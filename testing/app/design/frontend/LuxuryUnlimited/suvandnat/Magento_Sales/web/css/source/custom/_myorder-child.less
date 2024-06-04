@@ -1,0 +1,421 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common =true) {
+    .block-dashboard-orders {
+        .block-title {
+            color: @theme__territory--color-400;
+        }
+    }
+
+    .orders-recent {
+        .orders-recent-items {
+            padding: 0;
+
+            .id {
+                padding: 15px 24px;
+                background-color: @theme__secondary--color-50;
+            }
+
+            .orders-recent-details,
+            .orders-recent-details .order-status a,
+            .id {
+                color: @theme__territory--color-400;
+            }
+
+            .orders-recent-details {
+                border-radius: @indent__xxs;
+                padding: @indent__s;
+
+                .product-name {
+                    color: @theme__territory--color-500;
+                }
+
+                .product-price {
+                    color: @theme__primary--color-500;
+                }
+            }
+
+            .action {
+                height: auto;
+
+                &.cancel,
+                &.return,
+                &.view {
+                    color: @theme__territory--white;
+                    background-color: @theme__primary--color-500;
+                    padding: @indent__xs @indent__l;
+                    border-radius: @indent__xxs;
+                    font-weight: @font-weight__bold;
+                }
+
+                &.view {
+                    &:hover {
+                        background: @custom__color-murrey;
+                        color: @theme__territory--white;
+                    }
+                }
+            }
+        }
+    }
+
+    body.account {
+        .page-main {
+            .page-title-wrapper {
+                .lib-vendor-prefix-display(flex);
+                padding: 0;
+
+                .order-date {
+                    margin: 0;
+                    .lib-line-height(40);
+                    .lib-font-size(14);
+                }
+
+                .order-status {
+                    .lib-line-height(35);
+                    margin: 0 @indent__xs;
+                    .lib-font-size(16);
+                    padding: 2px @indent__xxs;
+                }
+            }
+        }
+
+        .page-wrapper {
+            .main {
+                .page-title-wrapper {
+                    .page-title {
+                        width: auto;
+                        margin: 0;
+                    }
+                }
+            }
+        }
+    }
+
+    body.account.sales-order-view {
+        .page-main {
+            .page-title-wrapper {
+                margin: 0 0 15px;
+
+                .page-title {
+                    padding: @indent__xxs 0;
+                }
+
+                .order-status {
+                    padding: 2px @indent__xxs;
+                    display: table-cell;
+                    vertical-align: middle;
+                    height: 40px;
+                }
+            }
+        }
+    }
+
+    .order-details-items {
+        .table-order-items {
+            tbody {
+                .col.options {
+                    padding: @indent__base @indent__l;
+                }
+            }
+        }
+    }
+
+    .col.subtotal.status,
+    .order-status-modal.modal,
+    .items.order-links,
+    .order-details-items .order-title,
+    .porto-icon-action-undo:before {
+        display: none;
+    }
+
+    .col.return.order-cancel span {
+        cursor: pointer;
+    }
+
+    ul.order-tracking-steps {
+        .lib-vendor-prefix-display(flex);
+        list-style-type: none;
+
+        .step {
+            position: relative;
+            padding: 0 @indent__xxs;
+
+            > div {
+                .lib-hide-content();
+            }
+
+            &:before {
+                content: '';
+                display: block;
+                width: 20px;
+                height: 20px;
+                border: 1px solid @theme__secondary--color-500;
+                position: relative;
+                margin: 0 auto @indent__s auto;
+                z-index: 2;
+                background: @custom-additional-color;
+            }
+
+            &.active:before {
+                background: @theme__secondary--color-500;
+                content: @icon-success;
+                color: @custom-additional-color;
+                font-family: @icon-font-family;
+                text-align: center;
+            }
+
+            &:after {
+                content: '';
+                background: @theme__secondary--color-500;
+                height: 2px;
+                width: 100%;
+                position: absolute;
+                top: 10px;
+                left: -50%;
+                z-index: 0;
+            }
+
+            &:first-child:after {
+                content: none;
+            }
+
+            p,
+            span {
+                .lib-font-size(13);
+            }
+        }
+    }
+
+    .product-status-bar {
+        .status-item {
+            &:before {
+                border-radius: 0;
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__s) {
+    body.layout-fullwidth.page-layout-2columns-left.account {
+        .block-dashboard-orders {
+            .orders-recent {
+                .orders-recent-details {
+                    .lib-css(flex-wrap, wrap, @_prefix: 1);
+
+                    .actions {
+                        .lib-vendor-prefix-display(flex);
+                        .lib-css(flex-direction, row-reverse, @_prefix: 1);
+                        .lib-css(justify-content, space-between, @_prefix: 1);
+
+                        .return-order-button {
+                            margin: 0;
+                        }
+
+                        .cancel-order-button {
+                            .action.cancel {
+                                margin: 0 @indent__xxs 0 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .block-content {
+        .orders-recent {
+            .orders-recent-items {
+                .action {
+                    &.cancel,
+                    &.return,
+                    &.view {
+                        .lib-button(
+                            @_button-padding: 6px 8px 5px,
+                            @_button-margin: 0,
+                            @_button-background: @theme__primary--color-500,
+                            @_button-color: @theme__territory--white
+                        );
+                    }
+                }
+            }
+        }
+    }
+
+    ul.order-tracking-steps {
+        .lib-css(flex-direction, column, @_prefix: 1);
+
+        li.step {
+            &:before {
+                position: absolute;
+                margin: 0 0 0 -@indent__xl;
+            }
+
+            &:after {
+                width: 2px;
+                height: 100%;
+                left: -25px;
+                top: 20px;
+            }
+
+            &:first-child:after {
+                content: '';
+            }
+
+            &:last-child:after {
+                content: none;
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    body.layout-fullwidth.page-layout-2columns-left.account {
+        .page-wrapper {
+            .page-title-wrapper {
+                order: 3;
+            }
+
+            .columns {
+                .lib-css(flex-direction, column-reverse, @_prefix: 1);
+
+                .column.main {
+                    order: 1;
+                }
+
+                .sidebar.sidebar-main {
+                    order: 2;
+                    width: 100%;
+                }
+            }
+        }
+
+        .block-dashboard-orders {
+            margin: @indent__l 0 0 0;
+
+            .orders-recent {
+                .orders-recent-items {
+                    .items {
+                        .item {
+                            .product-img {
+                                margin: 0 @indent__s 0 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .block-collapsible-nav {
+        position: relative;
+    }
+
+    .table-wrapper {
+        .table:not(.totals):not(.cart):not(.table-comparison) {
+            tbody {
+                tr {
+                    td {
+                        &:first-child {
+                            padding: @indent__xs;
+                            text-align: left;
+
+                            &:before {
+                                display: none;
+                            }
+                        }
+                    }
+
+                    td[data-th]:before {
+                        color: @custom__color-black;
+                    }
+                }
+            }
+        }
+    }
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__s) {
+    body.layout-fullwidth.page-layout-2columns-left.account {
+        .block-dashboard-orders {
+            .orders-recent {
+                .orders-recent-items {
+                    .action.cancel {
+                        margin: 0 0 @indent__xxs 0;
+                    }
+                }
+
+                .orders-recent-details {
+                    .lib-css(flex-wrap, nowrap, @_prefix: 1);
+
+                    .actions {
+                        .lib-vendor-prefix-display(flex);
+                        .lib-css(flex-direction, column-reverse, @_prefix: 1);
+                    }
+                }
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__m) {
+    .order-details-items {
+        width: fit-content;
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__xl) {
+    body.layout-fullwidth.page-layout-2columns-left.account {
+        .block-dashboard-orders {
+            .orders-recent {
+                .orders-recent-items {
+                    .action.cancel {
+                        margin: 0 @indent__xxs 0 0;
+                    }
+                }
+
+                .orders-recent-details {
+                    .lib-css(flex-wrap, nowrap, @_prefix: 1);
+
+                    .actions {
+                        .lib-vendor-prefix-display(flex);
+                        .lib-css(flex-direction, row-reverse, @_prefix: 1);
+                    }
+
+                    .status {
+                        padding: 0 @indent__xxs 0 0;
+                    }
+                }
+            }
+        }
+    }
+}

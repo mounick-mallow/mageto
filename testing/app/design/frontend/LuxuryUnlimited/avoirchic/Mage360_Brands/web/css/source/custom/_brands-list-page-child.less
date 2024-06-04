@@ -1,0 +1,170 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .brands-index-index {
+        .page-main {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .breadcrumbs {
+            position: absolute;
+            .lib-vendor-prefix-display(flex);
+            justify-content: center;
+            text-align: center;
+            left: 50%;
+            transform: translate(-50%, 0);
+        }
+
+        .lx-brands__header {
+            .lx-brands__wrapper {
+                position: absolute;
+                left: 50%;
+                transform: translate(-50%, 0);
+                top: 0;
+            }
+        }
+
+        .lx-brands__content {
+            padding: @indent__m 0;
+        }
+
+        .lx-brands__list-section {
+            .lx-brands__brand-title {
+                justify-content: flex-start;
+            }
+        }
+    }
+}
+
+//
+//  Tablet
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__m) {
+    .brands-index-index {
+        .breadcrumbs {
+            top: 75px;
+            z-index: 5;
+        }
+
+        .lx-brands__header {
+            padding-top: 125px;
+
+            .lx-brands__wrapper {
+                min-height: 120px;
+                padding: 26px 0 55px;
+            }
+
+            .lx-brands__page-title {
+                .lib-font-size(26);
+                .lib-line-height(26);
+            }
+        }
+    }
+}
+
+//
+//  Tablet lg
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__l) {
+    .brands-index-index {
+        .breadcrumbs {
+            top: 95px;
+            z-index: 5;
+        }
+
+        .lx-brands__header {
+            padding-top: 170px;
+
+            .lx-brands__wrapper {
+                min-height: 170px;
+                padding: @indent__s 0;
+            }
+        }
+    }
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__xl) {
+    .brands-index-index {
+        .breadcrumbs {
+            top: 125px;
+            z-index: 5;
+        }
+
+        .lx-brands__header {
+            padding-top: 0;
+
+            .lx-brands__wrapper {
+                position: static;
+                min-height: 170px;
+                padding: @indent__s 0;
+                margin: 0 0 @indent__l;
+                transform: translate(0, 0);
+                width: 100%;
+            }
+        }
+
+        .lx-brands__alphabet {
+            .lx-brands__letters {
+                width: 100%;
+                flex-wrap: wrap;
+                justify-content: space-between;
+            }
+
+            .lx-brands__alphabet-item {
+                margin: 0;
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  ---------------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    .brands-index-index {
+        .breadcrumbs {
+            top: 45px;
+            z-index: 5;
+        }
+
+        .lx-brands__header {
+            padding-top: 75px;
+
+            .lx-brands__wrapper {
+                min-height: 70px;
+                padding: 20px 0 @indent__l;
+            }
+
+            .lx-brands__page-title {
+                .lib-font-size(18);
+                .lib-line-height(18);
+            }
+        }
+    }
+}

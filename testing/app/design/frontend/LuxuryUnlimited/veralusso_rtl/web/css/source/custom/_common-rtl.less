@@ -1,0 +1,110 @@
+// /**
+//  * Copyright © Magento, Inc. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    html {
+        direction: rtl;
+    }
+
+    // Form
+    .fieldset {
+        .prifix-input-with-option,
+        .intl-tel-input {
+            .input-prefix,
+            .flag-container {
+                border-right: none;
+                border-left: @form-element-input__border;
+            }
+
+            .mage-error {
+                left: auto;
+                right: 0px;
+            }
+        }
+
+        .intl-tel-input {
+            .selected-flag {
+                .iti-arrow {
+                    margin-right: 0;
+                    margin-left: @indent__xxs;
+                }
+            }
+        }
+    }
+
+    .search-request-modal {
+        .modal-search-content {
+            .field {
+                .specialgenderbox {
+                    .specialgender {
+                        background-position: 15px center;
+                    }
+
+                    &:after {
+                        left: 10px;
+                        right: inherit;
+                    }
+                }
+                .special-number-dropdown {
+                    right: 0;
+                    padding-left: 0;
+                    padding-right: 17px;
+
+                    select#specialcountry {
+                        background-position: 5px center;
+                    }
+
+                    &::after {
+                        right: 75px;
+                    }
+
+                    .selected-flag {
+                        position: absolute;
+                        top: ~'calc(50% - 12px)';
+                        pointer-events: none;
+                    }
+                }
+
+                &.name,
+                &.phone {
+                    .input-text {
+                        padding-left: 0;
+                        padding-right: 80px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__s) {
+    // Table
+    .table-wrapper {
+        .table:not(.totals):not(.cart):not(.table-comparison) {
+            > tbody {
+                > tr {
+                    td[data-th],
+                    th[data-th] {
+                        &::before {
+                            padding-right: 0;
+                            padding-left: @table-cell__padding-horizontal;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

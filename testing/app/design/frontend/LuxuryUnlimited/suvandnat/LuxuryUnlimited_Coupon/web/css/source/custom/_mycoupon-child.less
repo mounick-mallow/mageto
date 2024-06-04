@@ -1,0 +1,63 @@
+& when (@media-common =true) {
+    .my-account-coupons {
+        table {
+            tr {
+                th {
+                    border-top: @my-coupon-table-border-width solid
+                        @my-coupon-table-border-color;
+                }
+            }
+            tr {
+                td {
+                    border-bottom: @my-coupon-table-border-width solid
+                        @my-coupon-table-border-color;
+                    &.col {
+                        &.actions {
+                            a.action.primary {
+                                .lib-button();
+                                background: none;
+                                color: @theme__territory--color-400;
+                                padding: @indent__xs @indent__s;
+                                font-weight: @my-coupon-table-th-font-weight;
+                                .lib-font-size(@my-coupon-table-td-font-size);
+                                border: none;
+                                text-decoration: underline;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    .coupon-list-container.my-account-coupons.table-wrapper {
+        .data.table.table-coupon-items {
+            tbody {
+                > tr {
+                    > td {
+                        font-weight: @my-coupon-table-th-font-weight;
+                        text-align: left;
+                        color: @theme__territory--color-500;
+                        padding-left: 40%;
+
+                        &::before {
+                            font-weight: @my-coupon-table-td-font-weight;
+                            color: @theme__territory--color-500;
+                            text-transform: @my-coupon-table-td-text-transform;
+                        }
+
+                        &:last-child {
+                            border-bottom: 10px solid @my-coupon-table-th-color;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

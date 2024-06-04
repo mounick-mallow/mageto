@@ -1,0 +1,15 @@
+type Mutation {
+    applyGiftCard(input: GiftCardInput!): GiftCardOutput
+    @resolver(class: "\\LuxuryUnlimited\\GiftCard\\Model\\Resolver\\ApplyGiftCard")
+    @doc(description: "Apply gift card discount.")
+}
+
+type GiftCardOutput {
+    message: String!
+}
+
+input GiftCardInput @doc(description: "Gift Card object.") {
+    cart_id: String!
+    amount: Int!
+    code: String!
+}

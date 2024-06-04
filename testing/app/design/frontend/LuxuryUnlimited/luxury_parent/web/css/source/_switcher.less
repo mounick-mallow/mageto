@@ -1,0 +1,201 @@
+// /**
+//  * Copyright © 2015 Magento. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .page-header,
+    .page-footer {
+        .panel-switcher {
+            .lib-vendor-prefix-display(inline-flex);
+            .lib-vendor-box-align (center);
+            .lib-css(justify-content, flex-end, @_prefix: 1);
+            margin-right: -@switcher_gap;
+            margin-left: -@switcher_gap;
+        }
+        .switcher {
+            .lib-vendor-prefix-flex-basis (auto);
+            .lib-vendor-prefix-flex-grow(1);
+            max-width: 100%;
+            width: auto;
+            min-height: 1px;
+            padding-right: @switcher_gap;
+            padding-left: @switcher_gap;
+            max-height: none;
+
+            a {
+                &:hover {
+                    text-decoration: none;
+                }
+            }
+
+            .label:extend(.abs-visually-hidden all) {
+            }
+
+            .options {
+                .lib-dropdown(
+                    @_dropdown-actions-padding: @switcher_trigger_padding,
+                    @_dropdown-list-item-padding: 0,
+                    @_dropdown-toggle-icon-content: @icon-down,
+                    @_dropdown-toggle-active-icon-content: @icon-up,
+                    @_icon-font: @icon-font-family,
+                    @_icon-font-text-hide: true,
+                    @_icon-font-margin: 0 0,
+                    @_icon-font-size: @switcher_dropdown__icon-font-size,
+                    @_icon-font-line-height: @switcher_dropdown__icon-line-height,
+                    @_dropdown-list-min-width: @switcher_dropdown__list-min-width,
+                    @_dropdown-list-border: 0,
+                    @_dropdown-list-item-hover: @switcher_dropdown_hover-background-color
+                );
+
+                &.active {
+                    .ui-dialog {
+                        display: block;
+                    }
+                }
+
+                .ui-dialog {
+                    display: none;
+                    .lib-css(background, transparent);
+                    margin-top: 15px;
+                    position: absolute;
+                    top: 100%;
+                    right: 0;
+                    height: auto;
+                    z-index: 100;
+                }
+
+                ul.dropdown {
+                    .lib-css(background, @switcher_dropdown_background-color);
+                    border: 1px solid @switcher_dropdown_border-color;
+                    box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.1);
+                    max-height: 400px;
+                    min-width: 200px;
+                    position: static;
+                    top: auto;
+                    margin-top: 0;
+                    overflow: auto;
+
+                    &::before {
+                        border: 10px solid;
+                        border-color: transparent transparent
+                            @switcher_dropdown_background-color transparent;
+                        left: auto;
+                        right: 8.5px;
+                        top: -19px;
+                    }
+
+                    &::after {
+                        border: 11px solid;
+                        border-color: transparent transparent
+                            @switcher_dropdown_border-color transparent;
+                        left: auto;
+                        right: 8px;
+                        top: -21px;
+                    }
+
+                    li {
+                        border-radius: 0;
+                        &:not(:last-child) {
+                            border-bottom: 1px solid
+                                @switcher_dropdown_border-color;
+                        }
+                    }
+                    a {
+                        display: block;
+                        color: @switcher_dropdown__font-color;
+                        .lib-font-size(14);
+                        font-weight: @font-weight__heavier;
+                        .lib-line-height(16px);
+                        padding: 12px 15px;
+
+                        & > img {
+                            margin-bottom: 3px;
+                            margin-right: 3px;
+                            vertical-align: middle;
+                        }
+                        &:hover {
+                            text-decoration: none;
+                        }
+                    }
+                }
+
+                .action.toggle {
+                    .lib-css(background, @switcher_trigger_background);
+                    .lib-vendor-prefix-display(inline-flex);
+                    .lib-vendor-box-align (center);
+                    .lib-css(gap, 8px, @_prefix: 1);
+                    &.active {
+                        .lib-vendor-prefix-display(inline-flex);
+                        .lib-vendor-box-align (center);
+                        .lib-css(gap, 8px, @_prefix: 1);
+                    }
+
+                    &:hover {
+                        strong {
+                            color: @switcher_trigger_hover-font-color;
+                        }
+                    }
+                }
+            }
+
+            .switcher-trigger {
+                background: @switcher_trigger_background;
+                padding: @switcher_trigger_padding;
+            }
+
+            strong {
+                .lib-font-size(@switcher_trigger_font-size);
+                .lib-line-height(@switcher_trigger_font-line-hight);
+                font-weight: @switcher_trigger_font-weight;
+                color: @switcher_trigger_font-color;
+                vertical-align: top;
+                display: inline-block;
+
+                span,
+                a {
+                    color: @switcher_trigger_font-color;
+                    &:hover {
+                        color: @switcher_trigger_font-color;
+                    }
+                }
+
+                & > img {
+                    margin-bottom: 3px;
+                    margin-right: 3px;
+                    vertical-align: middle;
+                }
+            }
+
+            &.switcher-website {
+                .options {
+                    .action.toggle {
+                        &::after {
+                            .lib-hide-content();
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+//
+//    Mobile
+//--------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    .page-header {
+        .panel-switcher {
+            .lib-hide-content();
+        }
+    }
+}

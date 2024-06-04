@@ -1,0 +1,123 @@
+//
+//  Common
+//
+& when (@media-common =true) {
+    .form-control {
+        fieldset.fieldset {
+            > .fields {
+                > .field {
+                    width: calc(100% - 8px);
+                }
+
+                &.field-common-section {
+                    .lib-vendor-prefix-display(flex);
+                    .lib-css(flex-direction, column, @_prefix: 1);
+
+                    &:has(.field.zip, .country) {
+                        .lib-vendor-prefix-display(flex);
+                        .lib-css(flex-direction, row, @_prefix: 1);
+                    }
+
+                    > .field {
+                        width: 100%;
+                    }
+                }
+            }
+
+            &.address-info {
+                padding: 0;
+                border: none;
+
+                h2 {
+                    display: none;
+                }
+            }
+
+            &.contact-info {
+                border: none;
+                padding: 0;
+            }
+        }
+    }
+
+    .account {
+        .column {
+            &.main {
+                h2 {
+                    display: none;
+                }
+            }
+        }
+
+        .block-box-element {
+            .block-title {
+                display: block;
+
+                strong {
+                    color: @custom__color-black;
+                }
+            }
+
+            address {
+                a {
+                    .lib-font-size(16);
+                    .lib-line-height(22);
+                    color: @theme__primary--color-26;
+                }
+            }
+        }
+    }
+
+    .form-address-edit {
+        .fieldset {
+            .fields {
+                &.choice-address {
+                    .lib-css(justify-content, flex-start, @_prefix: 1);
+
+                    .choice {
+                        width: 45%;
+                    }
+
+                    label {
+                        .lib-font-size(14);
+
+                        i {
+                            border-radius: 50%;
+                        }
+                    }
+
+                    input[type='checkbox']:checked + .checkmark + label {
+                        i {
+                            &:before {
+                                border-radius: 50%;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .actions-toolbar {
+            .lib-css(justify-content, flex-start, @_prefix: 1);
+        }
+    }
+
+    button.action.save.primary.save-address-button {
+        padding: 14px 54px;
+    }
+
+    .customer-address-index {
+        .actions-toolbar {
+            .lib-css(justify-content, center, @_prefix: 1);
+
+            .primary {
+                .action {
+                    padding: 12px 24px;
+                    background: @custom__color-white;
+                    color: @theme__primary--color-400;
+                    border: 2px solid @theme__primary--color-400;
+                }
+            }
+        }
+    }
+}

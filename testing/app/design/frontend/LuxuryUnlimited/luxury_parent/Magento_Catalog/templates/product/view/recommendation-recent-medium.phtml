@@ -1,0 +1,122 @@
+<div class="custtabs">
+    <ul>
+        <li class="active" rel="tab1">Recommendation</li>
+        <li rel="tab2">Recently Viewed</li>
+    </ul>
+    <div class="all_tab">
+        <div id="tab1" class="tab_content">
+            <!-- ##################### START CODE FOR RECOMMENDATION ##################### -->
+            <?php
+            $ddHelper = $this->helper("\Dynamic\HomepageApi\Helper\Data");
+            $categoryFactory = $ddHelper->getCategoryFactoryManager();
+            $categoryHelper = $this->helper('\Magento\Catalog\Helper\Category');
+            $categoryRepository = $ddHelper->getCategoryRepositoryManager();
+            $categoryCollection = $ddHelper->getCategoryCollectionFactoryManager();
+            $productRepository = $ddHelper->getProductRepositoryManager();
+            $helperImport = $this->helper('\Magento\Catalog\Helper\Image');
+            $_product = $ddHelper->getRegistryManager()->registry('current_product');
+            ?>
+            <?= $block->escapeHtml("c p id :" . $_product->getId()) ?><br/>";
+            <?= $block->escapeHtml("c name :" . $_product->getName()) ?><br/>";
+            <?= $block->escapeHtml("c color :" . $_product->getColor()) ?><br/>";
+            <?= $block->escapeHtml("c brand :" . $_product->getBrands()) ?><br/>";
+            <?= $block->escapeHtml("c finalprice :" . $_product->getFinalPrice()) ?><br/>";
+            <?= $block->escapeHtml("c percentage :" . $percentage = $_product->getFinalPrice() * 20 / 100) ?><br/>";
+            <?= $block->escapeHtml($min_price = $_product->getFinalPrice() - $percentage) ?><br/>";
+            <?= $block->escapeHtml($max_price = $_product->getFinalPrice() + $percentage) ?><br/>";
+            <?php
+            $categories = $_product->getCategoryIds();
+            $cat = $ddHelper->getCategoryManager()->load(end($categories));
+            $categoryId = $cat->getId();
+            $category = $categoryFactory->create()->load($categoryId);
+            $categoryProducts = $category->getProductCollection()->addAttributeToSelect('*')->setPageSize(25);
+            //$categoryProducts->addAttributeToFilter('color', array('like' => $_product->getColor()));
+            //$categoryProducts->addAttributeToFilter('brands', array('nin' => array($_product->getBrands())));
+            $categoryProducts->addAttributeToFilter('price', array('gteq' => $min_price));
+            $categoryProducts->addAttributeToFilter('price', array('lteq' => $max_price));
+            ?>
+            <?= $block->escapeHtml("c count :". count($categoryProducts)) ?>
+            <?php
+            /*foreach ($categoryProducts as $product) {
+                echo $product->getName() . ' - ' . $product->getProductUrl() . '<br />';
+                echo "<br/>";
+            }*/
+            /*foreach($categories as $category){
+                $cat = $objectManager->create('Magento\Catalog\Model\Category')->load($category);
+                echo "<br>";
+                echo $categoryId = $cat->getId(); // YOUR CATEGORY ID
+                echo "<br>";
+                echo $categoryId = $cat->getName();
+                $category = $categoryFactory->create()->load($categoryId);
+                $categoryProducts = $category->getProductCollection()
+                                 ->addAttributeToSelect('*');
+                                 //->addAttributeToFilter('visibility', \Magento\Catalog\Model\Product\Visibility::VISIBILITY_BOTH);
+                                 //->addAttributeToFilter('status',\Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_ENABLED);
+                                 //->setPageSize(9);
+            }*/
+            ?>
+            <?php if (count($categoryProducts) > 0) { ?>
+                <div class="product info detailed cls_recommendation">
+                    <div class="product data items">
+                        <div class="block upsell">
+                            <div class="block-content content">
+                                <div class="products wrapper grid products-grid products-recommandation">
+                                    <div class="products list items product-items owl-carousel">
+                                        <!-- START CODE FOR FIRST BLOCK -->
+                                        <?php foreach ($categoryProducts as $product) {
+                                            $imageUrl = $helperImport->init($product, 'product_page_image_small')
+                                                ->setImageFile($product->getThumbnail()) // image,small_image,thumbnail
+                                                ->resize(234)
+                                                ->getUrl();
+                                            ?>
+                                            <div class="item product product-item">
+                                                <div class="product-item-info type1" data-container="product-grid">
+                                                    <div class="product photo product-item-photo">
+                                                        <a href="<?= $block->escapeUrl($product->getProductUrl()) ?>">
+                                                            <img class="product-image-photo default_image"
+                                                                 src="<?= $block->escapeUrl($imageUrl) ?>"
+                                                                 alt="<?= $block->escapeHtmlAttr($product->getName()) ?>">
+                                                        </a>
+                                                    </div>
+                                                    <div class="product details product-item-details">
+                                                        <strong class="product-brand-name">
+                                                            <a class="product-item-link"
+                                                               href="<?= $block->escapeUrl($product->getProductUrl()) ?>"><?= $block->escapeHtml($product->getResource()->getAttribute('brands')->getFrontend()->getValue($product)) ?></a>
+                                                        </strong>
+                                                        <strong class="product name product-item-name">
+                                                            <a class="product-item-link"
+                                                               href="<?= $block->escapeUrl($product->getProductUrl()) ?>"><?= $block->escapeHtml($product->getName()) ?></a>
+                                                        </strong>
+                                                        <div class="price-box price-final_price">
+			                        				<span class="normal-price">
+														<span class="price-container price-final_price tax weee">
+														    <span class="price-wrapper"><span
+                                                                        class="price"><?= $block->escapeHtml($product->getFinalPrice()) ?></span></span>
+														</span>
+													</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <?php } //end foreach ?>
+                                        <!-- END CODE FOR FIRST BLOCK -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php } else { ?>
+                <div class="product info detailed cls_recommendation noproductrecome">
+                    <p class="clsnoprod">No Prodcuts Found</p>
+                </div>
+            <?php } ?>
+            <!-- ##################### END CODE FOR RECOMMENDATION ##################### -->
+        </div>
+        <div id="tab2" class="tab_content clsrecentlyviewed">
+            <!-- START CODE FOR Recently viewed -->
+            <?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('recently_view_product')->toHtml(); ?>
+            <!-- END CODE FOR Recently viewed -->
+        </div>
+    </div>
+</div>

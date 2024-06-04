@@ -1,0 +1,26 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+
+
+<div class="login-contaier-section">
+    <?php
+        $dynamicHelper = $this->helper('\Dynamic\Customization\Helper\Data');
+        $customerSession = $dynamicHelper->getCustomerSessionManager()->isLoggedIn();
+        if ($customerSession) {
+        ?>
+        <div class="customer_logged_in">
+            <ul>
+            <li><a href="<?= $block->escapeUrl($block->getUrl('customer/account')) ?>"><?= /* @noEscape */ __('My Account');?></a></li>
+            <li><a href="<?= $block->escapeUrl($block->getUrl('customer/account/logout')) ?>"><?= /* @noEscape */ __('Logout');?></a></li>
+            </ul>
+        </div>
+        <?php } else { ?>
+        <ul>
+            <li><a class="customer-account-link" href="<?= $block->escapeUrl($block->getUrl('customer/account')) ?>"><?= /* @noEscape */ __('Login');?></a></li>
+        </ul>
+        <?php } ?>
+</div>

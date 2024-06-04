@@ -1,0 +1,52 @@
+& when (@media-common = true) {
+    .wishlist-index-index {
+        .form-wishlist-items {
+            .product-list {
+                .product-item {
+                    .product-item-info {
+                        text-align: right;
+
+                        .prodAction {
+                            right: inherit;
+                            left: 14px;
+                        }
+
+                        .product-item-actions {
+                            .action.tocart {
+                                right: inherit;
+                                left: 40px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        aside.modal-popup.modal-slide._inner-scroll._show .modal-inner-wrap {
+            .modal-header {
+                .action-close {
+                    left: 70px;
+                    right: inherit;
+                }
+                .modal-title {
+                    text-align: right;
+                }
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__m) {
+    .wishlist-index-index {
+        &.account {
+            .page-title-wrapper {
+                padding-left: 0%;
+                padding-right: 25%;
+            }
+        }
+    }
+}

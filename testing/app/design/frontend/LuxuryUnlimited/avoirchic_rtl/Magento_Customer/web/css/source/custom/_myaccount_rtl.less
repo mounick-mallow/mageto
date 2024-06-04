@@ -1,0 +1,84 @@
+//
+//  Common
+//  ---------------------------------------------
+
+& when (@media-common = true) {
+    body.layout-fullwidth.page-layout-2columns-left.account {
+        .columns {
+            .column.main {
+                padding: 0 33px 0 0;
+            }
+        }
+    }
+
+    .block {
+        .title {
+            strong {
+                color: @custom__color-gray2;
+            }
+        }
+    }
+
+    .customer-account-index {
+        .block {
+            .block-title {
+                color: @color-gray20;
+
+                strong {
+                    .lib-font-size(20);
+                    line-height: @indent__l;
+                    font-weight: @font-weight__heavier;
+                    color: @theme__primary--color-500;
+                }
+
+                a.action.edit {
+                    font-size: @font-size__s;
+                    .lib-line-height(19);
+                    text-transform: capitalize;
+                    border: unset;
+                    font-weight: @font-weight__heavier;
+                    color: @theme__primary--color-800;
+                    .lib-vendor-prefix-display(flex);
+                    align-items: center;
+                    column-gap: 10px;
+
+                    &::after {
+                        font-family: @icon-font-family;
+                        content: @icon-arrow-right;
+                        .lib-font-size(20);
+                    }
+                }
+            }
+        }
+    }
+
+    .block {
+        .title {
+            strong {
+                font-size: @font-size__base;
+                margin: 0;
+                .lib-line-height(23);
+                font-weight: @font-weight__heavier;
+                margin-right: 12px;
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    .account {
+        &.layout-fullwidth.page-layout-2columns-left.pl-thm-luxuryunlimited-brands_labels_rtl {
+            .page-main {
+                .columns {
+                    .column.main {
+                        padding: 0;
+                    }
+                }
+            }
+        }
+    }
+}

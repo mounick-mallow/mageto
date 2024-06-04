@@ -1,0 +1,22 @@
+& when (@media-common = true) {
+    .page-wrapper {
+        .breadcrumbs {
+            .lib-breadcrumbs();
+            padding-left: 0;
+            padding-right: 0;
+
+            .items {
+                .lib-vendor-prefix-display(flex);
+                .lib-css(align-items, center, @_prefix: 1);
+                .lib-css(flex-wrap, wrap, @_prefix: 1);
+            }
+
+            .item {
+                &:not(:last-child) {
+                    .lib-vendor-prefix-display(inline-flex);
+                    .lib-css(align-items, center, @_prefix: 1);
+                }
+            }
+        }
+    }
+}

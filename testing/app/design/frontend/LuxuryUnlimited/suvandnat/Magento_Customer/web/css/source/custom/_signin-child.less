@@ -1,0 +1,527 @@
+//
+//    Common
+//--------------------------------------
+& when (@media-common =true) {
+    .abs-signin-block-title {
+        .lib-font-size(24);
+        .lib-line-height(30);
+        font-weight: @font-weight__semibold;
+        margin-bottom: 0;
+        text-align: left;
+        display: block;
+        color: @theme__territory--white;
+        background: @custom__color-black;
+        padding: 16px 30px;
+        border-radius: 5px 5px 0 0;
+
+        strong {
+            font-weight: @font-weight__heavier;
+        }
+    }
+
+    .abs-signin-block-title-note {
+        .lib-font-size(20);
+        .lib-line-height(30);
+        font-weight: @font-weight__heavier;
+        color: @theme__territory--color-300;
+        letter-spacing: 0.3px;
+        text-align: center;
+        width: 100%;
+        max-width: 350px;
+        margin: 0 auto 24px;
+    }
+
+    .customer-account-login,
+    .customer-account-create,
+    .customer-account-forgotpassword {
+        .page-main {
+            > .page-title-wrapper {
+                text-align: left;
+
+                .page-title {
+                    text-transform: uppercase;
+                }
+            }
+        }
+
+        .sociallogin-wrapper {
+            margin-bottom: @indent__xl;
+
+            .sociallogin-block {
+                .sociallogin-padding {
+                    .sociallogin-box {
+                        margin-bottom: @indent__xs;
+
+                        &:last-child {
+                            margin-bottom: 0;
+                        }
+
+                        .sociallogin-button {
+                            height: 50px;
+                        }
+                    }
+                }
+            }
+        }
+
+        .login-container,
+        .signup-account-container {
+            &:extend(.abs-add-clearfix all);
+
+            .block-customer-login,
+            .block-customer-signin {
+                .block-title {
+                    &:extend(.abs-signin-block-title all);
+                }
+
+                .block-content,
+                .sociallogin-padding {
+                    background-color: @theme__secondary--color-100;
+                    border-radius: 0 0 5px 5px;
+                    padding: 24px;
+                }
+
+                .actions-toolbar {
+                    > .primary,
+                    > .secondary {
+                        .action {
+                            width: 100%;
+                            margin: 0;
+                        }
+                    }
+                }
+            }
+
+            .customer-create-account {
+                .block-new-customer {
+                    .block-title {
+                        .lib-font-size(18);
+                        .lib-line-height(20);
+                        font-weight: @font-weight__bold;
+                        color: @custom__color-black;
+                        margin-bottom: @indent__xs;
+                        text-align: center;
+
+                        strong {
+                            font-weight: @font-weight__bold;
+                        }
+                    }
+
+                    p {
+                        .lib-font-size(16);
+                        .lib-line-height(22);
+                        color: @theme__territory--color-300;
+                        margin: 0 auto @indent__xs;
+                        text-align: center;
+                        max-width: 490px;
+                    }
+
+                    .actions-toolbar {
+                        margin-top: 0;
+
+                        div.primary {
+                            float: none;
+                            display: block;
+                            text-align: center;
+
+                            a.action {
+                                .lib-font-size(14);
+                                .lib-line-height(22);
+                                color: @theme__primary--color;
+                                font-weight: @font-weight__bold;
+                                text-decoration: underline;
+                                margin: 0;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .block-customer-login {
+                .form-login {
+                    .fieldset {
+                        > .field {
+                            > .label {
+                                display: none;
+                            }
+
+                            &.note {
+                                &:extend(.abs-signin-block-title-note all);
+                            }
+                        }
+                    }
+                }
+
+                .actions-toolbar {
+                    .secondary {
+                        margin: 0 0 24px;
+                        text-align: center;
+
+                        a.action {
+                            margin: 0;
+                            .lib-font-size(14);
+                            .lib-line-height(23);
+                            font-weight: @font-weight__bold;
+                            color: @theme__primary--color;
+                            text-decoration: underline;
+                        }
+                    }
+
+                    .primary {
+                        text-align: center;
+
+                        .action.primary {
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    body.wp-sl {
+        &.customer-account-login,
+        &.customer-account-create {
+            div.sociallogin-wrapper {
+                margin: 0 auto @indent__xl;
+
+                div.sociallogin-block {
+                    div.sociallogin-padding {
+                        .note {
+                            &:extend(.abs-signin-block-title-note all);
+                            max-width: 450px;
+                        }
+
+                        div.sociallogin-box {
+                            a.sociallogin-button {
+                                overflow: hidden;
+
+                                span.sociallogin-icon {
+                                    height: 50px;
+                                    border: 0;
+                                    .lib-font-size(16);
+                                    .lib-line-height(50);
+                                    font-weight: @font-weight__semibold;
+                                    text-align: center;
+                                    border-radius: 0;
+                                    overflow: hidden;
+
+                                    &:before {
+                                        border-right: 1px solid
+                                            @theme__secondary--color-300;
+                                        width: 50px;
+                                    }
+
+                                    &:after {
+                                        text-align: center;
+                                        margin: 0;
+                                        padding-left: @indent__xl;
+                                        padding-right: @indent__xl;
+                                        width: calc(~'100% - 80px');
+                                        display: block;
+                                    }
+
+                                    &.sl-google {
+                                        background: @theme__territory--white;
+
+                                        &:after {
+                                            color: @custom__color-black;
+                                        }
+                                    }
+
+                                    &.sl-fb {
+                                        background: @custom__color-facebook;
+
+                                        &:before {
+                                            color: @theme__territory--white;
+                                        }
+                                    }
+
+                                    &.sl-twitter {
+                                        background: @custom__color-twitter;
+
+                                        &:before {
+                                            color: @theme__territory--white;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // Fotgot Password
+    .forgotpassword-container {
+        max-width: 510px;
+
+        .form.forget {
+            margin-bottom: @indent__xl;
+            background-color: @theme__secondary--color-100;
+            border-radius: 0 0 5px 5px;
+            padding: 86px 24px 24px;
+            position: relative;
+
+            &:before {
+                content: 'Forgot Password?';
+                .lib-font-size(24);
+                .lib-line-height(30);
+                font-weight: @font-weight__bold;
+                display: block;
+                background-color: @custom__color-black;
+                border-radius: 5px 5px 0 0;
+                color: @theme__territory--white;
+                padding: 16px @indent__l;
+                position: absolute;
+                left: 0;
+                top: 0;
+                right: 0;
+            }
+        }
+
+        .fieldset {
+            margin: 0;
+
+            > .field {
+                &.note {
+                    .lib-font-size(20);
+                    .lib-line-height(30);
+                    font-weight: @font-weight__heavier;
+                    text-align: center;
+                    color: @theme__territory--color-300;
+                }
+            }
+        }
+
+        .actions-toolbar {
+            text-align: center;
+
+            div.primary {
+                display: block;
+                float: none;
+
+                .action.primary {
+                    width: 100%;
+                    float: none;
+                    margin: 0;
+                }
+            }
+        }
+
+        .forgot-login {
+            text-align: center;
+
+            p {
+                margin: 0;
+                .lib-font-size(16);
+                .lib-line-height(22);
+                color: @theme__territory--color-300;
+
+                span {
+                    display: block;
+                    margin-bottom: @indent__xs;
+                }
+
+                a {
+                    color: @theme__primary--color;
+                    text-decoration: underline;
+                    font-weight: @font-weight__bold;
+                }
+            }
+        }
+    }
+
+    .luxb_password {
+        .toggle-password {
+            top: 12px;
+        }
+    }
+
+    // Create Account
+    .signup-account-container {
+        .block {
+            &.block-customer-signin {
+                .block-title {
+                    &:extend(.abs-signin-block-title all);
+                }
+
+                .block-content {
+                    .note {
+                        &:extend(.abs-signin-block-title-note all);
+                    }
+                }
+
+                .fieldset {
+                    > .fields > .field,
+                    > .field {
+                        &.prifix-field > .label,
+                        > .label {
+                            .lib-text-hide();
+                        }
+                    }
+
+                    .fields {
+                        > .field.field-dob {
+                            .customer-dob {
+                                .ui-datepicker-trigger {
+                                    top: 14px;
+
+                                    span {
+                                        .lib-text-hide();
+                                    }
+                                }
+                            }
+                        }
+
+                        .field.prifix-field {
+                            & > .control.prifix-input-with-option {
+                                .prefix-select {
+                                    width: 68px;
+                                    background-position: right 10px center;
+                                    border-right-color: @theme__territory--color-300;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                .actions-toolbar {
+                    text-align: center;
+
+                    > .primary {
+                        float: none;
+                        width: 100%;
+                    }
+                }
+            }
+        }
+
+        .block-customer-login {
+            .sociallogin-block-title {
+                &:extend(.abs-signin-block-title all);
+            }
+        }
+    }
+
+    .choice {
+        input {
+            &:checked + label:after {
+                border-color: @theme__territory--white;
+                top: 12px;
+                left: 10px;
+            }
+
+            &:checked + label:before {
+                background-color: @theme__secondary--color-500;
+                border-color: @theme__secondary--color-500;
+            }
+        }
+
+        label {
+            .lib-font-size(14);
+            .lib-line-height(22);
+            color: @theme__territory--color-300;
+            font-weight: @font-weight__regular;
+            padding-left: @indent__xl;
+
+            &:before {
+                border-color: @theme__secondary--color-500;
+                border-width: 1px;
+                border-radius: 2px;
+                top: 6px;
+                width: 25px;
+                height: 25px;
+            }
+        }
+    }
+
+    .modal-popup {
+        &.siginerror-modal {
+            .modal-title {
+                text-align: center;
+                margin: 0;
+            }
+        }
+
+        .modal-content {
+            background: @theme__territory--white;
+        }
+
+        .signin-error-content {
+            .sigin-popup-buttons {
+                align-items: center;
+                .lib-css(flex-direction, column-reverse, @_prefix: 1);
+
+                .action {
+                    margin: @indent__xs 0;
+                    width: 50%;
+                    border-radius: 5px;
+
+                    &.create {
+                        border: none;
+                        text-decoration: underline;
+                        background: none;
+                        color: @theme__primary--color-500;
+                    }
+                }
+            }
+        }
+    }
+}
+
+//
+//    Desktop
+//--------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__m) {
+    .login-container,
+    .signup-account-container {
+        .block-customer-login,
+        .customer-create-account {
+            width: calc(~'50% - 20px');
+        }
+
+        .customer-create-account {
+            .sociallogin-wrapper,
+            .block-new-customer {
+                text-align: center;
+                width: 100%;
+                margin-left: auto;
+                margin-right: auto;
+                float: none;
+            }
+        }
+    }
+}
+
+//
+//    Mobile
+//--------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    .customer-account-login {
+        .login-container {
+            .block.block-customer-login {
+                margin-bottom: 24px;
+            }
+        }
+    }
+
+    .customer-account-create {
+        .signup-account-container {
+            .block.block-customer-signin {
+                margin-bottom: @indent__xl;
+            }
+        }
+    }
+}

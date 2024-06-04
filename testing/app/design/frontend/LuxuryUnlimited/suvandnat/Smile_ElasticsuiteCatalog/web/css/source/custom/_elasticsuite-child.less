@@ -1,0 +1,56 @@
+//
+//  Common
+//  _____________________________________________
+& when (@media-common = true) {
+    .smile-es-range-slider {
+        .ui-slider-horizontal {
+            border: 1px solid @theme__secondary--color-50;
+            background-color: @theme__secondary--color-50;
+            height: 5px;
+        }
+
+        .ui-slider-range.ui-widget-header.ui-corner-all {
+            background-color: @theme__secondary--color-500;
+            height: 5px;
+            position: absolute;
+        }
+
+        .ui-slider-handle {
+            background-color: @theme__territory--white;
+            border: 5px solid @theme__secondary--color-500;
+            width: 18px;
+            height: 18px;
+            margin-top: -7px;
+        }
+
+        .actions-primary {
+            a.action.primary.small {
+                display: none;
+            }
+        }
+    }
+
+    .filter {
+        .actions {
+            div.secondary {
+                a {
+                    text-decoration-color: @theme__territory--color-400;
+
+                    &.show-more {
+                        span {
+                            color: @theme__territory--color-400;
+                            text-transform: none;
+                        }
+                    }
+
+                    &.show-less {
+                        span {
+                            color: @theme__territory--color-400;
+                            text-transform: none;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

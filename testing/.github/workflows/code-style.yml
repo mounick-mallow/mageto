@@ -1,0 +1,278 @@
+name: CI
+on: 
+  pull_request:
+    types: [opened, reopened, synchronize, ready_for_review]
+jobs:
+  changedfiles:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/ludxb/base-store:latest
+      credentials:
+        username: ${{ secrets.GITACTIONNAME }}
+        password: ${{ secrets.ACTION_SECRET1 }}
+    outputs:
+      all: ${{ steps.changes.outputs.all}}
+      js: ${{ steps.changes.outputs.js}}
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          ref: ${{ github.ref }}
+      - name: Fix repository ownership
+        run: |
+          chmod -R 755 $GITHUB_WORKSPACE
+          $(git config --global --add safe.directory $GITHUB_WORKSPACE)
+      - name: Debug git branch
+        run: |
+          echo "Current branch: $(git rev-parse --abbrev-ref HEAD)"
+          echo "Current commit: $(git rev-parse HEAD)"
+      - name: Get changed files
+        id: changes
+        run: |
+          echo "all=$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | xargs)" >> $GITHUB_OUTPUT
+          echo "js=$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | grep .js$ | xargs)" >> $GITHUB_OUTPUT
+      - name: List all changed files
+        run: |
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            CONFIG_FILE=`echo "$file" | grep config.php`
+            if [ -z "$CONFIG_FILE" ]
+            then
+              echo "Config.php file found in PR request. Exiting......"
+              exit 1
+            else
+              echo "config.php not found in PR"
+            fi
+            
+            VARIABLE_FILE=`echo "$file" | grep variable`
+            if [ -z "$VARIABLE_FILE" ]
+            then
+              echo "variable file found in PR request. Exiting......"
+              exit 1
+            else
+              echo "variableschange not found in PR"
+            fi
+          done
+      - name: check variables
+        run: |
+          wget https://www.avoir-chic.com/variables.sh -O variables.sh
+          bash variables.sh CSS-COLOR
+      - name: "Update to ERP"
+        run: |
+          curl --location 'https://twilio.theluxuryunlimited.com/api/github-action' \
+          --header 'Content-Type: application/json' \
+          --data '
+          {
+          "GITHUB_ACTOR": "'"$GITHUB_ACTOR"'",
+          "GITHUB_API_URL": "'"$GITHUB_API_URL"'",
+          "GITHUB_BASE_REF": "'"$GITHUB_BASE_REF"'",
+          "GITHUB_EVENT_NAME": "'"$GITHUB_EVENT_NAME"'",
+          "GITHUB_JOB": "'"$GITHUB_JOB"'",
+          "GITHUB_REF": "'"$GITHUB_REF"'",
+          "GITHUB_REF_NAME": "'"$GITHUB_REF_NAME"'",
+          "GITHUB_REF_TYPE": "'"$GITHUB_REF_TYPE"'",
+          "GITHUB_REPOSITORY": "'"$GITHUB_REPOSITORY"'",
+          "GITHUB_REPOSITORY_ID": "'"$GITHUB_REPOSITORY_ID"'",
+          "GITHUB_RUN_ATTEMPT": "'"$GITHUB_RUN_ATTEMPT"'",
+          "GITHUB_RUN_ID": "'"$GITHUB_RUN_ID"'",
+          "GITHUB_WORKFLOW": "'"$GITHUB_WORKFLOW"'",
+          "RUNNER_NAME": "'"$RUNNER_NAME"'"
+          }
+          '
+
+  m2-scan-css:
+    name: scan css
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: "CSS scan and fix"
+      run: |
+         wget https://www.avoir-chic.com/fix-css.txt -O fix-css.sh
+         bash fix-css.sh
+    - name: "Push the changes to Git"
+      uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: Apply css changes
+      env:
+        token: ${{ secrets.GITHUB_TOKEN }}
+    - name: "Update to ERP"
+      run: |
+        curl --location 'https://twilio.theluxuryunlimited.com/api/github-action' \
+        --header 'Content-Type: application/json' \
+        --data '
+        {
+        "GITHUB_ACTOR": "'"$GITHUB_ACTOR"'",
+        "GITHUB_API_URL": "'"$GITHUB_API_URL"'",
+        "GITHUB_BASE_REF": "'"$GITHUB_BASE_REF"'",
+        "GITHUB_EVENT_NAME": "'"$GITHUB_EVENT_NAME"'",
+        "GITHUB_JOB": "'"$GITHUB_JOB"'",
+        "GITHUB_REF": "'"$GITHUB_REF"'",
+        "GITHUB_REF_NAME": "'"$GITHUB_REF_NAME"'",
+        "GITHUB_REF_TYPE": "'"$GITHUB_REF_TYPE"'",
+        "GITHUB_REPOSITORY": "'"$GITHUB_REPOSITORY"'",
+        "GITHUB_REPOSITORY_ID": "'"$GITHUB_REPOSITORY_ID"'",
+        "GITHUB_RUN_ATTEMPT": "'"$GITHUB_RUN_ATTEMPT"'",
+        "GITHUB_RUN_ID": "'"$GITHUB_RUN_ID"'",
+        "GITHUB_WORKFLOW": "'"$GITHUB_WORKFLOW"'",
+        "RUNNER_NAME": "'"$RUNNER_NAME"'"
+        }
+        '
+
+  m2-coding-standard:
+    name: M2 Coding Standard
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: extdn/github-actions-m2/magento-coding-standard@master
+        continue-on-error: true
+      - name: "Update to ERP"
+        run: |
+          curl --location 'https://twilio.theluxuryunlimited.com/api/github-action' \
+          --header 'Content-Type: application/json' \
+          --data '
+          {
+          "GITHUB_ACTOR": "'"$GITHUB_ACTOR"'",
+          "GITHUB_API_URL": "'"$GITHUB_API_URL"'",
+          "GITHUB_BASE_REF": "'"$GITHUB_BASE_REF"'",
+          "GITHUB_EVENT_NAME": "'"$GITHUB_EVENT_NAME"'",
+          "GITHUB_JOB": "'"$GITHUB_JOB"'",
+          "GITHUB_REF": "'"$GITHUB_REF"'",
+          "GITHUB_REF_NAME": "'"$GITHUB_REF_NAME"'",
+          "GITHUB_REF_TYPE": "'"$GITHUB_REF_TYPE"'",
+          "GITHUB_REPOSITORY": "'"$GITHUB_REPOSITORY"'",
+          "GITHUB_REPOSITORY_ID": "'"$GITHUB_REPOSITORY_ID"'",
+          "GITHUB_RUN_ATTEMPT": "'"$GITHUB_RUN_ATTEMPT"'",
+          "GITHUB_RUN_ID": "'"$GITHUB_RUN_ID"'",
+          "GITHUB_WORKFLOW": "'"$GITHUB_WORKFLOW"'",
+          "RUNNER_NAME": "'"$RUNNER_NAME"'"
+          }
+          '
+
+  m2-theme-structure:
+    name: M2 Theme structure test
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: " M2 Coding Standard"
+      run: |
+         wget https://www.avoir-chic.com/file_structure.sh -O file_structure.sh
+         bash file_structure.sh scan_theme_structure 
+    - name: "Update to ERP"
+      run: |
+        curl --location 'https://twilio.theluxuryunlimited.com/api/github-action' \
+        --header 'Content-Type: application/json' \
+        --data '
+        {
+        "GITHUB_ACTOR": "'"$GITHUB_ACTOR"'",
+        "GITHUB_API_URL": "'"$GITHUB_API_URL"'",
+        "GITHUB_BASE_REF": "'"$GITHUB_BASE_REF"'",
+        "GITHUB_EVENT_NAME": "'"$GITHUB_EVENT_NAME"'",
+        "GITHUB_JOB": "'"$GITHUB_JOB"'",
+        "GITHUB_REF": "'"$GITHUB_REF"'",
+        "GITHUB_REF_NAME": "'"$GITHUB_REF_NAME"'",
+        "GITHUB_REF_TYPE": "'"$GITHUB_REF_TYPE"'",
+        "GITHUB_REPOSITORY": "'"$GITHUB_REPOSITORY"'",
+        "GITHUB_REPOSITORY_ID": "'"$GITHUB_REPOSITORY_ID"'",
+        "GITHUB_RUN_ATTEMPT": "'"$GITHUB_RUN_ATTEMPT"'",
+        "GITHUB_RUN_ID": "'"$GITHUB_RUN_ID"'",
+        "GITHUB_WORKFLOW": "'"$GITHUB_WORKFLOW"'",
+        "RUNNER_NAME": "'"$RUNNER_NAME"'"
+        }
+        '
+         
+  grumphp:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read 
+    container:
+      image: ghcr.io/ludxb/base-store:latest
+      credentials:
+        username: vaibhav-panmand
+        password: ${{ secrets.ACTION_SECRET1 }}
+    needs: changedfiles
+    if: ${{needs.changedfiles.outputs.all}}
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          ref: ${{ github.ref }}
+      - name: Fix repository ownership
+        run: |
+          chmod -R 755 $GITHUB_WORKSPACE
+          $(git config --global --add safe.directory $GITHUB_WORKSPACE)
+      - name: Go into project folder
+        run: cd $GITHUB_WORKSPACE
+      - name: Install composer requirements
+        run: composer install --no-ansi --no-interaction
+      - name: Preparing list of changed files
+        run: echo ${{needs.changedfiles.outputs.all}} | tr ' ' '\n' > list_of_changed_files
+      - name: Show file list
+        run: cat list_of_changed_files
+      - name: Run GrumPHP
+        run: cat list_of_changed_files | $GITHUB_WORKSPACE/vendor/bin/grumphp run --config=./grumphp.yml
+      - name: "Update to ERP"
+        run: |
+          curl --location 'https://twilio.theluxuryunlimited.com/api/github-action' \
+          --header 'Content-Type: application/json' \
+          --data '
+          {
+          "GITHUB_ACTOR": "'"$GITHUB_ACTOR"'",
+          "GITHUB_API_URL": "'"$GITHUB_API_URL"'",
+          "GITHUB_BASE_REF": "'"$GITHUB_BASE_REF"'",
+          "GITHUB_EVENT_NAME": "'"$GITHUB_EVENT_NAME"'",
+          "GITHUB_JOB": "'"$GITHUB_JOB"'",
+          "GITHUB_REF": "'"$GITHUB_REF"'",
+          "GITHUB_REF_NAME": "'"$GITHUB_REF_NAME"'",
+          "GITHUB_REF_TYPE": "'"$GITHUB_REF_TYPE"'",
+          "GITHUB_REPOSITORY": "'"$GITHUB_REPOSITORY"'",
+          "GITHUB_REPOSITORY_ID": "'"$GITHUB_REPOSITORY_ID"'",
+          "GITHUB_RUN_ATTEMPT": "'"$GITHUB_RUN_ATTEMPT"'",
+          "GITHUB_RUN_ID": "'"$GITHUB_RUN_ID"'",
+          "GITHUB_WORKFLOW": "'"$GITHUB_WORKFLOW"'",
+          "RUNNER_NAME": "'"$RUNNER_NAME"'"
+          }
+          '
+          
+  eslint:
+    runs-on: ubuntu-latest
+    container:
+      image: node:20.1.0-buster-slim
+    needs: changedfiles
+    if: ${{needs.changedfiles.outputs.js}}
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Prepare testing env
+        run: npm install yarn && yarn add eslint --dev && yarn add eslint-plugin-css
+      - name: Preparing list of changed js files
+        run: echo ${{needs.changedfiles.outputs.js}} | tr ' ' '\n' > list_of_changed_js_files
+      - name: Show js file list
+        run: cat list_of_changed_js_files
+      - name: Run ESLint
+        run: yarn run eslint ${{needs.changedfiles.outputs.js}}
+      - name: "Update to ERP"
+        run: |
+          curl --location 'https://twilio.theluxuryunlimited.com/api/github-action' \
+          --header 'Content-Type: application/json' \
+          --data '
+          {
+          "GITHUB_ACTOR": "'"$GITHUB_ACTOR"'",
+          "GITHUB_API_URL": "'"$GITHUB_API_URL"'",
+          "GITHUB_BASE_REF": "'"$GITHUB_BASE_REF"'",
+          "GITHUB_EVENT_NAME": "'"$GITHUB_EVENT_NAME"'",
+          "GITHUB_JOB": "'"$GITHUB_JOB"'",
+          "GITHUB_REF": "'"$GITHUB_REF"'",
+          "GITHUB_REF_NAME": "'"$GITHUB_REF_NAME"'",
+          "GITHUB_REF_TYPE": "'"$GITHUB_REF_TYPE"'",
+          "GITHUB_REPOSITORY": "'"$GITHUB_REPOSITORY"'",
+          "GITHUB_REPOSITORY_ID": "'"$GITHUB_REPOSITORY_ID"'",
+          "GITHUB_RUN_ATTEMPT": "'"$GITHUB_RUN_ATTEMPT"'",
+          "GITHUB_RUN_ID": "'"$GITHUB_RUN_ID"'",
+          "GITHUB_WORKFLOW": "'"$GITHUB_WORKFLOW"'",
+          "RUNNER_NAME": "'"$RUNNER_NAME"'"
+          }
+          '
+  

@@ -1,0 +1,142 @@
+// /**
+//  * Copyright © 2015 Magento. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//    Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .filter {
+        .filter-options-item {
+            padding-top: 0;
+            padding-left: 0;
+            padding-right: 0;
+
+            .filter-options-title {
+                .lib-font-size(16);
+                padding: 15px;
+            }
+
+            .filter-options-content {
+                border-top: 1px solid #f2ded7;
+                padding: 0 15px;
+
+                .item {
+                    margin-left: 0;
+                    .lib-font-size(14);
+                    font-weight: @font-weight__heavier;
+                }
+
+                .smile-es-range-slider {
+                    margin-top: 16px;
+                }
+
+                .field.search {
+                    margin-top: 16px;
+                }
+            }
+        }
+
+        &-content {
+            .filter-subtitle {
+                display: none;
+            }
+        }
+
+        &-options {
+            &-item {
+                border: 2px solid @theme__primary--brd-light;
+                padding: 15px;
+            }
+
+            &-title {
+                color: @theme__secondary--color-800;
+                margin-bottom: 0;
+
+                &:after {
+                    color: @theme__primary--500;
+                }
+            }
+
+            &-content {
+                a {
+                    color: @theme__secondary--color-800;
+                }
+                .count {
+                    color: @theme__secondary--color-800;
+                }
+
+                .item {
+                    input {
+                        &:checked + label:after {
+                            border-color: @custom__color-white;
+                        }
+
+                        &:checked + label:before {
+                            background-color: @theme__primary--500;
+                            border-color: @theme__primary--500;
+                        }
+                    }
+
+                    label {
+                        &:before {
+                            border-color: @theme__primary--200;
+                        }
+                    }
+                }
+            }
+        }
+
+        .filter-current {
+            border: 1px solid @theme__primary--brd-light;
+            padding-bottom: 26px;
+            margin-bottom: 15px;
+
+            &-subtitle {
+                .lib-font-size(17);
+                font-weight: @font-weight__semibold;
+                text-transform: capitalize;
+                border-bottom: 1px solid @theme__primary--brd-light;
+                color: @theme__secondary--color-800;
+                padding-bottom: 15px;
+            }
+
+            .items {
+                margin-top: 26px;
+            }
+
+            li.item {
+                margin-left: 0;
+                color: @theme__secondary--color-800;
+            }
+        }
+
+        // Rewrite base theme
+        .block-content.filter-content a.action.clear.filter-clear {
+            top: 1px;
+            right: -5px;
+            font-size: 12px;
+        }
+    }
+}
+
+//
+//    Mobile
+//--------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    .block.filter {
+        .filter {
+            &-title {
+                color: @theme__primary--500;
+                border: 1px solid @theme__primary--brd-light;
+            }
+        }
+    }
+}

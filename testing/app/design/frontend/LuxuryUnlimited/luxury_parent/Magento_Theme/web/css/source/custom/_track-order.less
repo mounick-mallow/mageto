@@ -1,0 +1,383 @@
+// /**
+//  * Copyright © 2015 Magento. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//  Common
+//  ---------------------------------------------
+
+& when (@media-common = true) {
+    .track-order-login {
+        .track-order-widget {
+            .lib-vendor-prefix-display(grid);
+            .lib-css(grid-template-columns, 1fr, @_prefix: 1);
+            .lib-css(gap, @track-order-login__element-gap, @_prefix: 1);
+        }
+
+        .track-order-element {
+            border: 1px solid @form-element-input__border-color;
+            border-radius: @track-order-login__element-border-radius;
+            .lib-font-size(@track-order-login__element-font-size);
+            .lib-line-height(@track-order-login__element-line-height);
+            color: @track-order-login__element-font-color;
+            font-weight: @track-order-login__element-font-weight;
+            padding: @track-order-login__element-padding;
+
+            > .form {
+                height: 100%;
+
+                > .fieldset {
+                    height: 100%;
+                }
+            }
+        }
+
+        .fieldset {
+            h2 {
+                .lib-font-size(@track-order-login__element-title-font-size);
+                .lib-line-height(@track-order-login__element-title-line-height);
+                font-weight: @track-order-login__element-title-font-weight;
+                color: @track-order-login__element-title-font-color;
+                margin: 0;
+            }
+
+            .note {
+                .lib-font-size(@track-order-login__note-font-size);
+                .lib-line-height(@track-order-login__note-line-height);
+                font-weight: @track-order-login__note-font-weight;
+                color: @track-order-login__note-font-color;
+                margin-top: -@indent__xs;
+                margin-bottom: 12px;
+            }
+
+            .order-reference {
+                text-align: center;
+
+                a {
+                    text-decoration: underline;
+                }
+            }
+
+            .actions-toolbar {
+                .lib-vendor-prefix-display();
+                .lib-vendor-prefix-flex-direction ();
+                margin-top: auto;
+
+                .secondary {
+                    .lib-vendor-prefix-display(inline-flex);
+                    .lib-css(justify-content, flex-end, @_prefix: 1);
+                    margin-bottom: @track-order-login__action-secondary-space-bottom;
+
+                    .action {
+                        .lib-font-size(@track-order-login__action-secondary-font-size);
+                        .lib-line-height(@track-order-login__action-secondary-line-height);
+                        font-weight: @track-order-login__action-secondary-font-weight;
+                        margin-top: 0;
+                    }
+                }
+
+                .primary {
+                    .lib-vendor-prefix-display(inline-flex);
+                    .lib-css(justify-content, center, @_prefix: 1);
+
+                    .action {
+                        margin: 0;
+                    }
+                }
+            }
+
+            &::before,
+            &::after {
+                .lib-hide-content();
+            }
+        }
+    }
+
+    // Track Order Modal (popup)
+    .modal-track-order {
+        .lib-vendor-prefix-display();
+        .lib-vendor-box-align (center);
+        .lib-css(justify-content, center, @_prefix: 1);
+        padding: @indent__l 15px;
+
+        .modal-inner-wrap {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+        }
+
+        .order-container {
+            .lib-vendor-prefix-display();
+            .lib-vendor-prefix-flex-direction ();
+        }
+
+        .track-order-items {
+            list-style: none;
+            .lib-vendor-prefix-display();
+            .lib-vendor-prefix-flex-direction ();
+            gap: 20px;
+            padding: 0 0;
+            margin: 0 0 @indent__l;
+            height: auto;
+            max-height: 190px;
+            overflow-y: auto;
+
+            .order-item {
+                .lib-vendor-prefix-display(flex);
+                gap: 10px;
+                margin: 0;
+            }
+
+            .order-item-img {
+                width: 70px;
+                height: 70px;
+            }
+
+            .product-item-details {
+                .lib-vendor-prefix-display();
+                .lib-vendor-prefix-flex-direction ();
+                flex: 1;
+                .lib-font-size(@modal-track-order__font-size);
+                .lib-line-height(@modal-track-order__line-height);
+                color: @modal-track-order__font-color;
+                font-weight: @modal-track-order__font-weight;
+                padding: 0;
+            }
+
+            .order-detail-item {
+                &.name {
+                    .lib-font-size(@modal-track-order__font-size);
+                    .lib-line-height(@modal-track-order__line-height);
+                    color: @modal-track-order__font-color;
+                    font-weight: @modal-track-order__font-weight;
+                    margin: 0;
+                }
+
+                span {
+                    color: @modal-track-order__font-color2;
+                }
+            }
+        }
+
+        .track-order-progress {
+            border-top: 1px solid @modal__border-color;
+            border-bottom: 1px solid @modal__border-color;
+            padding: @modal-track-order__progress-padding;
+        }
+
+        .track-order-help {
+            .lib-font-size(@modal-track-order__help-font-size);
+            .lib-line-height(@modal-track-order__help-line-height);
+            font-weight: @modal-track-order__help-font-weight;
+            .lib-vendor-prefix-display();
+            .lib-vendor-box-align (center);
+            .lib-css(justify-content, center, @_prefix: 1);
+            margin: @modal-track-order__help-margin;
+
+            a {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    // Track Order Steps
+    .order-progress-steps {
+        .lib-css(display, grid, @_prefix: 1);
+        .lib-css(grid-template-columns, 1fr, @_prefix: 1);
+        .lib-css(gap, 0, @_prefix: 1);
+        width: 100%;
+        padding: 0;
+        margin: 0;
+        position: relative;
+
+        > li {
+            counter-increment: stepNum;
+            .lib-vendor-prefix-display(inline-flex);
+            .lib-css(gap, 0 10px, @_prefix: 1);
+            position: relative;
+            .lib-font-size(@progress-step__font-size);
+            .lib-line-height(@progress-step__line-height);
+            color: @progress-step__active-font-color;
+            font-weight: @progress-step__font-weight;
+            margin: 0;
+            padding: 0 0 15px;
+            min-height: 75px;
+
+            i {
+                .lib-icon-font(
+                    @_icon-font-content: @icon-success,
+                    @_icon-font: @icon-font-family,
+                    @_icon-font-size: @progress-step__active-icon-font-size,
+                    @_icon-font-line-height: normal,
+                    @_icon-font-color: @progress-step__active-icon-font-color,
+                    @_icon-font-margin: 0,
+                    @_icon-font-text-hide: true,
+                    @_icon-font-position: before,
+                    @_icon-font-display: block
+                );
+
+                width: 21px;
+                height: 21px;
+                .lib-line-height(21);
+                text-align: center;
+                font-weight: @font-weight__bold;
+                background: @color-white;
+                background-color: @progress-step__active-background-color;
+                border: 2px solid @progress-step__active-color;
+                border-radius: @progress-step-box__border-radius;
+                position: relative;
+                margin: 0;
+                z-index: 1;
+
+                &::before {
+                    display: block;
+                    background: @progress-step__active-color;
+                    width: 13px;
+                    height: 13px;
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    .lib-vendor-prefix-display();
+                    .lib-vendor-box-align (center);
+                    .lib-css(justify-content, center, @_prefix: 1);
+                    border-radius: @progress-step-box__active-border-radius;
+                }
+            }
+
+            p {
+                .lib-vendor-prefix-display(inline-flex);
+                .lib-vendor-prefix-flex-direction ();
+                .lib-css(gap, 3px, @_prefix: 1);
+                flex: 1;
+                margin-bottom: 0;
+                z-index: 1;
+
+                span {
+                    .lib-font-size(@progress-step-date__font-size);
+                    .lib-line-height(@progress-step-date__line-height);
+                    font-weight: @progress-step-date__font-weight;
+                    color: @progress-step-date__font-color;
+                }
+            }
+
+            &::after {
+                content: '';
+                height: 100%;
+                width: 2px;
+                background-color: @progress-step__active-color;
+                position: absolute;
+                top: 9.5px;
+                left: 9.5px;
+                z-index: 0;
+            }
+
+            &.active {
+                i {
+                    .lib-icon-font-symbol(
+                        @_icon-font-content: @icon-success,
+                        @_icon-font-position: before
+                    );
+
+                    &::before {
+                        background: @progress-step__active-color;
+                    }
+                }
+
+                ~ li {
+                    color: @progress-step__font-color;
+
+                    i {
+                        background-color: @color-white;
+                        border-color: @progress-step__color;
+
+                        &::before {
+                            content: counter(stepNum);
+                            background: transparent;
+                            .lib-font-size(0);
+                        }
+                    }
+                }
+
+                ~ li:after,
+                &::after {
+                    background-color: @progress-step__color;
+                }
+            }
+
+            &:last-child {
+                min-height: auto;
+                padding-bottom: 0;
+
+                &::after {
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
+//
+//  Desktop
+//  ---------------------------------------------
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    .modal-popup {
+        &.modal-track-order {
+            .modal-inner-wrap {
+                height: auto;
+            }
+        }
+    }
+}
+
+//
+//  Desktop
+//  ---------------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__m) {
+    .track-order-login {
+        .track-order-widget {
+            .lib-css(grid-template-columns, repeat(2, 1fr), @_prefix: 1);
+        }
+    }
+}
+
+& when (@media-target = 'desktop'), (@media-target = 'all') {
+    @media all and (min-width: 576px), print {
+        .order-progress-steps {
+            .lib-css(grid-template-columns, repeat(4, 1fr), @_prefix: 1);
+
+            > li {
+                .lib-vendor-prefix-flex-direction ();
+                .lib-vendor-box-align (center);
+                padding: 0 @indent__xxs;
+                text-align: center;
+                min-height: auto;
+
+                i {
+                    margin: 0 auto 4px;
+                }
+
+                p {
+                    .lib-vendor-box-align (center);
+                    margin-top: 16px;
+                }
+
+                &::after {
+                    height: 2px;
+                    width: 100%;
+                    left: 50%;
+                }
+            }
+        }
+    }
+}

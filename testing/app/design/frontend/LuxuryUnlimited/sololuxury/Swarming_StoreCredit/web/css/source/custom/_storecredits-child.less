@@ -1,0 +1,112 @@
+//
+//  Common
+//  ---------------------------------------------
+
+& when (@media-common = true) {
+    body.swarming_credits-index-index {
+        .columns {
+            div.empty-store-credit {
+                text-align: @storecredit-align-center;
+                display: block !important; // need to override parent style which can't be overridden by specificity
+
+                &:before {
+                    display: block;
+                    width: @storecredit-auto;
+                    height: @storecredit-auto;
+                    margin: 0 @storecredit-auto 22px;
+                }
+
+                .lib-icon-font(
+                    @_icon-font-content: 'Opps...!',
+                    @_icon-font-size: 50px,
+                    @_icon-font-line-height: normal
+                );
+            }
+        }
+
+        .page-wrapper {
+            .columns {
+                .main:has(.empty-store-credit) {
+                    p:not(.empty-store-credit p) {
+                        .lib-css(display, @storecredit-none);
+                    }
+                }
+            }
+        }
+    }
+
+    #order-track-help {
+        padding: @indent__base;
+        text-align: @storecredit-align-center;
+    }
+}
+
+//
+//  Mobile
+//  ---------------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__s) {
+    ._has-modal {
+        aside.modal-popup.modal-slide._inner-scroll._show {
+            .modal-inner-wrap {
+                background: @theme__primary--color-bg;
+            }
+        }
+    }
+
+    .modals-wrapper {
+        aside.modal-popup.modal-slide.special-requst-modal.modal-popup.help-modal {
+            .modal-inner-wrap {
+                .modal-header {
+                    background: @theme__primary--color-bg;
+                }
+            }
+        }
+    }
+}
+
+//
+//  Desktop
+//  ---------------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__m) {
+    body.swarming_credits-index-index {
+        .page-wrapper {
+            .columns {
+                .main {
+                    .store-credit-table-section {
+                        .credit-table-data {
+                            border: @storecredit-tableborder;
+
+                            thead {
+                                tr {
+                                    background: @theme__primary--color-bg;
+
+                                    th {
+                                        border-bottom: @storecredit-tableborder;
+                                    }
+                                }
+                            }
+
+                            tbody {
+                                tr {
+                                    td {
+                                        border-bottom: @storecredit-tableborder;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

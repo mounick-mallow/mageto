@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <!-- breadcrumbs -->
+        <referenceBlock name="breadcrumbs">
+            <action method="addCrumb">
+                <argument name="crumbName" xsi:type="string">Home</argument>
+                <argument name="crumbInfo" xsi:type="array">
+                    <item name="title" xsi:type="string" translate="true">Home</item>
+                    <item name="label" xsi:type="string" translate="true">Home</item>
+                    <item name="link" xsi:type="string">{{baseUrl}}</item>
+                </argument>
+            </action>
+            <action method="addCrumb">
+                <argument name="crumbName" xsi:type="string">My Account</argument>
+                <argument name="crumbInfo" xsi:type="array">
+                    <item name="title" xsi:type="string" translate="true">My Account</item>
+                    <item name="label" xsi:type="string" translate="true">My Account</item>
+                    <item name="link" xsi:type="string">{{baseUrl}}customer/account/</item>
+                </argument>
+            </action>
+            <action method="addCrumb">
+                <argument name="crumbName" xsi:type="string">Address</argument>
+                <argument name="crumbInfo" xsi:type="array">
+                    <item name="title" xsi:type="string" translate="true">Address</item>
+                    <item name="label" xsi:type="string" translate="true">Address</item>
+                </argument>
+            </action>
+        </referenceBlock>  
+
+         <referenceContainer name="content">
+            <referenceBlock name="address_book">
+                <arguments>
+                    <argument name="viewModel" xsi:type="object">LuxuryUnlimited\Customer\ViewModel\CustomerAddressCount</argument>
+                </arguments>
+            </referenceBlock>
+            <referenceBlock name="address_grid">
+                <arguments>
+                    <argument name="viewModel" xsi:type="object">LuxuryUnlimited\Customer\ViewModel\CustomerAddressCount</argument>
+                </arguments>
+            </referenceBlock>
+        </referenceContainer>  
+
+        <move element="breadcrumbs" destination="main.content" before="-" />
+        <move element="page.main.title" destination="main.content" before="columns"/>
+    </body>
+</page>

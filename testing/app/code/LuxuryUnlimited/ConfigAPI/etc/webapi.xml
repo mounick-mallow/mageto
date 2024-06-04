@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+    <route url="/V1/store-info/get-configuration" method="POST">
+        <service class="LuxuryUnlimited\ConfigAPI\Api\StoreConfigurationInterface" method="getConfiguration" />
+        <resources>
+            <resource ref="Magento_Backend::admin" />
+        </resources>
+        <data>
+            <parameter name="configs"/>
+            <parameter name="scopeId"/>
+            <parameter name="scopeType"/>
+        </data>
+    </route>
+    <route url="/V1/store-info/configuration" method="POST">
+        <service class="LuxuryUnlimited\ConfigAPI\Api\StoreConfigurationInterface" method="setConfiguration" />
+        <resources>
+            <resource ref="Magento_Backend::admin" />
+        </resources>
+        <data>
+            <parameter name="configs"/>
+            <parameter name="scopeId"/>
+            <parameter name="scopeType"/>
+        </data>
+    </route>
+    <route url="/V1/store-info/clean-config" method="POST">
+        <service class="LuxuryUnlimited\ConfigAPI\Api\StoreConfigurationInterface" method="cleanCoreConfigCache" />
+        <resources>
+            <resource ref="Magento_Backend::admin" />
+        </resources>
+    </route>
+</routes>

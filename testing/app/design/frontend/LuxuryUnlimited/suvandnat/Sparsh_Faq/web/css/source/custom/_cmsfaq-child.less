@@ -1,0 +1,62 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .sparsh-question-answer {
+        margin-top: @indent__xl;
+    }
+
+    .sparsh-faq-block {
+        .faq-question {
+            border-width: @faq-trigger-border-width;
+            border-style: solid;
+            border-color: @theme__secondary--color-100;
+            border-radius: @faq-trigger-border-radius;
+            letter-spacing: @faq-trigger__letter-spacing;
+            padding: @faq-question-padding;
+
+            &.ui-state-active {
+                padding: @faq-question-active-padding;
+                background: @theme__primary--color-500;
+
+                strong {
+                    color: @theme__territory--white;
+                }
+
+                &:after {
+                    background: @theme__territory--white;
+                }
+            }
+
+            &:after {
+                color: @theme__territory--color-500;
+                right: 20px;
+                border-radius: 50%;
+                background: @theme__secondary--color-50;
+                padding: 2px 3px;
+                top: calc(50% - 2px);
+            }
+
+            strong {
+                .lib-font-size(@font-size__xl);
+                .lib-line-height(@faq-trigger__line-height);
+                font-weight: @font-weight__bold;
+                color: @theme__territory--color-500;
+            }
+        }
+
+        .faq-answer {
+            .lib-font-size(@font-size__base);
+            .lib-line-height(@faq-answer__line-height);
+            font-weight: @font-weight__regular;
+            letter-spacing: @faq-trigger__letter-spacing;
+            color: @theme__territory--color-400;
+            padding: @faq-answer-padding;
+
+            a {
+                text-decoration: underline;
+            }
+        }
+    }
+}

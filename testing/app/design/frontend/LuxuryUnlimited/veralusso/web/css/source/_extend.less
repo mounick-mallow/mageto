@@ -1,0 +1,990 @@
+//
+//  Theme Base color
+//  ---------------------------------------------
+
+// Added Missing variable - need to review and fix
+@custom__color-blue-light: #cce7f6;
+@theme__secondary--color-50: #fafafa;
+
+// Primary Color
+@theme__primary--color-900: #1a1a1a;
+@theme__primary--color-800: #333333;
+@theme__primary--color-700: #4d4d4d;
+@theme__primary--color-600: #666666;
+@theme__primary--color-500: #808080;
+@theme__primary--color-400: #999999;
+@theme__primary--color-300: #b3b3b3;
+@theme__primary--color-200: #cccccc;
+@theme__primary--color-100: #e6e6e6;
+
+// Secondary Color
+@theme__secondary--color-900: #c4c3c3;
+@theme__secondary--color-800: #cac9c9;
+@theme__secondary--color-700: #d1d0d0;
+@theme__secondary--color-600: #d7d7d7;
+@theme__secondary--color-500: #dedede;
+@theme__secondary--color-400: #e5e4e4;
+@theme__secondary--color-300: #ebebeb;
+@theme__secondary--color-200: #f2f2f2;
+@theme__secondary--color-100: #f8f8f8;
+
+// Custom Color
+@custom__color-red: #dc2626;
+@custom__color-red-lighter: #bd1924;
+@custom__color-yellow: #eab308;
+@custom__color-yellow-light: #fff7de;
+@custom__color-white: #ffffff;
+@custom__color-black: #000000;
+@custom__color-gray1: #555555;
+@custom__color-gray2: #bcbcbc;
+@custom__color-gray4: #f5f5f5;
+@custom__color-gray7: #838383;
+@custom__color-gray9: #9f9f9f;
+@custom__color-gray11: #888888;
+@custom__color-gray12: #242424;
+@custom__color-gray13: #7e7d82;
+@custom__color-gray17: #bdbcbc;
+
+@custom__color-google: #1a73e8;
+@custom__color-facebook: #3b5998;
+@custom__color-twitter: #11b1d1;
+
+//
+//  Extend Variables
+//  _____________________________________________
+
+// font-family variables
+@font-family-name__base: 'Montserrat';
+@font-family__base: @font-family-name__base, @font-family__sans-serif;
+
+@custom-primary-font-family: @font-family__base;
+
+//  Colors nesting
+@text-color: @color-black;
+@theme-color: @text-color;
+@body_background-color: @color-white;
+@page__background-color: @body_background-color;
+
+@theme__primary--color: @color-black;
+@theme__secondary--color: @theme__primary--color-800;
+
+@theme__color__primary: @theme__primary--color;
+@theme__color__primary-alt: @color-blue2;
+@theme__color__secondary: @theme__secondary--color;
+
+@panel__background-color: @color-white;
+@border-color__base: @custom__color-black;
+
+@sidebar__background-color: @color-white;
+
+@copyright__background-color: @color-white;
+
+@mobile-cart-padding: 15px;
+
+//  layout
+@layout-column__sidebar-width: 3;
+@layout-column-checkout__width-left: 4;
+
+@global-top-margin: 40px;
+@global-bottom-margin: 100px;
+
+//  Typography
+//  ---------------------------------------------
+
+@base-font-family: @font-style__base;
+@base-font-size: 14px;
+@font-size__base: @base-font-size;
+@line-height__base: 1.428571429;
+@base-font-color: @custom__color-gray1;
+
+@enable_border_radius: true;
+
+@primary__color: @base-font-color;
+
+@link__color: @theme-color;
+@link__visited__color: @theme-color;
+@link__hover__color: @theme-color;
+@link__active__color: @theme-color;
+
+@enable_border_radius: true;
+
+//
+//  Headings
+//  ---------------------------------------------
+
+@heading__font-weight__base: @font-weight__heavier;
+
+@h1__font-weight: @heading__font-weight__base;
+@h1__font-size: 36px;
+@h1__font-size-desktop: @h1__font-size;
+
+@h2__font-size: 30px;
+@h2__font-weight: @heading__font-weight__base;
+
+@h3__font-size: 24px;
+@h3__font-weight: @heading__font-weight__base;
+
+@h4__font-size: 20px;
+@h4__font-weight: @heading__font-weight__base;
+
+@page-title__font-size: 32px;
+
+//
+//  Font Sizes
+//  _____________________________________________
+@font-size__xl: 20px;
+@font-size__l: 16px;
+@font-size__s: 14px;
+@font-size__xs: 12px;
+@font-size__base: 18px;
+
+//
+//  Indents
+//  ---------------------------------------------
+@indent__xl: 40px;
+@indent__l: 30px;
+@indent__m: 25px;
+@indent__s: 16px;
+@indent__xs: 10px;
+@indent__xxs: 5px;
+
+//
+//  Badge
+//  _____________________________________________
+@badge-font-size: 12px;
+@badge-font-weight: @font-weight__bold;
+
+// Active status
+@badge-active-background-color: @theme__primary--color-100;
+@badge-active-color: @theme__primary--color;
+
+// Expire status
+@badge-expire-background-color: @custom__color-gray4;
+@badge-expire-color: @theme__secondary--color-600;
+
+//
+//  Tables
+//  ---------------------------------------------
+@table-cell__padding-vertical: 11px;
+@table-cell-stripped__background-color: @table-cell__hover__background-color;
+@table-responsive-th__background-color: @table-cell-stripped__background-color;
+@table-responsive-cell__padding: @indent__xs @indent__s;
+
+@table__border-color: @theme__secondary--color-100;
+@table-head__background-color: @theme__secondary--color-500;
+
+//  Tabs
+@tab-control__font-weight: @font-weight__regular;
+@tab-control__height: @indent__base*2;
+@tab-control__margin-right: -1px;
+@tab-control__padding-top: 1px;
+@tab-control__padding-right: 35px;
+
+//  Tabs content
+@tab-content__padding-top: 35px;
+@tab-content__padding-right: @tab-control__padding-right;
+
+//
+//  Buttons
+//  ---------------------------------------------
+@button__shadow: false;
+@button__border-radius: 12px;
+@button__active__gradient-color-start: false;
+@button__active__gradient-color-end: false;
+@button__font-size: 14px;
+@button__font-weight: @font-weight__semibold;
+@button__line-height: 22px;
+@button__padding: 7px 14px;
+@button__border: 2px solid @theme__primary--color;
+@button__margin: 0 15px;
+@button__width: auto;
+@button__float: none;
+
+//  Default = secondary button
+@button__background: transparent;
+@button__border: 1px solid @theme__primary--color;
+@button__color: @theme__primary--color;
+
+@button__hover__border: 1px solid @theme__primary--color;
+@button__hover__background: @custom__color-white;
+@button__hover__color: @theme__primary--color;
+
+@button__active__background: @button__hover__background;
+
+//  Primary button
+@button-primary__background: @theme__primary--color;
+@button-primary__color: @custom__color-white;
+
+@button-primary__font-weight: @button__font-weight;
+@button-primary__line-height: @button__line-height;
+@button-primary__padding: @button__padding;
+@button-primary__border: @button__border;
+
+@button-primary__hover__border: @button__hover__border;
+@button-primary__hover__background: @custom__color-white;
+@button-primary__hover__color: @theme__primary--color;
+
+@button-primary__active__color: @theme__primary--color;
+@button-primary__active__border: @button__border;
+@button-primary__active__background: @custom__color-white;
+
+//
+//  Pager
+//  ---------------------------------------------
+@pager-item__padding: 11px;
+@pager__background: @custom__color-white;
+
+//  Pager link.action
+@pager-action__background: @custom__color-black;
+@pager-action__color: @custom__color-white;
+@pager-action__hover__color: @custom__color-white;
+
+// Navigation
+@navigation__background: transparent;
+
+// Toolbar
+@toolbar-element-background: @custom__color-white;
+@toolbar-mode-icon-font-size: 12px;
+
+//  Button with icon
+@button-icon__line-height: @icon-font__line-height;
+
+//
+//  Rating
+//  ---------------------------------------------
+
+@rating-icon__font-size: 16px;
+@rating-icon__letter-spacing: 2px;
+
+//
+//  Tables
+//  ---------------------------------------------
+
+@table-cell__padding-vertical: 11px;
+@table-cell-stripped__background-color: @table-cell__hover__background-color;
+@table-responsive-th__background-color: @table-cell-stripped__background-color;
+@table-responsive-cell__padding: @indent__xs @indent__s;
+
+@table__border-color: @custom__color-gray4;
+@table-head__background-color: @custom__color-white;
+
+//  Tabs
+@tab-control__font-weight: @font-weight__regular;
+@tab-control__height: @indent__base*2;
+@tab-control__margin-right: -1px;
+@tab-control__padding-top: 1px;
+@tab-control__padding-right: 35px;
+
+//  Tabs content
+@tab-content__padding-top: 35px;
+@tab-content__padding-right: @tab-control__padding-right;
+
+//
+//  Accordion
+//  ---------------------------------------------
+
+@accordion-control__font-family: false;
+@accordion-control__font-size: 24px;
+@accordion-control__font-style: false;
+@accordion-control__font-weight: @font-weight__heavier;
+@accordion-control__border-right: false;
+@accordion-control__border-bottom: false;
+@accordion-control__border-left: false;
+@accordion-control__background-color: false;
+@accordion-control__color: @theme__secondary--color;
+@accordion-control__hover__background-color: false;
+@accordion-control__hover__color: @accordion-control__color;
+@accordion-control__active__background-color: false;
+@accordion-control__active__color: @theme__primary--color;
+@accordion-control__margin-bottom: 0;
+@accordion-control__padding-right: @indent__l;
+@accordion-control__padding-left: @indent__l;
+@accordion-content__border: false;
+@accordion-content__margin: 0;
+@accordion-content__padding: @indent__l;
+
+@accordion-custom-box-border-width: 1px;
+@accordion-custom-box-border-color: @theme__primary--color-200;
+@accordion-custom-box-border-radius: 20px;
+@accordion-custom-box-padding: @indent__s @indent__l;
+@accordion-custom-box-margin: @indent__base;
+@accordion-custom-arrow-color: @custom__color-gray1;
+@accordion-custom-head-active-color: @theme__primary--color;
+
+//
+//  Icons
+//  ---------------------------------------------
+
+@icon-wishlist-empty: false;
+@icon-comment-reflected: false;
+@icon-compare-empty: false;
+@icon-arrow-up-thin: false;
+@icon-arrow-right-thin: false;
+@icon-arrow-left-thin: false;
+@icon-arrow-down-thin: false;
+@icon-wishlist-empty: '\e601';
+@icon-report: false;
+
+//
+//  Messages
+//  ---------------------------------------------
+
+@message__padding: 12px @indent__base 12px @indent__m;
+@message__line-height: false;
+@message-icon__font-size: 24px;
+@message-icon__inner-padding-left: 45px;
+@message-icon__top: 22px;
+@message-error-icon: @icon-error;
+@message-success-icon: @icon-success;
+
+//
+//  Loaders
+//  ---------------------------------------------
+
+@loader-overlay__background-color: fade(@custom__color-white, 70%);
+
+//
+//  Dropdowns
+//  ---------------------------------------------
+
+@dropdown-toggle-icon__content: @icon-down;
+@dropdown-toggle-icon__active__content: @icon-up;
+@dropdown-toggle-icon__font-size: 12px;
+
+//  Split dropdown
+@dropdown-split-actions__padding: 0 @indent__xs;
+@dropdown-split-toggle__actions__padding: false;
+
+//  Actions-toolbar
+@actions-toolbar-actions__position: left;
+@actions-toolbar-actions-primary__margin: 0 15px 0 0;
+
+//
+//  Popups
+//  ---------------------------------------------
+
+@popup__border: 1px solid @theme__secondary--color-400;
+@popup-title-headings__level: h2;
+@cookie-popup__background-color: fade(@custom__color-black, 40%);
+
+//  Popup icons
+@popup-icon-font__size: 16px;
+@popup-icon-font__line-height: 16px;
+@popup-icon-font__color: @text-color;
+@popup-icon-font__color-hover: darken(@popup-icon-font__color, 10%);
+@popup-icon-font__color-active: @popup-icon-font__color-hover;
+
+//  Window overlay
+@overlay__background: @text-color;
+@overlay__opacity: 0.7;
+@overlay__opacity-old: 70;
+
+@gallery-thumb-border-color-active: @active__color;
+
+//  Modal popup
+@modal-action-close__font-size: @font-size__base;
+
+// Breadcrumbs
+// ___________________________
+
+@breadcrumbs-color: @theme__primary--color-400;
+@breadcrumbs-arrow-color: @theme__primary--color-400;
+@breadcrumbs-txt-color: @custom__color-black;
+@breadcrumbs-current__color: @custom__color-black;
+
+// Home pages
+// ________________________
+
+@primary-title-font: @custom-primary-font-family;
+@header-font-size: 16px;
+
+@top-heading-font-size: 20px;
+@top-heading-font-weight: @font-weight__heavier;
+
+@banner-content-font-size: 18px;
+@banner-content-font-weight: @font-weight__regular;
+
+@base-link-font-size: @sidebar-header-font-size;
+@base-link-font-weight: @font-weight__semibold;
+
+// Catalog pages
+// ________________________
+
+@products-name-color: @theme__primary--color;
+@products-price-color: @theme__primary--color;
+
+@products-name-font: @custom-primary-font-family;
+@products-name-font-size: 15px;
+@products-price-font: @custom-primary-font-family;
+@products-price-font-size: 14px;
+
+// Product page
+// ___________________________
+
+@product-name-color: @theme__primary--color;
+@product-name-font: @custom-primary-font-family;
+@product-name-font-size: 17px;
+
+@product-price-color: @theme__primary--color;
+@product-price-font: @custom-primary-font-family;
+@product-price-font-size: 16px;
+
+@product-btn-bg-color: @theme__primary--color;
+@product-btn-color: @custom__color-white;
+@product-btn-bg-color-hover: @custom__color-white;
+@product-btn-color-hover: @custom__color-white;
+@product-btn-color-hover-2: @theme__primary--color;
+
+@product-descr-color: @custom__color-black;
+@product-descr-font-size: 16px;
+
+@product-details-color: @custom__color-black;
+@product-detail-font-size: 14px;
+
+// Sidebar Pages with products
+// _____________________________
+
+@sidebar-header-color: @theme__primary--color;
+@sidebar-list-color: @custom__color-black;
+@sidebar-list-count-color: @custom__color-black;
+@sidebar-link-color: @custom__color-black;
+@sidebar-header-font: @custom-primary-font-family;
+@sidebar-header-font-size: 14px;
+@sidebar-price-slider-bg: @custom__color-black;
+@sidebar-price-handle-bg: @custom__color-white;
+@sidebar-price-handle-border: @custom__color-black;
+
+//Main Menu
+// ______________________________
+
+@menu-bg-color: @custom__color-white;
+@menu-txt-color: @theme__primary--color;
+@menu-font-size: 13px;
+@menu-font: @custom-primary-font-family;
+
+//Dropdown Sub-Menu
+// _________________________
+@dropdown-menu-bg: @custom__color-white;
+@dropdown-menu-color: @theme__primary--color;
+@dropdown-menu-font-size: 14px;
+@dropdown-menu-font: @custom-primary-font-family;
+
+//Primary Buttons
+// ________________________________________
+
+// Product
+@product-view-product-info-price: @theme-color;
+@product-view-product-info-old-price: @custom__color-black;
+@product-info-page-title: @custom__color-black;
+@product-reviews-summary-links: @custom__color-black;
+@tab-control__border-color: @custom__color-black;
+
+//
+//  Secure shopping - Cms Page
+//  _____________________________________________
+
+@secure-content__margin: 80px 0;
+@secure-content-mobile__margin: @indent__xl 0;
+@secure-icon-content__max-width: 350px;
+@secure-img__height: 415px;
+@secure-img__width: 550px;
+
+//  404 - CMS PAGE
+//  _____________________________________________
+
+@cms-404-content__max-width: 600px;
+@cms-404-title__font-size: 64;
+@cms-404-title-mobile__font-size: 36;
+@cms-404-text__line-height: 24;
+
+//
+//  FAQ - CMS PAGE
+//  _____________________________________________
+
+@faq-desc-title-color: @theme__primary--color;
+@faq-trigger-border-width: 1px;
+@faq-trigger-border-radius: 20px;
+@faq-trigger__line-height: 24;
+@faq-trigger-open-padding: @indent__l @indent__l @indent__base @indent__l;
+@faq-trigger-close-padding: 16px 30px;
+@faq-trigger-margin: 0 0 20px;
+@faq-answer__line-height: 21;
+@faq-answer-padding: 0 @indent__l @indent__l @indent__l;
+
+//
+//  HOPE - CMS PAGE
+//  _____________________________________________
+
+@hope-text__line-height: 24;
+
+//
+//  Advanced Search - CMS PAGE
+//  _____________________________________________
+
+@advanced-subtitle__line-height: 24;
+@advanced-search__padding: 14px 54px;
+@advanced-input__max-width: 295px;
+@advanced-form__max-width: 616px;
+
+//
+//  Layout variables
+//  _____________________________________________
+
+//  Widths
+@layout__width-xs-indent: 20px;
+@layout__width-s-indent: 30px;
+@layout-indent__width: 40px;
+
+//
+//  Header
+//  _____________________________________________
+
+@header__margin: @indent__s 0;
+@header-panel__background-color: @color-white;
+@header-panel__text-color: @theme__color__primary;
+@header_wrapper-font-size: 14px;
+@header_wrapper-font-line-hight: 21px;
+@header_wrapper-gap-bottom: 24px;
+
+@navigation-desktop__margin: 0 0 @global-top-margin;
+
+//  Nav toggle
+@nav_toggle_icon-color: @theme__color__primary;
+
+// Switcher
+@switcher_gap: 15px;
+@switcher_trigger_font-size: @header_wrapper-font-size;
+@switcher_trigger_font-line-hight: @header_wrapper-font-line-hight;
+@switcher_trigger_font-weight: @font-weight__semibold;
+@switcher_trigger_font-color: @header-panel__text-color;
+
+//
+//  Navigation
+//  ---------------------------------------------
+@navigation-level0-item__font-size: 16px;
+@navigation-level0-item__font-weight: @font-weight__heavier;
+@navigation-level0-item__line-height: 24px;
+@navigation-level0-item__text-transform: uppercase;
+
+@navigation-level0-item__color: @theme__color__primary;
+@navigation-level0-item__active__color: @link__hover__color;
+@navigation-level0-item__hover__color: @link__hover__color;
+
+@navigation-level0-item__border: '';
+@navigation-level0-item__active__border-color: '';
+@navigation-level0-item__active__border-style: '';
+@navigation-level0-item__active__border-width: '';
+
+//  Desktop navigation
+@navigation-desktop__font-size: 16px;
+@navigation-desktop__font-weight: @font-weight__heavier;
+
+@navigation-desktop-level0-item__line-height: 24px;
+@navigation-desktop-level0-item__color: @theme__color__primary;
+@navigation-desktop-level0-item__hover__color: @link__hover__color;
+@navigation-desktop-level0-item__active__color: @link__hover__color;
+
+@navigation-desktop-level0-item__padding: 15px 16px;
+@navigation-desktop-level0-item__margin: 0 @indent__s 0 0;
+
+@navigation-desktop-level0-item__border: '';
+@navigation-desktop-level0-item__hover__border: '';
+@navigation-desktop-level0-item__active__border-color: '';
+@navigation-desktop-level0-item__active__border-style: '';
+@navigation-desktop-level0-item__active__border-width: '';
+
+//
+//  Minicart
+//  ---------------------------------------------
+@minicart__border-color: @theme__secondary--color-100;
+@minicart__text-color: @base-font-color;
+
+@minicart-qty__height: @indent__s;
+@minicart__qty_color: @color-white;
+
+@mobile-cart-padding: 15px;
+
+//Mobile Menu Tabs
+//  ---------------------------------------------
+@mobile-menu-tab-bg-color: @custom__color-white;
+@mobile-menu-tab-txt-color: @custom__color-black;
+@mobile-menu-tab-font-size: 24px;
+@mobile-menu-tab-line-height: 36px;
+@mobile-menu-tab-font-weight: @font-weight__semibold;
+
+@mobile-menu-txt-color: @custom__color-black;
+@mobile-menu-font-size: 32px;
+@mobile-menu-line-height: 44px;
+@mobile-menu-font-weight: @font-weight__semibold;
+@mobile-menu-font-family: @custom-primary-font-family;
+@mobile-menu-text-transform: capitalize;
+@mobile-menu-border: none;
+@mobile-menu-txt-color-hover: @custom__color-black;
+@mobile-menu-txt-color-active: @custom__color-black;
+
+@mobile-menu-small-device-font-size: 30px;
+@mobile-menu-small-device-line-height: 36px;
+
+@mobile-submenu-txt-color: @theme__primary--color-600;
+@mobile-submenu-font-size: 18px;
+@mobile-submenu-line-height: @indent__m;
+@mobile-submenu-font-family: @custom-primary-font-family;
+@mobile-submenu-font-weight: @font-weight__heavier;
+@mobile-submenu-active-text-color: @custom__color-black;
+@mobile-submenu-hover-text-color: @custom__color-black;
+
+@mobile-submenu-subchild-txt-color: @custom__color-black;
+@mobile-submenu-subchild-font-size: 14px;
+@mobile-submenu-subchild-line-height: 21px;
+@mobile-submenu-subchild-font-family: @custom-primary-font-family;
+@mobile-submenu-subchild-font-weight: @font-weight__regular;
+@mobile-submenu-subchild-hover-text-color: @custom__color-black;
+
+//Footer
+// ________________________
+
+@footer-bg-color: @custom__color-white;
+@footer-txt-color: @custom__color-black;
+@footer-border-width: 1px 0;
+@footer-border-style: solid;
+@footer-border-color: @custom__color-black;
+@footer-border-top: 1px solid @custom__color-black;
+@footer-primary-txt-color: @custom__color-black;
+@footer-primary-font: @custom-primary-font-family;
+@footer-primary-font-size: 14px;
+
+//Footer links
+@footer-link-color: @custom__color-black;
+@footer-link-color-hover: @custom__color-black;
+
+// Newsletter
+
+@footer-newsletter-text-color: @custom__color-gray17;
+@footer-newsletter-button-bg: @custom__color-black;
+
+// copyright
+
+@footer-copyright-text-color: @custom__color-black;
+
+//
+//  Form variables
+//  _____________________________________________
+@focus__box-shadow: 0 0 2px 1px @focus__color;
+
+@form-element-input__background: transparent;
+@form-element-input__border-color: @theme__primary--color-200;
+@form-element-input__border: 1px solid @form-element-input__border-color;
+@form-element-input__border-radius: 10px;
+@form-element-input__height: 52px;
+@form-element-input__width: 100%;
+@form-element-input__margin: false;
+@form-element-input__padding: 14px 16px;
+@form-element-input__background-clip: border-box; // [border-box|content-box|padding-box]
+@form-element-input__font-size: 16px;
+@form-element-input__color: @border-color__base;
+@form-element-input__font-family: @font-family__base;
+@form-element-input__font-weight: @font-weight__regular;
+@form-element-input__font-style: @font-style__base;
+@form-element-input__line-height: 24px;
+
+//  Placeholder
+@form-element-input-placeholder__color: @custom__color-gray17;
+
+//  Focus state
+@form-element-input__focus__color: @form-element-input__color;
+@form-element-input__focus__background: @form-element-input__background;
+@form-element-input__focus__border: 1px solid @form-element-input__border;
+
+//  Form field label
+@form-field-label__color: @border-color__base;
+@form-field-label__font-size: 13px;
+@form-field-label__font-family: @font-family__base;
+@form-field-label__font-weight: @font-weight__semibold;
+@form-field-label__font-style: false;
+@form-field-label__line-height: 20px;
+@form-field-type-label-block__margin: 0 0 8px;
+
+@form-field-type-label-inline__padding-top: false;
+@form-field-type-label-inline__padding: 0 0 @indent__xxs 8px;
+@form-field-type-label-inline__align: left;
+
+@form-field-type-label-block__margin: 0 0 4px;
+@form-field-type-label-block__padding: 0 0;
+
+@form-fieldset-prefix-flex-gap: 18px 16px;
+@form-fields-prefix-flex-gap: 18px 16px;
+
+//
+//  Address Box Empty
+//  ---------------------------------------------
+
+@address-empty-icon__font-size: 84px;
+@address-empty-icon__font-color: @custom__color-black;
+
+@address-empty-title__font-size: 48;
+@address-empty-title__line-height: 67;
+@address-empty-title__font-weight: @font-weight__semibold;
+@address-empty-title__font-color: @custom__color-black;
+@address-empty-mobile-title__font-size: 32;
+@address-empty-mobile-title__line-height: 44;
+
+@address-empty-content__font-size: 16;
+@address-empty-content__line-height: 24;
+@address-empty-content__font-weight: @font-weight__regular;
+@address-empty-content__font-color: @custom__color-gray1;
+
+//
+//  Address Box
+//  ---------------------------------------------
+
+//  Address Block Title
+@address-block-title__font-size: 24;
+@address-block-title__line-height: 30;
+@address-block-title__font-weight: @font-weight__heavier;
+@address-block-title__font-color: @custom__color-black;
+
+@address-block-action__font-size: 16;
+@address-block-action__line-height: 19;
+@address-block-action__font-weight: @font-weight__heavier;
+@address-block-action__font-color: @custom__color-black;
+
+//  Address Box
+@address-box__border-color: @theme__secondary--color-200;
+@address-box__padding: 20px;
+
+@address-box-title__font-size: 14;
+@address-box-title__line-height: 16.8;
+@address-box-title__font-weight: @font-weight__semibold;
+@address-box-title__font-color: @custom__color-black;
+@address-box-title__input-radio-color: @custom__color-black;
+
+@address-box-content__font-size: 16;
+@address-box-content__line-height: 24;
+@address-box-content__font-weight: @font-weight__heavier;
+@address-box-content__font-color: @custom__color-gray1;
+
+//  Address Box Action
+@address-box-action__font-size: 14;
+@address-box-content__line-height: 21;
+@address-box-action__font-weight: @font-weight__heavier;
+@address-box-action__font-color: @custom__color-black;
+
+//  Address Choice
+@address-choice-title__font-size: 18;
+@address-choice-title__line-height: 25;
+@address-choice-title__font-color: @custom__color-black;
+@address-choice-title__font-weight: @font-weight__semibold;
+@address-choice-title__input-check-color: @custom__color-black;
+@address-choice-title__input-border-radius: 2px;
+
+//
+//  Address List
+//  ---------------------------------------------
+@address-list-title__font-size: 24;
+@address-choice-title__line-height: 16;
+@address-list-title__line-height: 30;
+@address-list-title__font-weight: @font-weight__heavier;
+@address-list-title__font-color: @custom__color-black;
+
+// Table
+@address-table__border-color: @theme__primary--color-600;
+@address-table__font-size: 14px;
+@address-table__font-color: @color-gray-darken3;
+@address-table__head-background: transparent;
+@address-table__head-font-color: @color-gray-light3;
+@address-table-action__icon-font-color: @custom__color-black;
+@address-table-action__icon-font-size: @icomoon-font-size;
+
+//
+//  Contact Us
+//  ---------------------------------------------
+@contact-note-width: 420px;
+@contact-note-space-bottom: 46px;
+
+@contact-fieldset-prefix-flex-gap: 16px 24px;
+@contact-fields-prefix-flex-gap: 16px 24px;
+
+@contact-action-space-top: 32px;
+@contact-action-button-width: 170px;
+@contact-left-value: left;
+@contact-align-subtitle: @contact-left-value;
+@contact-float-value: @contact-left-value;
+@contact-cont-static-margin-bottom: 1.6rem;
+
+//  Track Order
+//  ---------------------------------------------
+
+// Order Login
+@track-order-login__element-font-size: 14px;
+@track-order-login__element-line-height: 21px;
+@track-order-login__element-font-weight: @font-weight__heavier;
+@track-order-login__element-font-color: @custom__color-gray1;
+@track-order-login__element-gap: 49px 0;
+
+@track-order-login__element-border-radius: 0;
+@track-order-login__element-padding: 0 0;
+
+@track-order-login__element-title-font-size: 20px;
+@track-order-login__element-title-line-height: 30px;
+@track-order-login__element-title-font-weight: @font-weight__heavier;
+@track-order-login__element-title-font-color: @custom__color-black;
+
+@track-order-login__note-font-size: 14px;
+@track-order-login__note-line-height: 21px;
+@track-order-login__note-font-weight: @font-weight__regular;
+@track-order-login__note-font-color: @track-order-login__element-font-color;
+
+@track-order-login__action-secondary-font-size: @track-order-login__element-font-size;
+@track-order-login__action-secondary-line-height: @track-order-login__element-line-height;
+@track-order-login__action-secondary-font-weight: @track-order-login__element-font-weight;
+@track-order-login__action-secondary-space-bottom: 16px;
+
+// Order Status Popup
+@track-order-status__active-stepbox-background: @custom__color-black;
+@track-order-status__active-stepbox-color: @custom__color-white;
+@track-order-status__stepbox-background: @custom__color-white;
+@track-order-status__border-color: @custom__color-black;
+@track-order-status__progress-bar-background: @custom__color-black;
+
+//
+//   Collapsible Nav
+//  ---------------------------------------------
+@collapsible-nav-item-border-color: @theme__secondary--color-200;
+@collapsible-nav-background: @custom__color-white;
+@collapsible-nav-hover-background: @custom__color-black;
+@collapsible-nav-border-radius: 10px;
+@collapsible-nav-color: @custom__color-gray1;
+
+//
+//  Modals Popup
+//  ---------------------------------------------
+@modal-popup-box-shadow: none;
+@modal-popup-border-width: 800px;
+@modal-popup-border-radius: 10px;
+@modal-popup-background-color: @custom__color-white;
+@modal-popup-header-border-bottom: 1px solid
+    fade(@theme__secondary--color-200, 100%);
+@modal-popup-header-padding: 24px;
+@modal-popup-header-font-size: 20px;
+@modal-popup-header-line-height: 28px;
+@modal-popup-header-font-weight: @font-weight__semibold;
+@modal-popup-header-color: @custom__color-black;
+@modal-popup-close-color: @custom__color-black;
+@modal-popup-content-padding: @indent__l;
+@modal-popup-footer-padding: 10px 30px 32px;
+@modal-popup-mobile-background-color: @modal-popup-background-color;
+
+//
+//  Modal Widget
+//  ---------------------------------------------
+@modal__border-color: fade(@theme__secondary--color-200, 100%);
+
+// Track Order
+@modal-track-order__font-size: 14px;
+@modal-track-order__line-height: 21px;
+@modal-track-order__font-weight: @font-weight__heavier;
+@modal-track-order__font-color: @custom__color-gray1;
+@modal-track-order__font-color2: @custom__color-black;
+@modal-track-order__progress-padding: @indent__l 0;
+
+@modal-track-order__help-font-size: 14px;
+@modal-track-order__help-line-height: 21px;
+@modal-track-order__help-font-weight: @font-weight__heavier;
+@modal-track-order__help-margin: @indent__l 0 0;
+
+//
+//  Order Progress Step
+//  ---------------------------------------------
+@progress-step__color: @custom__color-gray17;
+@progress-step__font-size: 14px;
+@progress-step__line-height: 21px;
+@progress-step__font-weight: @font-weight__heavier;
+@progress-step__font-color: @custom__color-black;
+@progress-step-box__border-radius: 4px;
+
+@progress-step__active-color: @custom__color-black;
+@progress-step__active-font-color: @custom__color-black;
+@progress-step__active-icon-font-size: 16px;
+@progress-step__active-icon-font-color: @custom__color-white;
+@progress-step-box__active-border-radius: 2px;
+@progress-step__active-background-color: @progress-step__active-color;
+
+@progress-step-date__font-size: 12px;
+@progress-step-date__line-height: 17px;
+@progress-step-date__font-weight: @font-weight__regular;
+@progress-step-date__font-color: @custom__color-gray1;
+
+//
+//  Price Match Popup
+//  ---------------------------------------------
+@price-match-popup__header-color: @color-black;
+@price-match-popup__content-color: @custom__color-gray17;
+@price-match-popup__label-color: @color-black;
+@price-match-popup__content-backgournd-color: @color-white;
+@price-match-popup__title-backgournd-color: @color-white;
+@price-match-popup__title-color: @color-black;
+@price-match-popup__border-color: @theme__primary--color-200;
+
+//
+//  My Coupon List - My Account
+//  ---------------------------------------------
+@my-coupon-table-border-width: 1px;
+@my-coupon-table-border-color: @theme__primary--color-200;
+@my-coupon-table-border-radius: 10px;
+
+@my-coupon-table-th-font-size: 14;
+@my-coupon-table-th-font-weight: @font-weight__semibold;
+@my-coupon-table-th-text-transform: capitalize;
+@my-coupon-table-th-color: @custom__color-black;
+@my-coupon-table-th-background-color: @custom__color-white;
+@my-coupon-table-btn-border-radius: 8px;
+
+@my-coupon-table-td-font-size: 14;
+@my-coupon-table-td-font-weight: @font-weight__regular;
+@my-coupon-table-td-color: @custom__color-black;
+@my-coupon-table-td-background-color: @custom__color-white;
+@my-coupon-table-td-text-transform: capitalize;
+@my-coupon-button-border-width: 2px;
+
+@my-coupon-active-font-size: 12;
+@my-coupon-active-background: transparent;
+@my-coupon-active-color: @my-coupon-table-th-color;
+@my-coupon-active-font-weight: 600;
+@my-coupon-border-table: @my-coupon-table-border-width solid
+    @my-coupon-table-border-color;
+
+//
+//  qty color
+//
+@qty-color: @custom__color-black;
+
+// Order Success Page
+@success-my-order-table-border-top: 1px solid @theme__primary--color-200;
+@success-my-order-table-border-bottom: 1px solid @theme__primary--color-200;
+@success-my-order-table-thead-border-bottom: 1px solid
+    @theme__primary--color-200;
+@success-box-address-border: 1px solid @theme__primary--color-200;
+@success-order-status-popup-background: @custom__color-black;
+@success-order-status-popup-color: @custom-additional-color;
+
+// Store Credit
+@storecredit-tableborder: 1px solid @theme__primary--color-200;
+
+// Order Return
+@order-return-list-align: left;
+
+//
+//  Custom fallback
+//  _____________________________________________
+@import 'custom/_common.less';
+@import 'custom/_header-child.less';
+@import 'custom/_forms.less';
+@import 'custom/_forms-child.less';
+@import 'custom/_navigation-child.less';
+@import 'custom/_footer-child.less';
+@import 'custom/_home.less';
+@import 'custom/_home-child.less';
+@import 'custom/_carousel-child.less';
+@import 'custom/_accordion-child.less';
+
+@import '_extend-child.less';

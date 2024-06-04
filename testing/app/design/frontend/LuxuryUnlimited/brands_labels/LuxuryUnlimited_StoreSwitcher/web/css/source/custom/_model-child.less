@@ -1,0 +1,94 @@
+//
+//  Desktop
+//
+& when (@media-common =true) {
+    .custom-window-block {
+        .modal-inner-wrap {
+            max-width: 539px;
+
+            .modal-content {
+                padding: 2.4rem;
+            }
+
+            .modal-header .modal-title {
+                text-align: left;
+                padding-top: 3px;
+            }
+
+            .buttons-container {
+                gap: 2rem;
+            }
+
+            .fieldset {
+                margin-bottom: @indent__xs;
+
+                > .field {
+                    .label {
+                        display: block;
+                        padding: 0;
+                        margin: 0 0 7px;
+                        text-align: left;
+                    }
+                }
+            }
+
+            .action {
+                .lib-font-size(16);
+                margin: 0;
+
+                &.primary {
+                    width: 120px;
+                }
+
+                &#cancel {
+                    background: @color-white;
+                    color: @theme__primary--color;
+                }
+            }
+
+            .info {
+                color: @color-black;
+                padding-bottom: 2.4rem;
+
+                a {
+                    .lib-font-size(14);
+                    text-decoration: underline;
+                    font-weight: @font-weight__semibold;
+                    margin-top: @indent__m;
+                    display: inline-block;
+                }
+            }
+
+            label {
+                color: @color-black;
+                .lib-font-size(14);
+                font-weight: @font-weight__semibold;
+            }
+
+            p {
+                color: @color-black;
+            }
+
+            .info:first-child {
+                .lib-visually-hidden();
+            }
+        }
+    }
+
+    .modal-popup.custom-window-block._inner-scroll div#modal-content-0 {
+        padding: 24px;
+    }
+}
+
+//
+//  Mobile
+//
+@media only screen and (max-width: (@screen__m - 1)) {
+    .modals-wrapper
+        aside.modal-popup.modal-slide._inner-scroll._show.custom-window-block
+        .modal-inner-wrap {
+        min-width: unset;
+        max-width: 90%;
+        width: unset;
+    }
+}

@@ -1,0 +1,65 @@
+<?php
+    $product_view = $this->getConfig('porto_settings/product');
+    $block = $this->getLayout()->createBlock('Magento\Cms\Block\Block');
+    // if($block) {
+    //     $block->setBlockId($product_view['main_custom_block2']);
+    // }
+    if($block && isset($product_view['main_custom_block2']) && $product_view['main_custom_block2'] !=''){ ?>
+        <div class="custom-block"><?= $block->toHtml() ?></div>
+   <?php }
+?>
+<?php
+    $ddHelper = $this->helper("\Dynamic\HomepageApi\Helper\Data");
+    $dynamicHelper = $this->helper('\Dynamic\Customization\Helper\Data');
+    $product = $ddHelper->getRegistryManager()->registry('current_product');//get current product
+    $compositionLabel = $product->getResource()->getAttribute('composition')->getStoreLabel();
+    $compositionValue = $product->getResource()->getAttribute('composition')->getFrontend()->getValue($product);
+    $dimensionsLabel = $product->getResource()->getAttribute('dimensions')->getStoreLabel();
+    $dimensionsValue = $product->getResource()->getAttribute('dimensions')->getFrontend()->getValue($product);
+    $sizeLabel = $product->getResource()->getAttribute('size_chart_url')->getStoreLabel();
+    $sizeValue = $product->getResource()->getAttribute('size_chart_url')->getFrontend()->getValue($product);
+
+    $colorLabel = $product->getResource()->getAttribute('color_v2')->getStoreLabel();
+    $colorValue = $product->getResource()->getAttribute('color_v2')->getFrontend()->getValue($product);
+
+    if ($product->getResource()->getAttribute('material')) {
+        $materialLabel = $product->getResource()->getAttribute('material')->getStoreLabel();
+        $materialValue = $product->getResource()->getAttribute('material')->getFrontend()->getValue($product);
+    }
+
+    if ($product->getResource()->getAttribute('estimated_minimum_days')) {
+        $estimated_minimum_days_Label = $product->getResource()->getAttribute('estimated_minimum_days')->getStoreLabel();
+        $estimated_minimum_Value = $product->getResource()->getAttribute('estimated_minimum_days')->getFrontend()->getValue($product);
+    }
+
+    if ($product->getResource()->getAttribute('estimated_maximum_days')) {
+        $estimated_maximum_days_Label = $product->getResource()->getAttribute('estimated_maximum_days')->getStoreLabel();
+        $estimated_maximum_daysValue = $product->getResource()->getAttribute('estimated_maximum_days')->getFrontend()->getValue($product);
+    }
+
+    $objDate = $dynamicHelper->getDate();
+    $date = $objDate->date('Y-m-d');
+    $minday = $objDate->date('M j', strtotime($date." +".$estimated_minimum_Value." days"));
+    $maxday = $objDate->date('M j', strtotime($date." +".$estimated_maximum_daysValue." days"));
+?>
+
+
+<?php if (!empty($estimated_maximum_daysValue) && $product->isAvailable()): ?>
+<div class="delivery">
+    <div class="leftd-container clk-estimate-delivery" data-mage-init='{"productEstimateDelivery": {}}'>
+        <span class="leftd"><?= /* @noEscape */__('Estimated Delivery') ?></span>
+        <span class="icon-info"></span>
+    </div>
+    <div class="rightd-container">
+        <span class="rightd"><?= $block->escapeHtml($minday." - ".$maxday) ?></span>
+    </div>
+</div>
+<div class="estimated-delivery-container" style="display:none">
+    <div class="estimated-delivery-reference-content modal-track-reference">
+        <div id="estimated-delivery-reference" class="estimated-delivery-reference">
+            <?= __("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris gravida dictum lorem quis scelerisque. Praesent in massa id mi dapibus consectetur. Etiam sagittis nulla eu enim consectetur, in facilisis dui malesuada. Etiam at elit aliquet, semper ante at, pharetra mi.
+              Nullam nec enim nunc. In hac habitasse platea dictumst. Praesent vel neque a risus cu"); ?>
+        </div>
+    </div>
+</div>
+<?php endif; ?>

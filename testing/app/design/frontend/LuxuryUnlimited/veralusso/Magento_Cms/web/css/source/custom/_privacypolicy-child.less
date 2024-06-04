@@ -1,0 +1,71 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common =true) {
+    .pivacy-policy-wrapper {
+        .header {
+            text-align: center;
+            margin: 0 0 @indent__l;
+
+            h1,
+            h2 {
+                margin: 0 0 @indent__xs;
+                color: @custom__color-black;
+            }
+
+            p {
+                color: @custom__color-gray1;
+            }
+        }
+
+        .group {
+            border: 2px solid @theme__secondary--color-200;
+            border-radius: 12px;
+            margin: 0 0 @indent__base;
+
+            button {
+                border: none;
+            }
+
+            .arrow-active {
+                &.collapsible {
+                    border-radius: 12px;
+                    background: @custom__color-white;
+                }
+
+                &.collapsible::before {
+                    .lib-rotate(180deg);
+                }
+            }
+
+            .collapsible {
+                border-radius: 0;
+                width: 100%;
+                text-align: left;
+                color: @custom__color-black;
+                padding: @indent__l;
+                background: @theme__secondary--color-100;
+                margin: 0;
+
+                &::before {
+                    content: @icon-down;
+                    float: right;
+                    font-family: @icon-font-family;
+                    .lib-font-size(24);
+                    .lib-line-height(24);
+                }
+            }
+
+            .group-content {
+                display: none;
+                color: @custom__color-gray1;
+                padding: 0 @indent__l @indent__l;
+
+                &.active {
+                    display: block;
+                }
+            }
+        }
+    }
+}

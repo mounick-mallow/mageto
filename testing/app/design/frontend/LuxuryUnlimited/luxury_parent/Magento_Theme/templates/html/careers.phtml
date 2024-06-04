@@ -1,0 +1,252 @@
+<?php
+
+use Magento\Framework\Escaper;
+
+/**
+ * @var $escaper Escaper
+ * @var $block Dynamic\Mytickets\Block\View
+ */
+$fname= '';
+$lname = '';
+$email= '';
+$telephone = '';
+$customer = $this->helper('Dynamic\Mytickets\Helper\Data')->isLoggedIn();
+
+if (is_object($customer)) {
+    $fname = $customer->getFirstname();
+    $lname = $customer->getLastname();
+    $email = $customer->getEmail();
+}
+
+$jobs = $this->helper('Dynamic\Mytickets\Helper\Data')->getJobOpening();
+
+$count = 0;
+$careerJobs= [];
+if(isset($jobs['careers'])){
+    $count = count($jobs['careers']);
+    $careerJobs = $jobs['careers'];
+}
+?>
+
+<?php
+    /** @var  Belvg\StoresManager\Helper\Data $storeHelper */
+    $storeHelper = $this->helper(Belvg\StoresManager\Helper\Data::class);
+    $storeName = $storeHelper->getStoreName();
+?>
+
+<div class="careers-wrap">
+    <div class="careers-search">
+        <h3><?= /* @noEscape */ __('Opening job posts') ?></h3>
+        <div class="careers-search-list">
+            <ul  class="careers-items">
+                <?php foreach($careerJobs as $job): ?>
+                    <?php
+                    $now = time();
+                    $your_date = strtotime($job['created_at']);
+                    $datediff = $now - $your_date;
+                    $daysAgo =  round($datediff / (60 * 60 * 24));
+                    ?>
+                    <li class="careers-item">
+                        <div class="careers-item-info">
+                            <?php if($daysAgo == 0): ?>
+                                <div class="date"><?php echo  __('Posted today'); ?></div>
+                            <?php else: ?>
+                                <?php if($daysAgo > 1): ?>
+                                    <div class="date"><?php echo  __('Posted ').$daysAgo.__(' days ago'); ?></div>
+                                <?php else: ?>
+                                    <div class="date"><?php echo  __('Posted ').$daysAgo.__(' day ago'); ?></div>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                            <h4><?php echo $job['title']; ?></h4>
+                            <p class="location"><?= /* @noEscape */ __('Location: ').$job['location']." - ". $job['type'] ?></p>
+                            <p class="description"><?= /* @noEscape */ $job['description'] ?></p>
+                        </div>
+                    </li>
+                <?php endforeach; ?>
+                <?php if(!$count && !empty($jobs)): ?>
+                    <li class="careers-item">
+                        <div class="careers-item-info">
+                            <p class="location"><?= /* @noEscape */ __($jobs['error_msg']) ?></p>
+                        </div>
+                    </li>
+                <?php endif; ?>
+            </ul>
+        </div>
+    </div>
+    <div class="careers-form-wrap">
+        <div class="careers-form-title"><?= /* @noEscape */ __('Join the ' . $storeName) ?></div>
+        <div class="careers-form">
+            <form class="cls_careerfrind_form form"
+                  id="career-form"
+                  data-hasrequired="<?= /* @noEscape */ __('* Required Fields') ?>"
+                  data-mage-init='{"validation":{}}'
+                  enctype="multipart/form-data"
+            >
+                <fieldset class="fieldset careers">
+                    <legend class="fieldset-legend">
+                        <span><?= $block->escapeHtml(__('Careers')) ?></span>
+                    </legend>
+                    <div class="fields">
+                        <div class="field required">
+                            <label for="yourfirstname" class="label">
+                                <span><?= $escaper->escapeHtml(__('First Name')) ?></span>
+                            </label>
+                            <div class="control">
+                                <input id="yourfirstname" class="input-text" title="Your first name" name="name" required="" type="text" value="<?= $block->escapeHtmlAttr($fname) ?>" placeholder="<?= /* @noEscape */ __('First Name') ?>" >
+                            </div>
+                        </div>
+                        <div class="field required">
+                            <label for="yoursurname" class="label">
+                                <span><?= $escaper->escapeHtml(__('Last name')) ?></span>
+                            </label>
+                            <div class="control">
+                                <input id="yoursurname" class="input-text" title="Your last name" name="last_name" required="" type="text" value="<?= $block->escapeHtmlAttr($lname) ?>" placeholder="<?= /* @noEscape */ __('Last name') ?>" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fields">
+                        <div class="field required">
+                            <label for="email" class="label">
+                                <span><?= $escaper->escapeHtml(__('Email Address')) ?></span>
+                            </label>
+                            <div class="control">
+                                <input id="email" class="input-text validate-email" title="Your email address required" required="" name="email" type="email" value="<?= $block->escapeHtmlAttr($email) ?>" placeholder="<?= /* @noEscape */ __('Email Address') ?>" >
+                            </div>
+                        </div>
+                        <div class="field required">
+                            <label for="telephone_number" class="label">
+                                <span><?= $escaper->escapeHtml(__('Phone Number')) ?></span>
+                            </label>
+                            <div class="control">
+
+                                <input id="phone"
+                                       class="input-text" required="" title="<?= /* @noEscape */ __('Phone')?>"
+                                       name="phone" type="text"
+                                       value="<?= $block->escapeHtmlAttr($telephone) ?>" data-validate="{'maxlength':15}"
+                                       placeholder="<?= /* @noEscape */ __('Enter Phone Number') ?>"></div>
+                        </div>
+                    </div>
+                    <div class="fields">
+                        <div class="field required">
+                            <label for="gender" class="label">
+                                <span><?= $escaper->escapeHtml(__('Gender')) ?></span>
+                            </label>
+                            <div class="control">
+                                <select id="specialgender" class="specialgender" name="gender" required>
+                                    <option value=""><?= /* @noEscape */ __('Select Gender') ?></option>
+                                    <option value="male"><?= /* @noEscape */ __('Male') ?></option>
+                                    <option value="female"><?= /* @noEscape */ __('Female') ?></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="field required">
+                            <label for="city" class="label">
+                                <span><?= $escaper->escapeHtml(__('City')) ?></span>
+                            </label>
+                            <div class="control">
+                                <input id="city" class="input-text" title="City" name="city" required="" type="text" value="" placeholder="<?= /* @noEscape */ __('City') ?>" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fields">
+                        <div class="field required">
+                            <label for="street1" class="label">
+                                <span><?= $escaper->escapeHtml(__('Street 1')) ?></span>
+                            </label>
+                            <div class="control">
+                                <input id="street1" class="input-text" title="Street 1" name="street_1" required="" type="text" value="" placeholder="<?= /* @noEscape */ __('Street 1') ?>" >
+                            </div>
+                        </div>
+                        <div class="field required">
+                            <label for="street2" class="label">
+                                <span><?= $escaper->escapeHtml(__('Street 2')) ?></span>
+                            </label>
+                            <div class="control">
+                                <input id="street2" class="input-text" title="Street 2" required="" name="street_2"  type="text" value="" placeholder="<?= /* @noEscape */ __('Street 2') ?>" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fields fields-col-3">
+                        <div class="field required">
+                            <label for="state" class="label">
+                                <span><?= $escaper->escapeHtml(__('State')) ?></span>
+                            </label>
+                            <div class="control">
+                                <input id="state" class="input-text" title="State" name="state" required="" type="text" value="" placeholder="<?= /* @noEscape */ __('State') ?>" >
+                            </div>
+                        </div>
+                        <div class="field required">
+                            <label for="country" class="label">
+                                <span><?= $escaper->escapeHtml(__('Country')) ?></span>
+                            </label>
+                            <div class="special-number-dropdown">
+                                <div class="selected-flag">
+                                    <i class="fi fi-in"></i>
+                                </div>
+                                <?php
+                                $countryBlock = $block->getLayout()->createBlock('Magento\Directory\Block\Data');
+                                $defaultValue = 'IN'; // Use the country code for India as the default value
+                                ?>
+                                <?= $countryBlock->getCountryHtmlSelect($defaultValue, 'country_id', 'specialcountry', 'Country', 'class="specialcountry"'); ?>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="zipcode" class="label">
+                                <span><?= $escaper->escapeHtml(__('Post Code')) ?></span>
+                            </label>
+                            <div class="control">
+                                <input id="zipcode" class="input-text" title="Zipcode" name="postcode" type="text" value="" placeholder="<?= /* @noEscape */ __('Post Code') ?>"                                 >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field required">
+                        <div class="field">
+                            <label for="remark" class="label">
+                                <span><?= $escaper->escapeHtml(__('Remark')) ?></span>
+                            </label>
+                            <div class="control">
+                                <textarea id="remark" class="input-text" title="Remark" name="remark" required=""  placeholder="<?= /* @noEscape */ __('Remark') ?>"  ></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field required">
+                        <label for="uploadcv" class="label">
+                            <span><?= $escaper->escapeHtml(__('File Upload')) ?></span>
+                        </label>
+                        <div class="control file-input-choice">
+                            <div class="file-input-wrap">
+                                <input id="uploadcv" class="file-input-text " title="Upload your CV" name="resume" required="" type="file" >
+                                <span class='file-button'><?= $escaper->escapeHtml(__('Upload your resume')) ?></span>
+                                <span class='input-file-label resume-label-input' data-js-label><?= $escaper->escapeHtml(__('No file chosen')) ?></span>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <button id="btn_registers" class="action primary" name="ButtonRegister" type="submit">
+                    <span><?= /* @noEscape */ __('Register') ?></span>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="clssearchreqpop">
+    <div class="clssearchrequest">
+        <button id="create-search-ticket-btn" class="secondary action create-search-ticket-btn"><?= /* @noEscape */ __('Career') ?></button>
+    </div>
+    <div id="modal-search-content" style="display: none">
+        <div class="modal-search-content">
+            <div class="ticket-created-success" style="display:none">
+                <div class="response-container"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Theme/js/careers": {
+            }
+        }
+    }
+</script>

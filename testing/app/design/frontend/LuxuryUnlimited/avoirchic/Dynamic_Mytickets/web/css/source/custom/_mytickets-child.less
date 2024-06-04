@@ -1,0 +1,190 @@
+& when (@media-common = true) {
+    .tickets-customer-index {
+        .mytickets-container {
+            .mytickets-list {
+                .mytickets-table-wrapper {
+                    border: 1px solid @color-gainsboro;
+                    border-radius: 20px;
+                    overflow: hidden;
+                    padding: 0px @indent__m @indent__xxs;
+
+                    .mytickets-table-header {
+                        .mytickets-table-col {
+                            .lib-font-size(16);
+                            color: @theme__primary--color-500;
+                            padding: @indent__m 0;
+                        }
+                    }
+
+                    .mytickets-table-body {
+                        .mytickets-table-row {
+                            border-top: 1px solid @color-gainsboro;
+
+                            .mytickets-table-col {
+                                color: @theme__primary--color-400;
+                                padding: 20px 0px;
+
+                                &.ticket-view {
+                                    a {
+                                        &.icomoon-icon-chat::before {
+                                            content: @icon-chat;
+                                        }
+                                    }
+                                }
+
+                                &.status span {
+                                    .lib-font-size(14);
+                                    background-color: @theme__primary--color-300;
+
+                                    &.ticket-active {
+                                        color: @theme__primary--color-800;
+                                    }
+
+                                    &.ticket-pending {
+                                        color: @theme__primary--color-800;
+                                        opacity: 0.5;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .ticket-chat-modal {
+        .message-container {
+            .message {
+                background: @color-gray-light0;
+                padding: @indent__xs;
+            }
+
+            &.merchant {
+                .message {
+                    background: @theme__territory--teal-blue--color-25;
+
+                    .name {
+                        padding: @indent__xxs 0;
+                        font-weight: @font-weight__bold;
+                    }
+                }
+            }
+        }
+
+        .chat-date-container {
+            margin: 0 0 @indent__s;
+            text-align: center;
+
+            .chat-date {
+                padding: @indent__xs @indent__s;
+                background: @color-gray95;
+                border-radius: 4px;
+            }
+        }
+
+        .chat-submit-form {
+            border-top: 2px solid @custom__color-transparent-gray7;
+            padding: @indent__xs @indent__base;
+
+            #ticket-chat-form {
+                #message {
+                    padding: @indent__xs;
+                    .lib-line-height(normal);
+                }
+            }
+
+            form {
+                border: 2px solid @custom__color-transparent-gray7;
+                border-radius: 50px;
+                padding: @indent__xxs;
+
+                .add-btn.btn-submit-txt {
+                    background: @theme__primary--color-800;
+                    color: @custom-color-3;
+                    padding: @indent__s 24px;
+                    height: fit-content;
+                    border-radius: 50px;
+                }
+            }
+        }
+
+        .chat-messages-wrapper {
+            padding: @indent__base;
+            .lib-font-size(@font-size__xs);
+            font-weight: @font-weight__heavier;
+            .lib-line-height(@font-size__s);
+            color: @theme__primary--color-400;
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__s) {
+    .tickets-customer-index {
+        .mytickets-container {
+            .mytickets-table-header {
+                .mytickets-table-row {
+                    .mytickets-table-col {
+                        &.status {
+                            text-align: center;
+                        }
+                    }
+                }
+            }
+
+            .mytickets-table-body {
+                .no-record {
+                    border-top: 1px solid @color-gainsboro;
+                }
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__s) {
+    .tickets-customer-index {
+        .columns {
+            .mytickets-container {
+                .mytickets-list {
+                    .mytickets-table-wrapper {
+                        padding: @indent__s;
+
+                        .mytickets-table-row {
+                            display: block;
+                            padding: 0px;
+
+                            &.ticket-date,
+                            &.ticket-view {
+                                width: unset;
+                            }
+                        }
+
+                        .mytickets-table-body {
+                            padding: @indent__s + 4 0px;
+
+                            .mytickets-table-row {
+                                .mytickets-table-col {
+                                    .mob-title {
+                                        color: @theme__primary--color-500;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

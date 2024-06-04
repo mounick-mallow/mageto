@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--
+
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <block class="Magetop\GiftCard\Block\CheckoutGiftCardCoupan" name="email.validation.on.product.view" template="Magetop_GiftCard::giftcardproductview.phtml" after="-"/>
+        </referenceContainer>
+        <!--<referenceContainer name="product.info.main">
+            <block class="Magetop\GiftCard\Block\ProductRefund" name="giftcard.product.refund.description" template="Magetop_GiftCard::productRefund.phtml" after="product.info.price">
+             </block>
+        </referenceContainer>-->
+    </body>
+</page>

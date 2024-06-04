@@ -1,0 +1,64 @@
+<?php
+$dynamicHelper = $this->helper('\Dynamic\Customization\Helper\Data');
+$storeManager = $dynamicHelper->getStoreManager();
+$websites = $dynamicHelper->getAllWebsitesData();
+$baseUrl = $storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_WEB);
+$alphabet = __('A B C D E F G H I J K L M N O P Q R S T U V W X Y Z');
+$letters = explode(' ', $alphabet);
+?>
+<div class="choosecountry">
+    <div class="country-head">
+        <h3 class="cls_country"><?= /* @noEscape */ __('Country') ?></h3>
+        <div class="searchbar">
+            <input type="text" name="" placeholder="<?= __('Find Countries') ?>" class="form-control" id="searchText">
+        </div>
+        <div class="alphabet">
+            <ul class="letters">
+                <?php foreach ($letters as $letter): ?>
+                    <?= "<li class='letter' data-letter='$letter'>$letter</li>" ?>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    </div>
+    <div id="no-result" style="display:none">
+        <p style="text-align: center"><?= /* @noEscape */ __('We don\'t ship to this country. Please raise a ticket for any queries.') ?></p>
+        <p style="text-align: center">
+            <a id="create-ticket-btn" data-title="<?php echo $block->escapeHtml(__('Country Search Query')); ?>"
+               style="cursor: pointer"><?php echo $block->escapeHtml(__('Create Ticket')); ?></a> | <a
+                    href="<?= $block->escapeUrl($block->getUrl('brands')) ?>"><?php echo $block->escapeHtml(__('Continue Shopping')); ?></a>
+        </p>
+    </div>
+    <div class="countrylist">
+        <ul class="cls_ulcountry">
+            <?php $mediaPath = $dynamicHelper->getFileSystemManager()->getDirectoryRead(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA)->getAbsolutePath() ?>
+            <?php foreach ($websites as $website): ?>
+                <?php $storeUrl = $baseUrl . $website['store_list'][0]['code']; ?>
+                <li><a class="country-switcher" data-websiteid="<?= /* @noEscape */ $website['website_id'] ?>"
+                       href="<?= /* @noEscape */ $storeUrl ?>"
+                       title="<?= /* @noEscape */ __($website['name']) ?>">
+                        <?php
+                        if (is_dir($mediaPath . "/bssstoresflags/websites/" . $website['code'])) {
+                            $flagFiles = (scandir($mediaPath . "/bssstoresflags/websites/" . $website['code']));
+                            ?>
+                            <img alt="<?= /* @noEscape */ __($website['name']) ?>" class="imgcustimg"
+                                src="/media/bssstoresflags/websites/<?= $block->escapeHtmlAttr($website['code']) ?>/<?= $block->escapeHtml($flagFiles[2]) ?>">
+                            <?php
+                        }
+                        ?>
+                        <span><?= /* @noEscape */ __($website['name']) ?></span>
+                    </a>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+</div>
+<div id="countrypopup-modal" style="display:none;"></div>
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Theme/js/country-list": {
+            }
+        }
+    }
+</script>

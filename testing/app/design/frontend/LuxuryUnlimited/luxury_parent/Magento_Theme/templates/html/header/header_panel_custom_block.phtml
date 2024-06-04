@@ -1,0 +1,15 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php
+    $block = $this->getLayout()->createBlock('Magento\Cms\Block\Block');
+    if($block) {
+        $block->setBlockId('header_panel_message');
+    }
+    if($block){
+        echo '<div class="panel wrap panel-message">'.$block->toHtml().'</div>';
+    }
+?>

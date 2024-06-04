@@ -1,0 +1,45 @@
+version: 0.2
+
+phases:
+  build:
+    on-failure: ABORT
+    commands:
+      - echo Build started on `date`
+      - aws s3 cp $S3_ENV_FILE_PATH ./env.zip --region $S3_ENV_FILE_REGION
+      - aws s3 cp $S3_MEDIA_FILE_PATH media.zip --region $S3_ENV_FILE_REGION
+      - eval $ECR_QUERY
+      - docker login -u pradeepmallow -p pradeep@mallow
+
+      # ECR authentication
+      - WEB_LATEST_VERSION=$(echo $(aws ecr describe-images --repository-name $WEB_REPO_NAME --query 'sort_by(imageDetails,& imagePushedAt)[-1].imageTags[0]' | tr -d '"' ))
+      - NGINX_LATEST_VERSION=$(echo $(aws ecr describe-images --repository-name $NGINX_REPO_NAME --query 'sort_by(imageDetails,& imagePushedAt)[-1].imageTags[0]' | tr -d '"' ))
+      - VARNISH_LATEST_VERSION=$(echo $(aws ecr describe-images --repository-name $VARNISH_REPO_NAME --query 'sort_by(imageDetails,& imagePushedAt)[-1].imageTags[0]' | tr -d '"' ))
+
+      - docker pull $WEB_REPO_URL:$WEB_LATEST_VERSION || true
+      - docker pull $NGINX_REPO_URL:$NGINX_LATEST_VERSION || true
+      - docker pull $VARNISH_REPO_URL:$VARNISH_LATEST_VERSION || true
+
+      # pull the image
+      - docker tag $WEB_REPO_URL:$WEB_LATEST_VERSION $WEB_REPO_URL:latest || true
+
+      - docker build -t $WEB_REPO_URL:$CODEBUILD_RESOLVED_SOURCE_VERSION --build-arg AWS_ACCESS_KEY_ENV="${AWS_ACCESS_KEY_ENV}" --build-arg AWS_SECRET_ACCESS_KEY_ENV="${AWS_SECRET_ACCESS_KEY_ENV}" --build-arg AWS_SESSION_TOKEN_ENV="${AWS_SESSION_TOKEN_ENV}" --build-arg S3_MEDIA_FILE_PATH="$S3_MEDIA_FILE_PATH" --build-arg S3_ENV_FILE_PATH="$S3_ENV_FILE_PATH" --build-arg REACT_PROJECT_NAME="$REACT_PROJECT_NAME" --build-arg REACT_APP_BASE_URL="$REACT_APP_BASE_URL" --build-arg S3_ENV_FILE_PATH="$S3_ENV_FILE_PATH" --build-arg ADMIN_PAGE_URL="$ADMIN_PAGE_URL" --build-arg REDIS_HOST_URL="$REDIS_HOST_URL" --build-arg REDIS_DB_SESSION_INDEX="$REDIS_DB_SESSION_INDEX" --build-arg REDIS_FE_SESSION_INDEX="$REDIS_FE_SESSION_INDEX" --build-arg RDS_DB_HOST="$RDS_DB_HOST" --build-arg RDS_DB_NAME="$RDS_DB_NAME" --build-arg RDS_DB_PASS="$RDS_DB_PASS" --build-arg RDS_DB_USERNAME="$RDS_DB_USERNAME" --build-arg ES_HOST="$ES_HOST" --build-arg ES_HOST_WITH_PORT="$ES_HOST_WITH_PORT" --build-arg ES_HOST_PREFIX="$ES_HOST_PREFIX" --build-arg S3_MEDIA_FILE_PATH="$S3_MEDIA_FILE_PATH" --build-arg S3_ENV_FILE_REGION="$S3_ENV_FILE_REGION" --build-arg MEDIA_FOLDER_NAME="$MEDIA_FOLDER_NAME" --build-arg APP_URL="$APP_URL" --cache-from $WEB_REPO_URL:latest -f docker/Dockerfile-php .
+      - docker build -t $NGINX_REPO_URL:$CODEBUILD_RESOLVED_SOURCE_VERSION --build-arg AWS_ACCESS_KEY_ENV="${AWS_ACCESS_KEY_ENV}"  --build-arg  AWS_SECRET_ACCESS_KEY_ENV="${AWS_SECRET_ACCESS_KEY_ENV}"  --build-arg  AWS_SESSION_TOKEN_ENV="${AWS_SESSION_TOKEN_ENV}" --cache-from $NGINX_REPO_URL:$NGINX_LATEST_VERSION -f docker/nginx/Dockerfile-nginx .
+      - docker build -t $VARNISH_REPO_URL:$CODEBUILD_RESOLVED_SOURCE_VERSION --cache-from $VARNISH_REPO_URL:$VARNISH_LATEST_VERSION -f docker/varnish/varnish.Dockerfile .
+
+      #build the image with cache
+
+      - docker push $WEB_REPO_URL:${CODEBUILD_RESOLVED_SOURCE_VERSION}
+      - docker push $NGINX_REPO_URL:${CODEBUILD_RESOLVED_SOURCE_VERSION}
+      - docker push $VARNISH_REPO_URL:${CODEBUILD_RESOLVED_SOURCE_VERSION}
+
+  post_build:
+    on-failure: ABORT
+    commands:
+      - printf '[{"name":"%s","imageUri":"%s:%s"},{"name":"%s","imageUri":"%s:%s"},{"name":"%s","imageUri":"%s:%s"}]' $WEB_CONTAINER $WEB_REPO_URL $CODEBUILD_RESOLVED_SOURCE_VERSION $NGINX_CONTAINER $NGINX_REPO_URL $CODEBUILD_RESOLVED_SOURCE_VERSION $VARNISH_CONTAINER $VARNISH_REPO_URL $CODEBUILD_RESOLVED_SOURCE_VERSION > $DEPLOY_FILE_NAME
+      - printf '[{"name":"%s","imageUri":"%s:%s"}]' $CRON_CONTAINER $WEB_REPO_URL $CODEBUILD_RESOLVED_SOURCE_VERSION  > $CRON_DEPLOY_FILE_NAME
+
+      
+artifacts:
+  files: 
+    - $DEPLOY_FILE_NAME
+    - $CRON_DEPLOY_FILE_NAME

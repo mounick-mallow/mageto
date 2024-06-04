@@ -1,0 +1,149 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+
+<?php
+/**
+ * @var $block \Magento\ProductAlert\Block\Product\View
+ * @var $dataViewModel \Dynamic\Notifyme\ViewModel\ProductAlert
+ */
+
+$viewModel = $block->getData('view_model');
+$notifyViewModel = $block->getData('product_alert_view_model');
+
+$ddHelper = $notifyViewModel->getHomepageHelper();
+$customerSession = $ddHelper->getCustomerSessionManager();
+$product = $ddHelper->getRegistryManager()->registry('current_product');
+
+$notifyHelper = $notifyViewModel->getDynamicHelper();
+$userContext = $notifyHelper->getHttpManager();
+$isLoggedIn = $userContext->getValue(\Magento\Customer\Model\Context::CONTEXT_AUTH);
+$customerName = $customerLastName = $customerEmail = $customerPhone = $customerGender = '';
+if ($isLoggedIn) {
+    $customer = $notifyViewModel->getCustomerById($userContext->getValue('customer_id'));
+    if ($customer) {
+        $customerName = $customer->getFirstname();
+        $customerLastName = $customer->getLastname();
+        $customerPhone = ($customer->getCustomAttribute('telephone'))?
+            $customer->getCustomAttribute('telephone')->getValue()
+            : '';
+
+    }
+    $customerEmail = $userContext->getValue('customer_email');
+    $customerGender = $customer->getGender();
+}
+?>
+<div class="product alert <?= $block->getHtmlClass() ?>">
+    <div class="actions">
+    <span class="action primary tocart"
+          id="product-addtocart-button">
+        <span><?= /* @noEscape */ __('SOLD OUT') ?></span>
+    </span>
+    </div>
+    <span class="out-of-stock-click" style="margin-left: auto">
+        <span class="notifyme">
+        <?= $block->escapeHtml(__($block->getSignupLabel())) ?></span>
+    </span>
+    <div class="additional-out-of-stock-popup">
+        <div id="myModalspecsizeOutofStock" >
+            <div class="modal notifyme-modal">
+                <div class="modal-content">
+                    <div class="result-loader-block" ></div>
+                    <form class="form out-of-stock-noti-form"
+                            action="<?= $block->escapeUrl($block->getUrl('notifyme/index/post')) ?>"
+                            id="simple-out-of-stock-form"
+                            method="post"
+                            data-hasrequired="<?= /* @noEscape */ __('* Required Fields') ?>"
+                            data-mage-init='{"validation":{}}'>
+                        <div class="field required cls_comm_input width-50p">
+                            <div class="control flex">
+                                <select id="salutation" name="salutation"
+                                        title="<?= /* @noEscape */ __('Prefix'); ?>" class="oos-prefix">
+                                    <option value="Mr"><?= $block->escapeHtml(__('Mr.')) ?></option>
+                                    <option value="Mrs"><?= $block->escapeHtml(__('Mrs.')) ?></option>
+                                </select>
+                                <input id="name_oos" class="input-text notifyme-first-name required-entry"
+                                        title="<?= /* @noEscape */ __('Name'); ?>" name="name"
+                                        value="<?= $block->escapeHtmlAttr($customerName) ?>"
+                                        type="text" placeholder="<?= /* @noEscape */ __('Name')?>">
+                            </div>
+                        </div>
+
+                        <div class="field required cls_comm_input width-50p">
+                            <div class="control">
+                                <input id="last_name_oos" class="input-text notifyme-last-name required-entry"
+                                        title="<?= /* @noEscape */ __('Last Name'); ?>" name="lastname"
+                                        value="<?= $block->escapeHtmlAttr($customerLastName) ?>"
+                                        type="text" placeholder="<?= /* @noEscape */ __('Last Name')?>">
+                            </div>
+                        </div>
+
+                        <div class="field required cls_comm_input width-50p">
+                            <div class="control">
+                                <input id="email_oos" class="input-text notifyme-email required-entry"
+                                        title="<?= /* @noEscape */ __('Email Address'); ?>" name="email"
+                                        value="<?= $block->escapeHtmlAttr($customerEmail) ?>"
+                                        type="email" placeholder="<?= /* @noEscape */ __('Email Address')?>">
+                            </div>
+                        </div>
+
+                        <div class="field required cls_comm_input width-50p">
+                            <div class="control">
+                                <input id="phone" class="input-text notifyme-telephone"
+                                        title="<?= /* @noEscape */ __('Phone Number'); ?>" name="phone"
+                                        type="text" placeholder="<?= /* @noEscape */ __('Phone Number')?>">
+                            </div>
+                        </div>
+
+                        <?php if ($viewModel->isConfigurable($product)): ?>
+                            <?php foreach ($viewModel->getConfigurableOptions($product->getId()) as $attr => $options): ?>
+                                <div class="field name required cls_comm_input">
+                                    <div class="control">
+                                        <label class="select_label" for="dropdown"><?= /* @noEscape */ __('Select') ?>
+                                            <?= $block->escapeHtml($options["label"]) ?></label>
+                                        <select id="<?= $block->escapeHtmlAttr($attr == "size_v2" ? "selectedsize" : $attr) ?>"
+                                                class="input-text" title="<?= $block->escapeHtmlAttr($options["label"]) ?>"
+                                                name="<?= $block->escapeHtmlAttr($options["label"]) ?>">
+                                            <?php foreach ($options["values"] as $attribute): ?>
+                                                <option value='<?= $block->escapeHtmlAttr($attribute["option_title"]) ?>'>
+                                                    <?= $block->escapeHtml($attribute["option_title"]) ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php endif;?>
+
+                        <input type="hidden" name="request_type" value="product-alert" />
+                        <input type="hidden" name="product_id" class="product-id"
+                                value="<?= $block->escapeHtmlAttr($product->getId());  ?>" />
+
+                        <input type="hidden" name="product_sku" class="product-sku"
+                                value="<?= $block->escapeHtmlAttr($product->getSku());  ?>" />
+
+                        <div class="mm-action">
+                            <button class="action submit primary">
+                                <span id="notifyme-btn" class="btn btn-custom">
+                                    <?= /* @noEscape */ __('Submit'); ?>
+                                </span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Out of stock notification api integration -->
+<script type="text/x-magento-init">
+{
+    "*": {
+        "MageAlertNotifyMe": {}
+    }
+}
+</script>
+</div> <!-- end of div with class secondCustomDiv-->
+<!-- End -->

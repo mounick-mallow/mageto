@@ -1,0 +1,132 @@
+& when (@media-common = true) {
+    html[lang='ar'] {
+        direction: rtl;
+
+        .Brands_logos {
+            .brnad-slider {
+                .lib-vendor-prefix-display(flex);
+                gap: 40px;
+
+                .brand {
+                    margin-left: 0;
+                }
+            }
+        }
+
+        .most_popular {
+            .tile-caption {
+                .category-name {
+                    float: right;
+                }
+
+                .view-more {
+                    float: left;
+                }
+            }
+        }
+
+        .most_popular {
+            .product-tile {
+                &:first-child {
+                    margin-right: 10px;
+                }
+
+                .in_wishlist {
+                    right: auto;
+                    left: 15px;
+                }
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__xs) {
+    .Brands_logos {
+        .brnad-slider {
+            display: block;
+            gap: 0;
+
+            .brand {
+                margin-left: 0;
+            }
+        }
+    }
+
+    .home_categories2 {
+        div.category-section-one {
+            display: block;
+        }
+    }
+
+    .home_categories {
+        div.category-section-two {
+            .category-tile {
+                margin: 0;
+            }
+        }
+    }
+
+    .home_banner_left {
+        padding: 0;
+    }
+}
+
+.page-header.header-newskin {
+    display: none;
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__992) {
+    .best_seller_brand {
+        ul {
+            li {
+                .lib-font-size(20);
+            }
+        }
+    }
+
+    .most_popular {
+        .product-tile {
+            .product.product-name a {
+                .lib-font-size(16);
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__xs) {
+    .most_popular {
+        .product-tile {
+            margin-right: 0;
+
+            .product-name {
+                a {
+                    .lib-font-size(16);
+                }
+            }
+        }
+
+        .tile-caption {
+            div.category-name {
+                .lib-font-size(20);
+            }
+        }
+    }
+
+    div.best_seller_brand {
+        h1 {
+            .lib-font-size(20);
+        }
+    }
+}

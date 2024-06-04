@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright Â© 2018 Porto. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page layout="2columns-right" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="product.info.main">
+            <container htmlTag="div" htmlClass="product-top-section" name="product.top.section" before="-" />
+        </referenceContainer>
+
+        <move element="page.main.title" destination="product.top.section" before="-"/>
+        
+
+        <referenceBlock name="view.addto.wishlist" remove="false" />
+    </body>
+</page>

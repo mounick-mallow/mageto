@@ -1,0 +1,167 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common =true) {
+    .catalogsearch-advanced-index {
+        .page-subtitle {
+            text-align: center;
+        }
+
+        .form.search.advanced {
+            margin: 0 auto;
+            width: 100%;
+
+            .fieldset {
+                .lib-vendor-prefix-display(flex);
+                flex-direction: row;
+                flex-wrap: wrap;
+                width: 100%;
+                margin-bottom: @indent__m;
+
+                .field {
+                    &.name {
+                        order: 1;
+                        width: 100%;
+                    }
+
+                    &.sku {
+                        order: 2;
+                        width: 100%;
+                    }
+
+                    &.description {
+                        order: 5;
+                        flex: 100%;
+
+                        .input-text {
+                            min-height: @advanced-search-input__min-height;
+                        }
+                    }
+
+                    &.short_description {
+                        order: 4;
+                        flex: 100%;
+
+                        .input-text {
+                            min-height: @advanced-search-input__min-height;
+                        }
+                    }
+
+                    &.price {
+                        order: 3;
+                        width: 100%;
+                        margin-bottom: @indent__base;
+
+                        .fields.range {
+                            .field.no-label {
+                                width: 100%;
+
+                                .control {
+                                    padding: 0;
+                                }
+                            }
+                        }
+
+                        .addafter,
+                        .control:after {
+                            visibility: hidden;
+                        }
+                    }
+
+                    &.manufacturer {
+                        display: none;
+                    }
+                }
+            }
+
+            .actions-toolbar {
+                .lib-vendor-prefix-display(flex);
+                justify-content: center;
+            }
+        }
+    }
+}
+
+//
+//  Desktop
+//  ---------------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__m) {
+    .catalogsearch-advanced-index {
+        .form.search.advanced {
+            .fieldset {
+                .field {
+                    &.name {
+                        margin-right: @indent__m;
+                    }
+
+                    &.price {
+                        .fields.range {
+                            .field.no-label {
+                                .control {
+                                    padding: 0;
+                                }
+
+                                &.with-addon {
+                                    margin-left: @indent__m;
+                                }
+                            }
+                        }
+
+                        .addafter,
+                        .control:after {
+                            visibility: hidden;
+                        }
+                    }
+                }
+            }
+        }
+
+        .actions-toolbar {
+            .search {
+                margin-right: 0;
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  ---------------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum ='max')
+    and
+    (@break = @screen__m) {
+    .catalogsearch-advanced-index {
+        .form.search.advanced {
+            .fieldset {
+                .field {
+                    &.name,
+                    &.sku,
+                    &.description,
+                    &.short_description {
+                        max-width: 100%;
+                    }
+
+                    &.price {
+                        .field {
+                            max-width: 100%;
+
+                            &.with-addon {
+                                margin-top: @indent__base;
+                                margin-left: 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

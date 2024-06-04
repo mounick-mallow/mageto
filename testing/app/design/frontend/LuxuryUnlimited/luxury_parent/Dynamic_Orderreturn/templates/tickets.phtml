@@ -1,0 +1,270 @@
+<?php
+    $ticketsList= $block->getLayout()->createBlock('Dynamic\Mytickets\Block\Myticketslist');
+    $myTicketCollection = $ticketsList->getMyTicketsByCustomerId();
+    $currentCustomer = $this->helper('LuxuryUnlimited\HomeProductSection\Helper\Data');
+    $objCustomerLoggedIn =$currentCustomer->getCustomerData();
+    $fname = $objCustomerLoggedIn->getFirstname();
+    $lname = $objCustomerLoggedIn->getLastname();
+    $email = $objCustomerLoggedIn->getEmail();
+    $storeCode = $currentCustomer->getStoreData()->getCode();
+
+    $pager = $this->getLayout()->createBlock(
+        'Magento\Theme\Block\Html\Pager',
+        'my-tickets.personal.page.custom.pager'
+    )->setAvailableLimit([5 => 5])->setShowPerPage(true)->setCollection(
+        $myTicketCollection
+    );
+
+    $this->setChild('pager', $pager);
+    $myTicketCollection->load();
+    $lastPage = $pager->getLastPageNum();
+    $pagerHtml =  $this->getChildHtml('pager');
+?>
+
+<div class="orders-history">
+    <?php if ($myTicketCollection && count($myTicketCollection)) {
+
+
+        ?>
+        <div class="table-order-items" id="my-orders-table">
+            <div class="myreturns-table-header">
+                <div class="myreturns-table-row">
+                    <div class="myreturns-table-col ticketid"><?= $block->escapeHtml(__('Ticket ID')) ?></div>
+                    <div class="myreturns-table-col type"><?= $block->escapeHtml(__('Request Type')) ?></div>
+                    <div class="myreturns-table-col sku"><?= $block->escapeHtml(__('Ticket Details')) ?></div>
+                    <div class="myreturns-table-col status"><?= $block->escapeHtml(__('Status')) ?></div>
+                    <div class="myreturns-table-col messages"><?= $block->escapeHtml(__('Messages')) ?></div>
+                </div>
+            </div>
+
+            <div class="myreturns-table-body">
+                <?php foreach ($myTicketCollection as $item) { ?>
+                    <?php
+                        $ticketCode = '';
+                        if (!empty($item->getTicketCode())) {
+                            $ticketOrderID = $item->getTicketCode();
+                            $ticketCode = $ticketOrderID;
+                            $reason = $item->getRemarks();
+                        } else {
+                            $reason = '';
+                            $orderIdReason ='';
+                            $ticketOrderID = '';
+                            $remarks = explode("# ", (string)$item->getRemarks());
+                            if(isset($remarks)) {
+                                $orderIdReason = explode(" ,Reason :", $remarks[0]);
+                                $ticketOrderID = isset($orderIdReason[0])?$orderIdReason[0]:'';
+                                $reason = isset($orderIdReason[0])?$orderIdReason[0]:'';
+                            }
+                        }
+                    ?>
+                    <?php
+                        $keyword = $item->getKeyword();
+                        if($keyword) {
+                            if(strpos($keyword, 'Cancel') !== false){
+                                $returnType = 'Cancel';
+                            } else if(strpos($keyword, 'Buy Back') !== false){
+                                $returnType = 'Buy Back';
+                            } else{
+                                $returnType = 'Return';
+                            }
+                        } else {
+                            $returnType = '';
+                        }
+                    ?>
+                    <div class="myreturns-table-row">
+                        <div class="myreturns-table-col ticketid">
+                            <span class="myreturns-txt-title"><?= $block->escapeHtml(__('Ticket ID')) ?></span>
+                            <span class="myreturns-txt-cnt"><?= $block->escapeHtml($ticketOrderID) ?></span>
+                            <?php $gallery = $ticketsList->getGalleryCollection($item->getMyticketsId()); ?>
+                            <?php if (!empty($gallery)): ?>
+                                <?php foreach ($ticketsList->getGalleryCollection($item->getMyticketsId()) as $image):?>
+                                    <img alt="<?= $ticketsList->escapeHtml(__('Ticket Image')) ?>"
+                                         src="<?= /* @noEscape */ $ticketsList->getMediaDirectory().$image->getImage() ?>">
+                                <?php endforeach;?>
+                            <?php endif;?>
+                        </div>
+
+                        <div class="myreturns-table-col type">
+                            <span class="myreturns-txt-title"><?= $block->escapeHtml(__('Request Type')) ?></span>
+                            <span class="myreturns-txt-cnt"><?= $block->escapeHtml($returnType) ?></span>
+                        </div>
+
+                        <div class="myreturns-table-col sku">
+                            <span class="myreturns-txt-title"><?= $block->escapeHtml(__('Product SKU')) ?></span>
+                            <span class="myreturns-txt-cnt"><?= $block->escapeHtml($item->getStyle()) ?></span>
+                        </div>
+
+                        <div class="myreturns-table-col status">
+                            <span class="myreturns-txt-title"><?= $block->escapeHtml(__('Status')) ?></span>
+                            <span class="myreturns-txt-cnt ticket-status <?= ($item->getStatus() == 0) ? '' : 'pending'; ?>">
+                                <?= ($item->getStatus() == 0) ? 'Completed' : 'Pending'; ?>
+                            </span>
+                        </div>
+                        <div class="myreturns-table-col ticket-view">
+                            <span class="mob-title"></span>
+                            <?php if (isset($ticketCode) && $ticketCode!='') { ?>
+                                <a class="icomoon-icon-chat showticketmessage"
+                                   data-tcode="<?= $block->escapeHtmlAttr($ticketCode) ?>"
+                                   data-tid="<?= $block->escapeHtmlAttr($item->getMyticketsId()) ?>">
+                                    <?= /* @noEscape */ __('Messages') ?>
+                                </a>
+                            <?php } else { ?>
+                                <a class="icomoon-icon-chat showticketnomessage"
+                                   data-tcode="<?= $block->escapeHtmlAttr($ticketCode) ?>"
+                                   data-tid="<?= $block->escapeHtmlAttr($item->getMyticketsId()) ?>">
+                                    <?= /* @noEscape */ __('Messages') ?>
+                                </a>
+                            <?php } ?>
+                        </div>
+                    </div>
+
+                <?php } ?>
+            </div>
+        </div>
+
+    <?php } else { ?>
+        <div class="returns_empty">
+            <div class="empty_icon"></div>
+            <p class="empty_txt"><?= /* @noEscape */ __('No return list found.') ?></p>
+        </div>
+    <?php } ?>
+    <div class="returns_footer">
+        <div class="clsspecialrequest">
+            <button id="help-btn" class="primary action help-btn"><?= /* @noEscape */ __('Need Help') ?></button>
+        </div>
+        <?php if ($lastPage > 1): ?>
+            <div class="pagination">
+                <div class="order-products-toolbar toolbar bottom">
+                    <?php echo $pagerHtml;   ?>
+                </div>
+            </div>
+        <?php endif ?>
+    </div>
+    <div class="help-modal">
+        <div id="help-content">
+            <div class="help-content">
+                <div class="help-tagline">
+                    <p><?= /* @noEscape */ __('Our Support Team is Here to Assist You') ?></p>
+                </div>
+                <form class="form"
+                      action="<?= $escaper->escapeUrl($this->getUrl('mytickets/ajax/create')) ?>"
+                      id="ordercancel-popup-form"
+                      method="post"
+                      data-hasrequired="<?= $escaper->escapeHtmlAttr(__('* Required Fields')) ?>"
+                      data-mage-init='{"validation":{}}'>
+                    <div id="ordercancelreturn_reason" class="alert alert-danger" role="alert"></div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="field name required cls_comm_input">
+                                <div class="control">
+                                    <input id="orddercancel_name" class="input-text" title="Name" name="orddercancel_name" required=""
+                                           type="text" value="<?= $escaper->escapeHtmlAttr($fname) ?>"
+                                           placeholder="<?= $escaper->escapeHtmlAttr(__('Enter Your Name')) ?>">
+                                </div>
+                            </div>
+                            <div class="field name required cls_comm_input">
+                                <div class="control">
+                                    <input id="orddercancel_last_name" class="input-text" title="Last Name" required=""
+                                           name="orddercancel_last_name" type="text"
+                                           value="<?= $escaper->escapeHtmlAttr($lname) ?>"
+                                           placeholder="<?= $escaper->escapeHtmlAttr(__('Enter Your Last Name')) ?>">
+                                </div>
+                            </div>
+                            <div class="field name required cls_comm_input">
+                                <div class="control">
+                                    <input id="orddercancel_email" class="input-text" required="" title="Email"
+                                           name="orddercancel_email"
+                                           type="email" <?php if ($email != '') { ?> readonly="readonly" <?php } ?>
+                                           value="<?= $escaper->escapeHtmlAttr($email) ?>"
+                                           placeholder="<?= $escaper->escapeHtmlAttr(__('Enter email')) ?>">
+                                </div>
+                            </div>
+                            <div class="field name required cls_comm_input">
+                                <div class="control">
+                                    <input id="orddercancel_phone" class="input-text" title="Phone" data-validate="{'maxlength':15}"
+                                           placeholder="<?= /* @noEscape */ __('+447700900077') ?>" required=""
+                                           name="orddercancel_phone" type="text" value=""
+                                           >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="field name required cls_comm_input">
+                                <div class="control">
+                                    <input id="orddercancel_brand" class="input-text" title="Brand"
+                                           required="" name="orddercancel_brand" type="text" value=""
+                                           placeholder="<?= $escaper->escapeHtmlAttr(__('Enter Order #')) ?>">
+                                </div>
+                            </div>
+                            <div class="field name required cls_comm_input">
+                                <div class="control">
+                                    <input id="orddercancel_keyword" readonly="true" class="input-text" title="Keyword"
+                                           required="" name="orddercancel_keyword" type="text"
+                                           value="<?= $escaper->escapeHtmlAttr(__('Order Return request')) ?>"
+                                           placeholder="<?= $escaper->escapeHtmlAttr(__('Enter Keyword')) ?>">
+                                </div>
+                            </div>
+                            <div class="field remarks required cls_comm_input">
+                                <div class="control">
+                    <textarea id="orddercancel_remarks" class="input-text" title="Remarks" required=""
+                              name="orddercancel_remarks" type="text" value=""
+                              placeholder="<?= $escaper->escapeHtmlAttr(__('Enter Remarks')) ?>"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field name required spBtn">
+                            <div class="control">
+                                <input type="hidden" name="ordderetrun_help" id="ordderetrun_help" value="1"/>
+                                <input type="hidden" name="orddercancel_style" id="orddercancel_style" value=""/>
+                                <input type="hidden" name="orddercancel_tickettype" id="orddercancel_tickettype" value="2"/>
+                                <input type="hidden" name="orddercancel_itemskus" id="orddercancel_itemskus" value=""/>
+                                <input type="hidden" name="orddercancel_order_id" id="orddercancel_order_id" value=""/>
+                                <input type="hidden" name="orddercancel_lang_code" id="orddercancel_lang_code"
+                                       value="<?= $escaper->escapeHtmlAttr($storeCode) ?>"/>
+                                <input type="hidden" name="orddercancel_hdn_subject" id="orddercancel_hdn_subject" value=""/>
+                                <input type="hidden" name="orddercancel_hdn_message" id="orddercancel_hdn_message" value=""/>
+                                <input type="hidden" name="orddercancelreturn_requesttype" id="orddercancelreturn_requesttype"
+                                       value=""/>
+                                <div class="mm-action">
+                                    <button id="orddercancel_btn_submit" class="btn btn-custom" name="orddercancel_btn_submit"
+                                            type="submit"><?= $escaper->escapeHtml(__('Submit')) ?></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class='clsmsgsuccessbox'>
+                    <div class="success-content">
+                        <p id="result-message"></p>
+                        <div class="actions-toolbar">
+                            <div class="primary">
+                                <a href="javascript:void(0)" class="action create btn btn-custom primary action done-btn"><?= __('Done') ?></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="ticket-chat" style="display: none">
+    <div class="ticket-chat-content">
+        <div class="chat-messages-wrapper"></div>
+        <div class="chat-submit-form">
+            <form action="<?= $block->escapeUrl($block->getUrl("mytickets/ajax/addMessage")) ?>"
+                  method="POST" id="ticket-chat-form" data-hasrequired="<?= $escaper->escapeHtmlAttr(__('* Required Fields')) ?>"
+                  data-mage-init='{"validation":{}}'>
+                <textarea id='message' name='message' required="required" rows="2" placeholder="<?= __('Type Your Message Here..') ?>"></textarea>
+                <input type='submit' value="<?= __('Submit') ?>" class='add-btn btn-submit-txt'/>
+            </form>
+        </div>
+    </div>
+</div>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Dynamic_Orderreturn/js/modal/order-return": {
+            }
+        }
+    }
+</script>

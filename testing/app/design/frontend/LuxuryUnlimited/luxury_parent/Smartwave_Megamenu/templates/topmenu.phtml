@@ -1,0 +1,56 @@
+<?php
+/**
+ * Copyright © 2018 Porto. All rights reserved.
+ */
+
+?>
+<?php
+/**
+ * Top menu for store
+ *
+ * @see \Smartwave\Megamenu\Block\Topmenu
+ */
+?>
+<?php
+    $_helper = $this->helper(Smartwave\Megamenu\Helper\Data::class);
+    $_config = $_helper->getConfig('sw_megamenu');
+    $columnsLimit = 0;
+    $header_type = $_helper->getConfig('porto_settings/header/header_type');
+
+    if($_config['general']['enable']) {
+?>
+<?php $_menu = $block->getMegamenuHtml(); ?>
+
+<nav class="navigation sw-megamenu" role="navigation">
+    <ul>
+        <?= /* @noEscape */ $_menu; ?>
+    </ul>
+</nav>
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Smartwave_Megamenu/js/mega-menu": {
+            }
+        }
+    }
+</script>
+
+<?php
+    } else {
+?>
+<?php
+    $_menu = $block->getHtml('level-top', 'submenu', $columnsLimit);
+
+
+?>
+
+<nav class="navigation sw-megamenu" role="navigation">
+    <ul data-mage-init='{"menu":{"responsive":true, "expanded":true, "position":{"my":"left top","at":"left bottom"}}}'>
+        <?= /* @noEscape */ $_menu; ?>
+    </ul>
+</nav>
+
+<?php
+    }
+?>

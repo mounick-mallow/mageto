@@ -1,0 +1,274 @@
+& when (@media-common = true) {
+    .brand_labels_hero_banner.avoir_banner {
+        margin-bottom: 50px;
+
+        .slick-dots {
+            bottom: 20px;
+
+            li {
+                button::before {
+                    border: 2px solid @custom__color-black;
+                    background: @custom__color-black;
+                }
+
+                &.slick-active {
+                    button {
+                        &::before {
+                            background: @custom__color-white;
+                            border: 2px solid @custom__color-white;
+                        }
+                    }
+                }
+            }
+
+            li.slick-active {
+                button {
+                    &::before {
+                        width: 12px;
+                        height: 12px;
+                    }
+                }
+            }
+        }
+    }
+
+    .hero-banner {
+        .pagebuilder-slide-wrapper {
+            .pagebuilder-overlay {
+                padding: 0;
+            }
+        }
+    }
+
+    .most-popular {
+    }
+
+    .most_popular {
+        .tile-caption {
+            margin: 0 0 32px;
+
+            .category-name {
+                .lib-font-size(24);
+                .lib-line-height(36);
+                color: @custom__color-black;
+                font-weight: @font-weight__semibold;
+            }
+
+            .view-more {
+                .lib-font-size(16);
+                .lib-line-height(36);
+                color: @custom__color-gray1;
+                font-weight: @menu-font-weight;
+                margin: 0;
+            }
+        }
+
+        .products.products-grid {
+            margin: 0;
+            padding: 0;
+        }
+    }
+
+    .veralusso_static_banners,
+    .veralusso_static_banners2 {
+        img {
+            display: block;
+            width: 100%;
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__m) {
+    .hero-banner,
+    .most-popular {
+        margin-bottom: 60px;
+    }
+
+    .most_popular {
+        .products-grid {
+            .product-item {
+                width: 33.333333%;
+            }
+        }
+    }
+
+    .veralusso_static_banners {
+        float: left;
+        width: 100%;
+        margin: 0 0 50px;
+        .lib-vendor-prefix-display(flex);
+        gap: 15px;
+
+        .veralusso_home_banner_left {
+            width: 64%;
+            padding-right: @indent__xxs;
+        }
+
+        .veralusso_home_banner_right {
+            width: 36%;
+            padding-left: @indent__xxs;
+
+            .veralusso_home_static_banners2 {
+                margin-bottom: 21px;
+            }
+        }
+    }
+
+    .veralusso_static_banners2 {
+        float: left;
+        width: 100%;
+        margin: 0 0 80px;
+        .lib-vendor-prefix-display(flex);
+        gap: 15px;
+
+        .veralusso_home_banner_left {
+            width: 36%;
+            padding-right: @indent__xxs;
+
+            .veralusso_home_static_banners2 {
+                margin-bottom: 24px;
+            }
+        }
+
+        .veralusso_home_banner_right {
+            width: 65%;
+            padding-left: @indent__xxs;
+
+            img {
+                height: 99%;
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__l) {
+    .most_popular {
+        .products-grid {
+            .product-item {
+                width: 25%;
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__l) {
+    .most_popular {
+        .product-tile {
+            .product.product-name a {
+                .lib-font-size(16);
+            }
+        }
+    }
+
+    .veralusso_static_banners {
+        .veralusso_home_banner_left {
+            img {
+                height: 98%;
+            }
+        }
+    }
+
+    .veralusso_static_banners2 {
+        margin: @indent__xs 0 20px 0;
+
+        .veralusso_home_banner_right {
+            img {
+                height: 98%;
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    .hero-banner,
+    .most-popular {
+        margin-bottom: 60px;
+    }
+
+    .most_popular {
+        .products-grid {
+            clear: both;
+
+            .product-item {
+                width: 50%;
+            }
+        }
+    }
+
+    .veralusso_static_banners {
+        margin-bottom: 30px;
+
+        .veralusso_home_banner_left {
+            margin-bottom: 30px;
+        }
+
+        .veralusso_home_banner_right {
+            .veralusso_home_static_banners2 {
+                margin-bottom: 30px;
+            }
+        }
+    }
+
+    .veralusso_static_banners2 {
+        margin-bottom: 60px;
+
+        .veralusso_home_banner_left {
+            .veralusso_home_static_banners2,
+            .veralusso_home_static_banners3 {
+                margin-bottom: 30px;
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__xs) {
+    .most_popular {
+        .product-tile {
+            .product-name {
+                a {
+                    .lib-font-size(16);
+                }
+            }
+        }
+
+        .tile-caption {
+            div.category-name {
+                .lib-font-size(20);
+            }
+        }
+
+        .products-grid {
+            .product-item {
+                width: 100%;
+            }
+        }
+    }
+
+    .pagebuilder-slider.brand_labels_hero_banner.avoir_banner {
+        margin-bottom: 0;
+
+        ul.slick-dots {
+            bottom: 30px;
+        }
+    }
+}

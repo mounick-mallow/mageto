@@ -1,0 +1,45 @@
+name: confi-php-test
+on: 
+  pull_request:
+    types: [opened, reopened, synchronize, ready_for_review]
+
+jobs:
+  config-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.1.0
+      - uses: jitterbit/get-changed-files@v1
+        id: files
+      - run: |
+          for changed_file in ${{ steps.files.outputs.all }}; do
+            
+            if [ `basename $changed_file` == "config.php" ]
+            then
+              echo "Config.php file found in PR request. Exiting......"
+              exit 1
+            else
+              echo "config.php not found in PR"
+            fi
+          done
+      - name: "Update to ERP"
+        run: |
+          curl --location 'https://twilio.theluxuryunlimited.com/api/github-action' \
+          --header 'Content-Type: application/json' \
+          --data '
+          {
+          "GITHUB_ACTOR": "'"$GITHUB_ACTOR"'",
+          "GITHUB_API_URL": "'"$GITHUB_API_URL"'",
+          "GITHUB_BASE_REF": "'"$GITHUB_BASE_REF"'",
+          "GITHUB_EVENT_NAME": "'"$GITHUB_EVENT_NAME"'",
+          "GITHUB_JOB": "'"$GITHUB_JOB"'",
+          "GITHUB_REF": "'"$GITHUB_REF"'",
+          "GITHUB_REF_NAME": "'"$GITHUB_REF_NAME"'",
+          "GITHUB_REF_TYPE": "'"$GITHUB_REF_TYPE"'",
+          "GITHUB_REPOSITORY": "'"$GITHUB_REPOSITORY"'",
+          "GITHUB_REPOSITORY_ID": "'"$GITHUB_REPOSITORY_ID"'",
+          "GITHUB_RUN_ATTEMPT": "'"$GITHUB_RUN_ATTEMPT"'",
+          "GITHUB_RUN_ID": "'"$GITHUB_RUN_ID"'",
+          "GITHUB_WORKFLOW": "'"$GITHUB_WORKFLOW"'",
+          "RUNNER_NAME": "'"$RUNNER_NAME"'"
+          }
+          '

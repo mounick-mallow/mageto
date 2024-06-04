@@ -1,0 +1,74 @@
+//
+//  APP - CMS PAGE
+//  _____________________________________________
+
+@app-tabs-container__background: @theme__secondary--color-50;
+@app-tabs-container__padding: 0 @indent__s @indent__s;
+@app-tabs-container__border-radius: 5px;
+@app-tabs-tab__border: 0;
+@app-tabs-tab__color: @theme__primary--color-500;
+@app-tabs-tab__font-size: 20px;
+@app-tabs-tab-active__color: @color-black;
+@app-tabs-tab__font-weight: @font-weight__bold;
+@app-tabs-data__border: 0;
+@app-tabs-data__color: @theme__territory--color-400;
+@app-tabs-data__font-size: 16;
+
+@app-subscribe-form__: flex;
+@app-subscribe-form__height: 52px;
+@app-subscribe-button__background: @theme__primary--color;
+@app-subscribe-button__color: @color-white;
+@app-subscribe-button__border-radius: 12px;
+@app-subscribe-button__font-size: 16;
+@app-subscribe-title__color: @color-black;
+@app-subscribe-title__font-family: @font-family__base;
+@app-subscribe-title__font-weight: @font-weight__bold;
+@app-subscribe-subtitle__font-weight: @font-weight__regular;
+@app-subscribe-subtitle__color: @theme__territory--color-400;
+@app-subscribe-subtitle__font-size: 20;
+@app-subscribe-subtitle__font-weight: @font-weight__heavier;
+
+@app-reasons-title__color: @theme__primary--color-500;
+@app-reasons-title__font-size: 24;
+@app-reasons-title__font-weight: @font-weight__bold;
+@app-reasons-title__margin: 0 0 @indent__base;
+@app-reasons-subtitle__font-size: 20;
+@app-reasons-subtitle__font-weight: @font-weight__heavier;
+@app-reasons-description__color: @theme__territory--color-400;
+@app-reasons-description__font-size: 14;
+@app-reasons-block__background: @color-white;
+@app-reasons-block__border-radius: 5px;
+@app-reasons-block__border: 1px solid @theme__secondary--color-50;
+@app-reasons-block__box-shadow: 3px 3px @theme__secondary--color-50;
+@app-reasons-icon-wrapper__height: 60px;
+@app-reasons-icon-wrapper__width: 60px;
+@app-reasons-icon-wrapper__border: 0;
+@app-reasons-icon-wrapper__background: @color-white;
+@app-reasons-icon__height: 24px;
+@app-reasons-icon__width: 24px;
+@app-reasons-middle-wraper__border: 0;
+
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .app-middle-wraper {
+        .container {
+            .row {
+                .col-md-4 {
+                    h3 {
+                        &::after {
+                            .lib-css(background, @theme__secondary--color-500);
+                            content: '';
+                            display: block;
+                            height: 2px;
+                            margin: 20px auto;
+                            width: 32px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

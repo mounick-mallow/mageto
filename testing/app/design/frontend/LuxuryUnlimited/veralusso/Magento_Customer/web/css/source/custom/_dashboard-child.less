@@ -1,0 +1,162 @@
+// /**
+//  * Copyright © 2015 Magento. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//  border varibles
+
+@my-account-sidebar-border: 2px solid @custom__color-yellow-light;
+
+//
+//  Common
+//  ---------------------------------------------
+
+& when (@media-common = true) {
+    .account {
+        .page-wrapper {
+            .main {
+                .container {
+                    max-width: 100%;
+                    padding: 0;
+                    width: 100%;
+                }
+            }
+
+            .page-title {
+                width: 100%;
+            }
+        }
+    }
+
+    body {
+        &.layout-fullwidth.page-layout-2columns-left {
+            &.account {
+                .sidebar-main {
+                    float: unset;
+                    padding: 0;
+
+                    &::before {
+                        &:extend(.abs-visually-hidden all);
+                    }
+                }
+
+                #block-collapsible-nav {
+                    margin: 0;
+                }
+            }
+        }
+    }
+
+    /* Dashboard */
+
+    .customer-account-index {
+        .block-dashboard-addresses,
+        .block-dashboard-orders {
+            .block-title {
+                font-family: @custom-primary-font-family;
+                font-weight: @font-weight__heavier;
+                margin: @indent__m 0;
+            }
+        }
+    }
+
+    .block-dashboard-addresses {
+        .box-billing-address,
+        .box-billing-address {
+            .box-title-top-section {
+                .box-title {
+                    input[type='radio']:checked {
+                        accent-color: @theme__primary--color-900;
+                    }
+                }
+            }
+
+            .box-content {
+                address {
+                    .lib-font-size(16);
+                    .lib-line-height(22);
+                    color: @custom__color-gray2;
+                    font-family: @custom-primary-font-family;
+                    font-weight: @font-weight__heavier;
+                }
+            }
+        }
+    }
+
+    body {
+        &.layout-fullwidth.page-layout-2columns-left {
+            &.account {
+                .columns {
+                    .lib-css(display, flex, @_prefix: 1);
+                    .lib-css(flex-direction, row-reverse, @_prefix: 1);
+
+                    .sidebar-main,
+                    .column.main {
+                        float: none;
+                        order: unset;
+                        flex-basis: unset;
+                    }
+
+                    .column.main {
+                        padding: 0 0 0 (@indent__l + 3);
+                    }
+                }
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    body {
+        &.layout-fullwidth.page-layout-2columns-left {
+            &.account {
+                .sidebar-main {
+                    max-width: 100%;
+                }
+
+                .column.main {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+
+//
+//  Destop
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__l) {
+    body {
+        &.layout-fullwidth.page-layout-2columns-left {
+            &.account {
+                .sidebar-main {
+                    max-width: 320px;
+                }
+
+                .column.main {
+                    width: ~'calc(100% - 350px)';
+                }
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__custom__xl) {
+}

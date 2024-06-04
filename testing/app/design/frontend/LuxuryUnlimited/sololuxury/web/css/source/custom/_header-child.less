@@ -1,0 +1,81 @@
+//
+//  Common
+//  _____________________________________________
+& when (@media-common = true) {
+    .page-wrapper {
+        //  Header
+        .page-header {
+            margin-bottom: 0;
+            .header {
+                &.content {
+                    .lib-css(grid-template-columns, auto auto, @_prefix: 1);
+                }
+
+                .content-right {
+                    .lib-css(gap, @indent__s);
+
+                    .switcher-website.cls_switcher {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+
+    .action.primary,
+    .action {
+        span {
+            padding-top: 0;
+        }
+    }
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__l) {
+    .logo {
+        img {
+            width: 172px;
+            height: 36px;
+        }
+    }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    .page-header {
+        border-bottom: 1px solid @border-color__base;
+        padding-bottom: 19px;
+    }
+
+    .logo {
+        .lib-css(gap, 0 20px, @_prefix: 1);
+
+        img {
+            max-width: 80px;
+        }
+    }
+
+    .panel-utilities {
+        margin-right: -7px;
+        margin-left: -7px;
+
+        .utilities,
+        .minicart-wrapper {
+            padding-right: 7px;
+            padding-left: 7px;
+        }
+    }
+}

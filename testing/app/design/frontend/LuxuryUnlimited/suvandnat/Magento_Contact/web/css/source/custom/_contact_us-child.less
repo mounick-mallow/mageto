@@ -1,0 +1,49 @@
+& when (@media-common =true) {
+    .contact-index-index {
+        .page-title-wrapper {
+            display: inline-flex;
+        }
+    }
+
+    .form {
+        &.contact {
+            background: @theme__secondary--color-50;
+            border-radius: @indent__xxs;
+
+            .contact-title {
+                background: @custom__color-black;
+                color: @theme__territory--white;
+                padding: @indent__s @indent__l;
+                border-radius: @indent__xxs @indent__xxs @contact-zero-val
+                    @contact-zero-val;
+                .lib-font-size(24);
+                font-weight: @font-weight__bold;
+                .lib-line-height(30);
+            }
+
+            .field {
+                &.note {
+                    &.no-label {
+                        color: @custom__color-text-top;
+                        .lib-font-size(24);
+                        font-weight: @font-weight__heavier;
+                        .lib-line-height(30);
+                        margin-top: (@indent__m - 1px);
+                    }
+                }
+
+                select {
+                    background-color: @theme__territory--white;
+                }
+            }
+
+            .fieldset {
+                padding: (@indent__m - 1px);
+            }
+
+            .actions-toolbar {
+                margin-bottom: @contact-zero-val;
+            }
+        }
+    }
+}

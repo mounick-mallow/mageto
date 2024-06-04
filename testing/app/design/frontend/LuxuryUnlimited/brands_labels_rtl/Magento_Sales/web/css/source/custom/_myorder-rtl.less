@@ -1,0 +1,131 @@
+// /**
+//  * Copyright © 2015 Magento. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+& when (@media-common =true) {
+    .orders-recent {
+        .orders-recent-items {
+            .items {
+                .item {
+                    .product-img {
+                        margin: 0 0 0 @indent__l;
+                    }
+                }
+            }
+
+            .order-cancel {
+                &:first-child {
+                    margin: 0 0 0 @indent__s;
+                }
+            }
+
+            .action {
+                &.cancel,
+                &.return {
+                    padding: 4px 22px;
+                }
+
+                &:last-child {
+                    margin-left: 0;
+                }
+            }
+        }
+    }
+
+    ul.order-tracking-steps {
+        li.step {
+            &:after {
+                right: -@indent__l;
+            }
+
+            &:before {
+                margin: 0 -@indent__xl 0 0;
+            }
+        }
+    }
+
+    ul.product-status-bar {
+        .status-item {
+            &::before {
+                margin: 0 -@indent__l 0 0;
+            }
+
+            &::after {
+                right: -20px;
+            }
+        }
+    }
+}
+
+//
+//    Desktop
+//--------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum ='min')
+    and
+    (@break =@screen__s) {
+    .modal-popup {
+        ul.order-tracking-steps {
+            li.step {
+                &:before {
+                    margin: 0 @indent__xl 0 0;
+                }
+
+                &:after {
+                    right: -50px;
+                }
+            }
+        }
+    }
+
+    ul.product-status-bar {
+        li.status-item {
+            &::before {
+                margin: 0 auto 3px auto;
+            }
+
+            &::after {
+                right: -50%;
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum ='min')
+    and
+    (@break =@screen__l) {
+    .sales-order-history {
+        &.layout-fullwidth.page-layout-2columns-left {
+            &.account {
+                .columns {
+                    .column.main {
+                        padding: 0 30px 0 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum ='min')
+    and
+    (@break =@screen__custom__xl) {
+    .orders-recent {
+        .orders-recent-items {
+            .orders-recent-details {
+                .col {
+                    &:last-child {
+                        padding-left: 0;
+                    }
+                }
+            }
+        }
+    }
+}

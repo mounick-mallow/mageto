@@ -1,0 +1,78 @@
+<?php
+$websites = $block->getAllWebsites();
+$cookiebaseUrl = $block->getBaseUrlFromCookies();
+$currentBaseUrl = $block->getCurrentUrl();
+$currentStores = $block->getCurrentStores();
+$currentWebsite = $block->getCurrentWebsite();
+$currentStore = $block->getCurrentStore();
+$currencyName = $block->getCurrentStoreCurrency();
+$countryOptions = $block->generateJsonOptionCountry();
+?>
+
+<div id="cookie-popup-window" style="display:none;">
+    <div class="info">
+        <p><?= /* @noEscape */ __('Please choose from the following language'); ?> </p>
+    </div>
+    <fieldset class="fieldset">
+        <legend class="fieldset-legend">
+            <span><?= $block->escapeHtml(__('Store Switcher')) ?></span>
+        </legend>
+        <div class="field">
+            <label class="label" for="websites"><span><?= /* @noEscape */ __('Shipping Country')?></span></label>
+            <div class="control" data-bind="scope: 'dependableDropdown'">
+                <select name="websites" id="websites" class="country-website"
+                    data-bind="options: availableOptions,
+                    optionsText: 'label',
+                    optionsValue: 'value',
+                    selectedOptions: chosenCountries"
+                    >
+                </select>
+            </div>
+        </div>
+        <div class="field">
+            <label class="label" for="store"><span><?= /* @noEscape */ __('View Price In')?></span></label>
+            <div class="control">
+                <select name="store" id="store">
+                    <?php foreach ($currentStores as $store): ?>
+                        <option value="<?= /* @noEscape */ $store->getStoreId() ?>"
+                            <?= ($store->getId() == $currentStore) ? "selected" : ""; ?>>
+                            <?= /* @noEscape */ $store->getName() ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        </div>
+    </fieldset>
+    <div class="info currency-placeholder">
+        <p><?= /* @noEscape */ sprintf(__('Price an <b>all Inclusive</b> which means hey include duty and import fees. <b>Payment is in <span class="currency">%s</span>.</b>'),$currencyName); ?></p>
+        <p><a href="<?php echo $this->getUrl('countrylist');?>"><?= __('View Country List')?></a></p>
+    </div>
+    <div class="buttons-container">
+        <button class="action primary" name="cancel" id="cancel"><span><?= /* @noEscape */ __('Cancel'); ?></span></button>
+        <button class="action primary" name="redirect" id="redirect"><span><?= /* @noEscape */ __('Ok'); ?></span></button>
+    </div>
+</div>
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "LuxuryUnlimited_StoreSwitcher/js/store-switcher": {
+                "cookieBaseUrl": "<?php echo $cookiebaseUrl ?>"
+            }
+        }
+    }
+</script>
+<script type="text/x-magento-init">
+{
+    ".country-website": {
+        "Magento_Ui/js/core/app": {
+           "components": {
+                "dependableDropdown": {
+                    "component": "LuxuryUnlimited_StoreSwitcher/js/website-dropdown",
+                    "config": <?= json_encode($countryOptions) ?>
+                }
+            }
+        }
+    }
+}
+</script>

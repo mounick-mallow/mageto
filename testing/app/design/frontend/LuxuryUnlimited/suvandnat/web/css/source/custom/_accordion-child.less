@@ -1,0 +1,39 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .acc__card {
+        .acc__title {
+            padding: @indent__base;
+            border: @accordion-custom-box-border-width solid
+                @accordion-custom-box-border-color;
+
+            &:after {
+                margin-top: -20px;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                border-color: @theme__secondary--color-50;
+                .lib-vendor-prefix-display(flex);
+                .lib-css(justify-content, center, @_prefix: 1);
+                .lib-css(align-items, center, @_prefix: 1);
+            }
+
+            &.active {
+                border-color: @theme__primary--color;
+                background-color: @theme__primary--color;
+                color: @color-white;
+
+                &:after {
+                    background-color: @color-white;
+                }
+            }
+        }
+
+        .acc__panel {
+            padding-top: 24px;
+            padding-bottom: @indent__xl - @accordion-custom-box-margin;
+        }
+    }
+}

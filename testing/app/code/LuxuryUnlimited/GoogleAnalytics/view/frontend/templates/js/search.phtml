@@ -1,0 +1,37 @@
+<script>
+    require(['jquery'], function ($) {
+        $(document).ready(function () {
+            var searchInput = $('#minisearch-input-top-search');
+            var formSearch = $('#minisearch-form-top-search');
+            if (searchInput.length) {
+                let typingTimer;
+                const interval = 2500;
+
+                searchInput.on('keyup', function () {
+                    clearTimeout(typingTimer);
+                    typingTimer = setTimeout(pushData, interval);
+                });
+
+                searchInput.on('keydown', function () {
+                    clearTimeout(typingTimer);
+                });
+
+                formSearch.submit(function (e) {
+                    clearTimeout(typingTimer);
+                    pushData();
+                });
+            }
+
+            function pushData() {
+                let searchVal = searchInput.val();
+                if (searchVal) {
+                    dataLayer.push({
+                        'event': 'userEngagement',
+                        'eventAction': 'search_item',
+                        'eventLabel': searchVal
+                    });
+                }
+            }
+        });
+    });
+</script>

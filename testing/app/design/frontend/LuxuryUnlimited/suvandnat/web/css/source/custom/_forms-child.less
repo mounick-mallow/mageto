@@ -1,0 +1,33 @@
+//
+//  Common
+//  ---------------------------------------------
+
+& when (@media-common = true) {
+    .fieldset {
+        .field {
+            .file-input-wrap {
+                padding: 16px 20px;
+                border-radius: 5px;
+                border: @form-element-input__border;
+                background-color: @form-element-input__background;
+
+                > .file-button {
+                    .lib-font-size(12);
+                    .lib-line-height(20);
+                    color: @theme__secondary--color-500;
+                    background: @theme__secondary--color-50;
+                    border: 1px solid @theme__secondary--color-100;
+                    border-radius: 5px;
+                    padding: 4px 10px;
+                    margin-right: 12px;
+                }
+
+                > .input-file-label {
+                    .lib-font-size(16);
+                    .lib-line-height(22);
+                    color: @theme__territory--color-400;
+                }
+            }
+        }
+    }
+}

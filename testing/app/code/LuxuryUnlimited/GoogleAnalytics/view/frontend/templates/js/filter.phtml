@@ -1,0 +1,54 @@
+<script>
+    require(['jquery'], function ($) {
+        $(document).ready(function () {
+            if ($('#layered-filter-block').length) {
+                checkRenderFilters();
+            }
+
+            function initGa() {
+                $('.filter-options-content a').on('click', function (e) {
+                    console.log('click');
+                    e.preventDefault();
+                    var filterName = $(this).closest('.filter-options-item').find('.filter-options-title').text().trim();
+                    var selectedOption = $(this).contents().filter(function () {
+                        return this.nodeType === 3;
+                    }).text().trim();
+                    if (!selectedOption) {
+                        var rangePrice = $(this).closest('.filter-options-item').find('.smile-es-range-slider');
+                        if (rangePrice.length) {
+                            let fromPrice = rangePrice.find("[data-role=from-label]").text().trim();
+                            let toPrice = rangePrice.find("[data-role=to-label]").text().trim();
+                            selectedOption = fromPrice + ' - ' + toPrice;
+                        } else {
+                            selectedOption = $(this).find('label').find('span').first().text().trim();
+                        }
+                    }
+                    var href = $(this).attr('href');
+                    pushData(filterName, selectedOption);
+                    if (href) {
+                        window.location.href = href;
+                    }
+                });
+            }
+
+            function pushData(filterName, selectedOption) {
+                window.dataLayer.push({
+                    'event': 'userEngagement',
+                    'eventCategory': 'product_list',
+                    'eventAction': 'filter',
+                    'eventLabel': 'Product List - ' + filterName + ' - ' + selectedOption
+                });
+            }
+
+            function checkRenderFilters() {
+                if ($('.smile-es-range-slider .ui-slider').length) {
+                    initGa();
+                } else {
+                    setTimeout(function () {
+                        checkRenderFilters();
+                    }, 3000);
+                }
+            }
+        });
+    });
+</script>

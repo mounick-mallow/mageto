@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <erp>
+            <general>
+                <is_enable>1</is_enable>
+                <send_request>1</send_request>
+                <allowed_iframe>https://erp.theluxuryunlimited.com,https://erpstage.theluxuryunlimited.com</allowed_iframe>
+                <hosts_api>https://erp.theluxuryunlimited.com,https://erpstage.theluxuryunlimited.com</hosts_api>
+                <page_save>/api/magento_modules/pagebuilder/edit</page_save>
+            </general>
+        </erp>
+    </default>
+</config>

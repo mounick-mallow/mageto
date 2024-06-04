@@ -1,0 +1,20 @@
+<div class="field skype">
+    <label for="skypem" class="label">
+        <span><?= $escaper->escapeHtml(__('Marriage Anniversary')) ?></span>
+    </label>
+    <div class="control">
+        <div class="control">
+            <input type="text" name="skypem" id="skypem" value="" placeholder="<?= $block->escapeHtmlAttr(__('Marriage Anniversary')) ?>"
+                   title="<?= $block->escapeHtmlAttr(__('Marriage Anniversary')) ?>" class="input-text has-datepicker">
+            <input type="text" name="skype" id="skype" value="0000/00/00" class="input-text" style="display: none;">
+            <span class="datepicker-symbol" style="cursor: pointer"></span>
+        </div>
+    </div>
+</div>
+<script type="text/x-magento-init">
+{
+    "#skypem": {
+        "MarriageCalendar" : {}
+    }
+}
+</script>

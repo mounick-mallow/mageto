@@ -1,0 +1,490 @@
+<?php
+/*
+* @category: Magepow
+* @copyright: Copyright (c) 2014 Magepow (http://www.magepow.com/)
+* @licence: http://www.magepow.com/license-agreement
+* @author: MichaelHa
+* @create date: 2019-06-14 17:19:50
+* @LastEditors: MichaelHa
+* @LastEditTime: 2019-06-29 12:48:03
+*/
+?>
+<?php
+
+use Magento\Framework\App\Action\Action;
+
+$listBlock = $block->getListProduct();
+$wishlistHelper = $this->helper('Magento\Wishlist\Helper\Data');
+
+$dynamicHelper = $this->helper('\Dynamic\Customization\Helper\Data');
+$categoryFactory = $dynamicHelper->getCategoryManager();
+$helperImport = $dynamicHelper->getImageHelperManager();
+$priceHelper = $dynamicHelper->getPriceHelperManager();
+$freeShipping_status = $block->getFreeShippingStatus();
+$currencySymbols = $block->getStoreCurrency();
+$currencyCode = $block->getCurrentCurrencyCode();
+$freeShipping = $block->getFreeShippingValue();
+$helper = $block->getAjaxHelper();
+$imageHelper = $block->getImageHelper();
+$resultItem = $block->getItem();
+$product = $resultItem->getProduct();
+$brandValue = $product->getAttributeText('brands');
+$resultPrice = $helper->getProductTaxDisplayType() == \Magento\Tax\Model\Config::DISPLAY_TYPE_EXCLUDING_TAX ?
+$resultItem->getPrice() : $resultItem->getPriceInclTax();
+$cart = $block->getCartHelper()->getCart();
+$showContinue = $helper->isShowContinueBtn();
+$showCartInfo = $helper->isShowCartInfo();
+$showCheckoutLink = $helper->isShowCheckoutLink();
+$freeShipping_message = $helper->getFreeShippingMessageText();
+$congratulation_message = $helper->getCongratulationMessageText();
+$countDown = ($helper->getCountDownTime() > 0) ? $helper->getCountDownTime() : 0;
+$confBuyNow = $block->getRequest()->getParam('confbuyNow',false);
+$compositeCartViewUrl = $block->getUrl('ajaxcart/index/view', ['id' => $product->getId(),'confBuyNow'=>$confBuyNow]);
+
+
+
+
+
+?>
+<div class="popup">
+    <div class="block">
+        <header class="modal-header">
+            <h1 class="modal-title" data-role="title">
+                <?php if ($product->getTypeId() == 'configurable' ) : ?>
+                    <?php echo __('Please, choose a size to add product to cart'); ?>
+                <?php else: ?>
+                    <?php if ($confBuyNow == "false"): ?>
+                        <?php echo __('Product Added to Cart'); ?>
+                    <?php else:?>
+                        <?php echo __('Buy Now'); ?>
+                    <?php endif;?>
+                <?php endif; ?>
+            </h1>
+            <button class="action-close" data-role="closeBtn" type="button">
+                <span><?php echo __('Close'); ?></span>
+            </button>
+        </header>
+        <p class="product-message">
+            <?php
+            $productName = $block->escapeHtml($resultItem->getName()) ;
+            $link = '<strong><a href="' . $block->escapeUrl($product->getProductUrl()) . '" title="' . $productName . '">' . strtolower($productName) . '</a></strong>';
+            if(!empty($productName)) {
+                if ($block->getRelatedAdded()) {
+                    /* @noEscape */ echo __(
+                        'You added %1 and related products to your shopping cart.',
+                        $link
+                    );
+                }
+            }
+            ?>
+        </p>
+        <div class="ajaxcart-wrapper-main">
+            <div class="main-section">
+                <div class="left-main-section">
+                    <?php if ($helper->isShowProductImage()) :?>
+                        <div class="product-image">
+                            <img alt="<?= $block->escapeHtml($resultItem->getName()) ?>" src="<?php echo $block->escapeUrl(
+                                    $imageHelper->init(
+                                        $product,
+                                        'mini_cart_product_thumbnail',
+                                        ['height' => $helper->getImageHeight() , 'width'=> $helper->getImageWidth()]
+                                    )->getUrl()
+                                ); ?>">
+                            <?php if ($helper->isShowProductPrice() && $product->getTypeId() != \Magento\GroupedProduct\Model\Product\Type\Grouped::TYPE_CODE) :?>
+                                <div>
+                                    <span>
+                                        <?php
+                                        echo $block->escapeHtml(
+                                            $block->getPricingHelper()->currency(
+                                                $resultPrice,
+                                                true,
+                                                false
+                                            )
+                                        );
+                                        ?>
+                                    </span>
+                                </div>
+                                <?php endif; ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
+                <div class="right-main-section">
+                    <div class="product-info">
+                        <?php if (!empty($brandValue)) { ?>
+                            <div class="product-brand-name">
+                                <?= $block->escapeHtml($brandValue); ?>
+                            </div>
+                        <?php } ?>
+                        <div class="product-name"><?= $block->escapeHtml($resultItem->getName()) ?></div>
+                    </div>
+                    <button class="product-option-btn" style="display:none"></button>
+                    <?php if ($product->getTypeId() == 'configurable' ) : ?>
+                        <?php
+                            $configurableOptions = $product->getTypeInstance(true)->getConfigurableAttributesAsArray($product);
+                            $sizeList = [];
+                            $sizeAttributeId = null;
+
+                            foreach ($configurableOptions as $attributeId =>  $attribute) {
+                                if ($attribute['attribute_code'] == 'size_v2') {
+                                    $sizeAttributeId = $attributeId;
+                                    foreach ($attribute['values'] as $value) {
+                                        $sizeList[$value['value_index']] = $value['label'];
+                                    }
+                                }
+                            }
+                        ?>
+
+                        <div class="wp-product-container">
+                            <div class="fieldset">
+                                <div class="field configurable required">
+                                    <label class="label">
+                                        <span><?php echo __('Size'); ?></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="product-options-wrapper--" id="product-options-wrapper--">
+                                <div class="product-add-form">
+                                    <div class="product-options-wrapper">
+                                        <div class="fieldset">
+                                            <div class="field configurable required">
+                                                <div class="control">
+                                                    <select class="super-attribute-select" aria-required="true">
+                                                        <option value="">
+                                                            <?= $block->escapeHtml(__('Choose an Option...')) ?>
+                                                        </option>
+                                                        <?php foreach ($sizeList as $sizeId => $size): ?>
+                                                        <option value="<?php echo $sizeId?>">
+                                                            <?php echo $size; ?>
+                                                        </option>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <form id="add-configurable-product-form">
+                                <input type="hidden" name="product" value="<?php echo  $product->getId(); ?>" />
+                                <input type="hidden" name="item" value="<?php echo  $product->getId(); ?>" />
+
+                                <input type="hidden" name="super_attribute[<?php echo $sizeAttributeId; ?>]"
+                                       id="add-configurable-product-form-attr"
+                                       value="" />
+                                <input type="hidden" name="qty" value="1" />
+                                <input type="hidden" name="product_sku" value="<?php echo $product->getSku();?>" />
+                                <input type="hidden" name="confbuyNow" value="false" />
+
+                            </form>
+                        </div>
+
+
+
+                    <?php else: ?>
+                    <div class="wp-product-container test-container"></div>
+                    <?php endif; ?>
+                    <div class="actions" style="display: flex; justify-content: center; align-items: center;">
+
+                        <?php if ($product->getTypeId() == 'configurable') : ?>
+                            <button type="button" class="primary add-conf-product-to-cart">
+                                <?php echo __('Add To Cart');  ?>
+                            </button>
+                        <?php endif; ?>
+                        <div class="checkout-link" style="margin-right: 10px">
+                            <a class="action primary" type="button" href="<?php echo $block->escapeUrl($block->getUrl('checkout')); ?>">
+                                <span><?php echo __('Go to checkout'); ?></span>
+                            </a>
+                        </div>
+                        <div class="btn-viewcart <?php echo (!$showContinue) ? 'full-width' : ''; ?>">
+                            <a
+                                href="<?php echo $block->escapeUrl($block->getUrl('checkout/cart')); ?>"
+                                title="<?php echo $block->escapeHtml(__($helper->getBtnViewcartText())); ?>"
+                                class="view-cart"
+                                >
+                                <button class="viewcart action primary"
+                                    type="button"
+                                    title="<?php echo $block->escapeHtml(__($helper->getBtnViewcartText())); ?>">
+                                    <span><?php echo __('View Cart') ?></span>
+                                    <?php if ($helper->getCountDownActive() == \Magepow\Ajaxcart\Model\Config\Source\Countdown::POPUP_COUNTDOWN_VIEW_CART_BTN
+                                        && $helper->getCountDownTime() > 0) :?>
+                                        <span class="<?php echo ($helper->getCountDownActive() == \Magepow\Ajaxcart\Model\Config\Source\Countdown::POPUP_COUNTDOWN_VIEW_CART_BTN) ? 'countdown' : ''; ?>">
+                                            (<?php echo $block->escapeHtml($helper->getCountDownTime()); ?>)
+                                        </span>
+                                        <?php endif; ?>
+                                </button>
+                            </a>
+                        </div>
+                        <?php if ($showContinue) : ?>
+                            <div class="btn-continue" style="margin:unset;">
+                                <button
+                                    class="continue action primary"
+                                    type="button"
+                                    title="<?php echo $block->escapeHtml(__($helper->getBtnContinueText())); ?>"
+                                    >
+                                    <span><?php echo $block->escapeHtml(__($helper->getBtnContinueText())); ?></span>
+                                </button>
+                            </div>
+                            <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php if ($confBuyNow == "false"):?>
+        <div class="custtabs">
+
+            <div class="recommendation-popup" rel="tab1"><?= /* @noEscape */ __('Recommendation') ?></div>
+            <div class="all_tab">
+                <div id="tab1" class="tab_content">
+                    <!-- ##################### START CODE FOR RECOMMENDATION ##################### -->
+                    <?php
+                    $_product = $resultItem->getProduct();
+                    $categories = $_product->getCategoryIds();
+                    $categoryProducts = $block->getWishlistProducts($categoryFactory, $_product);
+                    ?>
+                    <div class="productcount">
+                        <?= $block->escapeHtml("c p id :" . $_product->getId()) ?><br/>
+                        <?= $block->escapeHtml("c name :" . $_product->getName()) ?><br/>
+                        <?= $block->escapeHtml("c color :" . $_product->getColor()) ?><br/>
+                        <?= $block->escapeHtml("c brand :" . $_product->getBrands()) ?><br/>
+                        <?= $block->escapeHtml("c finalprice :" . $_product->getFinalPrice()) ?><br/>
+                        <?= $block->escapeHtml("c percentage :" . $percentage = $_product->getFinalPrice() * 20 / 100) ?><br/>
+                        <br/>
+                        <?= $block->escapeHtml("Category ID :" .end($categories)) ?>
+                        <?= $block->escapeHtml("Found Count : ".count($categoryProducts)) ?><br/>
+                    </div>
+                    <?php if(count($categoryProducts)>0){ ?>
+                        <div class="product info detailed cls_recommendation">
+                            <div class="product data items">
+                                <div class="block upsell">
+                                    <div class="block-content content">
+                                        <div class="products wrapper grid products-grid products-recommandation">
+                                            <div class="products list items product-items owl-carousel">
+                                                <!-- START CODE FOR FIRST BLOCK -->
+                                                <?php foreach ($categoryProducts as $product) {
+                                                    $imageUrl = $helperImport->init($product, 'category_page_grid-hover')
+                                                    ->setImageFile($product->getImage()) // image,small_image,thumbnail
+                                                    ->getUrl();
+                                                    $productUrl = $block->getProductUrl($product);
+                                                    $brandName = $product->getResource()->getAttribute('brands')->getFrontend()->getValue($product);
+                                                    ?>
+                                                    <div class="item product product-item">
+                                                        <div class="product-item-info type1" data-container="product-grid">
+
+                                                            <a class="belvg-quick-view-link" data-id="<?php echo $_product->getId(); ?>" role="button">
+                                                                <?php echo __('Quick View'); ?>
+                                                            </a>
+
+                                                            <div class="product photo product-item-photo">
+                                                                <a href="<?= $block->escapeUrl($productUrl) ?>">
+                                                                    <img class="product-image-photo default_image" src="<?= $block->escapeUrl($imageUrl) ?>" alt="<?= $block->escapeHtmlAttr($product->getName()) ?>">
+                                                                </a>
+                                                                <div class="product-addto-links" data-role="add-to-links">
+                                                                    <div class="product-item-inner">
+
+			                                    	                    <div class="okaydone actions-primary">
+                                                                            <a href="javascript:void(0)"
+                                                                               data-product='<?= $block->escapeHtmlAttr($wishlistHelper->getAddParams($product)) ?>'
+                                                                               class="action towishlist wishlist-add-popup-btn
+                                                                               wishlist-listing-<?= /* @noEscape */ $product->getId()?>"
+                                                                               data-url="<?php echo $this->getUrl('ajaxwishlist/index/add/'); ?>"
+                                                                               data-action="add-to-wishlist">
+                                                                                <span></span>
+                                                                            </a>
+
+                                                                            <?php $postParams = $listBlock->getAddToCartPostParams($product); ?>
+                                                                            <?php $addToCartUrl =  $listBlock->getAddToCartUrl($_product);  ?>
+                                                                            <?php if ($_product->isSaleable()):?>
+                                                                                <?php $productBlock = $this->getLayout()->createBlock("\Magento\Catalog\Block\Product\ListProduct");?>
+                                                                                <?php $postParams = $productBlock->getAddToCartPostParams($product); ?>
+                                                                                <form data-role="tocart-form"
+                                                                                      action="<?= $postParams['action'] ?>"
+                                                                                      data-product-sku="<?= $block->escapeHtml($product->getSku()) ?>"
+                                                                                      method="post" >
+                                                                                    <input type="hidden"
+                                                                                           name="product"
+                                                                                           value="<?= /* @noEscape */ $postParams['data']['product'] ?>">
+                                                                                    <input type="hidden"
+                                                                                           name="<?= /* @noEscape */ Action::PARAM_NAME_URL_ENCODED ?>"
+                                                                                           value="<?=
+                                                                                           /* @noEscape */ $postParams['data'][Action::PARAM_NAME_URL_ENCODED]
+                                                                                           ?>">
+                                                                                    <?php echo $block->getBlockHtml('formkey')?>
+                                                                                    <input type="hidden" name="return_url" value="<?php echo $block->getUrl('checkout/cart/index');?>">
+                                                                                    <div class="btn">
+                                                                                        <button type="submit" title="Add to Cart" class="action tocart primary" style="position: relative; top: 10px; right: 10px;">
+                                                                                            <span><?= __('Add to Cart') ?></span>
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </form>
+                                                                            <?php endif;?>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product details product-item-details">
+                                                                <strong class="product-brand-name">
+                                                                    <a class="product-item-link" href="<?= $block->escapeUrl($productUrl) ?>"><?= $block->escapeHtml($brandName) ?></a>
+                                                                </strong>
+                                                                <strong class="product name product-item-name">
+                                                                    <a class="product-item-link" href="<?= $block->escapeUrl($productUrl) ?>">
+                                                                        <?= $block->escapeHtmlAttr($product->getName()) ?>
+                                                                    </a>
+                                                                </strong>
+                                                                <div class="price-box price-final_price">
+                                                                    <span class="normal-price">
+                                                                        <span class="price-container price-final_price tax weee">
+                                                                            <span class="price-wrapper"><span class="price"><?= /* @noEscape */ $priceHelper->currency($product->getFinalPrice(), true, false); ?></span></span>
+                                                                        </span>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <script type="text/x-magento-init">
+                                                        {
+                                                            "[data-role=tocart-form], .form.map.checkout": {
+                                                                "catalogAddToCart": {
+                                                                    "product_sku": "<?= $block->escapeJs($product->getSku()) ?>"
+												                }
+											                }
+										                }
+                                                    </script>
+                                                    <?php } //end foreach ?>
+                                                <!-- END CODE FOR FIRST BLOCK -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <?php } else { ?>
+                        <div class="product info detailed cls_recommendation noproductrecome">
+                            <p class="clsnoprod"><?= /* @noEscape */ __('No Products Found') ?></p>
+                        </div>
+                        <?php } ?>
+                </div>
+            </div>
+        </div>
+        <?php endif;?>
+        <?php if ($showCartInfo || $showCheckoutLink) :?>
+            <div class="cart-info">
+                <?php if ($showCartInfo) : ?>
+                    <div class="items-count">
+                        <span>
+                            <?php
+                            if ($cart->getItemsQty() > 1) {
+                                echo $block->escapeHtml(__('%1 items in your cart', $cart->getItemsQty()));
+                            } else {
+                                echo $block->escapeHtml(__('1 item in your cart'));
+                            }
+                            ?>
+                        </span>
+                    </div>
+                    <div class="subtotal">
+                        <span class="label"><?php echo $block->escapeHtml(__('Cart Subtotal'));?></span>
+                        <?php
+                        $quote = $block->getCartHelper()->getQuote();
+                        if(isset($currencySymbols))
+                        {
+                            echo $block->escapeHtml(__($currencySymbols));
+                        }else{
+                            echo $block->escapeHtml(__($currencyCode));
+                        }
+                        echo $block->escapeHtml(__($quote->getSubtotal()));
+                        ?>
+                    </div>
+                    <?php endif; ?>
+                <?php
+                if($freeShipping_status == 1)
+                {
+                    $quote = $block->getCartHelper()->getQuote();
+                    $total = $quote->getSubtotal();
+                    $freeShipping = $block->getPricingHelper()->currency(
+                        $freeShipping,
+                        false,
+                        false
+                    );
+
+                    if($total < $freeShipping) {
+                        $currency = isset($currencySymbols) ? $currencySymbols : $currencyCode;
+                        $needMore = $currency . ($freeShipping - $total);
+                        ?>
+                        <div class="freeShipping_message">
+                            <?php
+                            ?>
+                            <div class="needMore">
+                                <?php
+                                echo $block->escapeHtml(__('Spend %1 more to get free shipping!', $needMore));
+                                ?>
+                            </div>
+                            <?php
+                            echo $block->escapeHtml(__($freeShipping_message));
+                            ?>
+                        </div>
+                        <?php
+                    }else{
+                        ?>
+                        <div class="congratulation"><?php echo $block->escapeHtml(__($congratulation_message)); ?></div>
+                        <?php
+                    }
+                }
+                ?>
+
+            </div>
+            <?php endif; ?>
+    </div>
+    <?php echo $block->getChildHtml('ajaxcart.popup.suggest'); ?>
+</div>
+
+<div class="clsspecialreqpop">
+    <div id="wishlist-modal-addcontent">
+        <div class='wishlist-success-div' >
+            <div id="wishlist-success">
+                <div class="modal-content">
+                    <p id="wishlist-result-message"></p>
+                    <div class="actions-toolbar wishlist-result-toolbar">
+                        <div class="primary">
+                            <button data-url="" type="button" title="<?= $block->escapeHtmlAttr(__('Wishlist')) ?>" class="action wishlist-redirect submit primary">
+                                <span><?= $block->escapeHtml(__('Wishlist')) ?></span>
+                            </button>
+                        </div>
+                        <div class="primary">
+                            <button type="button" title="<?= $block->escapeHtmlAttr(__('Continue Shopping')) ?>" class="action wishlist-continue primary">
+                                <span><?= $block->escapeHtml(__('Continue Shopping')) ?></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magepow_Ajaxcart/js/magepow_popup": {
+                "confBuyNow": "<?php echo (bool) $confBuyNow; ?>",
+                "compositeCartViewUrl": "<?php echo $block->escapeUrl($compositeCartViewUrl); ?>"
+            }
+        }
+    }
+</script>
+
+
+<script type="text/x-magento-init">
+{
+    "*": {
+        "Magento_Ui/js/core/app": {
+            "components": {
+                "wishlist": {
+                    "component": "BelVG_GuestWishlist/js/view/wishlist"
+                }
+            }
+        }
+    }
+}
+</script>
+

@@ -1,0 +1,18 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .acc__card {
+        .acc__title {
+            .lib-css(transition, padding-top 0.3s, @_prefix: 1);
+
+            &.active {
+                padding-top: @indent__m - @indent__s;
+            }
+        }
+        .acc__panel {
+            padding-bottom: @indent__m - @indent__s;
+        }
+    }
+}

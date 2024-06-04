@@ -1,0 +1,79 @@
+// /**
+//  * Copyright © 2015 Magento. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//  Common
+//  ---------------------------------------------
+
+& when (@media-common = true) {
+    .track-order-login {
+        .track-order-widget {
+            max-width: 990px;
+            margin: 0 auto;
+        }
+    }
+
+    .modal-track-help,
+    .modal-track-reference {
+        .modal-header {
+            border-bottom: 1px solid @custom-color-9;
+        }
+    }
+
+    .modal-track-help {
+        .main-information {
+            .lib-vendor-prefix-display(flex);
+            .lib-css(flex-direction, row, @_prefix: 1);
+            .lib-vendor-prefix-flex-wrap(wrap);
+            .lib-css(justify-content, space-around, @_prefix: 1);
+
+            .cls_comm_input {
+                width: 48%;
+                margin: 0 0 @indent__s;
+
+                &:has(textarea) {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  ---------------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum ='max')
+    and
+    (@break = @screen__m) {
+    .modal-popup.modal-slide.modal-track-help,
+    .modal-popup.modal-slide.modal-track-reference {
+        .modal-inner-wrap {
+            background: transparent;
+            padding: @indent__s;
+
+            .modal-header,
+            .modal-content {
+                background: @custom__color-white;
+            }
+        }
+    }
+
+    .modal-popup.modal-slide.modal-track-help {
+        .main-information {
+            .lib-css(flex-direction, column, @_prefix: 1);
+
+            .cls_comm_input {
+                width: 100%;
+            }
+
+            .field.create-ticket {
+                text-align: center;
+            }
+        }
+    }
+}

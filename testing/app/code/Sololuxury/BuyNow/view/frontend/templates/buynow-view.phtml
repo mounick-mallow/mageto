@@ -1,0 +1,32 @@
+<?php
+
+use Magento\Framework\Escaper;
+use Magento\Catalog\Block\Product\View;
+use Sololuxury\BuyNow\ViewModel\BuyNow;
+
+/**
+ * @var View $block
+ * @var BuyNow $buyNovViewModel
+ * @var Escaper $escaper
+ */
+$product = $block->getProduct();
+$productType = $product->getTypeId();
+$buyNovViewModel = $block->getData('buy_now_view_model');
+$formId = $buyNovViewModel->getAddToCartFormId();
+$buttonTitle = $buyNovViewModel->getButtonTitle();
+?>
+<div class="buynow-button">
+    <button type="submit"
+            title="<?= $escaper->escapeHtml(__($buttonTitle)) ?>"
+            id="buy-now"
+            class="action primary buy-now-btn"
+            data-mage-init='
+            {
+                "Sololuxury_BuyNow/js/buy-now": {
+                    "form": "#<?= $escaper->escapeHtml($formId); ?>"
+                }
+            }
+            '>
+        <span><?= $escaper->escapeHtml(__($buttonTitle)) ?></span>
+    </button>
+</div>

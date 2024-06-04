@@ -1,0 +1,73 @@
+//
+//  Desktop
+//
+& when (@media-common =true) {
+    .custom-window-block {
+        .modal-inner-wrap {
+            .modal-title {
+                color: @theme__primary--color-500;
+                border-color: @theme__territory--nero--color-15;
+                padding: 2px 0;
+                margin: 0;
+                text-align: left;
+            }
+
+            .modal-content {
+                .fieldset {
+                    margin-bottom: 0;
+                }
+
+                .field {
+                    text-align: left;
+                    margin-top: 0;
+                }
+            }
+
+            .action-close {
+                padding: @indent__s 0;
+                width: 30px;
+
+                &:before {
+                    color: @theme__primary--color-400;
+                }
+            }
+
+            .action {
+                &.primary {
+                    width: 120px;
+                    margin: 0;
+                }
+            }
+
+            .info {
+                color: @theme__primary--color-400;
+
+                a {
+                    .lib-font-size(14);
+                    text-decoration: underline;
+                    font-weight: @font-weight__semibold;
+                    margin-top: @indent__m;
+                    display: inline-block;
+                }
+            }
+
+            label {
+                color: @theme__primary--color-500;
+            }
+        }
+    }
+
+    .modals-wrapper {
+        .modal-popup.custom-window-block._inner-scroll {
+            .modal-inner-wrap {
+                max-width: 430px;
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//
+@media only screen and (max-width: (@screen__m - 1)) {
+}

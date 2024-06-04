@@ -1,0 +1,34 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .modals-wrapper {
+        .priceMatchModal.modal-popup._inner-scroll {
+            .modal-inner-wrap {
+                .modal-content {
+                    padding: @indent__s;
+                }
+            }
+
+            .mm-action {
+                text-align: center;
+            }
+
+            label {
+                .lib-font-size(@font-size__s);
+                font-weight: @font-weight__semibold;
+            }
+
+            select {
+                color: @price-match-popup__content-color;
+            }
+
+            .field.availability.required.cls_comm_input {
+                .price-is-available {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}

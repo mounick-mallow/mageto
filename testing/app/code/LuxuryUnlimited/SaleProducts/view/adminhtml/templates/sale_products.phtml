@@ -1,0 +1,36 @@
+<?php
+/**
+ * @var \Magento\Catalog\Block\Product\View $block
+ */
+?>
+ 
+<?php
+
+$input_data = $block->getSaleProductsAttribute();
+
+$label =  $input_data['label'];
+$name =  $input_data['name'];
+$name = "product[".$name."]";
+$value =  $input_data['value'];
+$yesSelected = $noSelected = '';
+
+if ($value == 0) {
+    $noSelected = 'selected';
+} else {
+    $yesSelected = 'selected';
+}
+
+?>
+<div class="admin__fieldset">
+    <div class="admin__field">
+        <div class="admin__field-label"><?= /** @noEscape */ $label ?></div>
+        <div class="admin__field-control">
+            <select class="admin__control-select" 
+                data-form-part="product_form" type="text"
+                name="<?=/** @noEscape */ $name ?>" value="<?= /** @noEscape */ $value ?>">
+                <option value = "0" <?= /** @noEscape */ $noSelected?>>No</option>
+                <option value = "1" <?= /** @noEscape */ $yesSelected ?>>Yes</option>
+            </select>
+        </div>
+    </div>
+</div>

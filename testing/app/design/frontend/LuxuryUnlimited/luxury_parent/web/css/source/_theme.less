@@ -1,0 +1,832 @@
+// /**
+//  * Copyright © 2015 Magento. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+@rtl: false;
+
+//
+//  Layout grid
+//  ---------------------------------------------
+@layout-indent__width: 40px;
+
+@total-columns: 12;
+
+//  Variables for layout columns
+@layout-column__sidebar-width: 5;
+@layout-column-checkout__width-left: 4;
+
+//
+//  Theme Base color
+//  ---------------------------------------------
+
+@theme__primary--color: #2c2f74;
+@custom-secondry-color: #e9ebfc;
+@custom-tertiary-color: #0e0f43;
+@custom-additional-color: #fff;
+@custom-secondary-text-color: #666666;
+@theme-color-gray_dark: #373737;
+@color-light-shadow-dark: #838383;
+@theme-color-brown-dark: #703015;
+@theme-color-coupon-active: #f2ded7;
+@theme-color-inactive: #f0f0f0;
+@theme-color-inactive-2: #979797;
+@theme-coupon-color: #fff;
+@store-credit-header-color: #888888;
+@theme-pagination-color: #212b36;
+@custom-color-1: #010080;
+@custom-color-2: #000000;
+@custom-color-3: #ffffff;
+@custom-color-4: #858585;
+@custom-color-5: #333333;
+@custom-color-6: #777777;
+@custom-color-7: #444444;
+@custom-color-8: #3796a2;
+@custom-color-9: #f2f2f2;
+@custom-color-11: #5b5fab;
+@custom-color-10: #b2b2b2;
+@color-bg-gray__light: #fafafa;
+
+@text-color: @color-gray40;
+@custom-color-smoke-white: #fbfbfb;
+
+//
+//  Color nesting
+//  ---------------------------------------------
+
+@body_background-color: @color-white;
+@page__background-color: @body_background-color;
+
+@theme__color__primary: @theme-color;
+@theme__color__primary-alt: @color-blue2;
+@theme__color__secondary: @color-orange-red1;
+
+@primary__color: @base-font-color;
+
+@secondary__color: @color-gray91;
+
+@panel__background-color: @color-gray-light0;
+@panel__font-color: @color-gray-light0;
+@panel__font-color-hover: @link__hover__color;
+
+//  Sidebar
+@sidebar__background-color: @color-white-smoke;
+
+@active__color: @theme__color__secondary;
+@error__color: @color-red10;
+
+@border-color__base: @color-gray80;
+
+@focus__color: @theme-color;
+@focus__box-shadow: 0 0 0;
+
+@text__color: @primary__color;
+
+//
+//  Typography
+//  ---------------------------------------------
+
+@theme-color: #08c;
+@base-font-size: 14px;
+@base-line-height: 1.42857143;
+@base-font-color: #777;
+@_link-color: @theme-color;
+@_link-color-visited: @theme-color;
+@_link-color-hover: @theme-color;
+@_link-color-active: @theme-color;
+@enable_border_radius: true;
+
+@icons__font-name: @icomoon-font-family;
+
+//
+//  Typography
+//  ---------------------------------------------
+
+//  Icons Fonts
+@icons__font-path: '@{baseDir}icomoon/fonts/icomoon';
+@icons__font-name: @icomoon-font-family;
+@icon-font__size: @icomoon-font-size;
+@icon-font__color: @base-font-color;
+@icon-font__color-hover: false;
+
+//  Fonts
+@font-size__base: @base-font-size;
+@line-height__base: @base-line-height;
+
+//
+//  Links
+//  ---------------------------------------------
+
+@link__color: @theme-color;
+@link__text-decoration: none;
+
+@link__visited__color: @theme-color;
+@link__visited__text-decoration: none;
+
+@link__hover__color: @theme-color;
+@link__hover__text-decoration: none;
+
+@link__active__color: @theme-color;
+@link__active__text-decoration: none;
+
+@_link-color: @link__color;
+@_link-text-decoration: @link__text-decoration;
+
+@_link-color-visited: @link__visited__color;
+@_link-text-decoration-visited: @link__visited__text-decoration;
+
+@_link-color-hover: @link__hover__color;
+@_link-text-decoration-hover: @link__hover__text-decoration;
+
+@_link-color-active: @link__active__color;
+@_link-text-decoration-active: @link__active__text-decoration;
+
+//
+//  Paragraphs
+//  ---------------------------------------------
+
+@p__margin-top: 0;
+@p__margin-bottom: @indent__s;
+
+//
+//  Tables
+//  ---------------------------------------------
+
+@table__background-color: false;
+@table__border-color: @border-color__base;
+@table__border-width: @border-width__base;
+
+@table-head__background-color: @table__background-color;
+@table-foot__background-color: @table__background-color;
+@table-body-th__background-color: @table__background-color;
+@table-td__background-color: @table__background-color;
+@table-cell-stripped__background-color: @table-cell__hover__background-color;
+
+@table-cell__padding-vertical: 11px;
+
+@table-responsive__background-color: @table__background-color;
+@table-responsive-th__background-color: @table-cell-stripped__background-color;
+@table-responsive-cell__padding: @indent__xs @indent__s;
+
+//
+//  Headings
+//  ---------------------------------------------
+
+@heading__font-weight__base: @font-weight__heavier;
+
+@h1__font-weight: @heading__font-weight__base;
+@h1__font-size: 36px;
+@h1__font-size-desktop: @h1__font-size;
+
+@h2__font-size: 30px;
+@h2__font-weight: @heading__font-weight__base;
+
+@h3__font-size: 24px;
+@h3__font-weight: @heading__font-weight__base;
+
+@h4__font-size: 20px;
+@h4__font-weight: @heading__font-weight__base;
+
+//
+//  Buttons
+//  ---------------------------------------------
+
+@button__font-family: @font-family__base;
+@button__font-size: @font-size__base;
+@button__font-weight: @font-weight__semibold;
+
+//  Default = secondary button
+@button__background: @color-gray-darken0;
+@button__border: 1px solid @border-color__base;
+@button__color: @primary__color;
+
+@button__hover__background: darken(@button__background, 5%);
+@button__hover__color: @button__color;
+
+@button__active__background: @color-gray-darken1;
+@button__active__background: @button__hover__background;
+
+//  Primary button
+@button-primary__background: @theme__color__primary;
+@button-primary__border: 1px solid @theme__color__primary;
+
+@button-primary__hover__background: @theme__color__primary;
+@button-primary__hover__border: 1px solid @theme__color__primary;
+@button-primary__hover__color: @color-blue1;
+
+@button-primary__active__background: @link__hover__color;
+@button-primary__active__border: 1px solid @link__hover__color;
+@button-primary__active__color: @color-white;
+
+//  Button with icon
+@button-icon__line-height: @icon-font__line-height;
+
+@enable_border_radius: true;
+
+//
+//  Icons
+//  ---------------------------------------------
+
+@icon-wishlist-empty: false;
+@icon-comment-reflected: false;
+@icon-compare-empty: false;
+@icon-arrow-up-thin: false;
+@icon-arrow-right-thin: false;
+@icon-arrow-left-thin: false;
+@icon-arrow-down-thin: false;
+@icon-wishlist-empty: '\e601';
+
+//
+//  Messages
+//  ---------------------------------------------
+
+@message__padding: 12px @indent__base 12px @indent__m;
+@message__margin: 0 0 @indent__s;
+
+@message__color: false; // Each message type has its own message color
+@message__font-size: 14px;
+@message__font-weight: false;
+@message__line-height: false;
+
+@message-icon__font-size: 24px;
+@message-icon__inner-padding-left: 45px;
+@message-icon__top: 22px;
+
+@message-info-icon: @icon-info;
+@message-warning-icon: @icon-alert;
+@message-error-icon: @icon-error;
+@message-success-icon: @icon-success;
+@message-notice-icon: @icon-notifications;
+
+//
+//  Loaders
+//  ---------------------------------------------
+
+@loader-overlay__background-color: rgba(255, 255, 255, 0.7);
+
+//
+//  Form variables
+//  _____________________________________________
+
+//  Inputs default variables
+@form-element-input__background: @page__background-color;
+@form-element-input__border-color: @color-gray95;
+@form-element-input__border: 2px solid @form-element-input__border-color;
+@form-element-input__border-radius: 4px;
+@form-element-input__height: 40px;
+@form-element-input__width: 100%;
+@form-element-input__margin: false;
+@form-element-input__padding: 10px 16px;
+@form-element-input__font-size: 14px;
+@form-element-input__color: @color-black;
+@form-element-input__font-family: @font-family__base;
+@form-element-input__font-weight: false;
+@form-element-input__font-style: false;
+@form-element-input__line-height: @line-height__base;
+
+@form-element-prifix-select__height: 36px;
+@form-element-prifix-seprater__left: 80px;
+@form-element-prifix-seprater__height: 28px;
+
+//  Placeholder
+@form-element-input-placeholder__color: @color-gray40;
+
+//  Select
+@select__height: @form-element-input__height;
+@select__font-size: @form-element-input__font-size;
+@select__color: @form-element-input__color;
+@select__font-size: @form-element-input__font-size;
+@select-placeholder__color: @color-gray40;
+@select__padding: 4px 39px 5px 15px;
+@select__line-height: 1.428571429;
+
+//  Select
+@textarea__font-size: @form-element-input__font-size;
+@textarea__height: 108px;
+@textarea-placeholder__color: @form-element-input-placeholder__color;
+
+//  Form fieldset
+@form-fieldset-legend__font-size: 18px;
+@form-fieldset-legend__font-weight: @font-weight__light;
+@form-fieldset-legend__margin: 0 0 @indent__base;
+@form-fieldset-legend__padding: 0 0 @indent__s;
+@form-fieldset-legend__width: 100%;
+
+//  Form field
+@form-field-type-revert: false;
+@form-field__additional-vertical-indent: @indent__s;
+
+//  Form field label
+@form-field-label__font-size: 14px;
+@form-field-label__font-weight: 400;
+@form-field-type-label-block__margin: 0 0 8px;
+
+//  Form field note icon
+@form-field-note-icon-font__content: false;
+
+//
+//  Rating
+//  ---------------------------------------------
+
+@rating-icon__font-size: 16px;
+@rating-icon__letter-spacing: 2px;
+@rating-icon__color: #c3c5c9;
+@rating-icon__active__color: #ffc600;
+
+//
+//  Dropdowns
+//  ---------------------------------------------
+
+@dropdown-toggle-icon__content: @icon-down;
+@dropdown-toggle-icon__active__content: @icon-up;
+@dropdown-toggle-icon__font-size: 12px;
+
+//  Split dropdown
+@dropdown-split-actions__padding: 0 @indent__xs;
+@dropdown-split-toggle__actions__padding: false;
+
+//  Actions-toolbar
+@actions-toolbar-actions__position: left;
+@actions-toolbar-actions-primary__margin: 0 15px 0 0;
+
+//
+//  Tabs
+//  ---------------------------------------------
+
+//  Tabs
+@tab-control__font-weight: @font-weight__regular;
+@tab-control__height: @indent__base*2;
+@tab-control__margin-right: -1px;
+@tab-control__padding-top: 1px;
+@tab-control__padding-right: 35px;
+
+//  Tabs content
+@tab-content__padding-top: 35px;
+@tab-content__padding-right: @tab-control__padding-right;
+
+//
+//  Accordion
+//  ---------------------------------------------
+
+@accordion-control__font-family: false;
+@accordion-control__font-size: @font-size__base;
+@accordion-control__font-style: false;
+@accordion-control__font-weight: @font-weight__semibold;
+@accordion-control__border-right: false;
+@accordion-control__border-bottom: false;
+@accordion-control__border-left: false;
+@accordion-control__background-color: false;
+@accordion-control__color: @primary__color;
+@accordion-control__hover__background-color: false;
+@accordion-control__hover__color: @accordion-control__color;
+@accordion-control__active__background-color: false;
+@accordion-control__active__color: @accordion-control__color;
+@accordion-control__margin-bottom: 0;
+@accordion-control__padding-right: @indent__s;
+@accordion-control__padding-left: @indent__s;
+@accordion-content__border: false;
+@accordion-content__margin: 0;
+@accordion-content__padding: @indent__s @indent__s @indent__l;
+
+//
+//  Popups
+//  ---------------------------------------------
+
+@popup__border: 1px solid @color-gray68;
+@popup-title-headings__level: h2;
+
+//  Popup icons
+@popup-icon-font__size: 16px;
+@popup-icon-font__line-height: 16px;
+@popup-icon-font__color: @color-gray55;
+@popup-icon-font__color-hover: darken(@popup-icon-font__color, 10%);
+@popup-icon-font__color-active: @popup-icon-font__color-hover;
+
+//  Window overlay
+@overlay__background: @color-gray55;
+@overlay__opacity: 0.7;
+@overlay__opacity-old: 70;
+
+@gallery-thumb-border-color-active: @active__color;
+
+//  Modal popup
+@modal-action-close__font-size: @font-size__base;
+
+//  Checkout tooltip icon
+@checkout-tooltip-icon__font-size: 21px;
+
+// Checkout Payment Option icon
+@checkout-payment-option-title-icon__font-size: 14px;
+@checkout-payment-option-title-icon__line-height: 16px;
+@checkout-payment-option-title-icon__margin: 0 0 0 @indent__s;
+
+// Checkout Sidebar Shipping Information
+@checkout-sidebar-shipping-information-edit-icon__content: @icon-edit;
+@checkout-sidebar-shipping-information-edit-icon__font-size: 18px;
+@checkout-sidebar-shipping-information-edit-icon__line-height: 20px;
+@checkout-sidebar-shipping-information-edit-icon__top: @indent__s;
+
+// Checkout
+@checkout-sidebar__columns: 8;
+
+//
+//  Minicart
+//  _____________________________________________
+
+@minicart-icons-color: @utilities_icon-color;
+@minicart-icons-color-hover: @utilities_icon-hover-color;
+@minicart__border-color: #eee;
+@minicart__text-color: @base-font-color;
+
+//
+//  Category
+//  ---------------------------------------------
+
+// Price
+@product-info-price: #444;
+@product-info-old-price: #999;
+@cart-price-color: #444;
+
+// Product
+@product-view-product-info-price: @theme-color;
+@product-view-product-info-old-price: #999;
+@product-info-page-title: #555;
+@product-reviews-summary-links: #bdbdbd;
+@tab-control__border-color: #eee;
+
+//
+//  Toolbar
+//  ---------------------------------------------
+
+@toolbar-element-background: #fff;
+@toolbar-element__color: @color-gray37;
+@toolbar-mode-icon-font-size: 12px;
+
+//
+//  Minicart
+//  ---------------------------------------------
+@minicart__icon_color: @color-white;
+@minicart__qty_color: @color-white;
+@minicart-qty__height: 22px;
+
+//
+//  Navigation
+//  _____________________________________________
+
+@navigation__background: transparent;
+
+// Mobile
+@mobile_navigation__background: #f6f6f6;
+@mobile_navigation__font-color: #777;
+@mobile_navigation__border-color: #ddd;
+
+@mobile_navigation_submenu__font-color: #777;
+
+@mobile_navigation_opened_submenu__background-color: #eee;
+@mobile_navigation_opened_submenu-item_icon-color: #aaa;
+
+@mobile_navigation-tab__background: @theme-color;
+@mobile_navigation-tab__font-color: #fff;
+
+@mobile_navigation-tab-active__font-color: @theme-color;
+
+//  Desktop
+@navigation-desktop__background: transparent;
+@navigation-desktop-level0-item__background: transparent;
+@navigation-desktop-level0-item__color: #777;
+
+@navigation-desktop-level0-item__hover__background: transparent;
+@navigation-desktop-level0-item__hover__color: @link__hover__color;
+
+@navigation-desktop-level0-item__active__background: transparent;
+@navigation-desktop-level0-item__active__color: @link__hover__color;
+
+//
+//  Footer
+//  _____________________________________________
+
+@footer-bg-color: @theme__color__primary;
+@footer-txt-color: @primary__color;
+
+@footer-link-color: @link__color;
+@footer-link-color-hover: @link__hover__color;
+
+@footer-border-width: 1px 0;
+@footer-border-style: solid;
+@footer-border-color: @theme__color__primary;
+@footer-border-top: 1px solid @theme__color__primary;
+
+@footer-primary-txt-color: @theme__color__primary;
+@footer-primary-font: @font-family__base;
+@footer-primary-font-size: 14px;
+
+@footer-middle_background-color: #121214;
+@footer-middle_font-color: #777;
+@footer-middle-block-title_font-color: #fff;
+@footer-middle-link_font-color: #fff;
+@footer-middle-icon_font-color: #777;
+@footer-middle-newsletter-input_background-color: #dcdcdc;
+
+@footer-bottom_background-color: #0c0c0c;
+
+@footer-ribbon_background-color: @theme-color;
+@footer-ribbon_font-color: #fff;
+
+// Addtolinks
+@addto-wishlist-icon: #ed4949;
+@addto-compare-icon: #52b9b5;
+@mailto-friend-icon: #999;
+
+@copyright__background-color: @color-gray56;
+
+@font-size__base: @base-font-size;
+@primary__color: @base-font-color;
+@link__color: @theme-color;
+@link__hover__color: @link__color;
+@link__active__color: @link__color;
+
+@button__font-size: 14px;
+@button-primary__background: @theme-color;
+@button-primary__border: 1px solid @theme-color;
+@button-primary__hover__background: @theme-color;
+@button-primary__hover__border: 1px solid @theme-color;
+
+@body_background-color: #fff;
+
+//  Fonts
+@icons__font-path: '@{baseDir}icomoon/fonts/icomoon';
+@icons__font-name: 'icomoon';
+@font-size__base: 13px;
+@line-height__base: 1.4;
+
+// Form elements
+
+@form-element-input__border: 2px solid @form-element-input__border-color;
+@form-element-input__border-color: @color-gray95;
+@form-element-input__font-size: 14px;
+@form-element-input__border-radius: 4px;
+@form-element-input__height: 40px;
+@form-element-input__padding: 15px 10px;
+@form-element-input__color: @color-black;
+@form-element-input-placeholder__color: @color-gray40;
+
+@form-element-input__border: 2px solid #e5e5e5;
+@form-element-input__font-size: 14px;
+@form-element-input__border-radius: 4px;
+@form-element-input__height: 40px;
+@form-element-input__padding: 10px 16px;
+@form-element-input__color: @color-black;
+@form-element-input-placeholder__color: @color-gray40;
+@form-element-input__background: @body_background-color;
+@select__height: @form-element-input__height;
+@select__font-size: @form-element-input__font-size;
+@select__color: @form-element-input__color;
+@select-placeholder__color: @color-gray40;
+@select__font-size: @form-element-input__font-size;
+@textarea-placeholder__color: @color-gray40;
+@textarea__font-size: 14px;
+@textarea__height: 108px;
+@textarea__height: 10px 16px;
+
+//  Header
+@header-icons-color: @theme-color;
+@header-icons-color-hover: @theme-color;
+
+// Footer
+@footer-middle_background-color: #121214;
+@footer-middle_font-color: #777;
+@footer-middle-block-title_font-color: #fff;
+@footer-middle-link_font-color: #fff;
+@footer-middle-icon_font-color: #777;
+@footer-middle-newsletter-input_background-color: #dcdcdc;
+
+@footer-bottom_background-color: #0c0c0c;
+
+@footer-ribbon_background-color: @theme-color;
+@footer-ribbon_font-color: #fff;
+
+// Category
+@product-info-price: #444;
+@product-info-old-price: #999;
+@cart-price-color: #444;
+// Toolbar
+@toolbar-element-background: #fff;
+@toolbar-mode-icon-font-size: 12px;
+
+// Product
+@product-view-product-info-price: @theme-color;
+@product-view-product-info-old-price: #999;
+@product-info-page-title: #555;
+@product-reviews-summary-links: #bdbdbd;
+@tab-control__border-color: #eee;
+
+// Addtolinks
+@addto-wishlist-icon: #ed4949;
+@addto-compare-icon: #52b9b5;
+@mailto-friend-icon: #999;
+
+//
+//  Rating
+//  ---------------------------------------------
+
+@rating-icon__font-size: 16px;
+@rating-icon__letter-spacing: 2px;
+@rating-icon__color: #c3c5c9;
+@rating-icon__active__color: #ffc600;
+
+//  Headings
+@h3__font-weight: @font-weight__semibold;
+@h3__margin-top: @indent__base;
+
+//
+//  Tables
+//  ---------------------------------------------
+
+@table-cell__padding-vertical: 11px;
+@table-cell-stripped__background-color: @table-cell__hover__background-color;
+@table-responsive-th__background-color: @table-cell-stripped__background-color;
+@table-responsive-cell__padding: @indent__xs @indent__s;
+
+//  Tabs
+@tab-control__font-weight: @font-weight__regular;
+@tab-control__height: @indent__base*2;
+@tab-control__margin-right: -1px;
+@tab-control__padding-top: 1px;
+@tab-control__padding-right: 35px;
+
+//  Tabs content
+@tab-content__padding-top: 35px;
+@tab-content__padding-right: @tab-control__padding-right;
+
+//
+//  Accordion
+//  ---------------------------------------------
+
+@accordion-control__font-family: false;
+@accordion-control__font-size: @font-size__base;
+@accordion-control__font-style: false;
+@accordion-control__font-weight: @font-weight__semibold;
+@accordion-control__border-right: false;
+@accordion-control__border-bottom: false;
+@accordion-control__border-left: false;
+@accordion-control__background-color: false;
+@accordion-control__color: @primary__color;
+@accordion-control__hover__background-color: false;
+@accordion-control__hover__color: @accordion-control__color;
+@accordion-control__active__background-color: false;
+@accordion-control__active__color: @accordion-control__color;
+@accordion-control__margin-bottom: 0;
+@accordion-control__padding-right: @indent__s;
+@accordion-control__padding-left: @indent__s;
+@accordion-content__border: false;
+@accordion-content__margin: 0;
+@accordion-content__padding: @indent__s @indent__s @indent__l;
+
+//
+//  Buttons
+//  ---------------------------------------------
+
+@button__font-weight: @font-weight__semibold;
+
+//  Default = secondary button
+@button__background: @color-gray-darken0;
+@button__border: 1px solid @border-color__base;
+@button__hover__color: @button__color;
+@button__hover__background: darken(@button__background, 5%);
+@button__active__background: @color-gray-darken1;
+
+//  Primary button
+@button-primary__hover__color: @color-white;
+@button-primary__active__background: @color-white;
+@button-primary__active__border: 1px solid @color-blue1;
+@button-primary__active__color: @color-blue1;
+@button-primary__background: @color-blue1;
+@button-primary__border: 1px solid @color-blue1;
+@button-primary__font-size: 14px;
+@button-primary__hover__background: @color-white;
+@button-primary__hover__border: 1px solid @color-blue1;
+@button-primary__hover__color: @color-blue1;
+
+//  Button with icon
+@button-icon__line-height: @icon-font__line-height;
+
+//
+//  Icons
+//  ---------------------------------------------
+
+@icon-wishlist-empty: false;
+@icon-comment-reflected: false;
+@icon-compare-empty: false;
+@icon-arrow-up-thin: false;
+@icon-arrow-right-thin: false;
+@icon-arrow-left-thin: false;
+@icon-arrow-down-thin: false;
+@icon-wishlist-empty: '\e601';
+
+//
+//  Messages
+//  ---------------------------------------------
+
+@message__padding: 12px @indent__base 12px @indent__m;
+@message__line-height: false;
+@message-icon__font-size: 24px;
+@message-icon__inner-padding-left: 45px;
+@message-icon__top: 22px;
+@message-error-icon: @icon-error;
+@message-success-icon: @icon-success;
+
+//
+//  Loaders
+//  ---------------------------------------------
+
+@loader-overlay__background-color: rgba(255, 255, 255, 0.7);
+
+//
+//  Forms
+//  ---------------------------------------------
+
+//  Form fieldset
+@form-fieldset-legend__font-size: 18px;
+@form-fieldset-legend__font-weight: @font-weight__light;
+@form-fieldset-legend__margin: 0 0 @indent__base;
+@form-fieldset-legend__padding: 0 0 @indent__s;
+@form-fieldset-legend__width: 100%;
+
+//  Form field
+@form-field-type-revert: false;
+@form-field__additional-vertical-indent: @indent__s;
+
+//  Form field label
+@form-field-label__font-size: 14px;
+@form-field-label__font-weight: 400;
+@form-field-type-label-block__margin: 0 0 8px;
+
+//  Form field note icon
+@form-field-note-icon-font__content: false;
+
+//
+//  Dropdowns
+//  ---------------------------------------------
+
+@dropdown-toggle-icon__content: @icon-down;
+@dropdown-toggle-icon__active__content: @icon-up;
+@dropdown-toggle-icon__font-size: 12px;
+
+//  Split dropdown
+@dropdown-split-actions__padding: 0 @indent__xs;
+@dropdown-split-toggle__actions__padding: false;
+
+//  Actions-toolbar
+@actions-toolbar-actions__position: left;
+@actions-toolbar-actions-primary__margin: 0 15px 0 0;
+
+//
+//  Popups
+//  ---------------------------------------------
+
+@popup__border: 1px solid @color-gray68;
+@popup-title-headings__level: h2;
+
+//  Popup icons
+@popup-icon-font__size: 16px;
+@popup-icon-font__line-height: 16px;
+@popup-icon-font__color: @color-gray55;
+@popup-icon-font__color-hover: darken(@popup-icon-font__color, 10%);
+@popup-icon-font__color-active: @popup-icon-font__color-hover;
+
+//  Window overlay
+@overlay__background: @color-gray55;
+@overlay__opacity: 0.7;
+@overlay__opacity-old: 70;
+
+@gallery-thumb-border-color-active: @active__color;
+
+//  Modal popup
+@modal-action-close__font-size: @font-size__base;
+
+//  Checkout tooltip icon
+@checkout-tooltip-icon__font-size: 21px;
+
+// Checkout Payment Option icon
+@checkout-payment-option-title-icon__font-size: 14px;
+@checkout-payment-option-title-icon__line-height: 16px;
+@checkout-payment-option-title-icon__margin: 0 0 0 @indent__s;
+
+// Checkout Sidebar Shipping Information
+@checkout-sidebar-shipping-information-edit-icon__content: @icon-edit;
+@checkout-sidebar-shipping-information-edit-icon__font-size: 18px;
+@checkout-sidebar-shipping-information-edit-icon__line-height: 20px;
+@checkout-sidebar-shipping-information-edit-icon__top: @indent__s;
+
+// Checkout
+@checkout-sidebar__columns: 8;
+
+//
+//  Spacing
+//  _____________________________________________
+@indent__xl: 40px;
+@indent__l: 30px;
+@indent__m: 25px;
+@indent__s: 16px;
+@indent__xs: 10px;
+@indent__xxs: 5px;

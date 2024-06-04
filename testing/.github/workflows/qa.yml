@@ -1,0 +1,44 @@
+name: CI-qa
+on: 
+  pull_request:
+    types: [labeled]
+
+jobs:
+  magento2-qa:
+    if: contains(github.event.pull_request.labels.*.name, 'pending qa')
+    runs-on: ubuntu-latest
+   
+    steps:
+    - uses: actions/checkout@v3
+    - name: "Get PR NUMBER"
+      run : |
+        echo "PR_NUMBER=$(dirname $GITHUB_REF_NAME)" >> $GITHUB_ENV
+    - name: "Build trigger for qa"
+      run: |
+        echo "REF=$GITHUB_REF"
+        echo "REF_NAME=$GITHUB_REF_NAME"
+        echo "PR=$PR_NUMBER"
+        echo "HEAD=$GITHUB_HEAD_REF"
+        curl -X POST https://twilio.theluxuryunlimited.com/auto-build-process -H "Content-Type: application/x-www-form-urlencoded" -d "build_process_repository=$GITHUB_REPOSITORY_ID&build_process_branch=$GITHUB_HEAD_REF&project_type=qa&build_pr=$PR_NUMBER" 
+    - name: "Update to ERP"
+      run: |
+        curl --location 'https://twilio.theluxuryunlimited.com/api/github-action' \
+        --header 'Content-Type: application/json' \
+        --data '
+        {
+        "GITHUB_ACTOR": "'"$GITHUB_ACTOR"'",
+        "GITHUB_API_URL": "'"$GITHUB_API_URL"'",
+        "GITHUB_BASE_REF": "'"$GITHUB_BASE_REF"'",
+        "GITHUB_EVENT_NAME": "'"$GITHUB_EVENT_NAME"'",
+        "GITHUB_JOB": "'"$GITHUB_JOB"'",
+        "GITHUB_REF": "'"$GITHUB_REF"'",
+        "GITHUB_REF_NAME": "'"$GITHUB_REF_NAME"'",
+        "GITHUB_REF_TYPE": "'"$GITHUB_REF_TYPE"'",
+        "GITHUB_REPOSITORY": "'"$GITHUB_REPOSITORY"'",
+        "GITHUB_REPOSITORY_ID": "'"$GITHUB_REPOSITORY_ID"'",
+        "GITHUB_RUN_ATTEMPT": "'"$GITHUB_RUN_ATTEMPT"'",
+        "GITHUB_RUN_ID": "'"$GITHUB_RUN_ID"'",
+        "GITHUB_WORKFLOW": "'"$GITHUB_WORKFLOW"'",
+        "RUNNER_NAME": "'"$RUNNER_NAME"'"
+        }
+        '

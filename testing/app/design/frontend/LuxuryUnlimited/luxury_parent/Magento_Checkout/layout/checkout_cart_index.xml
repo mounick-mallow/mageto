@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <remove src="mage/calendar.css" />
+        <remove src="css/print.css" />
+        <remove src="icon-fonts/css/animation.css" />
+        <remove src="font-awesome/css/font-awesome.min.css" />
+        <remove src="owl.carousel/assets/owl.carousel.css" />
+        <remove src="fancybox/css/jquery.fancybox.css" />
+        <remove src="Bss_GeoIPAutoSwitchStore::css/magnific-popup.css" />
+        <remove src="Bss_SocialLogin::css/jquery.fancybox.min.css" />
+        <remove src="Experius_DonationProduct::css/donation.css" />
+        <remove src="Magefan_Blog::css/blog-m.css" />
+        <remove src="Magefan_Blog::css/blog-custom.css" />
+        <remove src="Smartwave_Dailydeals::css/style.css" />
+        <remove src="WeltPixel_Quickview::css/magnific-popup.css" />
+        <remove src="Amasty_ShopbyBase::css/swiper.min.css" />
+        <remove src="//fonts.googleapis.com/css?family=Shadows+Into+Light" />
+        <script src="Magento_Checkout::js/form.js" />
+        <!-- DEVTASK-21844-performanceissue-p2 : remove unused css on the page -->
+        <remove src="Plumrocket_SocialLoginFree::css/pslogin.css" />
+        <remove src="Plumrocket_SocialLoginFree::css/pslogin-custom.css" />
+        <remove src="MaxMage_InternationalTelephoneInput::css/intlTelInput.css"/>
+        <remove src="Sparsh_Faq::css/faq.css"/>
+    </head>
+    <body>
+        <referenceBlock name="breadcrumbs">
+                <action method="addCrumb">
+                    <argument name="crumbName" xsi:type="string">Home</argument>
+                    <argument name="crumbInfo" xsi:type="array">
+                        <item name="title" xsi:type="string" translate="true">Home</item>
+                        <item name="label" xsi:type="string" translate="true">Home</item>
+                        <item name="link" xsi:type="string">{{baseUrl}}</item>
+                    </argument>
+                </action>
+                <action method="addCrumb">
+                    <argument name="crumbName" xsi:type="string">Cart</argument>
+                    <argument name="crumbInfo" xsi:type="array">
+                        <item name="title" xsi:type="string" translate="true">Cart</item>
+                        <item name="label" xsi:type="string" translate="true">Cart</item>
+                    </argument>
+                </action>
+            </referenceBlock>
+        <move element="breadcrumbs" destination="main.content" before="-" />
+        <referenceContainer name="cart.summary">
+            <container name="cart.discount" label="Cart Discount Container" htmlTag="div" htmlClass="cart-discount" before="-" />
+        </referenceContainer>
+        <referenceBlock name="checkout.cart.totals">
+            <arguments>
+                <argument name="jsLayout" xsi:type="array">
+                    <!-- UI component customizations -->
+                    <item name="components" xsi:type="array">
+                        <item name="block-totals" xsi:type="array">
+                            <item name="children" xsi:type="array">
+                                <item name="grand-total" xsi:type="array">
+                                    <item name="config" xsi:type="array">
+                                        <item name="title" xsi:type="string" translate="true">Total</item>
+                                    </item>
+                                </item>
+                            </item>
+                        </item>
+                    </item>
+                </argument>
+            </arguments>
+        </referenceBlock>
+        <referenceBlock name="checkout.cart.shipping">
+            <arguments>
+                <argument name="jsLayout" xsi:type="array">
+                    <item name="components" xsi:type="array">
+                        <item name="block-summary" xsi:type="array">
+                            <!-- My custom part: -->
+                            <item name="config" xsi:type="array">
+                                <item name="componentDisabled" xsi:type="boolean">true</item>
+                            </item>
+
+                        </item>
+                    </item>
+                </argument>
+            </arguments>
+        </referenceBlock>
+        <referenceContainer name="checkout.cart.container">
+            <block class="Magento\Cms\Block\Block" name="donate-cart-page" after="checkout.cart.widget">
+                <arguments>
+                    <argument name="block_id" xsi:type="string">donate-cart-page</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+         <referenceContainer name="cart.summary">
+            <block class="Magento\Framework\View\Element\Template" name="custom.cart.summary" template="Magento_Checkout::cart/secure.phtml" after="checkout.cart.shortcut.buttons"/>
+        </referenceContainer>
+        <referenceBlock name="pslogin.customer.form.login.buttons" remove="true"/>
+        <move element="checkout.cart.crosssell" destination="checkout.cart.container" after="donate-cart-page" />
+        <move element="checkout.cart.coupon" destination="cart.summary" after="-" />
+        <move element="checkout.cart.methods.bottom" destination="cart.summary" after="-" />
+        <move element="checkout.cart.methods.onepage.bottom" destination="cart.summary" after="checkout.cart.coupon"/>
+        <move element="checkout.cart.shortcut.buttons" destination="checkout.cart.methods" before="checkout.cart.methods.onepage.bottom"/>
+        <move element="checkout.cart.secure" destination="cart.summary" after="checkout.cart.shortcut.buttons"/>
+    </body>
+</page>

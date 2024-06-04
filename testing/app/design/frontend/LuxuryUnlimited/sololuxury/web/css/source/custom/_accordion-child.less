@@ -1,0 +1,30 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .acc__card {
+        border-right: none;
+        border-left: none;
+
+        &:not(:first-child) {
+            border-top: none;
+        }
+
+        .acc__title {
+            .lib-icon-font-symbol(
+                @_icon-font-content: @icon-plus
+            );
+
+            &.active {
+                .lib-icon-font-symbol(
+                    @_icon-font-content: @icon-minus
+                );
+            }
+        }
+
+        .acc__panel {
+            padding-top: @indent__xl;
+        }
+    }
+}

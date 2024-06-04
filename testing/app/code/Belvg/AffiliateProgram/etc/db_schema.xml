@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+
+    <table name="belvg_affiliate_post" resource="default" engine="innodb" comment="Affiliate requests">
+        <column xsi:type="int" name="affiliate_id" unsigned="false" nullable="false" identity="true" comment="Affiliate Id"/>
+        <column xsi:type="varchar" name="first_name" nullable="false" length="255" comment="First Name" />
+        <column xsi:type="varchar" name="last_name" nullable="false" length="255" comment="Last Name" />
+        <column xsi:type="varchar" name="email" nullable="false" length="255" comment="Email" />
+        <column xsi:type="varchar" name="phone" nullable="false" length="255" comment="Phone" />
+        <column xsi:type="varchar" name="website_url" nullable="false" length="255" comment="Website Url" />
+        <column xsi:type="varchar" name="visitors" nullable="false" length="255" comment="Visitors Number" />
+        <column xsi:type="varchar" name="views" nullable="false" length="255" comment="Views Number" />
+        <column xsi:type="varchar" name="street_address_1" nullable="false" length="255" comment="Street Address 1" />
+        <column xsi:type="varchar" name="street_address_2" nullable="false" length="255" comment="Street Address 2" />
+        <column xsi:type="varchar" name="city" nullable="false" length="255" comment="City" />
+        <column xsi:type="varchar" name="country" nullable="false" length="255" comment="Country" />
+        <column xsi:type="varchar" name="post_code" nullable="false" length="255" comment="Post Code" />
+
+        <column xsi:type="timestamp" name="creation_time" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Creation Time"/>
+
+        <column xsi:type="smallint" name="sent" unsigned="false" nullable="false" identity="false" default="0" comment="Is sent to ERP"/>
+
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="affiliate_id"/>
+        </constraint>
+
+        <index referenceId="CMS_BLOCK_TITLE_IDENTIFIER_CONTENT" indexType="fulltext">
+            <column name="first_name"/>
+            <column name="last_name"/>
+            <column name="email"/>
+            <column name="phone"/>
+            <column name="city"/>
+        </index>
+    </table>
+</schema>

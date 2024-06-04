@@ -1,0 +1,17 @@
+{
+  "name": "belvg/module-menu-additional",
+  "version": "1.0.0",
+  "description": "MenuAdditional",
+  "type": "magento2-module",
+  "require": {
+    "magento/framework": "*"
+  },
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "Belvg\\MenuAdditional\\": ""
+    }
+  }
+}

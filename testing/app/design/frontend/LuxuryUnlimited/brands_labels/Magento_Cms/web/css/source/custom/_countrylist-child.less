@@ -1,0 +1,85 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common =true) {
+    body {
+        &.cms-countrylist {
+            background-color: @theme__secondary--color-50;
+        }
+    }
+
+    .choosecountry {
+        .country-head {
+            .cls_country {
+                color: @theme__primary--color-500;
+                font-style: normal;
+                font-weight: @font-weight__heavier;
+                .lib-line-height(normal);
+                .lib-font-size(36);
+            }
+
+            .alphabet {
+                display: none;
+            }
+        }
+
+        .countrylist {
+            ul {
+                column-count: 3;
+            }
+        }
+    }
+}
+
+//
+//  Desktop
+//  ---------------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum ='min')
+    and
+    (@break = @screen__m) {
+    .choosecountry {
+        .countrylist {
+            ul {
+                column-count: 4;
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum ='min')
+    and
+    (@break = @screen__xl) {
+    .choosecountry {
+        .countrylist {
+            ul {
+                column-count: 5;
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  ---------------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum ='max')
+    and
+    (@break = @screen__xs) {
+    .cms-countrylist {
+        .choosecountry {
+            .countrylist {
+                ul {
+                    column-count: 2;
+                }
+            }
+        }
+    }
+}

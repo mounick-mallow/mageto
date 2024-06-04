@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="logo">
+            <arguments>
+                <argument name="logo_img_width" xsi:type="number">80</argument>
+                <argument name="logo_img_height" xsi:type="number">50</argument>
+            </arguments>
+        </referenceBlock>
+
+        <referenceContainer name="header.container">
+            <block class="Magento\Framework\View\Element\Template" name="luxury_header" template="Magento_Theme::html/header/header.phtml" before="main.content">
+                <block class="Magento\Framework\View\Element\Html\Links" name="header.links">
+                    <arguments>
+                        <argument name="css_class" xsi:type="string">header links</argument>
+                    </arguments>
+                </block>
+                <block class="Bss\GeoIPAutoSwitchStore\Block\Switcher" name="switch_website" as="switch_website" template="Bss_GeoIPAutoSwitchStore::switch/sw_website.phtml"/>
+                <block class="Smartwave\Porto\Block\Form\Login" name="header_customer_form_login" ifconfig="porto_settings/header/login_popup" template="Smartwave_Porto::html/login.phtml"/>
+                <block class="Magento\Store\Block\Switcher" name="store_language" as="store_language" template="switch/languages.phtml"/>
+                <block class="Smile\ElasticsuiteCore\Block\Search\Form\Autocomplete" name="top.search" as="topSearch" template="Smile_ElasticsuiteCore::search/form.mini.phtml" />
+                <block class="Magento\Framework\View\Element\Template" name="custom_block" template="Magento_Theme::html/header/header_panel_custom_block.phtml" after="-"/>
+            </block>
+        </referenceContainer>
+        <move element="navigation.sections" destination="luxury_header"/>
+        <move element="top.search" destination="luxury_header"/>
+        <move element="minicart" destination="luxury_header"/>
+        <move element="currency" destination="luxury_header"/>
+        <move element="switch_website" destination="luxury_header"/>
+        <move element="store_website" destination="luxury_header"/>
+        <move element="logo" destination="luxury_header"/>
+        <move element="skip_to_content" destination="luxury_header"/>
+
+        <move element="page.top" destination="page.wrapper" after="luxury_header"/>
+        <move element="breadcrumbs" destination="main.content" before="-" />
+
+        <referenceContainer name="header.panel" remove="1"/>
+        <referenceContainer name="header-wrapper" remove="1"/>
+
+
+        <referenceContainer name="footer" remove="true"/>
+        <referenceBlock name="report.bugs" remove="true"/>
+        <!-- <referenceBlock name="catalog.compare.sidebar" remove="true"/> -->
+        <referenceBlock name="wishlist_sidebar" remove="true"/>
+
+        <!-- Downloadable product link -->
+        <referenceBlock name="customer-account-navigation-downloadable-products-link" remove="true"/>
+        <!-- Subscription link -->
+        <referenceBlock name="customer-account-navigation-newsletter-subscriptions-link" remove="true"/>
+        <!-- Product review link -->
+        <referenceBlock name="customer-account-navigation-product-reviews-link" remove="true"/>
+
+        <referenceBlock name="reviews.tab" remove="true" />
+       <referenceBlock name="product.review.form" remove="true" />
+       <referenceBlock name="product.info.review" remove="true" />
+       <referenceBlock name="head.additional">
+            <block class="Magento\Framework\View\Element\Template" name="hreftag" template="Magento_Theme::html/hreftag.phtml" before="-"/>
+        </referenceBlock>
+        <referenceBlock name="after.body.start">
+             <block class="Magento\Framework\View\Element\Template" name="tagmanager" template="Magento_Theme::html/tagmanager.phtml" before="-"/>
+         </referenceBlock>
+        <!-- footer content -->
+        <referenceContainer name="footer-container">
+            <block name="custom.footer.new.design" class="LuxuryUnlimited\FrontendConfigs\Block\FooterLinks"   template="Magento_Theme::html/footer-links.phtml" before="-" >
+                <block class="Magento\Newsletter\Block\Subscribe" name="footer.newsletter" template="subscribe.phtml"/>
+            </block>
+        </referenceContainer>
+
+        <!-- Move Element -->
+            <move element="copyright" destination="footer-container" after="-" />
+        <!-- End Move Element -->
+
+
+        <referenceBlock name="store.links" remove="true" />
+        <referenceBlock name="store.settings" remove="true" />
+        <referenceBlock name="store.menu">
+            <block name="user.login.link" class="Magento\Framework\View\Element\Template"   template="Magento_Theme::html/login-user.phtml" after="-" />
+        </referenceBlock>
+
+        <referenceBlock name="welpixel.sticky.header.js" remove="true" />
+
+    </body>
+</page>

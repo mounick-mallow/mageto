@@ -1,0 +1,72 @@
+//
+//  Desktop
+//
+& when (@media-common =true) {
+    .custom-window-block {
+        .modal-inner-wrap {
+            border-radius: 2rem;
+            min-width: 485px;
+
+            p {
+                .lib-font-size(16);
+                margin-bottom: 0;
+            }
+
+            .modal-content {
+                padding: 3rem;
+                text-align: center;
+            }
+
+            .info {
+                padding-bottom: 3rem;
+            }
+
+            .control {
+                text-align: left;
+            }
+
+            label {
+                .lib-font-size(13);
+                margin-left: 4px;
+            }
+
+            .buttons-container {
+                .lib-vendor-prefix-display(flex);
+                justify-content: center;
+                gap: 10px;
+            }
+
+            .action.primary {
+                .lib-font-size(16);
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//
+@media only screen and (max-width: (@screen__m - 1)) {
+    body
+        .modals-wrapper
+        .modal-popup.modal-slide._inner-scroll.custom-window-block {
+        .modal-inner-wrap {
+            min-width: unset;
+            max-width: 90%;
+            margin: 25% auto;
+            min-height: unset;
+
+            .modal-title {
+                padding: 1.5rem 5rem 1.5rem 1.5rem;
+            }
+
+            .modal-content {
+                padding: 3rem 1.5rem;
+            }
+
+            .action.primary {
+                flex-basis: 150px;
+            }
+        }
+    }
+}

@@ -1,0 +1,282 @@
+name: build_test
+on: 
+  pull_request:
+    types: [opened, reopened, synchronize, ready_for_review]
+    
+jobs:  
+  avoir-build:
+    runs-on: self-hosted
+    name: 'avoir build'
+    services:
+      mysql:
+        image: mariadb:10.3
+        env:
+          MYSQL_ROOT_PASSWORD: magento
+          MYSQL_DATABASE: magento
+        volumes:
+          - "magento.sql:/docker-entrypoint-initdb.d"
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+      elasticsearch:
+        image: shanatics0007/my-elasticsearch
+        ports:
+          - 9200:9200
+        options: -e="discovery.type=single-node" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10   
+      redis:
+        image: redis:6.2-alpine
+        ports:
+          - "6379:6379"       
+     
+    steps:
+    - uses: actions/checkout@v3
+    - name: "import database"
+      run: |
+        mysql --host 127.0.0.1 --port 3306 -uroot -pmagento magento < databases/avoirchic-blank.sql 2>/dev/null
+
+    - name: "build"
+      run: |
+        composer install
+        wget https://www.avoir-chic.com/avoir-env.txt -O app/etc/env.php
+        cp app/design/frontend/LuxuryUnlimited/avoirchic/.deploy/config.php app/etc/config.php
+        php bin/magento setup:upgrade -n
+        php bin/magento setup:di:compile -n
+        php bin/magento setup:static-content:deploy --theme Magento/backend --theme LuxuryUnlimited/avoirchic --theme LuxuryUnlimited/avoirchic_rtl -n  2>&1 | tee databases/temp.log
+        echo "CHECK_CONTENT_ERROR=$(cat databases/temp.log | grep 'Compilation from source')"  >> $GITHUB_ENV
+        echo "GEN_CSS=find pub/static/frontend/LuxuryUnlimited/ -type f \( -name 'styles-l.css' -o -name 'styles-m.css' \)" >> $GITHUB_ENV
+        echo "GEN_CSSCOUNT=find pub/static/frontend/LuxuryUnlimited/ -type f \( -name 'styles-l.css' -o -name 'styles-m.css' \) | wc -l" >> $GITHUB_ENV
+
+    - name: 'check css errors'
+      run: |
+        if [ ! -z "$CHECK_CONTENT_ERROR" ]
+        then 
+          echo "ERROR INSIDE CSS = $CHECK_CONTENT_ERROR"
+          exit 1
+        else
+          echo "Build Sucess"
+        fi
+    - name: 'check generated css'
+      run: |
+        if [ "$GEN_CSSCOUNT" -ne "6" ]
+        then 
+          echo "ERROR: ALL CSS Not Generated"
+          echo "$GEN_CSSCOUNT"
+          exit 1
+        else
+          echo "CSS Generated"
+          echo "$GEN_CSSCOUNT"
+        fi
+        
+    - name: 'check imported css'
+      run: |
+        wget https://www.avoir-chic.com/scan_css_import.sh -O scan_css_import.sh
+        bash scan_css_import.sh  
+
+  sololuxury-build:
+    runs-on: self-hosted
+    needs: avoir-build
+    name: 'sololuxury build'
+    services:
+      mysql:
+        image: mariadb:10.3
+        env:
+          MYSQL_ROOT_PASSWORD: magento
+          MYSQL_DATABASE: magento
+        volumes:
+          - "magento.sql:/docker-entrypoint-initdb.d"
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+      elasticsearch:
+        image: shanatics0007/my-elasticsearch
+        ports:
+          - 9200:9200
+        options: -e="discovery.type=single-node" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
+      redis:
+        image: redis:6.2-alpine
+        ports:
+          - "6379:6379"
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: "import database"
+      run: |
+        mysql --host 127.0.0.1 --port 3306 -uroot -pmagento magento < databases/sololuxury-blank.sql 2>/dev/null
+
+    - name: "build"
+      run: |
+        composer install
+        wget https://www.avoir-chic.com/solo-env.txt -O app/etc/env.php
+        cp app/design/frontend/LuxuryUnlimited/sololuxury/.deploy/config.php app/etc/config.php
+        php bin/magento setup:upgrade -n
+        php bin/magento setup:di:compile -n
+        php bin/magento setup:static-content:deploy --theme Magento/backend --theme LuxuryUnlimited/sololuxury --theme LuxuryUnlimited/sololuxury_rtl  -n   2>&1 | tee databases/temp.log
+        echo "CHECK_CONTENT_ERROR=$(cat databases/temp.log | grep 'Compilation from source')"  >> $GITHUB_ENV
+        echo "GEN_CSS=find pub/static/frontend/LuxuryUnlimited/ -type f \( -name 'styles-l.css' -o -name 'styles-m.css' \)" >> $GITHUB_ENV
+        echo "GEN_CSSCOUNT=find pub/static/frontend/LuxuryUnlimited/ -type f \( -name 'styles-l.css' -o -name 'styles-m.css' \) | wc -l" >> $GITHUB_ENV
+
+    - name: 'check css errors'
+      run: |
+        if [ ! -z "$CHECK_CONTENT_ERROR" ]
+        then 
+          echo "ERROR INSIDE CSS = $CHECK_CONTENT_ERROR"
+          exit 1
+        else
+          echo "Build Sucess"
+        fi
+    - name: 'check generated css'
+      run: |
+        if [ "$GEN_CSSCOUNT" -ne "6" ]
+        then 
+          echo "ERROR: ALL CSS Not Generated"
+          echo "$GEN_CSSCOUNT"
+          exit 1
+        else
+          echo "CSS Generated"
+          echo "$GEN_CSSCOUNT"
+        fi
+        
+    - name: 'check imported css'
+      run: |
+        wget https://www.avoir-chic.com/scan_css_import.sh -O scan_css_import.sh
+        bash scan_css_import.sh  
+
+  brands_labels-build:
+    runs-on: self-hosted
+    needs: sololuxury-build
+    name: 'brands_labels build'
+    services:
+      mysql:
+        image: mariadb:10.3
+        env:
+          MYSQL_ROOT_PASSWORD: magento
+          MYSQL_DATABASE: magento
+        volumes:
+          - "magento.sql:/docker-entrypoint-initdb.d"
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+      elasticsearch:
+        image: shanatics0007/my-elasticsearch
+        ports:
+          - 9200:9200
+        options: -e="discovery.type=single-node" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
+      redis:
+        image: redis:6.2-alpine
+        ports:
+          - "6379:6379"
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: "import database"
+      run: |
+        mysql --host 127.0.0.1 --port 3306 -uroot -pmagento magento < databases/brands-labels-blank.sql 2>/dev/null
+
+    - name: "build"
+      run: |
+        composer install
+        wget https://www.avoir-chic.com/brands-env.txt -O app/etc/env.php
+        cp app/design/frontend/LuxuryUnlimited/brands_labels/.deploy/config.php app/etc/config.php
+        php bin/magento setup:upgrade -n
+        php bin/magento setup:di:compile -n
+        php bin/magento setup:static-content:deploy --theme Magento/backend --theme LuxuryUnlimited/brands_labels --theme LuxuryUnlimited/brands_labels_rtl -n   2>&1 | tee databases/temp.log
+        echo "CHECK_CONTENT_ERROR=$(cat databases/temp.log | grep 'Compilation from source')"  >> $GITHUB_ENV
+        echo "GEN_CSS=find pub/static/frontend/LuxuryUnlimited/ -type f \( -name 'styles-l.css' -o -name 'styles-m.css' \)" >> $GITHUB_ENV
+        echo "GEN_CSSCOUNT=find pub/static/frontend/LuxuryUnlimited/ -type f \( -name 'styles-l.css' -o -name 'styles-m.css' \) | wc -l" >> $GITHUB_ENV
+
+    - name: 'check css errors'
+      run: |
+        if [ ! -z "$CHECK_CONTENT_ERROR" ]
+        then 
+          echo "ERROR INSIDE CSS = $CHECK_CONTENT_ERROR"
+          exit 1
+        else
+          echo "Build Sucess"
+        fi
+    - name: 'check generated css'
+      run: |
+        if [ "$GEN_CSSCOUNT" -ne "6" ]
+        then 
+          echo "ERROR: ALL CSS Not Generated"
+          echo "$GEN_CSSCOUNT"
+          exit 1
+        else
+          echo "CSS Generated"
+          echo "$GEN_CSSCOUNT"
+        fi
+        
+    - name: 'check imported css'
+      run: |
+        wget https://www.avoir-chic.com/scan_css_import.sh -O scan_css_import.sh
+        bash scan_css_import.sh  
+        
+  suvandnat-build:
+    runs-on: self-hosted
+    needs: brands_labels-build
+    name: 'suvandnat build'
+    services:
+      mysql:
+        image: mariadb:10.3
+        env:
+          MYSQL_ROOT_PASSWORD: magento
+          MYSQL_DATABASE: magento
+        volumes:
+          - "magento.sql:/docker-entrypoint-initdb.d"
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+      elasticsearch:
+        image: shanatics0007/my-elasticsearch
+        ports:
+          - 9200:9200
+        options: -e="discovery.type=single-node" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
+      redis:
+        image: redis:6.2-alpine
+        ports:
+          - "6379:6379"
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: "import database"
+      run: |
+        mysql --host 127.0.0.1 --port 3306 -uroot -pmagento magento < databases/suvandnat-blank.sql 2>/dev/null
+
+    - name: "build"
+      run: |
+        ls
+        php -v
+        composer install
+        wget https://www.avoir-chic.com/suvandnat-env.txt -O app/etc/env.php
+        cp app/design/frontend/LuxuryUnlimited/suvandnat/.deploy/config.php app/etc/config.php
+        php bin/magento setup:upgrade -n
+        php bin/magento setup:di:compile -n
+        php bin/magento setup:static-content:deploy --theme Magento/backend --theme LuxuryUnlimited/suvandnat --theme LuxuryUnlimited/suvandnat_rtl -n   2>&1 | tee databases/temp.log
+        echo "CHECK_CONTENT_ERROR=$(cat databases/temp.log | grep 'Compilation from source')"  >> $GITHUB_ENV
+        echo "GEN_CSS=find pub/static/frontend/LuxuryUnlimited/ -type f \( -name 'styles-l.css' -o -name 'styles-m.css' \)" >> $GITHUB_ENV
+        echo "GEN_CSSCOUNT=find pub/static/frontend/LuxuryUnlimited/ -type f \( -name 'styles-l.css' -o -name 'styles-m.css' \) | wc -l" >> $GITHUB_ENV
+
+    - name: 'check css errors'
+      run: |
+        if [ ! -z "$CHECK_CONTENT_ERROR" ]
+        then 
+          echo "ERROR INSIDE CSS = $CHECK_CONTENT_ERROR"
+          exit 1
+        else
+          echo "Build Sucess"
+        fi
+    - name: 'check generated css'
+      run: |
+        if [ "$GEN_CSSCOUNT" -ne "6" ]
+        then 
+          echo "ERROR: ALL CSS Not Generated"
+          echo "$GEN_CSSCOUNT"
+          exit 1
+        else
+          echo "CSS Generated"
+          echo "$GEN_CSSCOUNT"
+        fi
+        
+    - name: 'check imported css'
+      run: |
+        wget https://www.avoir-chic.com/scan_css_import.sh -O scan_css_import.sh
+        bash scan_css_import.sh  

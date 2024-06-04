@@ -1,0 +1,93 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .cms-track-your-ticket-by-email {
+        .login-container {
+            .block-content {
+                .lib-css(width, 100%);
+            }
+
+            .block-customer-login {
+                .lib-css(background, @color-white);
+                border: 2px solid @color-gray90;
+                border-radius: 12px;
+            }
+
+            .check-order-container.block-new-customer {
+                border: 2px solid @color-gray90;
+                border-radius: 12px;
+            }
+        }
+    }
+}
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__m) {
+    .cms-track-your-ticket-by-email {
+        .login-container {
+            .block-customer-login {
+                width: 450px;
+            }
+
+            .check-order-container.block-new-customer {
+                width: 450px;
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    .cms-track-your-ticket-by-email {
+        h1.hed {
+            margin: 40px 20px;
+        }
+
+        .login-container {
+            .block .block-title {
+                strong {
+                    .lib-font-size(@font-size__xl);
+                }
+            }
+
+            .block-content {
+                .lib-css(width, 100%);
+            }
+
+            .block-customer-login {
+                .actions-toolbar {
+                    .primary {
+                        margin-bottom: 0;
+
+                        button.action.login.primary {
+                            .lib-css(width, auto);
+                        }
+                    }
+                }
+            }
+
+            .check-order-container.block-new-customer {
+                margin-top: 32px;
+
+                .row {
+                    padding-bottom: 0;
+                }
+            }
+        }
+    }
+}

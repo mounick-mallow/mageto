@@ -1,0 +1,44 @@
+& when (@media-common =true) {
+    .form {
+        &.contact {
+            .note {
+                .lib-font-size(20);
+                .lib-line-height(30);
+                font-weight: @font-weight__heavier;
+                color: @theme-color;
+                margin-bottom: @indent__l;
+            }
+
+            .fieldset {
+                border: 1px solid fade(@theme__primary--color-400, 20%);
+                border-radius: 20px;
+                padding: @indent__l 24px;
+
+                .prifix-input-with-option {
+                    &:before {
+                        content: @contact-none-value;
+                    }
+                }
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__m) {
+    .form {
+        &.contact {
+            .note {
+                .lib-font-size(28);
+                .lib-line-height(42);
+                margin-bottom: @contact-note-space-bottom;
+            }
+        }
+    }
+}

@@ -1,0 +1,36 @@
+
+<ul>
+    <li>
+        <div class="iconBlock">
+            <span class="iconImage">
+                <img src="<?php echo $block->getViewFileUrl('images/icon-1.png') ?>" alt=""/>
+            </span>
+        </div>
+        <div class="contentBlock">
+            <span class="spanTitle">FREE SHIPPING</span>
+            <span class="spanContent">Free shipping on all over $99.</span>
+        </div>
+    </li>
+    <li>
+        <div class="iconBlock">
+            <span class="iconImage">
+                <img src="<?php echo $block->getViewFileUrl('images/icon-2.png') ?>" alt=""/>
+            </span>
+        </div>
+        <div class="contentBlock">
+            <span class="spanTitle">MONEY BACK GUARANTEE</span>
+            <span class="spanContent">100% money back guarantee.</span>
+        </div>
+    </li>
+    <li>
+        <div class="iconBlock">
+            <span class="iconImage">
+                <img src="<?php echo $block->getViewFileUrl('images/icon-3.png') ?>" alt=""/>
+            </span>
+        </div>
+        <div class="contentBlock">
+            <span class="spanTitle">ONLINE SUPPORT 24/7</span>
+            <span class="spanContent">Lorem ipsum dolor sit sit amet.</span>
+        </div>
+    </li>
+</ul>

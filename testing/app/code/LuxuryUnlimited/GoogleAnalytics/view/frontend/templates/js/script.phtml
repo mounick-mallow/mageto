@@ -1,0 +1,14 @@
+<?php
+/** @var $block object */
+?>
+<?php
+// @codingStandardsIgnoreFile
+$data = $block->getGoogleAnalyticsScriptData();
+?>
+<?php if (!empty($data)) : ?>
+    <!-- Google Tag Manager -->
+    <script>
+        window.dataLayer.push(<?= $this->helper('Magento\Framework\Json\Helper\Data')->jsonEncode($data) ?>);
+    </script>
+    <!-- End Google Tag Manager -->
+<?php endif; ?>

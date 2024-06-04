@@ -1,0 +1,46 @@
+& when (@media-common = true) {
+    .catalogsearch-result-index.page-layout-2columns-left {
+        .column.main {
+            .no-page {
+                h3 {
+                    .lib-font-size(48);
+                    color: @custom__color-black;
+                }
+
+                .re-result-desc {
+                    .lib-font-size(16);
+                    color: @theme__territory--color-400;
+                }
+            }
+
+            .result-count {
+                .lib-font-size(16);
+                color: @theme__territory--color-400;
+            }
+        }
+    }
+
+    .no-page {
+        .create-search-ticket-btn {
+            .lib-font-size(14);
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__xs) {
+    .catalogsearch-result-index.page-layout-2columns-left {
+        .column.main {
+            .no-page {
+                div.re-result-btns {
+                    .action {
+                        width: 60%;
+                    }
+                }
+            }
+        }
+    }
+}

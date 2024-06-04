@@ -1,0 +1,122 @@
+//
+//  Common
+//  ---------------------------------------------
+
+& when (@media-common = true) {
+    .block-collapsible-nav {
+        .account .page-main & {
+            margin-bottom: @global-bottom-margin;
+        }
+        .nav.items {
+            .item {
+                &.dashboard {
+                    a,
+                    strong {
+                        .lib-icon-font-symbol(
+                            @_icon-font-content: @icon-dashboard
+                        );
+                    }
+                }
+
+                &.myaccount {
+                    a,
+                    strong {
+                        .lib-icon-font-symbol(
+                            @_icon-font-content: @icon-account
+                        );
+                    }
+                }
+
+                &.mysocialaccounts {
+                    a,
+                    strong {
+                        .lib-icon-font-symbol(
+                            @_icon-font-content: @icon-account
+                        );
+                    }
+                }
+
+                &.addressbook {
+                    a,
+                    strong {
+                        .lib-icon-font-symbol(
+                            @_icon-font-content: @icon-location
+                        );
+                    }
+                }
+
+                &.myorders {
+                    a,
+                    strong {
+                        .lib-icon-font-symbol(
+                            @_icon-font-content: @icon-list-alt
+                        );
+                    }
+                }
+
+                &.mywishlist {
+                    a,
+                    strong {
+                        .lib-icon-font-symbol(
+                            @_icon-font-content: @icon-wishlist
+
+                        );
+                        .lib-icon-font-size(
+                            @_icon-font-size: 18px,
+                            @_icon-font-line-height: 24px
+                        );
+                    }
+                }
+
+                &.mytickets {
+                    a,
+                    strong {
+                        .lib-icon-font-symbol(
+                            @_icon-font-content: @icon-ticket
+                        );
+                    }
+                }
+
+                &.logout {
+                    a,
+                    strong {
+                        .lib-icon-font-symbol(
+                            @_icon-font-content: @icon-logout
+                        );
+                    }
+                }
+
+                &.couponlist {
+                    a,
+                    strong {
+                        .lib-icon-font-symbol(
+                            @_icon-font-content: @icon-coupon
+                        );
+                    }
+                }
+
+                &.returnlist {
+                    a,
+                    strong {
+                        .lib-icon-font-symbol(
+                            @_icon-font-content: @icon-return
+                        );
+                    }
+                }
+
+                &.mystorecredit {
+                    a,
+                    strong {
+                        .lib-icon-font-symbol(
+                            @_icon-font-content: @icon-credit-card
+                        );
+                        .lib-icon-font-size(
+                            @_icon-font-size: 18px,
+                            @_icon-font-line-height: 24px
+                        );
+                    }
+                }
+            }
+        }
+    }
+}

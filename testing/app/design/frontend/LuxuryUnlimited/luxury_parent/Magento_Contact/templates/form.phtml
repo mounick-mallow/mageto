@@ -1,0 +1,169 @@
+<?php
+
+/** @var \Magento\Contact\Block\ContactForm $block */
+/** @var \Magento\Contact\ViewModel\UserDataProvider $viewModel */
+/** @var \Magento\Framework\Escaper $escaper*/
+
+$dynamicHelper = $this->helper("Dynamic\Customization\Helper\Data");
+$countryHelper = $dynamicHelper->getCountry();
+$countryCollection = $countryHelper->toOptionArray();
+
+$viewModel = $block->getViewModel();
+?>
+<form class="form contact form-control"
+      action="<?= $escaper->escapeUrl($block->getFormAction()) ?>"
+      id="contact-form"
+      method="post"
+      data-hasrequired="<?= $escaper->escapeHtmlAttr(__('* Required Fields')) ?>"
+      data-mage-init='{"validation":{}}'>
+
+    <div class="field note no-label">
+        <?= $escaper->escapeHtml(__('Whatever Your Query. Use The Contact From Below To Get In Touch-Our Team Is Ready To Help 24*7')) ?>
+    </div>
+
+    <fieldset class="fieldset contact-form">
+        <legend class="fieldset-legend">
+            <span><?= $block->escapeHtml(__('Contact Us')) ?></span>
+        </legend>
+        <div class="fields">
+            <div class="field required prifix-field">
+                <label class="label" for="name"><span><?= $escaper->escapeHtml(__('First Name')) ?></span></label>
+                <div class="control prifix-input-with-option">
+                    <select name="name" class="input-prefix  prefix-select contact__select-options">
+                        <option class="contact__form-option" href="#"><?= /* @noEscape */ __('Mr.') ?></option>
+                        <option class="contact__form-option" href="#"><?= /* @noEscape */ __('Ms.') ?></option>
+                        <option class="contact__form-option" href="#"><?= /* @noEscape */ __('Mrs.') ?></option>
+                    </select>
+                    <input name="name"
+                       id="name"
+                       title="<?= $escaper->escapeHtmlAttr(__('First Name')) ?>"
+                       value="<?= $escaper->escapeHtmlAttr($viewModel->getUserName()) ?>"
+                       class="input-text contact__form-input prefix-text"
+                       type="text"
+                       placeholder="<?= $escaper->escapeHtml(__('Enter first name')) ?>"
+                       data-validate="{required:true}"/>
+                </div>
+            </div>
+            <div class="field required">
+                <label class="label" for="last_name"><span><?= $escaper->escapeHtml(__('Last Name')) ?></span></label>
+                <div class="control">
+                    <input name="second_name"
+                       id="last_name"
+                       title="<?= $escaper->escapeHtmlAttr(__('Last Name')) ?>"
+                       value="<?= $escaper->escapeHtmlAttr($viewModel->getUserName()) ?>"
+                       class="input-text contact__form-input"
+                       type="text"
+                       placeholder="<?= $escaper->escapeHtml(__('Enter last name')) ?>"
+                       data-validate="{required:true}"/>
+                </div>
+            </div>
+        </div>
+        <div class="fields">
+            <div class="field required">
+                <label class="label" for="email"><span><?= $escaper->escapeHtml(__('Email Address')) ?></span></label>
+                <div class="control">
+                    <input name="email"
+                           id="email"
+                           title="<?= $escaper->escapeHtmlAttr(__('Email')) ?>"
+                           value="<?= $escaper->escapeHtmlAttr($viewModel->getUserEmail()) ?>"
+                           class="input-text contact__form-input"
+                           type="email"
+                           placeholder="<?= $escaper->escapeHtmlAttr(__('Enter email address')) ?>"
+                           data-validate="{required:true}"
+                    />
+                </div>
+            </div>
+            <div class="field required">
+                <label class="label" for="phone"><span><?= $escaper->escapeHtml(__('Phone Number')) ?></span></label>
+                <div class="control">
+                    <input name="phone"
+                           id="phone"
+                           title="<?= $escaper->escapeHtmlAttr(__('Phone Number')) ?>"
+                           value="<?= $escaper->escapeHtmlAttr($viewModel->getUserTelephone()) ?>"
+                           placeholder="<?= $escaper->escapeHtmlAttr(__('Enter phone number')) ?>"
+                           class="input-text contact__form-input"
+                           data-validate="{required:true}"'
+                    type="tel" />
+                </div>
+            </div>
+        </div>
+
+        <div class="fields">
+            <div class="field required">
+                <label class="label" for="enquiry"><span><?= $escaper->escapeHtml(__('Type Of Enquiry')) ?></span></label>
+                <div class="control">
+                    <select name="enquiry" >
+                        <option>
+                            <?= $escaper->escapeHtml(__('Payment')) ?>
+                        </option>
+                        <option value="">
+                            <?= $escaper->escapeHtml(__('Payment')) ?>
+                        </option>
+                        <option value="">
+                            <?= $escaper->escapeHtml(__('Payment')) ?>
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="field required">
+                <label class="label" for="country"><span><?= $escaper->escapeHtml(__('Country')) ?></span></label>
+                <div class="control">
+                    <select name="country"  id="country" data-validate="{required:true}">
+                        <?php foreach ($countryCollection as $key => $country) {
+                            if ($key > 0) {
+                                ?>
+                                <option value="<?= $escaper->escapeHtmlAttr($country['label']) ?>"><?= $escaper->escapeHtml(__($country['label'])) ?></option>
+                            <?php }
+                        } ?>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="field required">
+            <label class="label" for="enquiry"><span><?= $escaper->escapeHtml(__('Subject')) ?></span></label>
+            <div class="control">
+                <input name="subject"
+                   id="subject"
+                   title="<?= $escaper->escapeHtmlAttr(__('Subject')) ?>"
+                   value="<?= $escaper->escapeHtmlAttr($viewModel->getUserName()) ?>"
+                   class="input-text"
+                   type="text"
+                   placeholder="<?= $escaper->escapeHtml(__('Subject')) ?>"
+                   data-validate="{required:true}"/>
+            </div>
+        </div>
+
+        <div class="field required">
+            <label class="label" for="message"><span><?= $escaper->escapeHtml(__('Message')) ?></span></label>
+            <div class="control">
+                <textarea name="message"
+                      id="message"
+                      title="<?= $escaper->escapeHtmlAttr(__('Message')) ?>"
+                      class="input-text contact__form-textarea"
+                      cols="5"
+                      rows="3"
+                      placeholder="<?= $escaper->escapeHtmlAttr(__('What’s on your mind?')) ?>"
+                      data-validate="{required:true}"
+                ><?= $escaper->escapeHtml($viewModel->getUserComment()) ?></textarea>
+            </div>
+        </div>
+        <?= $block->getChildHtml('form.additional.info') ?>
+    </fieldset>
+    <div class="actions-toolbar">
+        <div class="primary">
+            <button type="submit" title="<?= $escaper->escapeHtmlAttr(__('Submit')) ?>" class="action submit primary">
+                <span><?= $escaper->escapeHtml(__('Submit')) ?></span>
+            </button>
+        </div>
+    </div>
+</form>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Customer/js/block-submit-on-send": {
+                "formId": "contact-form"
+            }
+        }
+    }
+</script>

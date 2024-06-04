@@ -1,0 +1,37 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common =true) {
+    .checkout-onepage-success {
+        .checkout-success {
+            p {
+                &:first-child {
+                    color: @theme__secondary--color-500;
+                }
+            }
+
+            .box-order-billing-method {
+                display: inline-block;
+                padding: 15px;
+                background: @theme__primary--brd-light;
+                border-radius: @indent__xs;
+                color: @theme__primary--500;
+            }
+        }
+
+        #my-orders-table {
+            color: @theme__secondary--color-500;
+        }
+
+        .block-content {
+            color: @theme__secondary--color-500;
+        }
+
+        .box-order-shipping-address .box-title span,
+        .box-order-billing-address .box-title span {
+            color: @theme__primary--500;
+            border-bottom: 1px solid @theme__primary--brd-dark;
+        }
+    }
+}

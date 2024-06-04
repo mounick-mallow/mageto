@@ -1,0 +1,53 @@
+//
+//  Common
+//  ---------------------------------------------
+
+& when (@media-common = true) {
+    body {
+        &:not(.cms-index-index) {
+            .page-wrapper {
+                .page-header.sticky.active {
+                    padding-bottom: 0;
+                    .sections.nav-sections {
+                        .navigation {
+                            .level0 {
+                                .submenu {
+                                    top: 132px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .page-wrapper {
+            .page-header.sticky.active {
+                .sections.nav-sections {
+                    top: @sticky-active-childTopPos-sololuxury;
+                    .navigation {
+                        .level0 {
+                            .submenu {
+                                top: @sticky-active-childTopPos-sololuxury;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .cms-index-index {
+            .page-header.sticky.active {
+                .sections.nav-sections {
+                    .navigation {
+                        .level0 {
+                            .submenu {
+                                top: @sticky-active-childTopPos-sololuxury;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

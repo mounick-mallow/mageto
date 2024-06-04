@@ -1,0 +1,101 @@
+//
+//  Common
+//  ---------------------------------------------
+
+& when (@media-common = true) {
+    .account {
+        .page-wrapper {
+            .page-title-wrapper {
+                .page-title {
+                    text-align: left;
+                }
+            }
+        }
+
+        .box-content,
+        .block-content {
+            column-gap: 24px;
+            row-gap: 24px;
+        }
+    }
+
+    .customer-account-index {
+        .block {
+            .block-title {
+                background-color: @theme__territory--color-500;
+                padding: @indent__xs @indent__l;
+                margin-bottom: 0;
+
+                strong {
+                    .lib-font-size(24);
+                    line-height: @indent__l;
+                    font-weight: @font-weight__bold;
+                    color: @theme__territory--white;
+                }
+
+                a.action.edit {
+                    font-size: @font-size__s;
+                    .lib-line-height(19);
+                    text-transform: capitalize;
+                    font-weight: @font-weight__bold;
+                    border: 2px solid @theme__primary--color-500;
+                    background-color: @theme__primary--color-500;
+                    color: @theme__territory--white;
+                    border-radius: 5px;
+                }
+            }
+        }
+    }
+
+    .block {
+        .title {
+            strong {
+                font-size: @font-size__l;
+                margin: 0;
+                .lib-line-height(22);
+                font-weight: @font-weight__regular;
+                color: @theme__territory--white;
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    .customer-account-index {
+        .page-wrapper {
+            .block.block-dashboard-info {
+                .box {
+                    .box-title {
+                        .lib-font-size(20);
+                        padding: 15px @indent__s;
+                    }
+                }
+            }
+
+            .box-content,
+            .block-content {
+                column-gap: @indent__s;
+                row-gap: @indent__s;
+            }
+
+            .block-dashboard-addresses {
+                > .box-content {
+                    padding: 16px;
+                }
+            }
+
+            .block {
+                .block-title {
+                    padding: 15px @indent__s;
+                    strong {
+                        .lib-font-size(20);
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,26 @@
+<?php
+
+declare(strict_types=1);
+
+/* @var \Magento\Wishlist\Block\Link $block */
+?>
+<a data-bind="scope: 'wishlist'" href="<?= $block->escapeUrl($block->getUrl('guestwishlist/index/redirect')) ?>"
+   class="action my-wishlist" title="<?= $block->escapeHtmlAttr($block->getLabel()) ?>" role="button">
+    <i class="far fa-heart"></i>
+    <!-- ko if: wishlist().counter --><span data-bind="text: wishlist().counter" class="counter qty"></span><!-- /ko -->
+</a>
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "wishlist": {
+                        "component": "Magento_Wishlist/js/view/wishlist"
+                    }
+                }
+            }
+        }
+    }
+
+</script>

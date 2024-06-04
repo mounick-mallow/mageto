@@ -1,0 +1,19 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<small class="copyright">
+    <div class="container">
+        <div class="copyright-inner-sec">
+            <span><?= $block->escapeHtml($block->getCopyright()) ?></span>
+            <?php
+                echo $this->getLayout()
+                ->createBlock('Magento\Cms\Block\Block')
+                ->setBlockId('footer_social_links')
+                ->toHtml();
+            ?> 
+        </div>
+    </div>
+</small>

@@ -1,0 +1,50 @@
+//
+//    Common
+//--------------------------------------
+& when (@media-common = true) {
+    .newsletter-manage-index {
+        .form-newsletter-manage {
+            h3 {
+                margin-bottom: @indent__m;
+            }
+
+            .actions-toolbar {
+                .lib-vendor-prefix-display(flex);
+                justify-content: center;
+                margin-top: @indent__m;
+            }
+        }
+    }
+}
+
+//
+//    Desktop
+//--------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__m) {
+    .newsletter-manage-index {
+        .page-title-wrapper {
+            padding-left: 0;
+        }
+    }
+}
+
+//
+//    Mobile
+//--------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    .newsletter-manage-index {
+        .newsletterBlock {
+            margin-bottom: @indent__xl;
+        }
+    }
+}

@@ -1,0 +1,300 @@
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__xs) {
+    body.cms-homepage,
+    body.cms-index-index {
+        background: @theme__primary--brd-light;
+
+        .most_popular {
+            display: block;
+
+            .tile-caption {
+                width: 100%;
+                float: left;
+                margin: @indent__xs 0 @indent__l;
+
+                .category-name {
+                    color: @theme__secondary--color-800;
+                    .lib-font-size(20);
+                    font-weight: @h2__font-weight;
+                    float: left;
+                }
+                .view-more {
+                    color: @theme__primary--500;
+                    float: right;
+                    margin: 0;
+                }
+            }
+
+            .product-tile {
+                width: 48%;
+                margin: @indent__xs 0 @indent__xs 8px;
+                min-height: 395px;
+                padding: 15px;
+                float: left;
+
+                .product-name {
+                    a {
+                        color: @theme__secondary--color-800;
+                        .lib-font-size(16);
+                        .lib-line-height(24);
+                        width: 100%;
+                        margin: 12px 0;
+                        float: left;
+                    }
+                }
+
+                .product-price {
+                    color: @theme__primary--500;
+                    .lib-font-size(16);
+                    font-weight: @font-weight__semibold;
+                    width: 100%;
+                    margin: 0;
+                    float: left;
+                }
+
+                .in_wishlist {
+                    float: right;
+                    position: absolute;
+                    top: @indent__xs;
+                    right: 15px;
+                }
+
+                &:first-child {
+                    margin-left: 0;
+                }
+            }
+        }
+
+        .home_categories {
+            display: block;
+
+            .tile-caption {
+                width: 100%;
+                float: left;
+                margin: @indent__xs 0 @indent__l;
+
+                .category-name {
+                    color: @theme__secondary--color-800;
+                    .lib-font-size(20);
+                    font-weight: @h2__font-weight;
+                    float: left;
+                }
+                .view-more {
+                    color: @theme__primary--500;
+                    float: right;
+                    margin: 0;
+                }
+            }
+
+            .product-tile {
+                width: 48%;
+                margin: @indent__xs 0 @indent__xs 8px;
+                padding: 15px;
+                float: left;
+
+                .product-name {
+                    a {
+                        color: @theme__secondary--color-800;
+                        .lib-font-size(16);
+                        .lib-line-height(24);
+                        width: 100%;
+                        margin: 12px 0;
+                        float: left;
+                    }
+                }
+
+                .product-price {
+                    color: @theme__primary--500;
+                    .lib-font-size(16);
+                    .lib-line-height(28);
+                    width: 100%;
+                    margin: 0;
+                    float: left;
+                }
+
+                .in_wishlist {
+                    float: right;
+                    position: absolute;
+                    top: @indent__xs;
+                    right: 15px;
+                }
+
+                &:first-child {
+                    margin-left: 0;
+                }
+            }
+        }
+
+        .brands_logos {
+            padding: @indent__l 0 @indent__xs;
+            .brand-slide {
+                div.brand {
+                    float: left;
+                    margin: 0 2px;
+                    width: 24%;
+                    clear: none;
+
+                    img {
+                        display: block;
+                    }
+
+                    .brand-title {
+                        color: @theme__secondary--color-800;
+                        font-weight: @heading__font-weight__base;
+                        text-align: center;
+                        .lib-line-height(24);
+
+                        &:hover {
+                            color: @theme__primary--500;
+                        }
+                    }
+                }
+            }
+        }
+
+        .offer1 {
+            background: @theme__primary--brd-light;
+            color: @theme__secondary--color-800;
+            .lib-font-size(16);
+            display: block;
+            float: left;
+            width: 100%;
+            padding: 20px @indent__xl 0;
+            margin: 20px 0 0;
+            text-align: center;
+            .lib-line-height(24);
+        }
+
+        .offer2 {
+            background: @theme__primary--500;
+            float: left;
+            width: 100%;
+            padding: 20px 0 @indent__xs;
+            display: block;
+            margin: 20px 0;
+            .lib-line-height(24);
+
+            span {
+                color: @theme__primary--100;
+                .lib-font-size(24);
+                font-weight: @font-weight__heavier;
+                text-align: center;
+                float: left;
+                width: 100%;
+                margin-bottom: @indent__xs;
+            }
+
+            p {
+                color: @theme__primary--100;
+                .lib-font-size(16);
+                text-align: center;
+                float: left;
+                width: 100%;
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    body.cms-index-index {
+        background: @theme__primary--brd-light
+            url(../images/solo/solo-new-home-mobile.jpg) top center no-repeat;
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__l) {
+    body.cms-index-index {
+        background: @theme__primary--brd-light
+            url(../images/solo/solo-new-home-ipad-mini.jpg) top center no-repeat;
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__xl) {
+    body.cms-index-index {
+        background: @theme__primary--brd-light
+            url(../images/solo/solo-new-home-ipad.jpg) top center no-repeat;
+    }
+}
+
+& when (@media-common = true) {
+    .cms-index-index {
+        background: @theme__primary--brd-light
+            url(../images/solo/solo-new-home.jpg) top center no-repeat;
+        background-size: 100%;
+
+        .brands_logos {
+            width: 100%;
+            float: right;
+            margin: 0;
+            padding: @indent__m 0;
+            border: none;
+
+            .brand {
+                float: right;
+                clear: both;
+                margin-bottom: 15px;
+
+                img {
+                    display: none;
+                }
+
+                .brand-title {
+                    text-align: right;
+                    color: @theme__secondary--color-500;
+                    text-transform: @dropdown-menu-text-transform;
+                    border: none;
+
+                    &:hover {
+                        color: @theme__primary--500;
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+
+        .offer1,
+        .offer2,
+        .home_categories,
+        .most_popular {
+            display: none;
+        }
+
+        .column.main {
+            min-height: inherit;
+            padding-bottom: 0;
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__l) {
+    .column.main {
+        min-height: calc(~'100vh - 200px');
+    }
+
+    .brands_logos {
+        position: absolute;
+        right: 25px;
+        top: 130px;
+        max-height: calc(~'100vh - 323px ');
+        overflow: hidden;
+    }
+}

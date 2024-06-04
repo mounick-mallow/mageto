@@ -1,0 +1,16 @@
+{
+  "name": "luxuryunlimited/module-pricemathch",
+  "description": "Magento2 Price Match Module",
+  "homepage": "https://www.sololuxury.com/",
+  "type": "magento2-module",
+  "version": "1.0.0",
+  "license": "GPL-3.0-or-later",
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "LuxuryUnlimited\\PriceMatch\\": ""
+    }
+  }
+}

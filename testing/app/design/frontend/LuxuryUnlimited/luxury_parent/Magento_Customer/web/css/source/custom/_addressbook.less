@@ -1,0 +1,630 @@
+//
+//  Desktop
+//
+& when (@media-common =true) {
+    .account {
+        .account-nav-content {
+            .items {
+                .item:nth-child(3) {
+                    /* default porto design imported */
+                    .lib-css(display, flex, @_prefix: 1) !important;
+
+                    strong {
+                        color: @color-white;
+                    }
+                }
+            }
+        }
+
+        .block-addresses-default {
+            .address-title-section {
+                .lib-css(display, flex, @_prefix: 1);
+                .lib-css(align-items, start, @_prefix: 1);
+                .lib-css(justify-content, space-between, @_prefix: 1);
+                margin-bottom: @indent__s;
+
+                .block-title {
+                    strong {
+                        color: @color-black;
+                        .lib-font-size(24);
+                        font-weight: @font-weight__heavier;
+                        text-decoration: none;
+                    }
+                }
+
+                .primary {
+                    .action.add {
+                        background-color: @color-white;
+                        border: 2px solid @color-sky-blue1;
+                        color: @color-sky-blue1;
+                        .lib-css(display, flex, @_prefix: 1);
+                        .lib-css(align-items, center, @_prefix: 1);
+                        padding: 12px 24px;
+                        .lib-font-size(14);
+                        font-weight: @font-weight__bold;
+                        border-radius: 50px;
+                    }
+                }
+            }
+
+            .block-content {
+                .lib-css(display, flex, @_prefix: 1);
+                .lib-css(justify-content, space-between, @_prefix: 1);
+                .lib-css(align-items, center, @_prefix: 1);
+
+                .addresses {
+                    width: 48%;
+                    border: 1px solid @color-gray95;
+                    border-radius: 4px;
+                    padding: 24px @indent__l;
+
+                    .address-content {
+                        position: relative;
+                        .lib-css(display, flex, @_prefix: 1);
+                        .lib-css(flex-direction, column, @_prefix: 1);
+                        .lib-css(justify-content, space-between, @_prefix: 1);
+                        .lib-css(align-items, start, @_prefix: 1);
+                        .lib-css(gap, 20px, @_prefix: 1);
+
+                        .address-tag {
+                            .lib-css(display, flex, @_prefix: 1);
+                            .lib-css(align-items, center, @_prefix: 1);
+                            .lib-css(gap, 10px, @_prefix: 1);
+
+                            span {
+                                .lib-css(display, flex, @_prefix: 1);
+                                padding: @indent__s 16px;
+                                .lib-css(flex-direction, column, @_prefix: 1);
+                                .lib-css(align-items, flex-start, @_prefix: 1);
+                                border-radius: 4px;
+                                background-color: @color-gray95;
+                                .lib-font-size(14);
+                                font-weight: @font-weight__bold;
+                                color: @color-gray40;
+                            }
+                        }
+
+                        p {
+                            margin-bottom: 0;
+                            .lib-font-size(20);
+                            font-weight: @font-weight__heavier;
+                            color: @color-gray40;
+
+                            a {
+                                .lib-font-size(20);
+                                font-weight: @font-weight__heavier;
+                                color: @color-gray40;
+                            }
+
+                            strong {
+                                font-weight: @font-weight__semibold;
+                            }
+                        }
+
+                        .additional-info {
+                            position: absolute;
+                            right: 0;
+                            top: 0;
+                        }
+                    }
+                }
+            }
+        }
+
+        .block.block-addresses-list {
+            .block-title {
+                strong {
+                    color: @color-black;
+                    .lib-font-size(24);
+                    font-weight: @font-weight__heavier;
+                    text-decoration: none;
+                }
+            }
+
+            .block-content {
+                .table-address-value {
+                    &.actions {
+                        .action.edit {
+                            span {
+                                .lib-font-size(16);
+                                font-weight: @font-weight__regular;
+                                color: @color-gray40;
+                            }
+                        }
+
+                        button.action.delete {
+                            background-color: @color-white;
+                            .lib-font-size(16);
+                            font-weight: @font-weight__regular;
+                            color: @color-gray40;
+                        }
+                    }
+                }
+
+                .customer-addresses-toolbar {
+                    margin: 15px 0;
+
+                    &::before,
+                    &::after {
+                        display: none; /* to remove the unwanted content */
+                    }
+
+                    .pager {
+                        .lib-css(display, flex, @_prefix: 1);
+                        .lib-css(justify-content, space-between, @_prefix: 1);
+
+                        &::before,
+                        &::after {
+                            display: none; /* to remove the unwanted content */
+                        }
+
+                        .toolbar-amount {
+                            .lib-font-size(16);
+                            font-weight: @font-weight__regular;
+                            color: @color-gray40;
+                            padding-right: @indent__s;
+                        }
+
+                        .limiter {
+                            select.limiter-options {
+                                padding: 4px @indent__l;
+                                width: 75px;
+                            }
+
+                            .limiter-text {
+                                .lib-font-size(16);
+                                font-weight: @font-weight__regular;
+                                color: @color-gray40;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .block-address-listview {
+            .address-title-section {
+                .lib-css(display, flex, @_prefix: 1);
+                .lib-css(align-items, start, @_prefix: 1);
+                .lib-css(justify-content, space-between, @_prefix: 1);
+
+                .block-title {
+                    strong {
+                        color: @color-black;
+                        .lib-font-size(24);
+                        font-weight: @font-weight__heavier;
+                    }
+                }
+
+                .primary {
+                    .action.add {
+                        background-color: @color-white;
+                        border: 2px solid @color-sky-blue1;
+                        color: @color-sky-blue1;
+                        .lib-css(display, flex, @_prefix: 1);
+                        .lib-css(align-items, center, @_prefix: 1);
+                        padding: 12px 24px;
+                        .lib-font-size(14);
+                        font-weight: @font-weight__bold;
+                        border-radius: 50px;
+                    }
+                }
+            }
+
+            .block-content {
+                .lib-css(display, flex, @_prefix: 1);
+                .lib-css(justify-content, space-between, @_prefix: 1);
+                .lib-css(align-items, center, @_prefix: 1);
+
+                .addresses {
+                    width: 48%;
+                    border: 1px solid @color-gray95;
+                    border-radius: 4px;
+                    padding: 24px @indent__l;
+
+                    .address-content {
+                        position: relative;
+                        .lib-css(display, flex, @_prefix: 1);
+                        .lib-css(flex-direction, column, @_prefix: 1);
+                        .lib-css(justify-content, space-between, @_prefix: 1);
+                        .lib-css(align-items, start, @_prefix: 1);
+                        .lib-css(gap, 20px, @_prefix: 1);
+
+                        .address-tag {
+                            .lib-css(display, flex, @_prefix: 1);
+                            .lib-css(flex-direction, column, @_prefix: 1);
+                            .lib-css(align-items, flex-start, @_prefix: 1);
+                            padding: 4px 16px;
+                            border-radius: 4px;
+                            background-color: @color-gray95;
+                            .lib-font-size(14);
+                            font-weight: @font-weight__bold;
+                            color: @color-gray40;
+                        }
+
+                        p {
+                            margin-bottom: 0;
+                            .lib-font-size(20);
+                            font-weight: @font-weight__heavier;
+                            color: @color-gray40;
+
+                            strong {
+                                font-weight: @font-weight__semibold;
+                            }
+                        }
+
+                        .additional-info {
+                            position: absolute;
+                            right: 0;
+                            top: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .modals-wrapper {
+        .add-edit-address-popup {
+            .modal-inner-wrap {
+                width: 30%;
+
+                .modal-header {
+                    border: 1px solid @color-gray95;
+                    border-radius: 10px 10px 0 0;
+
+                    .modal-title {
+                        color: @color-black;
+                        .lib-font-size(20);
+                        font-weight: @font-weight__heavier;
+                        border: 0;
+                    }
+                }
+
+                .modal-content {
+                    border-radius: 0 0 10px 10px;
+                    padding: @indent__xl @indent__l;
+
+                    .address-popup {
+                        .fieldset {
+                            .field {
+                                .control {
+                                    input[type='text'] {
+                                        border-radius: 4px;
+                                        border: 1px solid @color-gray95;
+                                    }
+                                }
+
+                                &.address-type {
+                                    .options {
+                                        .lib-css(display, flex, @_prefix: 1);
+                                        .lib-css(align-items, center, @_prefix: 1);
+                                        .lib-css(gap, 10px, @_prefix: 1);
+
+                                        input[type='radio'] {
+                                            margin-top: 0;
+                                        }
+                                    }
+                                }
+
+                                &.common {
+                                    .lib-css(display, flex, @_prefix: 1);
+                                    .lib-css(align-items, center, @_prefix: 1);
+                                    .lib-css(justify-content, space-between, @_prefix: 1);
+
+                                    .field {
+                                        width: 49%;
+                                    }
+                                }
+                            }
+                        }
+
+                        .actions-toolbar {
+                            width: 60%;
+                            margin: auto;
+
+                            .primary {
+                                width: 100%;
+
+                                button.submit {
+                                    border-radius: 50px;
+                                    border: 2px solid @color-blue1;
+                                    background-color: @color-blue1;
+
+                                    span {
+                                        color: @color-white;
+                                        .lib-font-size(14);
+                                        font-weight: @font-weight__bold;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .customer-address-form
+        .form-address-edit
+        .fieldset
+        .fields.street.required {
+        .lib-vendor-prefix-flex-wrap(wrap);
+    }
+}
+
+//
+//  Mobile
+//
+@media only screen and (max-width: (@screen__m - 1)) {
+    body.account {
+        .page-main {
+            padding-left: @indent__l;
+            padding-right: @indent__l;
+        }
+
+        .page-wrapper {
+            .column.main {
+                /* magento default lib file content !important */
+                padding: 0 !important;
+            }
+        }
+
+        .column.main {
+            .form-address-add-section.accountInfo {
+                padding-left: 0;
+                padding-right: 0;
+
+                .fieldset {
+                    padding-left: 0;
+                    padding-right: 0;
+
+                    .field {
+                        select {
+                            height: 40px;
+                            border: 1px solid @color-gray95;
+                        }
+                    }
+
+                    &.contact-info {
+                        .form-block.customer-name-prefix {
+                            .fields {
+                                .lib-css(flex-direction, column, @_prefix: 1);
+
+                                .form-block {
+                                    width: 100%;
+
+                                    select {
+                                        height: 40px;
+                                        border: 1px solid @color-gray95;
+                                    }
+                                }
+                            }
+                        }
+
+                        .field-common-section {
+                            .lib-css(flex-direction, column, @_prefix: 1);
+
+                            .field {
+                                width: 100%;
+                            }
+                        }
+                    }
+
+                    .field-common-section {
+                        .lib-css(flex-direction, column, @_prefix: 1);
+
+                        .field {
+                            width: 100%;
+                        }
+                    }
+
+                    .street {
+                        .nested {
+                            margin-bottom: @indent__base;
+                            display: block;
+
+                            .field.additional {
+                                width: 100%;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .block.block-addresses-default {
+                .block-content {
+                    .lib-css(flex-direction, column, @_prefix: 1);
+                    .lib-css(gap, 10px, @_prefix: 1);
+
+                    .addresses {
+                        width: 100%;
+                        padding-left: 15px;
+                        padding-right: 15px;
+
+                        .address-content {
+                            p {
+                                .lib-font-size(16);
+                            }
+                        }
+                    }
+                }
+            }
+
+            .block.block-addresses-list {
+                margin-bottom: @indent__base;
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum ='max')
+    and
+    (@break =@screen__xs) {
+    body.account {
+        .column.main {
+            .form-address-add-section.accountInfo {
+                .fieldset {
+                    padding-left: 0;
+                    padding-right: 0;
+
+                    &.contact-info {
+                        .form-block.customer-name-prefix {
+                            .fields {
+                                .lib-css(flex-direction, column, @_prefix: 1);
+
+                                .form-block {
+                                    width: 100%;
+
+                                    select {
+                                        height: 40px;
+                                        border: 1px solid @color-gray95;
+                                    }
+                                }
+                            }
+                        }
+
+                        .field-common-section {
+                            .lib-css(flex-direction, column, @_prefix: 1);
+
+                            .field {
+                                width: 100%;
+                            }
+                        }
+                    }
+
+                    .field-common-section {
+                        .lib-css(flex-direction, column, @_prefix: 1);
+
+                        .field {
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+
+            .block.block-addresses-default {
+                .address-title-section {
+                    .lib-css(flex-direction, column, @_prefix: 1);
+                    margin-bottom: 15px;
+                }
+
+                .block-content {
+                    .lib-css(flex-direction, column, @_prefix: 1);
+                    .lib-css(gap, 10px, @_prefix: 1);
+
+                    .addresses {
+                        width: 100%;
+
+                        .address-content {
+                            p {
+                                .lib-font-size(16);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum ='max')
+    and
+    (@break =@screen__s) {
+    body.account {
+        .page-wrapper {
+            .column.main {
+                padding: 0 !important; /* magento default lib file content !important */
+            }
+        }
+
+        .column.main {
+            .form-address-add-section.accountInfo {
+                .fieldset {
+                    padding-left: 0;
+                    padding-right: 0;
+
+                    &.contact-info {
+                        .form-block.customer-name-prefix {
+                            .fields {
+                                .lib-css(flex-direction, column, @_prefix: 1);
+
+                                .form-block {
+                                    width: 100%;
+
+                                    select {
+                                        height: 40px;
+                                        border: 1px solid @color-gray95;
+                                    }
+                                }
+                            }
+                        }
+
+                        .field-common-section {
+                            .lib-css(flex-direction, column, @_prefix: 1);
+
+                            .field {
+                                width: 100%;
+                            }
+                        }
+                    }
+
+                    .field-common-section {
+                        .lib-css(flex-direction, column, @_prefix: 1);
+
+                        .field {
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+
+            .block.block-addresses-default {
+                .block-content {
+                    .lib-css(flex-direction, column, @_prefix: 1);
+                    .lib-css(gap, 10px, @_prefix: 1);
+
+                    .addresses {
+                        width: 100%;
+
+                        .address-content {
+                            p {
+                                .lib-font-size(16);
+                            }
+                        }
+                    }
+                }
+            }
+
+            .block.block-addresses-list {
+                .block-content {
+                    .additional-addresses {
+                        margin: 0;
+
+                        .table-additional-addresses-items {
+                            .table-address {
+                                border: 0;
+                                padding: 0;
+
+                                td.col {
+                                    &.firstname {
+                                        padding-left: 15px;
+                                        border-top: 0;
+                                    }
+
+                                    &.actions {
+                                        border-bottom: 0;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

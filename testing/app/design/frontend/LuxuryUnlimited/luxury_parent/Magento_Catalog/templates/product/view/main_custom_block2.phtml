@@ -1,0 +1,79 @@
+<?php
+// phpcs:disable
+    $product_view = $this->getConfig('porto_settings/product');
+    $block = $this->getLayout()->createBlock('Magento\Cms\Block\Block');
+    /*if($block) {
+        $block->setBlockId($product_view['main_custom_block2']);
+    }
+    if($block && isset($product_view['main_custom_block2']) && $product_view['main_custom_block2'] !=''){ ?>
+        <div class="custom-block"><?= $block->toHtml() ?></div>
+   <?php }*/
+?>
+<?php
+    $ddHelper = $this->helper("\Dynamic\HomepageApi\Helper\Data");
+    $dynamicHelper = $this->helper('\Dynamic\Customization\Helper\Data');
+    $product = $ddHelper->getRegistryManager()->registry('current_product');//get current product
+    $compositionLabel = $product->getResource()->getAttribute('composition')->getStoreLabel();
+    $compositionValue = $product->getResource()->getAttribute('composition')->getFrontend()->getValue($product);
+    $dimensionsLabel = $product->getResource()->getAttribute('dimensions')->getStoreLabel();
+    $dimensionsValue = $product->getResource()->getAttribute('dimensions')->getFrontend()->getValue($product);
+    // $sizeLabel = $product->getResource()->getAttribute('dimensions')->getStoreLabel();
+    // $sizeValue = $product->getResource()->getAttribute('size_chart')->getFrontend()->getValue($product);
+    $sizeLabel = $product->getResource()->getAttribute('size_chart_url')->getStoreLabel();
+    $sizeValue = $product->getResource()->getAttribute('size_chart_url')->getFrontend()->getValue($product);
+
+    $colorLabel = $product->getResource()->getAttribute('color_v2')->getStoreLabel();
+    $colorValue = $product->getResource()->getAttribute('color_v2')->getFrontend()->getValue($product);
+
+    if ($product->getResource()->getAttribute('material')) {
+        $materialLabel = $product->getResource()->getAttribute('material')->getStoreLabel();
+        $materialValue = $product->getResource()->getAttribute('material')->getFrontend()->getValue($product);
+    }
+?>
+<div class="common-accordion">
+  <div class="dropdown-custom-attributes">
+    <?= $block->escapeHtml(__('Details')) ?>
+    <span class="icon-icon-down icon-right"></span>
+  </div>
+  <div class="custom-prod-attributes-block" style="display:none">
+    <div class="data table additional-attributes" id="product-attribute-specs-table">
+      <?php if(!empty($sizeValue)){ ?>
+        <div class="custom-prod-attributes">
+          <span class="label"><div id="openSizeModal"><?= /* @noEscape */ __('View the size chart') ?></div></span>
+        </div>
+      <?php } ?>
+      <div>
+        <?php if(!empty($dimensionsValue)){ ?>
+        <div class="same-line">
+          <div class="col label" scope="row"><?= $block->escapeHtml(__($dimensionsLabel)) ?>:</div>
+          <div class="col data" data-th="Composition"><?= $block->escapeHtml($dimensionsValue) ?></div>
+        </div>
+        <?php } ?>
+        <?php if(!empty($colorValue)){ ?>
+        <div class="same-line">
+          <div class="col label" scope="row"><?= $block->escapeHtml(__($colorLabel)) ?>:</div>
+          <div class="col data" data-th="Composition"><?= $block->escapeHtml($colorValue) ?></div>
+        </div>
+        <?php } ?>
+        <?php if(!empty($materialValue)){ ?>
+        <div class="same-line">
+          <div class="col label" scope="row"><?= $block->escapeHtml(__($materialLabel)) ?>:</div>
+          <div class="col data" data-th="Composition"><?= $block->escapeHtml($materialValue) ?></div>
+        </div>
+        <?php } ?>
+      </div>
+      </div>
+  </div>
+</div>
+
+<div id="sizeModal" class="size-modal" style="display: none;">
+  <div class="size-modal-content">
+    <div class="size-container">
+      <span id="close-size-modal">&times;</span>
+      <?php if(!empty($sizeValue)): ?>
+        <img src="<?= $block->escapeUrl($sizeValue) ?>"/>
+      <?php endif; ?>
+    </div>
+  </div>
+</div>
+<?php // phpcs:enable ?>

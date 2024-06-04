@@ -1,0 +1,24 @@
+<?php if ($block->getCurrentCategory()->getDescription()): ?>
+    <?php $helper = $this->helper(\WeltPixel\CategoryPage\Helper\Data::class); ?>
+    <?php $descriptionOptions = $helper->getCategoryDescriptionOptions(); ?>
+    <?php if ($descriptionOptions['enable_show_more']): ?>
+        <div class="category-description-copy"></div>
+        <div class="category-show-more">
+            <div class="action-view show-more active">
+                <span><?= /* @noEscape */ __('Show More') ?></span>
+            </div>
+            <div class="action-view show-less">
+                <span><?= /* @noEscape */ __('Show Less') ?></span>
+            </div>
+        </div>
+        <script type="text/x-magento-init">
+        {
+            "*": {
+                "WeltPixelCategoryPageShowMore": {
+                    "animationSpeed" : "<?= /* @noEscape */ $descriptionOptions['animation_speed'] ?>"
+                }
+            }
+        }
+        </script>
+    <?php endif; ?>
+<?php endif; ?>

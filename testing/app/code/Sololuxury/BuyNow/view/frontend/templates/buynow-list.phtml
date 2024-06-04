@@ -1,0 +1,54 @@
+<?php
+
+use Magento\Framework\Escaper;
+use Sololuxury\BuyNow\Block\Product\ListProduct;
+use Sololuxury\BuyNow\ViewModel\BuyNow;
+
+/**
+ * @var ListProduct $block
+ * @var BuyNow $buyNovViewModel
+ * @var Escaper $escaper
+ */
+
+$product = $block->getProduct();
+$productType = $product->getTypeId();
+$buyNovViewModel = $block->getData('buy_now_view_model');
+$buttonTitle = $buyNovViewModel->getButtonTitle();
+?>
+<?php if ($product->isSaleable()): ?>
+    <?php $postParams = $block->getAddToCartPostParams($product); ?>
+    <div class="buynow-btn">
+        <form action="<?= $escaper->escapeUrl($postParams['action']); ?>"
+              id="product_addtocart_form_<?= /* @noEscape */ $postParams['data']['product']; ?>"
+              method="post">
+            <input type="hidden"
+                   name="product"
+                   value="<?= /* @noEscape */ $postParams['data']['product']; ?>">
+            <input type="hidden"
+                   name="uenc"
+                   value="<?= /* @noEscape */ $postParams['data']['uenc']; ?>">
+            <?= $block->getBlockHtml('formkey') ?>
+            <?php $productAddToCartForm = $postParams['data']['product'];?>
+            <?php if($productType=="simple"):?>
+                <button type="submit"
+                        title="<?= $escaper->escapeHtml(__($buttonTitle)) ?>"
+                        class="action buynow primary"
+                        data-mage-init='
+                        {
+                            "Sololuxury_BuyNow/js/buy-now": {
+                                "form": "#product_addtocart_form_<?= $escaper->escapeHtml($productAddToCartForm) ?>"
+                            }
+                        }
+                    '>
+                    <span><?= $escaper->escapeHtml(__($buttonTitle)) ?></span>
+                </button>
+            <?php else:?>
+                <button type="submit"
+                    title="<?= $escaper->escapeHtml(__($buttonTitle)) ?>"
+                    class="action tocart primary confbuynow">
+                    <span><?= $escaper->escapeHtml(__($buttonTitle)) ?></span>
+                </button>
+            <?php endif;?>
+        </form>
+    </div>
+<?php endif; ?>

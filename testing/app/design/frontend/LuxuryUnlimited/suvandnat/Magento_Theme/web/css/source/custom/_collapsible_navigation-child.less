@@ -1,0 +1,48 @@
+//
+//  Common
+//  ---------------------------------------------
+
+& when (@media-common = true) {
+    .block-collapsible-nav {
+        .nav.items {
+            .item {
+                a,
+                > strong {
+                    &::after {
+                        .lib-css(background,@theme__secondary--color-50);
+                        border-radius: 100%;
+                        .lib-css(display, flex, @_prefix: 1);
+                        .lib-css(justify-content, center, @_prefix: 1);
+                        .lib-css(align-items, center, @_prefix: 1);
+                        width: 32px;
+                        height: 32px;
+                        top: 44%;
+                        .lib-font-size(16);
+                        .lib-css(color, @collapsible-nav-color);
+                    }
+                }
+
+                a {
+                    &:hover,
+                    &:active,
+                    &:focus {
+                        &:after {
+                            .lib-css(color, @theme__territory--white);
+                            .lib-css(background, @theme__primary--color-300);
+                        }
+                    }
+                }
+
+                &.current {
+                    a,
+                    strong {
+                        &:after {
+                            .lib-css(color, @theme__territory--white);
+                            .lib-css(background, @theme__primary--color-300);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,153 @@
+//
+//  Common
+//
+& when (@media-common =true) {
+    .form-control {
+        fieldset.fieldset {
+            > .fields {
+                > .field {
+                    width: 100%;
+                }
+
+                &.field-common-section {
+                    .lib-vendor-prefix-display(flex);
+                    .lib-css(flex-direction, column, @_prefix: 1);
+
+                    &:has(.field.zip, .country, .telephone, .company) {
+                        .lib-vendor-prefix-display(flex);
+                        .lib-css(flex-direction, row, @_prefix: 1);
+                    }
+
+                    > .field {
+                        width: 100%;
+
+                        &.telephone {
+                            width: calc(~'50% - 8px');
+                        }
+
+                        &.company {
+                            display: none;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .account {
+        .column {
+            .block {
+                &.block-addresses-list {
+                    .block-content {
+                        #additional-addresses-table {
+                            .table-address {
+                                border-top: none;
+                                border-bottom: 1px solid
+                                    @custom__color-transparent-gray7;
+
+                                .col-head {
+                                    color: @theme__primary--color-500;
+                                }
+                            }
+                        }
+                    }
+
+                    table {
+                        tbody {
+                            > tr {
+                                > th {
+                                    padding: @indent__base 15px;
+                                }
+
+                                > td {
+                                    padding: @indent__base 15px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .block-box-element {
+            .block-title {
+                display: none;
+            }
+
+            address {
+                a {
+                    .lib-font-size(16);
+                    .lib-line-height(22);
+                    color: @theme__primary--color-400;
+                }
+            }
+        }
+    }
+
+    .form-address-edit {
+        .fieldset {
+            .fields {
+                &.choice-address {
+                    .lib-css(justify-content, flex-start, @_prefix: 1);
+
+                    .choice {
+                        width: 45%;
+                    }
+
+                    label {
+                        .lib-font-size(14);
+                    }
+                }
+            }
+        }
+
+        .actions-toolbar {
+            .lib-css(justify-content, center, @_prefix: 1);
+        }
+    }
+
+    button.action.save.primary.save-address-button {
+        padding: 14px 54px;
+    }
+
+    .block-addresses-list {
+        .additional-addresses {
+            border: 1px solid @custom__color-transparent-gray7;
+        }
+    }
+
+    .customer-address-index {
+        .actions-toolbar {
+            .lib-css(justify-content, center, @_prefix: 1);
+
+            .primary {
+                .action {
+                    padding: @indent__xs @indent__m;
+                    background: @theme__primary--color-800;
+                    color: @custom__color-white;
+                    border: 2px solid @custom__color-transparent-gray7;
+                }
+            }
+        }
+    }
+
+    fieldset {
+        .prifix-input-with-option {
+            .input-prefix {
+                display: none;
+            }
+        }
+    }
+
+    .block-addresses-list {
+        table {
+            thead {
+                background: none;
+            }
+        }
+    }
+
+    .block-addresses-empty i {
+        display: none;
+    }
+}

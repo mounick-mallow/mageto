@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+    <route url="/V1/home/category-section/:section" method="GET">
+        <service class="LuxuryUnlimited\HomeApi\Api\CategorySectionInterface" method="getCategorySection"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route url="/V1/home/product-section/:section" method="GET">
+        <service class="LuxuryUnlimited\HomeApi\Api\ProductSectionInterface" method="getProductSection"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route url="/V1/home/promo-products/:promoType" method="GET">
+        <service class="LuxuryUnlimited\HomeApi\Api\ProductSectionInterface" method="getPromoProducts"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route url="/V1/home/brand-section/:section" method="GET">
+        <service class="LuxuryUnlimited\HomeApi\Api\BrandSectionInterface" method="getBrandSection"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+</routes>

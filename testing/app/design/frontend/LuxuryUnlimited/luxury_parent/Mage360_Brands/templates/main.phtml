@@ -1,0 +1,104 @@
+<?php
+
+/**
+ * @var $block Mage360\Brands\Block\Brands
+ * @var $escaper Escaper
+ */
+
+use Magento\Framework\Escaper;
+
+$brands = $block->getBrands();
+$baseUrl = $block->getBaseUrl();
+$sortedChars = $block->getSortedChars();
+?>
+<!-- START CODE TO GET BRANDS -->
+<div class="lx-brands__header">
+    <div class="lx-brands__wrapper">
+        <h1 class="lx-brands__page-title"><?= $block->getData('page-title') ?></h1>
+    </div>
+    <div class="lx-brands__search">
+        <input type="text" id="lx-brands__search-field" name="lx-brands__search-field"
+               placeholder="<?= $escaper->escapeHtml(__('Find Brand')) ?>"
+               defaultValue=""
+               class="lx-brands__search-field">
+        <a href="javascript:;" class="lx-brands__clear-search"></a>
+    </div>
+</div>
+<div class="lx-brands__alphabet">
+    <ul class="lx-brands__letters">
+        <?php foreach ($sortedChars['letters'] as $char): ?>
+            <li class="lx-brands__alphabet-item"
+                data-symbol="<?= $escaper->escapeHtmlAttr($char) ?>">
+                <a href="javascript:;"><?= $escaper->escapeHtml($char); ?></a></li>
+        <?php endforeach; ?>
+    </ul>
+    <ul class="lx-brands__numbers">
+        <?php foreach (range('0', '9') as $char): ?>
+            <li class="lx-brands__alphabet-item"
+                data-symbol="<?= $escaper->escapeHtmlAttr($char) ?>">
+                <a href="javascript:;"><?= $escaper->escapeHtml($char); ?></a></li>
+        <?php endforeach; ?>
+    </ul>
+    <div class="lx-brands__clear-wrapper">
+        <a href="" class="lx-brands__clear-search"><?= $escaper->escapeHtml(__('View All')); ?></a></div>
+</div>
+<div class="lx-brands__content">
+    <div id="no-result" class="lx-brands__empty">
+        <div class="lx-no-brands">
+            <h3 class="lx-no-brands__title"><?= $escaper->escapeHtml(__('Opps...!')) ?></h3>
+            <div class="lx-no-brands__img">
+
+            </div>
+            <div class="lx-no-brands__message">
+                <span class="lx-no-brands__text">
+                    <?= $escaper->escapeHtml(__('It Seems like we have nothing to show for this Brand If you would like us send you the collection from ')) ?></span>
+                <span class="lx-no-brands__text lx-no-brands__text--special">
+                    <?= $escaper->escapeHtml(__('Aquazzura Firenze')) ?></span>
+                <span class="lx-no-brands__text">
+                    <?= $escaper->escapeHtml(__('Please Create a ticket below')) ?></span>
+            </div>
+            <div class="lx-no-brands__actions">
+                <a class="lx-no-brands__action create" href="javascript:;">
+                    <?= $escaper->escapeHtml(__('Create Ticket')); ?></a>
+                <a class="lx-no-brands__action lx-brands__clear-search" href="javascript:;">
+                    <?= $escaper->escapeHtml(__('Continue Shopping')); ?></a>
+            </div>
+        </div>
+    </div>
+    <div id="lx-brands__result" class="lx-brands__list">
+        <?php foreach (array_reverse($sortedChars) as $array): ?>
+            <?php foreach ($array as $char): ?>
+                <?php if (isset($brands[$char])): ?>
+                    <?php $isLongList = count($brands[$char]) > $block->getData('list-items-qty'); ?>
+                    <div class="lx-brands__list-section"
+                         data-symbol="<?= $escaper->escapeHtmlAttr($char) ?>">
+                        <div class="lx-brands__brand-title-wrapper">
+                            <h3 class="lx-brands__brand-title"><?= $escaper->escapeHtml($char) ?></h3>
+                        </div>
+                        <ul class="lx-brand-list <?= $isLongList ? 'long' : ''; ?>">
+                            <?php foreach ($brands[$char] as $index => $brand): ?>
+                                <li class="lx-brand-list__name">
+                                    <a href="<?= $escaper->escapeUrl($brand->getUrl()) ?>">
+                                        <?= $escaper->escapeHtml($brand->getName()) ?></a></li>
+                            <?php endforeach; ?>
+                        </ul>
+                        <?php if ($isLongList) : ?>
+                            <a class="lx-brand-list__show"><?= $escaper->escapeHtml(__('more')); ?></a>
+                        <?php endif; ?>
+                    </div>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        <?php endforeach; ?>
+    </div>
+</div>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Mage360_Brands/js/brands-search": {}
+        },
+        ".lx-brand-list__show": {
+            "Mage360_Brands/js/show-more": {}
+        }
+    }
+</script>
+<!-- END CODE TO GET BRANDS -->

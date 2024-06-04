@@ -1,0 +1,243 @@
+// /**
+//  * Copyright © Magento, Inc. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .clsmsgsuccessbox,
+    .clsspecialreqpop_box,
+    .clsspecialreqpop {
+        display: none;
+    }
+
+    .modals-wrapper {
+        aside.modal-popup.modal-slide.special-requst-modal.modal-popup {
+            .modal-inner-wrap {
+                width: 720px;
+                border-radius: 10px;
+                max-width: 90%;
+
+                .modal-header {
+                    padding: 0;
+
+                    .action-close {
+                        margin: @indent__m @indent__m 0 @indent__m;
+                    }
+                }
+
+                .modal-content {
+                    padding: 0;
+                    overflow-y: auto;
+
+                    .form.contact {
+                        background: transparent;
+                        padding-top: 0;
+
+                        &.success_hide {
+                            display: none;
+                        }
+                    }
+
+                    .clsmsgsuccessbox.success {
+                        display: block;
+                    }
+
+                    .modal-content {
+                        padding: @indent__m;
+                    }
+                }
+
+                .field {
+                    margin-bottom: 20px;
+                }
+
+                .fields {
+                    .lib-vendor-prefix-display(flex);
+                    justify-content: space-between;
+
+                    .field {
+                        width: ~'calc(50% - 12px)';
+                        position: relative;
+
+                        &.spBtn {
+                            margin-bottom: 0;
+                        }
+
+                        &.name,
+                        &.phone {
+                            .input-text {
+                                padding-left: 75px;
+                            }
+                        }
+
+                        .label {
+                            color: @custom__color-black;
+                            font-weight: 600;
+                            font-size: 1.4rem;
+                            margin: 0 0 8px;
+                            display: inline-block;
+                        }
+
+                        .specialgenderbox {
+                            position: absolute;
+                            width: 80px;
+
+                            .specialgender {
+                                width: 80px;
+                                padding: 0 @indent__xs 0 16px;
+                                border: 0;
+                                color: @color-black;
+                                border-radius: 0;
+                                box-shadow: none;
+                                background: transparent;
+
+                                option {
+                                    color: @color-black;
+                                }
+                            }
+
+                            &:after {
+                                content: '';
+                                background: @color-gray_light;
+                                height: 22px;
+                                width: 1px;
+                                display: inline-block;
+                                position: absolute;
+                                right: 10px;
+                                top: ~'calc(50% - 11px)';
+                            }
+                        }
+                        .special-number-dropdown {
+                            position: absolute;
+                            width: 74px;
+                            padding-left: 17px;
+
+                            &::after {
+                                content: '';
+                                background: @color-gray_light;
+                                height: 22px;
+                                width: 1px;
+                                display: inline-block;
+                                position: absolute;
+                                right: 5px;
+                                top: 50%;
+                                margin-top: -@indent__s;
+                            }
+
+                            select {
+                                padding: 0 @indent__xs 0 16px;
+                                border-left: 0;
+                                border-right: 0;
+                                text-indent: -9999px;
+                                color: @color-black;
+                                border-radius: 0;
+                                overflow: hidden;
+                                margin-top: 0;
+                                box-shadow: none;
+
+                                option {
+                                    color: @color-black;
+                                }
+                            }
+
+                            .selected-flag {
+                                position: absolute;
+                                top: ~'calc(50% - 9px)';
+                                pointer-events: none;
+                            }
+                        }
+                    }
+                }
+
+                .modal-footer {
+                    display: none;
+                }
+
+                .mm-action {
+                    text-align: center;
+
+                    .btn-custom {
+                        border-radius: 12px;
+                    }
+                }
+            }
+            .clsmsgsuccessbox.success {
+                text-align: center;
+                padding-top: 33px;
+
+                .btn.primary {
+                    width: auto;
+                    margin-top: 15px;
+                }
+            }
+
+            .modal-title {
+                padding: @indent__m @indent__l;
+                font-size: @font-size__xl;
+                font-weight: @font-weight__semibold;
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    .clsspecialrequest-btn.action.primary {
+        position: fixed;
+        top: 50%;
+        z-index: 9;
+        right: -134px;
+        margin: 0;
+        border-radius: 8px 8px 0 0;
+        padding: @indent__xs 15px;
+        -moz-transform: translateX(-50%) translateY(-50%) rotate(-90deg);
+        -webkit-transform: translateX(-50%) translateY(-50%) rotate(-90deg);
+        transform: translateX(-50%) translateY(-50%) rotate(-90deg);
+    }
+}
+
+//
+//    iPad
+//--------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__1200) {
+    .modals-wrapper {
+        aside.modal-popup.modal-slide.special-requst-modal.modal-popup {
+            .modal-inner-wrap {
+                width: 680px;
+            }
+        }
+    }
+}
+
+//
+//    Mobile
+//--------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__s) {
+    .modals-wrapper {
+        aside.modal-popup.modal-slide.special-requst-modal.modal-popup {
+            .modal-inner-wrap {
+                width: 100%;
+
+                .fieldset .fields {
+                    display: block;
+
+                    .field {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,24 @@
+//
+//  Common
+//  ---------------------------------------------
+
+& when (@media-common = true) {
+    .block-collapsible-nav {
+        .nav.items {
+            border: none;
+
+            .item {
+                border-bottom: 1px dashed @collapsible-nav-item-border-color;
+
+                a,
+                > strong {
+                    padding: 20px 15px;
+
+                    &::before {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+}

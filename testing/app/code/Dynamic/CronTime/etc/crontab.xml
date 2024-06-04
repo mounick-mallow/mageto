@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+    <group id="amasty_base">
+        <job name="ambase_feeds_refresh" instance="Amasty\Base\Cron\RefreshFeedData" method="execute">
+            <config_path>setting/general_cron_time_amasty/frequency_cron_time_amasty</config_path>
+        </job>
+    </group>
+    <group id="default">
+        <job name="amasty_cron_activity" instance="Amasty\CronScheduleList\Cron\Activity" method="execute">
+            <config_path>setting/general_cron_time_amasty_cronschedule/frequency_cron_time_amasty_cronschedule</config_path>
+        </job>
+        <job name="amsorting" instance="Amasty\Sorting\Model\Indexer\Summary" method="reindexAll">
+            <config_path>setting/general_cron_time_amasty_sorting/frequency_cron_time_amasty_sorting</config_path>
+        </job>
+        <job name="bss_import_geoip" instance="Bss\GeoIPAutoSwitchStore\Model\Observer" method="execute">
+            <config_path>setting/general_cron_time_bss/frequency_cron_time_bss</config_path>
+        </job>
+    </group>
+    <!--<group id="firas_cronbrands_cron_group">-->
+        <!--<job name="firas_cronbrands_cron" instance="Mage360\Brands\Controller\Adminhtml\Brands\Sync" method="execute">-->
+            <!--<config_path>setting/general_cron_time_firasbrands/frequency_cron_time_firasbrands</config_path>-->
+        <!--</job>-->
+    <!--</group>-->
+</config>

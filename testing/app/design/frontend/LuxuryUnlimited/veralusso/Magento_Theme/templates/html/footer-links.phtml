@@ -1,0 +1,32 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+
+<div class="custom-footer-container">
+    <div class="custom-footer-section container">
+        <div class="custom-row">
+            <?php
+            echo $this->getLayout()
+            ->createBlock('Magento\Cms\Block\Block')
+            ->setBlockId('footer_links')
+            ->toHtml();
+            ?>  
+                
+            <div class="custom-col">
+                <p class="links-title"><?= __('SUBSCRIBE TO OUR NEWSLETTER'); ?></p>
+                <div class="news-letter-main-footer">
+                    <?php echo $this->getChildHtml("footer.newsletter"); ?>
+                </div>
+                <ul class="social-sec">
+                    <li class="facebook"><a target="_blank" href="#"><i class="icon-facebook-f"></i></a></li>
+                    <li class="twitter"><a target="_blank" href="#"><i class="icon-twitter"></i></a></li>
+                    <li class="linkdin"><a target="_blank" href="#"><i class="icon-linkdin"></i></a></li>
+                    <li class="youtube"><a target="_blank" href="#"><i class="icon-youtube"></i></a></li>
+                </ul>
+            </div>   
+        </div>
+    </div>
+</div>

@@ -1,0 +1,40 @@
+//
+//  Mobile
+//  ---------------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    .block-collapsible-nav {
+        left: 40px;
+        right: 40px;
+        top: 128px;
+        z-index: 5;
+
+        .title {
+            border-color: @custom__color-gray5;
+            border-radius: 5px;
+            padding-left: 56px;
+
+            strong {
+                .lib-font-size(18);
+                .lib-line-height(22);
+            }
+
+            &.active {
+                border-radius: 5px 5px 0 0;
+            }
+        }
+
+        .content {
+            &.active {
+                .nav.items {
+                    border-radius: 0 0 10px;
+                    background-color: @custom__color-white;
+                }
+            }
+        }
+    }
+}

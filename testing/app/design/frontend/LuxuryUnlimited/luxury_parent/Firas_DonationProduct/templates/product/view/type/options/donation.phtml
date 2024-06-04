@@ -1,0 +1,79 @@
+<?php /* @var $block \Firas\DonationProduct\Block\Product\Type\Donation */ ?>
+
+<?php
+    $product = $this->getProduct();
+
+    /** @var Belvg\DonationUpdate\Helper\Data  $helper */
+    $helper = $this->helper(Belvg\DonationUpdate\Helper\Data::class);
+    $defaultDonationPrice = (float) $helper->getDefaultDonationPrice();
+?>
+<div class="product-options-wrapper donations-option" id="product-options-wrapper">
+    <div class="fieldset">
+        <div class="field">
+            <label class="label">
+                <span><?= /* @noEscape */ __('Choose an amount to donate') ?></span>
+            </label>
+            <div class="control">
+                <div class="options-list nested" id="options-4-list">
+                    <?php
+                        $dynamicHelper = $this->helper(\Dynamic\Customization\Helper\Data::class);
+                        $priceCurrencyFactory = $dynamicHelper->getCurrencyManager();
+                        $storeManager = $dynamicHelper->getStoreManager();
+                        $currencyCodeTo = $storeManager->getStore()->getCurrentCurrency()->getCode();
+                        $currencyCodeFrom = $storeManager->getStore()->getBaseCurrency()->getCode();
+
+                        $defaultAmount = 100; // product price
+                        $productPrice = (float) $product->getFinalPrice();
+                        $itemAmount = $defaultDonationPrice > 0 ? $defaultDonationPrice :  $productPrice;
+                        $itemAmount = $itemAmount > 0 ? $itemAmount : $defaultAmount;
+
+                    ?>
+                    <?php foreach ($this->getFixedAmounts() as $fixedAmount => $viewFixedAmount): ?>
+                        <?php
+                        $rate = $priceCurrencyFactory->create()->load($currencyCodeTo)->getAnyRate($currencyCodeFrom);
+                        $itemAmount = $itemAmount * $rate;
+                        // echo 'from:'.$currencyCodeTo.' to: '.$currencyCodeFrom.'=='.$itemAmount;
+                        ?>
+                        <div class="field choice admin__field">
+                            <input type="radio" class="radio input-radio-fixed-donation"
+                                   name="amount_fixed" value="
+                            <?= $block->escapeHtmlAttr($fixedAmount) ?>">
+                            <label class="label" for="options_4_2">
+                                <span>
+                                    <?= $block->escapeHtml($viewFixedAmount) ?>
+                                </span>
+                            </label>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">
+                <span><?= $block->escapeHtml(__(
+                        'Choose your own Amount %1
+                (minimum %2)',
+                        $block->getCurrencySymbol(),
+                        $block->getMinimalDonationAmount()
+                    )) ?></span>
+            </label>
+            <div class="control">
+                <input name="amount" id="amount" title="amount"
+                       placeholder="<?=
+                       $block->escapeHtmlAttr($block->getCurrencySymbol()) ?>"
+                       class="<?=
+                       $block->escapeHtmlAttr($block->getHtmlValidationClasses()) ?>"
+                       type="text" data-validate="{required:false, 'validate-number': true}" value="">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Firas_DonationProduct/js/donation-options": {
+            }
+        }
+    }
+</script>

@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--
+
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Magetop_GiftCard::giftcard" title="Gift Card" module="Magetop_GiftCard" sortOrder="20" resource="Magetop_GiftCard::giftcard" />
+        <add id="Magetop_GiftCard::giftcarddetails" title="Gift Card Details" module="Magetop_GiftCard" sortOrder="50" parent="Magetop_GiftCard::giftcard" action="giftcard/giftuser/index" resource="Magetop_GiftCard::giftcarddetails" />
+        <add id="Magetop_GiftCard::config" title="Configurations" module="Magetop_GiftCard" parent="Magetop_GiftCard::giftcard" sortOrder="100" action="adminhtml/system_config/edit/section/giftcard" resource="Magetop_GiftCard::config"/>
+    </menu>
+</config>

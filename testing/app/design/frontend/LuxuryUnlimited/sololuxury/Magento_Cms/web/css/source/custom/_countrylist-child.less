@@ -1,0 +1,177 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common =true) {
+    .cms-countrylist {
+        .container {
+            max-width: 100%;
+            padding: 0;
+            width: 100%;
+        }
+    }
+
+    .choosecountry {
+        .country-head {
+            text-align: center;
+            margin-bottom: 50px;
+
+            .cls_country {
+                .lib-css(font-family, @custom-secondary-font-family);
+                .lib-font-size(@font-size__xl);
+                .lib-line-height(24);
+                color: @theme__secondary--color-800;
+                font-weight: @font-weight__semibold;
+                margin: 0 0 @indent__l;
+            }
+
+            .searchbar {
+                margin: 0 auto;
+                max-width: 670px;
+                position: relative;
+                width: 100%;
+
+                &::after {
+                    .lib-css(content, @icon-search);
+                    .lib-css(font-family, @icomoon-font-family);
+                    .lib-font-size(@font-size__base);
+                    color: @color-black;
+                    position: absolute;
+                    right: 15px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                }
+
+                input {
+                    width: 100%;
+                }
+            }
+
+            .alphabet {
+                display: none;
+            }
+        }
+
+        .countrylist {
+            ul {
+                column-count: 3;
+                column-span: unset;
+                margin: 0;
+                padding: 0;
+
+                li {
+                    list-style: none;
+                    margin: 0;
+
+                    a {
+                        .lib-font-size(@font-size__l);
+                        .lib-line-height(30);
+                        color: @theme__secondary--color-400;
+                        text-decoration: none;
+                        text-transform: capitalize;
+
+                        &:hover {
+                            color: @theme__primary--color;
+                        }
+                    }
+
+                    .imgcustimg {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+}
+
+//
+//  X-Large Desktop
+//  ---------------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum ='min')
+    and
+    (@break = @screen__xl) {
+    .choosecountry {
+        .country-head {
+            .alphabet {
+                display: block;
+                margin: @indent__l auto 0 auto;
+                color: @theme__primary--500;
+                text-align: center;
+                font-family: @font-family-name__base;
+                font-weight: @font-weight__heavier;
+                .lib-font-size(@font-size__l);
+                .lib-line-height(20);
+                letter-spacing: 12.8px;
+
+                .letters {
+                    padding: 0;
+                    white-space: nowrap;
+
+                    .letter {
+                        display: inline;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+    }
+}
+
+//
+//  Desktop
+//  ---------------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum ='min')
+    and
+    (@break =@screen__l) {
+    .cms-countrylist {
+        .choosecountry {
+            .countrylist {
+                ul {
+                    column-count: 4;
+                }
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum ='min')
+    and
+    (@break =@screen__xl) {
+    .cms-countrylist {
+        .choosecountry {
+            .countrylist {
+                ul {
+                    column-count: 5;
+                }
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  ---------------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum ='max')
+    and
+    (@break =@screen__s) {
+    .cms-countrylist {
+        .choosecountry {
+            .countrylist {
+                ul {
+                    column-count: 2;
+                }
+            }
+        }
+    }
+}

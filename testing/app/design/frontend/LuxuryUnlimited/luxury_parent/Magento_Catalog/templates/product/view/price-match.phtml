@@ -1,0 +1,28 @@
+<?php $_product = $block->getProduct(); ?>
+<div id="price-promise-modal" style="display: none">
+    <div class="price-match-popup">
+        <p><?= $block->escapeHtmlAttr(__("Your Best Price - Always.")) ?></p>
+        <p>
+            <?= $block->escapeHtmlAttr(__("If your preferred item is lower priced at any other store at the current time we will match the price and offer you 10% additional store credit for your next purchase.")) ?>
+        </p>
+        <p>
+            <?= $block->escapeHtmlAttr(__("Simply let us know by "))?>
+            <a id="price-match-create-ticket-bth" data-buy="no" rel="noopener noreferrer"><?= $block->escapeHtmlAttr(__("clicking here")) ?>.</a>
+        </p>
+        <p>
+            <?= $block->escapeHtmlAttr(__("Already Made your Purchase.")) ?> <?= $block->escapeHtmlAttr(__("Dont Worry let us know by ")) ?>
+            <a id="price-match-create-ticket-bth-new" data-buy="no" rel="noopener noreferrer">
+                <?= $block->escapeHtmlAttr(__("clicking here")) ?>
+            </a>
+            <?= $block->escapeHtmlAttr(__("clicking here and we our customer support team will refund you the difference if the purchase was made within the last 30 days.")) ?>
+        </p>
+        <p>
+            <?= $block->escapeHtmlAttr(__("Please see T & C by ")) ?>
+            <a href="/terms-and-conditions" target="_blank"><?= $block->escapeHtmlAttr(__("clicking here")) ?>.</a>
+        </p>
+    </div>
+</div>
+
+<div class="price-comparison-main">
+    <a id="price-match-btn" data-mage-init='{"price-match": {"target": "#price-promise-modal"}}' data-product-sku="<?= $block->escapeHtmlAttr($_product->getSku()) ?>"><?= $block->escapeHtmlAttr(__('Price Match')) ?></a>
+</div>

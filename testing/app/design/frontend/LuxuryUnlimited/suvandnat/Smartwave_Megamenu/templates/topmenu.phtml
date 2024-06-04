@@ -1,0 +1,66 @@
+<?php
+/**
+ * Copyright © 2018 Porto. All rights reserved.
+ */
+
+?>
+<?php
+/**
+ * Top menu for store
+ *
+ * @see \Smartwave\Megamenu\Block\Topmenu
+ */
+?>
+<?php
+    $_helper = $this->helper(Smartwave\Megamenu\Helper\Data::class);
+    $_config = $_helper->getConfig('sw_megamenu');
+    $columnsLimit = 0;
+    $header_type = $_helper->getConfig('porto_settings/header/header_type');
+    
+    if($_config['general']['enable']) {
+?>
+<?php $_menu = $block->getMegamenuHtml(); ?>
+
+<nav class="navigation sw-megamenu" role="navigation">
+    <div class="navigation-top-sec">
+        <div class="left-sec-main-navigation">
+            <div class="panel wrap panel-email">
+                <a href="mailto:customersupport@example.com" target="_blank"><i class="icon-mail"></i> customersupport@example.com</a>
+            </div>
+            
+            <?php echo $this->getChildHtml("custom_block_mobile"); ?>
+        </div>
+
+            <div class="panel wrap">
+                <?php echo $this->getChildHtml("switch_website_mobile"); ?>
+                <?php echo $this->getChildHtml("currency_mobile"); ?>
+                <?php echo $this->getChildHtml("store_language_mobile"); ?>
+            </div>
+    </div>
+    <ul>
+        <?= /* @noEscape */ $_menu; ?>
+    </ul>
+</nav>
+
+<script type="text/javascript">
+    require([
+        'jquery',
+        'Smartwave_Megamenu/js/sw_megamenu'
+    ], function ($) {
+        $(".sw-megamenu").swMegamenu();
+    });
+</script>
+<?php
+    } else {
+?>
+<?php $_menu = $block->getHtml('level-top', 'submenu', $columnsLimit); ?>
+
+<nav class="navigation sw-megamenu" role="navigation">
+    <ul data-mage-init='{"menu":{"responsive":true, "expanded":true, "position":{"my":"left top","at":"left bottom"}}}'>
+        <?= /* @noEscape */ $_menu; ?>
+    </ul>
+</nav>
+
+<?php
+    }
+?>

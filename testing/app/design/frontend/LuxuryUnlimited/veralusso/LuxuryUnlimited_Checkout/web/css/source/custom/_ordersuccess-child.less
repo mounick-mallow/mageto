@@ -1,0 +1,32 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common =true) {
+    .checkout-onepage-success {
+        .checkout-success {
+            p {
+                &:first-child {
+                    color: @custom__color-gray1;
+                }
+            }
+
+            .box-order-billing-method {
+                display: inline-block;
+                padding: 15px;
+                background: @theme__secondary--color-200;
+                border-radius: @indent__xs;
+                color: @custom__color-black;
+            }
+        }
+
+        .block-content {
+            color: @custom__color-black;
+        }
+
+        .box-order-shipping-address .box-title span,
+        .box-order-billing-address .box-title span {
+            color: @custom__color-black;
+        }
+    }
+}

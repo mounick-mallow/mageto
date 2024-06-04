@@ -1,0 +1,33 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common =true) {
+    body {
+        direction: rtl;
+    }
+
+    .choosecountry {
+        .country-head {
+            .searchbar {
+                &::after {
+                    left: 11px;
+                    right: auto;
+                }
+
+                input {
+                    padding: @indent__s 16px @indent__s @indent__xl;
+                }
+            }
+
+            .alphabet {
+                .letters {
+                    .lib-vendor-prefix-display(flex);
+                    .lib-css(flex-direction, row, @_prefix: 1);
+                    .lib-css(justify-content, space-around, @_prefix: 1);
+                    .lib-vendor-prefix-flex-wrap(wrap);
+                }
+            }
+        }
+    }
+}

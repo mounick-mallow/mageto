@@ -1,0 +1,201 @@
+// /**
+//  * Copyright © Magento, Inc. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .page-header {
+        // Header Panel
+        .panel {
+        }
+
+        .message-slider {
+            text-align: center;
+            position: relative;
+            padding: 0 @indent__m;
+            width: 100%;
+            max-width: 400px;
+
+            .slick-arrow {
+                &::before {
+                    .lib-font-size(20);
+                }
+
+                &.slick-prev {
+                    left: 0;
+
+                    .lib-icon-font-symbol(
+                        @_icon-font-content: @icon-left,
+                        @_icon-font-position: before
+                    );
+                }
+
+                &.slick-next {
+                    right: 0;
+
+                    .lib-icon-font-symbol(
+                        @_icon-font-content: @icon-right,
+                        @_icon-font-position: before
+                    );
+                }
+            }
+        }
+
+        .panel.header .panel-utilities {
+            div.search-area {
+                margin-top: 0;
+            }
+        }
+    }
+
+    .action.primary,
+    .action {
+        span {
+            padding-top: 0;
+        }
+    }
+
+    .page-header,
+    .page-footer {
+        .switcher {
+            .options {
+                .ui-dialog {
+                    top: calc(~'100% - 2px');
+                }
+
+                .action.toggle {
+                    &::after {
+                        .lib-hide-content();
+                    }
+                }
+            }
+        }
+    }
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__l) {
+    .logo {
+        img {
+            width: 135px;
+            height: 40px;
+        }
+    }
+
+    .panel.header {
+        .panel-utilities {
+            padding-left: 200px;
+        }
+    }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    .page-header {
+        border-bottom: 1px solid @border-color__base;
+        padding-bottom: 16px;
+
+        .panel {
+            &.wrapper {
+                position: absolute;
+                right: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                margin: 0;
+            }
+
+            &.header {
+                padding-top: 0;
+                padding-bottom: 0;
+                padding-left: 0;
+            }
+
+            &-switcher,
+            &-message {
+                .lib-hide-content();
+            }
+        }
+    }
+
+    .logo {
+        .lib-css(gap, 0 16px, @_prefix: 1);
+
+        img {
+            max-width: 108px;
+        }
+    }
+
+    .panel-utilities {
+        .top-links-area {
+            .lib-hide-content();
+        }
+
+        .minicart-wrapper {
+            margin-top: 0;
+        }
+    }
+}
+
+//  Custom Media
+& when (@media-target = 'mobile'), (@media-target = 'all') {
+    @media only screen and (max-width: 374px) {
+        .page-header {
+            padding-right: 166px;
+        }
+
+        .panel-utilities {
+            margin-right: -2px;
+            margin-left: -2px;
+            .utilities,
+            .minicart-wrapper {
+                padding-right: 2px;
+                padding-left: 2px;
+            }
+        }
+    }
+}
+
+//
+//  Desktop
+//  _____________________________________________
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__m) {
+    .page-header {
+        .panel.wrapper {
+            border-bottom: 1px solid @border-color__base;
+        }
+
+        .header.panel {
+            padding-bottom: 12px;
+            padding-top: 12px;
+        }
+
+        .header.content {
+            .lib-css(justify-content, center, @_prefix: 1);
+
+            .content-right {
+                .lib-hide-content();
+            }
+        }
+    }
+}

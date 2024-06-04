@@ -1,0 +1,47 @@
+<?php
+/**
+ * Copyright � Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \Magento\Wishlist\Block\Customer\Wishlist\Item\Column\Cart $block */
+
+/** @var \Magento\Wishlist\Model\Item $item */
+$item = $block->getItem();
+$product = $item->getProduct();
+/** @var \Magento\Wishlist\ViewModel\AllowedQuantity $viewModel */
+$viewModel = $block->getData('allowedQuantityViewModel');
+$allowedQty = $viewModel->setItem($item)->getMinMaxQty();
+?>
+<?php foreach ($block->getChildNames() as $childName) : ?>
+    <?= /* @noEscape */ $block->getLayout()->renderElement($childName, false) ?>
+<?php endforeach;?>
+
+
+<div class="box-tocart">
+    <fieldset class="fieldset" >
+
+    <?php
+     if ($item->canHaveQty() && $product->isVisibleInSiteVisibility()) : ?>
+        <div class="field qty">
+            <label class="label" for="qty[<?= $block->escapeHtmlAttr($item->getId()) ?>]"><span><?= $block->escapeHtml(__('Qty')) ?></span></label>
+            <div class="control">
+                <input type="number" data-role="qty" id="qty[<?= $block->escapeHtmlAttr($item->getId()) ?>]" class="input-text qty" data-validate="{'required-number':true,'validate-greater-than-zero':true, 'validate-item-quantity':{'minAllowed':<?= /* @noEscape */ $allowedQty['minAllowed'] ?>,'maxAllowed':<?= /* @noEscape */ $allowedQty['maxAllowed'] ?>}}"
+               name="qty[<?= $block->escapeHtmlAttr($item->getId()) ?>]" value="<?= /* @noEscape */ $block->getAddToCartQty($item) * 1 ?>" <?= $product->isSaleable() ? '' : 'disabled="disabled"' ?>>
+            </div>
+        </div>
+    <?php endif; ?>
+    
+    </fieldset>
+</div>
+<script type="text/javascript">
+
+         function addToWishlistConfigrable(super_attr_id,item_id,base_url){
+            var super_attr = jQuery('#super_attribute_'+super_attr_id+' option:selected').val();
+            jQuery('#wishlist-view-form').attr('action',base_url+'wishlist/index/cart/?item='+item_id+'&key='+super_attr_id+'&qty=1&super_attribute='+super_attr);
+
+             jQuery('#wishlist-view-form').submit();
+          //  window.location='https://dev9.sololuxury.com/gb-en/wishlist/index/cart/?item='+item_id+'&qty=1&super_attribute='+super_attr;
+
+        }
+</script>

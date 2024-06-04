@@ -1,0 +1,220 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * @var \Magento\Framework\View\Element\AbstractBlock $block
+ */
+
+
+$customerModel = $block->getData('belvg_customer_view_model');
+$customerData = null;
+
+if (!empty($customerModel) && $customerModel->isCustomerLoggedIn()) {
+    $customerData = $customerModel->getCustomerData();
+}
+?>
+
+
+<div class="block discount" id="block-discount">
+    <div class="content" aria-labelledby="block-discount-heading">
+        <div id="discount-coupon-form" class="discount-coupon-form">
+            <div class="fieldset coupon<?= strlen($block->getCouponCode() ?: '') ? ' applied' : '' ?>">
+                <input type="hidden" name="remove" id="remove-coupon" value="0"/>
+                <div class="field">
+                    <div class="control">
+                        <input type="text"
+                               class="input-text"
+                               id="coupon_code"
+                               name="coupon_code"
+                               value="<?= $block->escapeHtmlAttr($block->getCouponCode()) ?>"
+                               placeholder="<?= $block->escapeHtmlAttr(__('Promocode')) ?>"
+                            <?php if (strlen($block->getCouponCode() ?: '')) : ?>
+                                disabled="disabled"
+                            <?php endif; ?>
+                        />
+                    </div>
+                </div>
+                <div class="actions-toolbar">
+                    <?php if (!strlen($block->getCouponCode() ?: '')) : ?>
+                        <div class="primary">
+                            <button class="action apply primary" type="button"
+                                    value="<?= $block->escapeHtmlAttr(__('Apply Discount')) ?>">
+                                <span><?= $block->escapeHtml(__('Apply Discount')) ?></span>
+                            </button>
+                        </div>
+                    <?php else : ?>
+                        <div class="primary">
+                            <button type="button" class="action cancel primary"
+                                    value="<?= $block->escapeHtmlAttr(__('Cancel Coupon')) ?>">
+                                <span><?= $block->escapeHtml(__('Cancel Coupon')) ?></span></button>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+            <?php if (!strlen($block->getCouponCode() ?: '')) : ?>
+                <?= /* @noEscape */
+                $block->getChildHtml('captcha') ?>
+            <?php endif; ?>
+        </div>
+        <div class="coupon_error_message">
+        </div>
+    </div>
+</div>
+
+<div id="belvg-error-modal" class="coupon-error-modal">
+    <div class="modal-content" style="text-align: center;"></div>
+</div>
+
+<div id="coupon-ticket-modal" class="coupon-ticket-modal search-request-modal" >
+
+        <div class="create-search-text">
+            <p><?php echo __('If you can`t apply your coupon, please let us know bellow') ?></p>
+        </div>
+        <form class="form contact"
+              action="<?= $block->escapeUrl($block->getUrl('mytickets/index/post')) ?>"
+              id="coupon-ticket-form"
+              method="post"
+              data-hasrequired="<?php echo  /* @noEscape */ __('* Required Fields') ?>"
+              data-mage-init='{"validation":{}}'
+        >
+            <fieldset class="fieldset" data-hasrequired="* Required Fields">
+                <legend class="fieldset-legend">
+                    <span><?= $block->escapeHtml(__('Coupon Ticket')) ?></span>
+                </legend>
+                <div class="fields">
+                    <div class="field name required cls_comm_input">
+                        <label for="name" class="label">
+                            <span><?= /* @noEscape */ __('First Name') ?></span>
+                        </label>
+                        <div class="control">
+                            <div class="specialgenderbox">
+                                <select id="specialgender" class="specialgender" name="specialgender" required>
+                                    <option value="Mr"><?= /* @noEscape */ __('Mr.') ?></option>
+                                    <option value="Mrs"><?= /* @noEscape */ __('Mrs.') ?></option>
+                                </select>
+                            </div>
+                            <input id="name" class="input-text" title="Name"
+                                   name="name" required="" type="text"
+                                   value="<?php echo !empty($customerData) && !empty($customerData->getFirstname())
+                                       ? $block->escapeHtmlAttr($customerData->getFirstname()) : ''?>"
+                                   placeholder="<?= /* @noEscape */ __('Enter Your Name') ?>"
+                            >
+                        </div>
+                    </div>
+                    <div class="field last_name required cls_comm_input">
+                        <label for="last_name" class="label">
+                            <span><?= /* @noEscape */ __('Last Name') ?></span>
+                        </label>
+                        <div class="control">
+                            <input
+                                id="last_name"
+                                class="input-text" title="Last Name" required=""
+                                name="last_name" type="text"
+                                value="<?php echo !empty($customerData) && !empty($customerData->getLastname()) ?
+                                    $block->escapeHtmlAttr($customerData->getLastname()) : ''?>"
+                                placeholder="<?= /* @noEscape */ __('Enter Your Last Name') ?>">
+                        </div>
+                    </div>
+                </div>
+                <div class="fields">
+                    <div class="field required cls_comm_input">
+                        <label for="email" class="label">
+                            <span><?= /* @noEscape */
+                                __('Email Address') ?></span>
+                        </label>
+                        <div class="control">
+                            <input id="email"
+                                class="input-text validate-email" required=""
+                                title="Email" name="email"
+                                type="email"
+                                value="<?php echo !empty($customerData) && !empty($customerData->getEmail()) ?
+                                    $block->escapeHtmlAttr($customerData->getEmail()) : ''?>"
+                                placeholder="<?= /* @noEscape */  __('Enter email') ?>">
+                        </div>
+                    </div>
+                    <div class="field phone required cls_comm_input">
+                        <label for="phone" class="label">
+                            <span><?= /* @noEscape */ __('Phone Number') ?></span>
+                        </label>
+                        <div class="control">
+                            <div class="special-number-dropdown">
+                                <div class="selected-flag">
+                                    <i class="fi fi-in"></i>
+                                </div>
+                                <?php
+                                $countryBlock = $block->getLayout()->createBlock('Magento\Directory\Block\Data');
+                                $defaultValue = 'IN'; // Use the country code for India as the default value
+                                ?>
+                                <?= $countryBlock->getCountryHtmlSelect($defaultValue, 'country_id', 'specialcountry',
+                                    'Country', 'class="specialcountry"'); ?>
+                            </div>
+                            <input id="phone"
+                                   class="input-text" required="" title="Phone"
+                                   name="phone" type="text"
+                                   value="<?php echo !empty($customerData) && !empty($customerData->getTelephone()) ?
+                                       $block->escapeHtmlAttr($customerData->getTelephone()) : ''?>"
+                                   data-validate="{'maxlength':15}"
+                                   placeholder="<?= /* @noEscape */ __('Enter Phone Number') ?>"
+                            >
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field brand cls_comm_input required product-input">
+                    <label for="keywords" class="label">
+                        <span><?php echo __('Coupon Code') ?></span>
+                    </label>
+                    <div class="control">
+                        <input
+                            id="keywords"
+                            class="input-text"
+                            title="Coupon Code"
+                            required=""
+                            name="keyword"
+                            type="text"
+                            value=""
+                            placeholder="<?php echo __('Coupon Code')?>" aria-required="true"
+                        />
+                    </div>
+                </div>
+
+                <div class="field remarks cls_comm_input">
+                    <label for="remarks" class="label">
+                        <span><?= /* @noEscape */  __('Remarks') ?></span>
+                    </label>
+                    <div class="control">
+                        <textarea id="remarks"
+                           class="input-text" title="Remarks" name="remarks"
+                           type="text" value=""
+                           placeholder="<?= /* @noEscape */ __('Remarks') ?>"
+                        ></textarea>
+                    </div>
+                </div>
+                <div class="field name required spBtn">
+                    <div class="control">
+                        <input type="hidden" name="lang_code" id="lang_code"
+                               value=""
+                        />
+                        <div class="mm-action">
+                            <button id="btn_ticket_coupon" class="btn btn-custom primary" type="button">
+                                <?= /* @noEscape */ __('Submit') ?>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+</div>
+
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Checkout/js/coupon": {
+            }
+        }
+    }
+</script>

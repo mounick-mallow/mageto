@@ -1,0 +1,43 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common =true) {
+    html {
+        overflow-x: hidden;
+    }
+
+    body {
+        overflow-x: hidden;
+
+        &.cms-countrylist {
+            direction: rtl;
+        }
+    }
+
+    .choosecountry {
+        .country-head {
+            .searchbar {
+                &::after {
+                    left: 19px;
+                    right: auto;
+                }
+
+                input {
+                    padding: 18px 26px 15px 45px;
+                }
+            }
+        }
+
+        .countrylist {
+            ul {
+                li {
+                    .imgcustimg {
+                        margin-left: 16px;
+                        margin-right: 0;
+                    }
+                }
+            }
+        }
+    }
+}

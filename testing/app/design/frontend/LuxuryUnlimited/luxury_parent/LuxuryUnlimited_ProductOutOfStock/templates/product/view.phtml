@@ -1,0 +1,143 @@
+<?php
+declare(strict_types=1);
+
+use Dynamic\Notifyme\ViewModel\ConfigurableOptions as ConfigurableOptionsViewModel;
+use LuxuryUnlimited\ProductOutOfStock\ViewModel\CustomerData as CustomerDataViewModel;
+use Magento\Catalog\Api\Data\ProductInterface;
+use Magento\Catalog\Block\Product\View as ProductView;
+use Magento\Customer\Block\Account\AuthorizationLink;
+use Magento\Framework\Escaper;
+
+/**
+ * @var Escaper $escaper
+ * @var ProductView $block
+ * @var ProductInterface $product
+ */
+$product = $block->getProduct();
+$productSku = $product->getSku();
+/** @var ConfigurableOptionsViewModel $viewModel */
+$viewModel = $block->getData('view_model'); ?>
+<?php if ($isConfigurable = $viewModel->isConfigurable($product)): ?>
+    <?php /** @var CustomerDataViewModel $customerViewModel */
+    $customerViewModel = $block->getData('customer_view_model');
+    /** @var AuthorizationLink $authBlock */
+    $authBlock = $block->getLayout()->getBlock('authorization-link'); ?>
+    <div class="clsspecialreqpop custom-success">
+        <div id="myModalspecsize-new1" class="modal custom-success notifyme-modal" style="display: none">
+            <div class="modal-content">
+                <span class="close" id="myModalspecsizeclose-new">&times;</span>
+                <div id="loader-oos" style="display:none;"></div>
+            </div>
+        </div>
+    </div>
+    <div id="loader-oos" style="display:none;"></div>
+    <div id="product-alert" class="product alert <?= $block->getHtmlClass() ?>"
+         style="display: none; margin: 0">
+        <div class="actions">
+        <span class="action primary tocart" id="product-addtocart-button">
+            <span><?= $escaper->escapeHtml(__('SOLD OUT')) ?></span>
+        </span>
+        </div>
+        <?php if ($authBlock && $authBlock->isLoggedIn()): ?>
+            <span class="out-of-stock-click" style="margin-left: auto">
+                <a href="javascript:void(0);" class="action alert notifyme">
+                    <?= $escaper->escapeHtml(__($block->getSignupLabel())) ?></a>
+            </span>
+            <?php if ($isConfigurable): ?>
+                <?php foreach ($viewModel->getConfigurableOptions($product->getId()) as $attr => $options): ?>
+                    <div class="field name required cls_comm_input">
+                        <div class="control">
+                            <label class="select_label"
+                                   for="dropdown">Select <?= $escaper->escapeHtml($options['label']) ?></label>
+                            <select id="<?= $attr == 'size_v2'
+                            ? 'notifyme-selectedsize' :
+                            $escaper->escapeHtmlAttr($attr) ?>"
+                                    class="input-text" title="<?= $escaper->escapeHtmlAttr($options['label']) ?>"
+                                    name="<?= $escaper->escapeHtmlAttr($options['label']) ?>">
+                                <?php foreach ($options['values'] as $attribute): ?>
+                                    <option value='<?= $escaper->escapeHtmlAttr($attribute['option_title']) ?>'>
+                                        <?= $escaper->escapeHtml($attribute['option_title']) ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif;?>
+            <input id="email" class="input-text notifyme-email notify-email" title="Email" name="email" type="hidden"
+                   value="<?= $escaper->escapeHtmlAttr($customerViewModel->getCustomerEmail()) ?>">
+            <input type="hidden" name="product_sku" class="notifyme-product-sku notify-product-sku"
+                   value="<?= $escaper->escapeHtmlAttr($productSku) ?>">
+        <?php else: ?>
+            <span class="out-of-stock-click" style="margin-left: auto">
+                <a href="javascript:void(0);" class="action alert notifyme">
+                    <?= $escaper->escapeHtml(__($block->getSignupLabel())) ?></a>
+            </span>
+            <div class="clsspecialreqpop">
+                <div id="modal-notify-me" class="modal notifyme-modal">
+                    <div class="modal-content">
+                        <label class="select_label text-center">
+                            <?= /* @noEscape */ __('Please Share Your 
+                            Email & Phone Number, So That We 
+                            Can Notify You by Email and Whats App 
+                            When this Product is Back in Stock.') ?>
+                        </label>
+                        <div class="control">
+                            <input id="email" class="input-text notifyme-email notify-email" title="Email" name="email"
+                                   type="email" placeholder="<?= $escaper->escapeHtml(__('Enter email')) ?>"
+                                   style="width: 100%;">
+                            <input id="phone" class="input-text notifyme-phone notify-phone" title="Phone-Number"
+                                   name="phone" type="tel" style="width: 100%;"
+                                   placeholder="<?= $escaper->escapeHtml(__('123-45-678')) ?>">
+                        </div>
+                        <?php if ($isConfigurable): ?>
+                            <?php
+                            foreach ($viewModel->getConfigurableOptions($product->getId()) as $attr => $options): ?>
+                                <div class="field name required cls_comm_input">
+                                    <div class="control">
+                                        <label class="select_label"
+                                               for="dropdown">
+                                               Select <?= $escaper->escapeHtml($options['label']) ?>
+                                        </label>
+                                        <select id="
+                                        <?= $attr == 'size_v2'
+                                        ? 'notifyme-selectedsize'
+                                        : $escaper->escapeHtmlAttr($attr) ?>"
+                                                class="input-text text-center notify-selectedsize"
+                                                title="<?= $escaper->escapeHtmlAttr($options['label']) ?>"
+                                                name="<?= $escaper->escapeHtmlAttr($options['label']) ?>">
+                                            <?php foreach ($options['values'] as $attribute): ?>
+                                                <option value='
+                                                <?= $escaper->escapeHtmlAttr($attribute['option_title']) ?>
+                                                '>
+                                                    <?= $escaper->escapeHtml($attribute['option_title']) ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                        <input type="hidden" name="product_sku" class="notifyme-product-sku notify-product-sku"
+                               value="<?= $escaper->escapeHtmlAttr($productSku) ?>">
+                        <div class="mm-action">
+                            <span id="notifyme-btn" class="btn btn-custom">
+                                <?= $escaper->escapeHtml(__('Submit')) ?>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
+    </div>
+    <!-- Out of stock notification api integration -->
+    <script type="text/x-magento-init">
+    {
+        "#modal-notify-me": {
+            "notifyRequest" : {
+                "notifyUrl": "<?= $escaper->escapeJs($escaper->escapeUrl($block->getUrl('notifyme/index/post'))) ?>",
+                "dataProductSize": "<?= $isConfigurable ? '#notifyme-selectedsize.notify-selectedsize' : '' ?>"
+            }
+        }
+    }
+</script>
+<?php endif; ?>
+

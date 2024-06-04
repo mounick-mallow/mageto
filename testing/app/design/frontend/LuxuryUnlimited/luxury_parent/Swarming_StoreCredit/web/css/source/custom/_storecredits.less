@@ -1,0 +1,253 @@
+//
+//  Desktop
+//
+& when (@media-common =true) {
+    body.swarming_credits-index-index {
+        .page-wrapper {
+            .columns {
+                .main {
+                    p {
+                        color: @color-gray52;
+                        .lib-font-size(14);
+                        font-weight: @font-weight__heavier;
+                        text-align: @storecredit-align-center;
+                        margin-bottom: @indent__xs;
+                    }
+
+                    .store-credit-table-section {
+                        border-radius: 0;
+                        margin-top: @indent__l;
+
+                        .lib-css(display, flex, @_prefix: 1);
+                        .lib-css(flex-wrap, wrap, @_prefix: 1);
+
+                        .credit-table-data {
+                            thead {
+                                tr {
+                                    border: 0;
+                                    background-color: @color-white;
+                                }
+                            }
+
+                            tbody {
+                                tr {
+                                    td {
+                                        color: @color-gray20;
+                                        .lib-font-size(14);
+                                        font-weight: @font-weight__regular;
+                                        border-bottom: 1px solid @color-gray95;
+                                        border-top: 0;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    .swarming-credits-transaction-toolbar.toolbar {
+                        margin-bottom: 15px;
+
+                        &::before,
+                        &::after {
+                            .lib-css(display, @storecredit-none); /* to remove the unwanted content */
+                        }
+
+                        .pager {
+                            .lib-css(display, flex, @_prefix: 1);
+                            .lib-css(justify-content, space-between, @_prefix: 1);
+
+                            &::before,
+                            &::after {
+                                .lib-css(display, @storecredit-none); /* to remove the unwanted content */
+                            }
+
+                            .limiter {
+                                .limiter-options {
+                                    width: 75px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .returns_footer {
+            .lib-vendor-prefix-display(flex);
+            .lib-css(justify-content, space-between, @_prefix: 1);
+        }
+
+        .empty-store-credit {
+            max-width: 400px;
+            width: 100%;
+            margin: 0 @storecredit-auto;
+
+            .lib-icon-font(
+                @_icon-font-content: @icon-credit-card,
+                @_icon-font: @icon-font-family,
+                @_icon-font-size: @storecredit-empty-icon__font-size,
+                @_icon-font-line-height: @storecredit-empty-icon__line-height,
+                @_icon-font-color: @storecredit-empty-icon__font-color,
+                @_icon-font-text-hide: false,
+                @_icon-font-position: before,
+                @_icon-font-display: block
+            );
+
+            &:before {
+                .lib-css(display, @storecredit-block);
+                width: 150px;
+                height: 150px;
+                margin: 0 @storecredit-auto 22px;
+            }
+
+            p {
+                .lib-font-size(@storecredit-content-font-size);
+                .lib-line-height(@storecredit-content-line-height);
+                font-weight: @storecredit-content-font-weight;
+                color: @storecredit-content-color;
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//
+.media-width(@extremum, @break)
+    when
+    (@extremum ='max')
+    and
+    (@break =@screen__s) {
+    body.account {
+        &.swarming_credits-index-index {
+            .page-wrapper {
+                .columns {
+                    .main {
+                        .store-credit-table-section {
+                            border: 0;
+
+                            .credit-table-data {
+                                tbody {
+                                    tr {
+                                        margin-bottom: @indent__s;
+                                        border: 1px solid @color-gray95;
+                                        padding: 12px @indent__s;
+
+                                        td {
+                                            .lib-css(display, flex, @_prefix: 1);
+                                            .lib-css(align-items, center, @_prefix: 1);
+                                            padding: @indent__s 0;
+                                            color: @color-gray20;
+                                            .lib-font-size(14);
+                                            font-weight: @font-weight__regular;
+                                            border-bottom: 0;
+                                        }
+
+                                        td[data-th] {
+                                            &::before {
+                                                .lib-font-size(14);
+                                                font-weight: @font-weight__semibold;
+                                                color: @color-gray20;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum ='max')
+    and
+    (@break =@screen__xs) {
+    body.account {
+        &.swarming_credits-index-index {
+            .page-wrapper {
+                .columns {
+                    .main {
+                        .swarming-credits-transaction-toolbar.toolbar {
+                            .pager {
+                                .lib-css(display, @storecredit-block);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    body.swarming_credits-index-index {
+        .page-wrapper {
+            .columns {
+                .main {
+                    .store-credit-table-section {
+                        #my-swarming-credits-transaction-table.credit-table-data {
+                            tbody {
+                                tr {
+                                    margin-bottom: @indent__s;
+                                    border: @storecredit-tableborder;
+                                    padding: 12px @indent__s;
+
+                                    td {
+                                        .lib-vendor-prefix-display(flex);
+                                        border-bottom: @storecredit-none;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .returns_footer {
+            .lib-css(flex-direction, column, @_prefix: 1);
+            .lib-css(align-items, center, @_prefix: 1);
+
+            .clsspecialrequest {
+                margin: 0 0 @indent__xs;
+            }
+        }
+    }
+
+    .help-modal {
+        padding: @indent__l;
+    }
+
+    .modals-wrapper {
+        aside.modal-popup.modal-slide.special-requst-modal.modal-popup.help-modal {
+            .modal-inner-wrap {
+                max-width: 100%;
+            }
+        }
+    }
+}
+
+//
+//  Desktop
+//  ---------------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__m) {
+    .account {
+        .toolbar {
+            .pages {
+                position: relative;
+            }
+        }
+    }
+}

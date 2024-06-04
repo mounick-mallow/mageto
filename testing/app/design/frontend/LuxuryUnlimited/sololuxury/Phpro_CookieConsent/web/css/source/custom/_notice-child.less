@@ -1,0 +1,98 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .phpro-cookie-notice {
+        padding: 0;
+        background-color: @theme__primary--color-bg;
+        box-shadow: 0 0 49px 0 @custom__battleship-grey;
+
+        .notice-wrapper {
+            .lib-css(flex-direction, column, @_prefix: 1);
+            border-radius: @indent__xs;
+
+            .notice__title {
+                color: @theme__secondary--color-800;
+                width: 100%;
+                padding: 14.5px 24px;
+                font-weight: @font-weight__semibold;
+            }
+
+            .notice__actions {
+                padding: 24px;
+
+                .notice__description {
+                    color: @custom__battleship-grey;
+                    padding: 0 0 32px;
+                    width: 100%;
+                    text-align: center;
+                }
+
+                .notice__btn-settings {
+                    margin: 0 20px 0 0;
+                    background: @theme__primary--color-bg;
+                    color: @theme__primary--500;
+                }
+
+                .notice__btn-accept {
+                    &:active,
+                    &:focus,
+                    &:hover {
+                        background: @theme__primary--500;
+                        color: @custom__color-white;
+                    }
+                }
+
+                .action.primary {
+                    border: 1px solid @theme__primary--500;
+                }
+            }
+        }
+    }
+}
+
+//
+//  Desktop
+//  ---------------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum ='min')
+    and
+    (@break = @screen__m) {
+    .phpro-cookie-notice {
+        width: fit-content;
+        max-width: 395px;
+        margin: 48px;
+    }
+}
+
+//
+//  Mobile
+//  ---------------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum ='max')
+    and
+    (@break = @screen__m) {
+    .phpro-cookie-notice {
+        background-color: @cookie-popup__background-color;
+        padding: 0;
+        width: fit-content;
+        margin: @indent__xxs @indent__xs;
+
+        .notice-wrapper {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+
+            .notice__actions {
+                .action.primary {
+                    padding: @indent__xs 14px @indent__xs;
+                }
+            }
+        }
+    }
+}

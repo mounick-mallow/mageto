@@ -1,0 +1,73 @@
+& when (@media-common =true) {
+    .my-account-coupons {
+        table {
+            tr {
+                th {
+                    border-top: @my-coupon-border-table;
+                }
+            }
+
+            tr {
+                td {
+                    border-bottom: @my-coupon-border-table;
+
+                    &.col {
+                        &.exp-date {
+                            color: @my-coupon-table-td-color;
+                            font-weight: @my-coupon-table-th-font-weight;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .couponlist-coupon-index {
+        .no-coupons {
+            .empty_icon {
+                .lib-icon-font(
+                    @_icon-font-content: 'Opps...!',
+                    @_icon-font: @icon-font-family,
+                    @_icon-font-size:  50px,
+                    @_icon-font-line-height: normal,
+                    @_icon-font-color: @custom__color-black,
+                    @_icon-font-text-hide: false,
+                    @_icon-font-position: before,
+                    @_icon-font-display: block
+                );
+            }
+
+            p {
+                &.empty_txt {
+                    color: @store-credit-header-color;
+                }
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    .my-account-coupons.table-wrapper {
+        .data.table.table-coupon-items {
+            tbody {
+                > tr {
+                    > td {
+                        &.col {
+                            &.actions {
+                                text-align: left;
+                            }
+                        }
+
+                        &:last-child {
+                            border-bottom: @my-coupon-border-table;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

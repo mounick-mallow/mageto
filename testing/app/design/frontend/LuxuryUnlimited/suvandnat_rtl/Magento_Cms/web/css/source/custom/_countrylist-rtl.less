@@ -1,0 +1,67 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common =true) {
+    .choosecountry {
+        .country-head {
+            .searchbar {
+                float: left;
+
+                &::after {
+                    left: 15px;
+                    right: auto;
+                }
+            }
+        }
+
+        .countrylist {
+            ul {
+                li {
+                    .imgcustimg {
+                        margin: 0 0 0 @indent__base;
+                    }
+                }
+            }
+        }
+
+        .alphabet {
+            .letters {
+                .lib-vendor-prefix-display(flex);
+                .lib-css(flex-direction, row, @_prefix: 1);
+                .lib-css(justify-content, space-around, @_prefix: 1);
+                .lib-vendor-prefix-flex-wrap(wrap);
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  ---------------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum ='max')
+    and
+    (@break = @screen__xs) {
+    .cms-countrylist {
+        .choosecountry {
+            .country-head {
+                .cls_country {
+                    text-align: right;
+                }
+            }
+
+            .countrylist {
+                ul {
+                    li {
+                        .imgcustimg {
+                            margin: 0 0 0 16px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

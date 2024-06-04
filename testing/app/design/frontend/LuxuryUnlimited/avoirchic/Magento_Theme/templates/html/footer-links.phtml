@@ -1,0 +1,23 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+
+<div class="custom-footer-container container">
+    <div class="custom-footer-section">
+        <div class="custom-row">
+            <?php
+            echo $this->getLayout()
+            ->createBlock('Magento\Cms\Block\Block')
+            ->setBlockId('footer_links')
+            ->toHtml();
+            ?>  
+        </div>
+    </div>
+    
+    <?php echo $this->getChildHtml("footer.newsletter"); ?>
+</div>
+
+

@@ -1,0 +1,58 @@
+//
+//  Common
+//  ---------------------------------------------
+
+& when (@media-common = true) {
+    body.swarming_credits-index-index {
+        .page-wrapper {
+            .columns {
+                .main {
+                    .store-credit-table-section {
+                        .credit-table-data tbody tr,
+                        .credit-table-data tbody tr td {
+                            background: @theme__secondary--color-50;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    #order-track-help {
+        padding: @indent__base;
+        text-align: @storecredit-align-center;
+        background: @theme__secondary--color-50;
+    }
+}
+
+//
+//  Desktop
+//  ---------------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__m) {
+    body.swarming_credits-index-index {
+        .page-wrapper {
+            .columns {
+                .main {
+                    .store-credit-table-section {
+                        .credit-table-data {
+                            thead tr th {
+                                background: @theme__territory--color-500;
+                                color: @theme__territory--white;
+                            }
+
+                            tbody tr {
+                                border-bottom: 2px solid
+                                    @theme__secondary--color-100;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

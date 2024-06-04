@@ -1,0 +1,97 @@
+//
+//    Common
+//--------------------------------------
+& when (@media-common =true) {
+    select {
+        background-position: 5px center;
+    }
+
+    .login-container,
+    .forgotpassword-container,
+    .signup-account-container {
+        direction: rtl;
+    }
+
+    body.wp-sl {
+        &.customer-account-login {
+            div.sociallogin-wrapper {
+                div.sociallogin-block {
+                    div.sociallogin-padding {
+                        div.sociallogin-box {
+                            a.sociallogin-button {
+                                span.sociallogin-icon {
+                                    &:before {
+                                        right: 0;
+                                        left: auto;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .luxb_password {
+        .toggle-password {
+            left: 10px;
+            right: auto;
+        }
+    }
+
+    .signup-account-container {
+        .block.block-customer-signin {
+            .fieldset {
+                > .fields {
+                    > .field {
+                        &.field-dob {
+                            .customer-dob {
+                                .ui-datepicker-trigger {
+                                    right: auto;
+                                    left: 10px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .choice {
+        input {
+            &:checked + label:after {
+                left: auto;
+                right: 3px;
+            }
+        }
+
+        label {
+            padding-left: 0;
+            padding-right: 27px;
+        }
+    }
+}
+
+//
+//    Desktop
+//--------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum ='min')
+    and
+    (@break = @screen__m) {
+    .login-container,
+    .signup-account-container {
+        .block-customer-login,
+        .block-customer-signin {
+            float: right;
+        }
+
+        .customer-create-account {
+            float: left;
+        }
+    }
+}

@@ -1,0 +1,49 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * @var $block \Magento\Theme\Block\Html\Title
+ */
+$cssClass = $block->getCssClass() ? ' ' . $block->getCssClass() : '';
+$titleHtml = '';
+if (trim($block->getPageHeading())) {
+    $titleHtml = '<span class="base" data-ui-id="page-title-wrapper" '
+        . $block->getAddBaseAttribute()
+        . '>'
+        . $block->escapeHtml($block->getPageHeading())
+        . '</span>';
+}
+    $layout   = $this->getRequest()->getFullActionName();
+    $notArray = array(
+        'catalog_product_view',
+    );
+?>
+<?php if (!in_array($layout, $notArray)) : ?>
+    <?php if ($titleHtml) : ?>
+        <div class="page-title-wrapper<?= $block->escapeHtmlAttr($cssClass) ?>">
+            <h1 class="page-title"
+                <?php if ($block->getId()) : ?> id="<?= $block->escapeHtmlAttr($block->getId()) ?>" <?php endif; ?>
+                <?php if ($block->getAddBaseAttributeAria()) : ?>
+                    aria-labelledby="<?= $block->escapeHtmlAttr($block->getAddBaseAttributeAria()) ?>"
+                <?php endif; ?>>
+                <?= /* @noEscape */ $titleHtml ?>
+            </h1>
+            <?= $block->getChildHtml() ?>
+        </div>
+    <?php endif; ?>
+<?php endif; ?>
+<?php if ($layout == 'catalog_product_view') : ?>
+<?php
+  $ddHelper = $this->helper("\Dynamic\HomepageApi\Helper\Data");
+  $currentProduct = $ddHelper->getRegistryManager()->registry('current_product');
+  $brandValue = $currentProduct->getResource()->getAttribute('brands')->getFrontend()->getValue($currentProduct);
+
+?>
+    <?php if(!empty($brandValue)){ ?>
+      <h2 class="brand-name"><?= $block->escapeHtml($brandValue) ?></h2>
+    <?php } ?>
+    <h1><?= $block->escapeHtml(strtolower($block->getPageHeading())) ?></h1>
+<?php endif;  ?>

@@ -1,0 +1,50 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Deploy') {
+            when {
+                branch 'stage'
+            }
+            steps {
+            	sh "/usr/local/bin/composer update ludxb/magento-meta-package"
+            	sh "/usr/local/bin/composer install"
+            	sh "php vendor/bin/dep deploy:unlock env=$serverenv --branch=stage"
+            	sh "export IS_CSS_FAIL=`grep -R 'Compilation from source' temp.log`"
+            	sh 'if [ -z "$IS_CSS_FAIL" ] && echo "No CSS ERROR" || echo "Error in CSS : $IS_CSS_FAIL"'
+            }
+        }
+    }
+
+    post {
+        success {
+            emailext (
+                subject: "Success: Build of Magento on Stage Branch",
+                body: "The build of Magento on the Stage branch was successful.",
+                to: "vaibhavpanmand@gmail.com",
+            )
+        }
+
+        unstable {
+            emailext (
+                subject: "Unstable: Build of Magento on Stage Branch",
+                body: "The build of Magento on the Stage branch is unstable.",
+                to: "vaibhavpanmand@gmail.com",
+            )
+        }
+
+        failure {
+            emailext (
+                subject: "Failure: Build of Magento on Stage Branch",
+                body: "The build of Magento on the Stage branch has failed.",
+                to: "vaibhavpanmand@gmail.com",
+            )
+        }
+    }
+}

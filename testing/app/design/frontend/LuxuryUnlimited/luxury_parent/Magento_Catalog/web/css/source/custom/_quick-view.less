@@ -1,0 +1,152 @@
+// /**
+//  * Copyright © 2015 Magento. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//    Common
+//--------------------------------------
+
+& when (@media-common =true) {
+    .product-item-info {
+        .belvg-quick-view-link {
+            position: absolute;
+            z-index: 9;
+            right: 54px;
+            top: 13px;
+            .lib-font-size(0);
+
+            &::before {
+                .lib-css(content, @icon-open-eye);
+                .lib-css(font-family, @icomoon-font-family);
+                .lib-font-size(22);
+                border-radius: 50%;
+                background: @theme__primary--color;
+                color: @color-white;
+                width: 23px;
+                height: 23px;
+                text-align: center;
+                .lib-line-height(normal);
+            }
+        }
+    }
+
+    .quick-view-modal {
+        .modal-content {
+            padding: @indent__l;
+
+            .modal-inner-content > h2 {
+                .lib-hide-content();
+            }
+
+            .belvg-item-carousel {
+                .slick-slide {
+                    img {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+
+        .modal-footer {
+            .lib-vendor-prefix-display(flex);
+            .lib-css(justify-content, center, @_prefix: 1);
+            border: none;
+        }
+
+        .owl-theme {
+            .owl-controls {
+                position: absolute;
+                top: 50%;
+                .lib-css(transform, translateY(-50%), @_prefix: 1);
+                width: 100%;
+
+                .owl-nav {
+                    div {
+                        background-color: @theme__primary--color;
+                        font-size: 0;
+                        border-radius: 50%;
+                        .lib-vendor-prefix-display(flex);
+                        align-items: center;
+                    }
+
+                    .owl-prev,
+                    .owl-next {
+                        &::before {
+                            .lib-css(font-family, @icomoon-font-family);
+                            .lib-font-size(22);
+                            color: @color-white;
+                            text-shadow: none;
+                        }
+                    }
+
+                    .owl-prev {
+                        position: absolute;
+                        left: -40px;
+
+                        &::before {
+                            .lib-css(content, @icon-arrow-right);
+                        }
+                    }
+
+                    .owl-next {
+                        position: absolute;
+                        right: -40px;
+
+                        &::before {
+                            .lib-css(content, @icon-arrow-left);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .quick-view-titles {
+        margin-top: @indent__m;
+        text-align: center;
+
+        .belvg-quick-brand-name {
+            color: @theme__primary--color;
+            .lib-font-size(14);
+            font-weight: @font-weight__bold;
+            letter-spacing: 0.28px;
+            text-transform: uppercase;
+        }
+
+        .belvg-quick-brand-title {
+            .lib-font-size(13);
+        }
+    }
+
+    .belvg-modal-owl {
+        &.owl-carousel {
+            .owl-item {
+                .item {
+                    .lib-vendor-prefix-display(flex);
+                    .lib-css(justify-content, center, @_prefix: 1);
+                }
+            }
+        }
+    }
+
+    .catalog-category-view {
+        .modal-inner-wrap {
+            .modal-footer {
+                text-align: center;
+            }
+        }
+        .columns .column.main {
+            padding-bottom: @global-bottom-margin - 30px; //grid item margin
+        }
+    }
+
+    .wishlist-index-index {
+        .form-wishlist-items {
+            .belvg-quick-view-link {
+                right: 50px;
+                top: 18px;
+            }
+        }
+    }
+}

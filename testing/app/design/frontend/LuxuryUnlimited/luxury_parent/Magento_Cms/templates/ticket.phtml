@@ -1,0 +1,17 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<div class="no-page" style="text-align: center">
+    <img alt="<?= /* @noEscape */ __('Oops') ?>" src="<?= $block->getViewFileUrl('images/oops.svg') ?>">
+    <h3><?= __('Oops...!'); ?> </h3>
+    <p class="re-result-desc"
+       style="text-align: center"><?= __('Page not found!!'); ?>
+    </p>
+    <div class="re-result-btns" style="text-align: center">
+        <?php echo $this->getLayout()->createBlock("Dynamic\Mytickets\Block\View")->setTemplate("Dynamic_Mytickets::search_ticket_popup.phtml")->toHtml() ?>
+        <a class="action primary" href="<?php echo $block->getUrl('brands'); ?>"><?= $block->escapeHtml(__('Continue Shopping')); ?></a>
+    </div>
+</div>

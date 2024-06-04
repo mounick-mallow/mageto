@@ -1,0 +1,40 @@
+//
+//  Common
+//  _____________________________________________
+& when (@media-common = true) {
+    .filter {
+        .actions {
+            text-align: unset;
+
+            div.secondary {
+                a {
+                    &.show-more {
+                        span {
+                            font-weight: @font-weight__bold;
+                            .lib-font-size(14);
+                            .lib-line-height(20);
+                            text-transform: uppercase;
+
+                            &:after {
+                                display: none;
+                            }
+                        }
+                    }
+
+                    &.show-less {
+                        span {
+                            font-weight: @font-weight__bold;
+                            .lib-font-size(14);
+                            .lib-line-height(20);
+                            text-transform: uppercase;
+
+                            &:after {
+                                display: none;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

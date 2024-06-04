@@ -1,0 +1,194 @@
+<?php
+$ddHelper = $this->helper("\Dynamic\HomepageApi\Helper\Data");
+$dynamicHelper = $this->helper("Dynamic\Customization\Helper\Data");
+$storeManager = $ddHelper->getStoreManager();
+$storeCode = $storeManager->getStore()->getCode();
+// Get country collection
+$countryCollectionFactory = $ddHelper->getCountryCollectionFactoryManager();
+$countryCollection = $countryCollectionFactory->create()->loadByStore();
+$status = "";
+$msg = "";
+
+$customerSession = $dynamicHelper->getCustomerSessionManager();
+$email = $fname = $lname = $telephone = "";
+if($customerSession->isLoggedIn()) {
+    $fname = $customerSession->getCustomer()->getFirstname();
+    $lname = $customerSession->getCustomer()->getLastname();
+    $email = $customerSession->getCustomer()->getEmail();
+    if($customerSession->getCustomer()->getPrimaryBillingAddress() != ""){
+        $telephone = $customerSession->getCustomer()->getPrimaryBillingAddress()->getTelephone();
+    }
+}
+
+?>
+<div class="cls_contactus_main">
+    <p class="cls_cont_static"><?= /* @noEscape */ __('Whatever Your Query. Use The Contact From Below To Get In Touch-Our Team Is Ready To Help 24*7') ?></p>
+    <form class="form contact"
+          action="<?= $block->escapeUrl($block->getBaseUrl() . 'mytickets/index/contact/')  ?>"
+          id="contact-form"
+          method="post"
+          data-hasrequired="<?= /* @noEscape */ __('* Required Fields') ?>"
+          data-mage-init='{"validation":{}}'>
+        <fieldset class="fieldset">
+            <legend class="fieldset-legend">
+                <span><?= $block->escapeHtml(__('Contact Us')) ?></span>
+            </legend>
+            <div class="fields">
+                <div class="field prifix-field required">
+                    <label for="name" class="label">
+                        <span><?= /* @noEscape */ __('First Name') ?></span>
+                    </label>
+                    <div class="control prifix-input-with-option">
+                        <select name="prefix" id="prefix" class="input-prefix prefix-select">
+                            <option value="Mrs"><?= /* @noEscape */ __('Mrs') ?></option>
+                            <option value="Mr"><?= /* @noEscape */ __('Mr') ?></option>
+                            <option value="Miss"><?= /* @noEscape */ __('Miss') ?></option>
+                        </select>
+                        <input name="name" required id="name" title="<?= /* @noEscape */__('First Name') ?>" placeholder="<?= /* @noEscape */__('First Name*') ?>" value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('name') ?: $fname) ?>" class="input-text prefix-text" type="text" data-validate="{required:true}"/>
+                    </div>
+                </div>
+                <div class="field required">
+                    <label for="surname" class="label">
+                        <span><?= /* @noEscape */ __('Last Name') ?></span>
+                    </label>
+                    <div class="control">
+                        <input name="surname" id="surname" title="<?= /* @noEscape */__('Last Name') ?>" placeholder="<?= /* @noEscape */__('Last Name*') ?>" value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('surname') ?: $lname) ?>" class="input-text" type="text" data-validate="{required:true}"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="fields">
+                <div class="field required">
+                    <label for="email" class="label">
+                        <span><?= /* @noEscape */ __('Email Address') ?></span>
+                    </label>
+                    <div class="control">
+                        <input name="email" id="email" title="<?= /* @noEscape */__('Email') ?>" placeholder="<?= /* @noEscape */__('Email Address*') ?>" value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('email') ?: $email) ?>" class="input-text" type="email" data-validate="{required:true, 'validate-email':true}"/>
+                    </div>
+                </div>
+                <div class="field required">
+                    <label for="confirmemail" class="label">
+                        <span><?= /* @noEscape */ __('Confirm Email Address') ?></span>
+                    </label>
+                    <div class="control">
+                        <input name="confirmemail" id="confirmemail" title="<?= /* @noEscape */__('Confirm Email Address*') ?>" placeholder="<?= /* @noEscape */__('Verify Email Address*') ?>" value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('email') ?: $email) ?>" class="input-text" type="email" data-validate="{required:true, 'validate-email':true}" equalTo='#email'  equals="email" err="Please enter same email address" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="fields">
+                <div class="field">
+                    <label for="telephone" class="label">
+                        <span><?= /* @noEscape */ __('Phone Number') ?></span>
+                    </label>
+                    <div class="control">
+                        <input name="telephone" id="telephone" title="<?= /* @noEscape */__('Phone Number') ?>" placeholder="<?= /* @noEscape */__('Phone Number') ?>" value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('telephone') ?: $telephone) ?>" class="input-text prefix-text" type="text" />
+                    </div>
+                </div>
+                <div class="field required">
+                    <label for="typeofenquiry" class="label">
+                        <span><?= /* @noEscape */ __('Type Of Enquiry') ?></span>
+                    </label>
+                    <div class="control">
+                        <select name="typeofenquiry" id="typeofenquiry" class="input-text" data-validate="{required:true}">
+                            <option value=""><?= /* @noEscape */__('Type Of Enquiry*') ?></option>
+                            <option value="Delivery"><?= /* @noEscape */__('Delivery') ?></option>
+                            <option value="Orders"><?= /* @noEscape */__('Orders') ?></option>
+                            <option value="Payment"><?= /* @noEscape */__('Payment') ?></option>
+                            <option value="Product"><?= /* @noEscape */__('Product') ?></option>
+                            <option value="Promotion"><?= /* @noEscape */__('Promotion') ?></option>
+                            <option value="Returns"><?= /* @noEscape */__('Returns') ?></option>
+                            <option value="Shipping"><?= /* @noEscape */__('Shipping') ?></option>
+                            <option value="Technical"><?= /* @noEscape */__('Technical') ?></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="fields">
+                <div class="field">
+                    <label for="country" class="label">
+                        <span><?= /* @noEscape */ __('Country') ?></span>
+                    </label>
+                    <div class="control">
+                        <select id="country" name="country" class="input-text" data-validate="{required:true}">
+                            <?php
+                            $country_code = $ddHelper->getStoreCode();
+                            $country_code = strtok($country_code, '-');
+                            $countryFactory = $ddHelper->getCountryFactoryManager()->create();
+                            foreach ($countryCollection->getData() as $row_country) {
+                                $countryCode = $row_country['country_id'];
+                                $country = $countryFactory->loadByCode($countryCode);
+                                $countryName = $country->getName();
+                                ?>
+                                <option value="<?= $block->escapeHtmlAttr($countryName) ?>" <?php if (strtolower($countryCode) == strtolower(trim($country_code)))echo 'selected';?>><?= $block->escapeHtml($countryName) ?></option>
+                                <?php
+                            }
+                            ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="field required">
+                    <label for="subject" class="label">
+                        <span><?= /* @noEscape */ __('Subject') ?></span>
+                    </label>
+                    <div class="control">
+                        <input name="subject" id="subject" title="Subject" placeholder="Subject" value="" class="input-text" type="text" data-validate="{required:true}" aria-required="true">
+                    </div>
+                </div>
+            </div>
+
+            <div class="field required comment-area">
+                <label for="comment" class="label">
+                    <span><?= /* @noEscape */ __('What’s on your mind?') ?></span>
+                </label>
+                <div class="control">
+                    <textarea name="comment" id="comment" title="<?= /* @noEscape */__('What’s on your mind?') ?>" placeholder="<?= /* @noEscape */__('What’s on your mind?*') ?>" class="input-text textarea-text" cols="5" rows="3" data-validate="{required:true}"><?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('comment')) ?></textarea>
+                </div>
+            </div>
+
+            <div class="field required contact-me-by">
+                <label class="label">
+                    <span><?= /* @noEscape */ __('Contact me by') ?>
+                </label>
+                <div class="control">
+                    <input type="radio" name="rndconactbyme" id="rndemail" />
+                    <label for="contactByEmail" class=""><?= /* @noEscape */ __('Email') ?></label>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="radio" name="rndconactbyme" id="rndphone" />
+                    <label for="contactByEmail" class=""><?= /* @noEscape */ __('Phone') ?></label>
+                </div>
+            </div>
+
+            <?php echo $block->getChildHtml('form.additional.info'); ?>
+
+            <div class="actions-toolbar">
+                <div class="primary">
+                    <input type="hidden" name="hideit" id="hideit" value="" />
+                    <button type="submit" name="btncontactus" title="<?= /* @noEscape */__('Submit') ?>" class="action submit primary">
+                        <span><?= /* @noEscape */__('Submit') ?></span>
+                    </button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+    <div class="contact-us-result" id="contact-us-result" style="display:none">
+        <div class="response-container"></div>
+        <div class="actions">
+            <a href="<?= $block->getUrl('contact-us') ?>" class="btn-back"><?= __('Back to contact us') ?></a>
+            <a href="<?= $block->getUrl('/') ?>" class="btn-continue-shopping"><?= __('Continue Shopping') ?></a>
+        </div>
+    </div>
+    <div class="cls-contact-details row">
+        <?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('contactus_bottom_content')->toHtml(); ?>
+    </div>
+</div>
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Theme/js/contact-us": {
+            }
+        }
+    }
+</script>

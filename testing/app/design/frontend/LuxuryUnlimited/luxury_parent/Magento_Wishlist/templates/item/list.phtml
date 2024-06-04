@@ -1,0 +1,77 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+use Magento\Framework\App\Action\Action;
+?>
+<?php
+    /** @var \Magento\Wishlist\Block\Customer\Wishlist\Items $block */
+    $columns = $block->getColumns();
+
+    /** @var Magento\Framework\Data\Helper\PostHelper $helper */
+    $helper = $this->helper(Magento\Framework\Data\Helper\PostHelper::class);
+
+    /** @var Magento\Checkout\Helper\Cart  $cartHelper */
+    $cartHelper = $this->helper(Magento\Checkout\Helper\Cart::class);
+
+    /** @var Belvg\Products\Helper\Data $productHelper */
+    $productHelper = $this->helper(Belvg\Products\Helper\Data::class);
+?>
+
+<div class="product-list">
+    <?php if (count($block->getItems())) : ?>
+        <?php foreach ($block->getItems() as $item) : ?>
+            <div data-row="product-item" class="productBlock product-item"
+                 id="item_<?= $block->escapeHtmlAttr($item->getId()) ?>"
+            >
+                <div class="product-item-info" data-container="product-grid">
+                    <?php foreach ($columns as $column): ?>
+                        <?php echo $column->setItem($item)->toHtml(); ?>
+                    <?php endforeach; ?>
+                    <?php
+                        $product = $item->getProduct();
+                    ?>
+
+                    <?php if ($product->isSaleable()): ?>
+                        <?php $actionParams = $productHelper->getAddToCartPostParams($product); ?>
+                        <form data-role="tocart-form"
+                              action="<?= $actionParams['action'] ?>"
+                              data-product-sku="<?= $block->escapeHtml($product->getSku()) ?>"
+                              method="post"
+                        >
+                            <input type="hidden" name="product"
+                                   value="<?= /* @noEscape */ $actionParams['data']['product'] ?>">
+                            <input type="hidden" name="<?= /* @noEscape */ Action::PARAM_NAME_URL_ENCODED ?>"
+                                   value="<?php echo /* @noEscape */ $actionParams['data'][Action::PARAM_NAME_URL_ENCODED] ?>">
+                            <?php echo $block->getBlockHtml('formkey')?>
+                            <input type="hidden" name="return_url" value="<?php echo $block->getUrl('checkout/cart/index');?>">
+                            <button type="submit" title="Add to Cart" class="action tocart primary" style="position: relative; top: 10px; right: 10px;">
+                                <span><?php echo __('Add to Cart') ?></span>
+                            </button>
+                        </form>
+                        <script type="text/x-magento-init">
+                            {
+                                "[data-role=tocart-form], .form.map.checkout": {
+                                    "catalogAddToCart": {
+                                        "product_sku": "<?= $block->escapeJs($product->getSku()) ?>"
+                                    }
+                                }
+                            }
+                        </script>
+                    <?php endif;?>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    <?php else : ?>
+        <div class="message info empty">
+            <span><?= $block->escapeHtml(__('This Wish List has no Items')) ?></span>
+        </div>
+    <?php endif; ?>
+</div>
+
+<?php foreach ($columns as $column) : ?>
+    <?= $column->getAdditionalHtml() ?>
+<?php endforeach; ?>
+

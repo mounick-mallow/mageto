@@ -1,0 +1,204 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common =true) {
+    body {
+        &.cms-countrylist {
+            background-color: @color-gray94;
+        }
+    }
+
+    .cms-countrylist {
+        .container {
+            max-width: 100%;
+            padding: 0;
+            width: 100%;
+        }
+    }
+
+    .choosecountry {
+        .country-head {
+            .lib-css(justify-content, space-between, @_prefix: 1);
+            .lib-vendor-box-align(center);
+            .lib-vendor-prefix-display(flex);
+            margin-bottom: 50px;
+
+            .cls_country {
+                .lib-css(font-family, @custom-primary-font-family);
+                .lib-font-size(36);
+                color: @color-blue1;
+                margin: 0;
+            }
+
+            .searchbar {
+                margin: 0;
+                position: relative;
+                width: 344px;
+
+                &::after {
+                    .lib-css(content, @icon-search);
+                    .lib-css(font-family, @icomoon-font-family);
+                    .lib-font-size(22);
+                    position: absolute;
+                    right: 19px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                }
+
+                input {
+                    border-radius: 50px;
+                    box-shadow: none;
+                    height: 52px;
+                    padding: 18px 45px 15px 26px;
+                    vertical-align: middle;
+                    width: 100%;
+                }
+            }
+        }
+
+        .countrylist {
+            ul {
+                column-count: 2;
+                column-span: unset;
+                margin: 0;
+                padding: 0;
+
+                li {
+                    .lib-vendor-box-align(center);
+                    .lib-vendor-prefix-display(flex);
+                    list-style: none;
+                    margin-bottom: 24px;
+
+                    a {
+                        .lib-font-size(18);
+                        .lib-vendor-box-align(center);
+                        .lib-vendor-prefix-display(flex);
+                        color: @color-gray40;
+                        text-decoration: none;
+                        text-transform: capitalize;
+
+                        &:hover {
+                            color: @color-blue1;
+                        }
+
+                        span {
+                            .lib-font-size(18);
+                            .lib-line-height(18);
+                        }
+                    }
+
+                    .imgcustimg {
+                        border-radius: 50%;
+                        height: 32px;
+                        margin-right: 16px;
+                        width: 32px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+//
+//  Desktop
+//  ---------------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum ='min')
+    and
+    (@break =@screen__m) {
+    .choosecountry {
+        .countrylist {
+            ul {
+                column-count: 3;
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum ='min')
+    and
+    (@break =@screen__l) {
+    .choosecountry {
+        .countrylist {
+            ul {
+                column-count: 4;
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum ='min')
+    and
+    (@break =@screen__xl) {
+    .choosecountry {
+        .countrylist {
+            ul {
+                column-count: 5;
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  ---------------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum ='max')
+    and
+    (@break =@screen__m) {
+    .cms-countrylist {
+        .main {
+            .container {
+                padding: 0 15px;
+            }
+        }
+
+        .choosecountry {
+            .country-head {
+                .lib-vendor-prefix-flex-wrap(wrap);
+                margin-bottom: 30px;
+
+                .cls_country {
+                    margin-bottom: 24px;
+                    text-align: center;
+                    width: 100%;
+                }
+
+                .searchbar {
+                    max-width: 100%;
+                    width: 100%;
+                }
+            }
+
+            .countrylist {
+                ul {
+                    li {
+                        height: 24px;
+                        margin-bottom: 16px;
+
+                        a {
+                            span {
+                                .lib-font-size(16);
+                                .lib-line-height(16);
+                            }
+                        }
+
+                        .imgcustimg {
+                            height: 24px;
+                            width: 24px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

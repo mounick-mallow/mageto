@@ -1,0 +1,50 @@
+//
+//  Common
+//  ---------------------------------------------
+
+& when (@media-common = true) {
+    .block {
+        .title {
+            strong {
+                color: @theme__primary--500;
+            }
+        }
+    }
+
+    .customer-account-index {
+        .block {
+            .block-title {
+                color: @color-gray20;
+
+                strong {
+                    .lib-font-size(16);
+                    .lib-line-height(20);
+                    font-weight: @font-weight__semibold;
+                    color: @theme__secondary--color-800;
+                }
+
+                a.action.edit {
+                    font-size: @font-size__s;
+                    .lib-line-height(19);
+                    text-transform: capitalize;
+                    text-decoration: underline;
+                    font-weight: @font-weight__heavier;
+                    color: @theme__primary--500;
+                    padding: 0;
+                    border-radius: unset;
+                }
+            }
+        }
+    }
+
+    .block {
+        .title {
+            strong {
+                font-size: @font-size__base;
+                margin: 0;
+                .lib-line-height(23);
+                font-weight: @font-weight__heavier;
+            }
+        }
+    }
+}

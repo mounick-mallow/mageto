@@ -1,0 +1,33 @@
+// Brands empty block
+@brands-empty__title--font-size: 24;
+@brands-empty__title--line-height: 38;
+@brands-empty__title--color: @color-black;
+
+@brands-empty__text--color: @theme__territory--color-300;
+@brands-empty__text-special--color: @color-black;
+
+@brands-empty__action--font-size: 14;
+@brands-empty__action--line-height: 25;
+@brands-empty__action--font-weight: @font-weight__bold;
+@brands-empty__action--color: @color-white;
+@brands-empty__action--border: 2px solid @theme__primary--color-500;
+@brands-empty__action--border-radius: 5px;
+@brands-empty__action--background: @theme__primary--color-500;
+@brands-empty__action-secondary--color: @theme__primary--color-500;
+@brands-empty__action-secondary--border: @brands-empty__action--border;
+
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .lx-no-brands {
+        .lx-no-brands__message {
+            .lx-no-brands__text {
+                &.lx-no-brands__text--special {
+                    font-weight: @font-weight__regular;
+                }
+            }
+        }
+    }
+}

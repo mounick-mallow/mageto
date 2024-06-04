@@ -1,0 +1,45 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/* @var \Magento\Wishlist\Block\Customer\Wishlist\Item\Column\Remove $block */
+?>
+<?php 
+$item = $block->getItem();
+$_product = $item->getProduct();
+$ddHelper = $this->helper("\Dynamic\HomepageApi\Helper\Data");
+$storeManager  = $ddHelper->getStoreManager();
+
+$customerSession = $ddHelper->getCustomerSessionManager();
+$customerName = $customerEmail = '';
+if ($customerSession->isLoggedIn()) {
+    $customerSession->getCustomerId();  // get Customer Id
+    $customerSession->getCustomerGroupId();
+    $customerSession->getCustomer();
+    $customerSession->getCustomerData();
+
+    $customerName = $customerSession->getCustomer()->getName();  // get  Full Name
+    $customerEmail = $customerSession->getCustomer()->getEmail(); // get Email
+}
+
+$storeCode = $storeManager->getStore()->getCode();
+$siteUrl = $ddHelper->getScopeConfigManager()->getValue("web/secure/base_url");
+
+$currency = $ddHelper->getCurrencyManager();
+$currencysymbol = $currency->getCurrencySymbol();
+$productSku = $_product->getSku();
+$productPrice = $_product->getFinalPrice();
+$productName = $_product->getName();
+?>
+<div class="prodAction"> 
+    <a href="#" data-role="remove" data-post-remove='<?= /* @noEscape */ $block->getItemRemoveParams($block->getItem()) ?>' title="<?= $block->escapeHtmlAttr(__('Remove Item')) ?>" class="btn-remove action delete wishlist">
+        <span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+            <path d="M6 6.25L18 18.25M18 6.25L6 18.25" stroke="black" stroke-width="2.4" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </span>
+    </a>
+</div>
+

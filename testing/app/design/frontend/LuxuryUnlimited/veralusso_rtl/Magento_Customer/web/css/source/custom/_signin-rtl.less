@@ -1,0 +1,72 @@
+//
+//    Common
+//--------------------------------------
+& when (@media-common =true) {
+    select {
+        background-position: 5px center;
+    }
+
+    .login-container,
+    .forgotpassword-container,
+    .signup-account-container {
+        direction: rtl;
+    }
+
+    .customer-account-login {
+        .login-container {
+            .block-customer-login {
+                .block-title {
+                    text-align: right;
+                }
+            }
+        }
+    }
+
+    .luxb_password {
+        .toggle-password {
+            left: 10px;
+            right: auto;
+        }
+    }
+
+    .signup-account-container {
+        .block.block-customer-signin {
+            .fieldset {
+                > .fields {
+                    > .field {
+                        &.field-dob {
+                            .customer-dob {
+                                .ui-datepicker-trigger {
+                                    right: auto;
+                                    left: 10px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+//
+//    Desktop
+//--------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum ='min')
+    and
+    (@break = @screen__m) {
+    .login-container,
+    .signup-account-container {
+        .block-customer-login,
+        .block-customer-signin {
+            float: right;
+        }
+
+        .customer-create-account {
+            float: left;
+        }
+    }
+}

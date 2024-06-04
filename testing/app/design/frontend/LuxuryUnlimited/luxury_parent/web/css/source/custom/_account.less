@@ -1,0 +1,36 @@
+//
+//  Common
+//  _____________________________________________
+& when (@media-common =true) {
+    .page-title-wrapper {
+        margin: @indent__l 0 40px;
+        text-align: center;
+
+        .page-title {
+            color: @theme__primary--color;
+            margin: 0;
+            text-align: center;
+            .lib-font-size(20);
+            .lib-line-height(24);
+            font-weight: @font-weight__semibold;
+            text-transform: capitalize;
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum ='min')
+    and
+    (@break =@screen__s) {
+    .customer-account-index {
+        .page-title-wrapper {
+            margin: @indent__m 0 @indent__m;
+
+            .page-title {
+                .lib-font-size(26);
+                .lib-line-height(33);
+            }
+        }
+    }
+}

@@ -1,0 +1,28 @@
+//
+//  Common
+//  _____________________________________________
+& when (@media-common = true) {
+    .smile-es-range-slider {
+        .ui-slider-horizontal {
+            border: 1px solid @theme__primary--color-200;
+            background-color: @theme__primary--color-200;
+            position: relative;
+        }
+
+        .ui-slider-range.ui-widget-header.ui-corner-all {
+            background-color: @custom__color-black;
+            height: 10px;
+            position: absolute;
+        }
+
+        .ui-slider-handle {
+            background-color: @custom__color-black;
+        }
+
+        .actions-primary {
+            a.action.primary.small {
+                display: none;
+            }
+        }
+    }
+}

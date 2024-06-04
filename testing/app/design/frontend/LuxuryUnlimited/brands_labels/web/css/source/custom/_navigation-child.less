@@ -1,0 +1,33 @@
+//
+//  Mobile
+//  _____________________________________________
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    .page-header {
+        .sections {
+            &.nav-sections {
+                left: auto;
+                right: -100%;
+                width: 80%;
+                .lib-css(transition, right 0.3s, @_prefix: 1);
+                backdrop-filter: @menu-bg-blur-index;
+                filter: drop-shadow(-4px 4px 50px @color-gray90);
+                background-color: fade(@color-white, 90);
+
+                .nav-sections-items {
+                    .menu-sub-section {
+                        .lib-css(flex-direction, row, @_prefix: 1);
+                    }
+                }
+
+                .nav-open & {
+                    left: auto;
+                    right: 0;
+                }
+            }
+        }
+    }
+}

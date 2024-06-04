@@ -1,0 +1,86 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \Magento\Review\Block\Customer\ListCustomer $block */
+?>
+<?php if ($block->getReviews() && count($block->getReviews())) : ?>
+    <div class="table-wrapper reviews">
+        <div id="my-reviews-table" class="reviewBlock">
+            <?php $iteration = 1; ?>
+            <?php foreach ($block->getReviews() as $review) : ?>
+                <div class="reviewContent">
+                    <?php if ($iteration == 1) : ?>
+                        <div class="reviewHead desktopBlock">
+                            <div class="reviewTitle"><?= $block->escapeHtml(__('Created')) ?></div>
+                            <div class="reviewTitle"><?= $block->escapeHtml(__('Product Name')) ?></div>
+                            <div class="reviewTitle"><?= $block->escapeHtml(__('Rating')) ?></div>
+                            <div class="reviewTitle"><?= $block->escapeHtml(__('Review')) ?></div>
+                        </div>
+                    <?php endif; ?>
+                    <div class="leftReview">
+                        <div class="reviewHead mobileBlock">
+                            <div class="reviewTitle"><?= $block->escapeHtml(__('Created')) ?></div>
+                            <div class="reviewTitle"><?= $block->escapeHtml(__('Product Name')) ?></div>
+                        </div>
+                        <div class="reviewBody">
+                            <div class="col1">
+                                <?= $block->escapeHtml($block->dateFormat($review->getReviewCreatedAt())) ?>
+                            </div>
+                            <div class="col2">
+                                <?= $block->escapeHtml($review->getName()) ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="centerReview">
+                        <div class="reviewHead mobileBlock">
+                            <div class="reviewTitle"><?= $block->escapeHtml(__('Rating')) ?></div>
+                            <div class="reviewTitle"><?= $block->escapeHtml(__('Review')) ?></div>
+                        </div>
+                        <div class="reviewBody">
+                            <div class="col3">
+                                <?php if ($review->getSum()) : ?>
+                                    <div class="rating-summary">
+                                        <span class="label"><span><?= $block->escapeHtml(__('Rating')) ?>:</span></span>
+                                        <div class="rating-result" title="<?= /* @noEscape */ ((int)$review->getSum() / (int)$review->getCount()) ?>%">
+                                            <span style="width:<?= /* @noEscape */ ((int)$review->getSum() / (int)$review->getCount()) ?>%;"><span><?= /* @noEscape */ ((int)$review->getSum() / (int)$review->getCount()) ?>%</span></span>
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                            <div class="col4">
+                                <?= $this->helper(\Magento\Review\Helper\Data::class)->getDetailHtml($review->getDetail()) ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rightReview">
+                        <div class="reviewBody">
+                            <div class="col4">
+                                <a href="<?= $block->escapeUrl($block->getReviewUrl($review)) ?>">
+                                    <?= $block->escapeHtml(__('See Details')) ?>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php $iteration++; ?>
+            <?php endforeach; ?>
+        </div>
+    </div>
+    <?php if ($block->getToolbarHtml()) : ?>
+        <div class="toolbar products-reviews-toolbar bottom">
+            <?= $block->getToolbarHtml() ?>
+        </div>
+    <?php endif; ?>
+<?php else : ?>
+    <div class="message info empty"><span><?= $block->escapeHtml(__('You have submitted no reviews.')) ?></span></div>
+<?php endif; ?>
+<div class="actions-toolbar">
+    <div class="secondary">
+        <a class="action back" href="<?= $block->escapeUrl($block->getBackUrl()) ?>">
+            <span><?= $block->escapeHtml(__('Back')) ?></span>
+        </a>
+    </div>
+</div>

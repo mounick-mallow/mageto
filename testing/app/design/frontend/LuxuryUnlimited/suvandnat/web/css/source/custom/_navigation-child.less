@@ -1,0 +1,171 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .page-wrapper {
+        .page-header {
+            .sections.nav-sections {
+                .navigation {
+                    .submenu {
+                        .subchildmenu {
+                            .ui-menu-item {
+                                .subchildmenu {
+                                    .ui-menu-item {
+                                        a {
+                                            color: @mobile_navigation__font-color;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    .page-header {
+        .sections {
+            &.nav-sections {
+                left: auto;
+                right: -100%;
+                .lib-css(transition, right 0.3s, @_prefix: 1);
+                width: 100%;
+                top: 67px;
+
+                .navigation {
+                    .navigation-top-sec {
+                        background: @theme__secondary--color-50;
+                        text-align: left;
+                        padding: @indent__xs @indent__xl 15px;
+                        .lib-vendor-prefix-display(flex);
+                        .lib-vendor-box-align (center);
+                        .lib-css(justify-content, space-between, @_prefix: 1);
+
+                        .panel.wrap {
+                            .lib-vendor-prefix-display(flex);
+                            .lib-vendor-box-align (center);
+                            margin: 0;
+                            .lib-css(justify-content, flex-start, @_prefix: 1);
+                            color: @theme__territory--color-300;
+                            .lib-font-size(14);
+                            .lib-line-height(@mobile-submenu-line-height);
+                            font-weight: @mobile-submenu-font-weight;
+
+                            a {
+                                padding: 0;
+                                white-space: nowrap;
+                            }
+
+                            .switcher {
+                                border: none;
+                                width: 140px;
+                                padding: 0 @indent__xxs;
+                                max-width: inherit;
+                                flex-basis: auto;
+                                flex-grow: initial;
+
+                                &.switcher-currency {
+                                    width: 90px;
+                                }
+
+                                &.switcher-language {
+                                    width: 100px;
+                                }
+
+                                .options {
+                                    display: inherit;
+                                }
+                            }
+
+                            &.panel-message {
+                                margin-top: 0;
+                                margin-bottom: 0;
+                            }
+
+                            &.panel-email {
+                                a {
+                                    .lib-vendor-prefix-display(flex);
+                                    .lib-vendor-box-align (center);
+                                    .lib-css(gap, 8px, @_prefix: 1);
+
+                                    i.icon-mail {
+                                        margin-top: 3px;
+
+                                        .lib-icon-font-symbol(
+                                            @_icon-font-content: @icon-mail,
+                                            @_icon-font-position: before
+                                        );
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__s) {
+    .page-header {
+        .sections {
+            &.nav-sections {
+                .navigation {
+                    .navigation-top-sec {
+                        padding: @indent__xs 20px 15px;
+                        display: inherit;
+                        text-align: center;
+
+                        .panel.wrap {
+                            .lib-css(justify-content, center, @_prefix: 1);
+
+                            &.panel-message {
+                                margin-top: @indent__xs;
+                                margin-bottom: 20px;
+                            }
+
+                            &.panel-email {
+                                a {
+                                    i.icon-mail {
+                                        margin-top: 7px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+//
+//  Desktop
+//  _____________________________________________
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__m) {
+    .page-header {
+        .sections {
+            &.nav-sections {
+                .navigation-top-sec {
+                    .lib-hide-content();
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,66 @@
+<?php
+if ($block->isFaqEnabled() == 1):
+    $items = $block->getFaqCategoryItems();
+    $categoriesArray = $items->getData();
+    $itemCount = count($categoriesArray);
+    $isActive = '';
+
+    if ($block->getCurrentFaqCatId()) {
+        $faqCatId = $block->getCurrentFaqCatId();
+    } else {
+        $faqCatId = $categoriesArray[0]['faq_category_id'];
+    }
+
+    $pageLayout = $block->getCurrentPageLayout();
+    $categoryNavbarEnable = $block->isCategoryNavbarEnable();
+
+    ?>
+    <?php foreach ($items as $item): ?>
+        <input type="hidden" id="<?= $block->escapeHtmlAttr($item->getFaqCategoryId()) ?>" class="categoryvalue">
+    <?php endforeach; ?>
+    <?php
+    if ($categoryNavbarEnable) {
+
+        if ($itemCount > 1) {
+            ?>
+            <div class="sparsh-block-content <?= ($pageLayout == "1column")?'column1layout':''; ?>">
+                <div class="sparsh-block-subtitle">
+                    <strong role="heading" aria-level="2"><?= $block->escapeHtml(__("CATEGORIES")); ?></strong>
+                </div>
+                <?php
+                foreach ($items as $item):
+                    if ($faqCatId == $item->getFaqCategoryId()) {
+                        $isActive = 'active';
+                    } else {
+                        $isActive = '';
+                    }
+                    ?>
+                    <div class="sparsh-block-item <?= $block->escapeHtmlAttr($isActive); ?>"
+                         id="<?= $block->escapeHtmlAttr($item->getFaqCategoryId()) ?>">
+                        <span><?= $block->escapeHtml($item->getFaqCategoryName()) ?></span>
+                    </div>
+                    <?php
+                endforeach; ?>
+            </div>
+            <?php
+        }
+    }  //end of isCategoryNavbarEnable() condition
+    ?>
+
+<div class="sparsh-question-answer
+    <?= ($pageLayout == "1column" && $itemCount > 1 && $categoryNavbarEnable)?' column1layout':''; ?>">
+    <?php if ($itemCount != 0) {
+        echo $block->getLayout()
+            ->createBlock(\Sparsh\Faq\Block\Widget\Faq::class)
+            ->setTemplate('Sparsh_Faq::widget/faqcategory.phtml')->toHtml();
+    } ?>
+</div>
+    <script type="text/x-magento-init">
+        {
+            "*": {
+                "Sparsh_Faq/js/faq": {
+                }
+            }
+        }
+    </script>
+<?php endif; ?>

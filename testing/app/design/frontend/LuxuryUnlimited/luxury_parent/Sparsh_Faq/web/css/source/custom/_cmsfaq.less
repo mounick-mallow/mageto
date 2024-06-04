@@ -1,0 +1,58 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .faq-search-bar {
+        margin-bottom: @indent__l;
+    }
+
+    .sparsh-faq-block {
+        .faq-question {
+            position: relative;
+            border-width: @faq-trigger-border-width;
+            border-style: solid;
+            border-color: @faq-trigger-border-color;
+            padding: @faq-trigger-padding;
+            margin: @faq-trigger-margin;
+            border-radius: @faq-trigger-border-radius;
+            cursor: pointer;
+
+            strong {
+                .lib-font-size(@faq-trigger-font-size);
+                .lib-line-height(@faq-trigger-line-height);
+                font-weight: @faq-trigger-font-weight;
+                color: @faq-trigger-color;
+            }
+
+            .lib-icon-font(
+                @_icon-font-content: @faq-trigger-icon,
+                @_icon-font: @icomoon-font-family,
+                @_icon-font-size: @faq-trigger-icon-font-size,
+                @_icon-font-line-height: 24px,
+                @_icon-font-text-hide: true,
+                @_icon-font-position: after,
+                @_icon-font-color: @faq-trigger-icon-color,
+                @_icon-font-display: block
+            );
+
+            &.ui-state-active {
+                .lib-icon-font-symbol(
+                    @_icon-font-content: @faq-trigger-active-icon,
+                    @_icon-font-position: after
+                );
+            }
+
+            &:after {
+                position: absolute;
+                right: 30px;
+                top: 50%;
+                margin-top: -12px;
+            }
+        }
+
+        .faq-answer {
+            padding-bottom: @indent__l;
+        }
+    }
+}

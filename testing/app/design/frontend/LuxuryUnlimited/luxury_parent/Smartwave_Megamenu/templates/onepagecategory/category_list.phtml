@@ -1,0 +1,67 @@
+<?php
+/**
+ * Copyright © 2018 Porto. All rights reserved.
+ */
+
+?>
+<?php
+/**
+ * Top menu for store
+ *
+ * @var \Smartwave\Megamenu\Block\Topmenu
+ */
+?>
+<?php
+$viewModelMegamenu = $block->getData('mega_menu_view_model');
+$helper = $viewModelMegamenu->getMegamenuHelper();
+$portohelper = $viewModelMegamenu->getPortoHelper();
+
+$categories = $helper->getFirstLevelCategories();
+$index = 0;
+$customStyles='<style type="text/css">';
+?>
+<?php if ($portohelper->getConfig('porto_settings/general/layout') == "full_width" &&
+$portohelper->getConfig('porto_settings/general/category_list_on_left')): ?>
+<div class="onepage-cat category-list">
+    <ul>
+        <?php foreach ($categories as $category) : ?>
+            <?php $catId = $category->getId(); ?>
+            <?php $catModel = $helper->getCategoryModel($catId); ?>
+            <?php if ($category->getIsActive() && !$catModel->getData("sw_ocat_hide_this_item")) : ?>
+                <?php
+                    $icon = '<em class="porto-icon-circle-empty"></em>';
+                    if ($catIconImg=$catModel->getData("sw_ocat_category_icon_image")) {
+                        $icon = '<img src="'.'catalog/category/'.$catIconImg.'" alt=""/>';
+                    } elseif ($catFontIcon=$catModel->getData("sw_ocat_category_font_icon")) {
+                        $icon = '<em class="'.$catFontIcon.'"></em>';
+                    }
+                    if ($hoverBgColor = $catModel->getData("sw_ocat_category_hoverbgcolor")) {
+                        $customStyles .= '.onepage-category .category-list > ul > li > a[data-cat="'.$catId.
+                        '"]:hover,.onepage-category .category-list > ul > li > a[data-cat="'.$catId.
+                        '"].active{background-color:'.$hoverBgColor.
+                            ';}.onepage-category .category-list > ul > li > a[data-cat="'.$catId.
+                            '"]:hover:after,.onepage-category .category-list > ul > li > a[data-cat="'.
+                            $catId.'"].active:after{border-left-color:'.$hoverBgColor.';}';
+                    }
+                ?>
+                <li data-index="<?= $index ?>">
+                    <a href="<?= $catModel->getUrl() ?>" data-cat="<?= $catId ?>">
+                        <?= $icon ?>
+                        <span><?= $category->getName() ?></span>
+                    </a>
+                </li>
+                <?php $index++; ?>
+            <?php endif; ?>
+        <?php endforeach; ?>
+    </ul>
+    <?php $customStyles .= '</style>'; ?>
+    <?= /* @noEscape */ $customStyles; ?>
+</div>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "SmartwaveMagemenuCategoryList": {}
+        }
+    }
+</script>
+<?php endif; ?>

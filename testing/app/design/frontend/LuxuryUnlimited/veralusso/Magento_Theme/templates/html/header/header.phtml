@@ -1,0 +1,72 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+
+<div class="panel wrapper">
+    <div class="header panel">
+        <div class="panel wrap panel-switcher">
+            <?php echo $this->getChildHtml("switch_website"); ?>
+            <?php echo $this->getChildHtml("currency"); ?>
+            <?php echo $this->getChildHtml("store_language"); ?>
+        </div>
+
+        <?php echo $this->getChildHtml("custom_block"); ?>
+
+        <div class="panel wrap panel-utilities">
+            <!-- I didn't delete this template not to break header on the project -->
+            <?php echo $this->getChildHtml("my_tickets_icon"); ?>
+
+            <?php echo $this->getChildHtml("unread_ticket_link"); ?>
+
+            <div class="utilities search-area">
+                <a href="javascript:void(0)" class="action search search-toggle-icon" role="button" aria-label="Search product"><i class="icon-search"></i></a>
+                <?php echo $this->getChildHtml("top.search"); ?>
+            </div>
+
+            <div class="utilities top-links-area">
+                <div class="top-links-icon">
+                    <?php
+                    $dynamicHelper = $this->helper('\Dynamic\Customization\Helper\Data');
+                    $customerSession = $dynamicHelper->getCustomerSessionManager()->isLoggedIn();
+                    if ($customerSession) { ?>
+                        <div class="customer_logged_in">
+                            <span><em class="icon-user porto-icon-user"></em></span>
+                            <ul class="account-menu" style="display:none;">
+                                <li><a href="<?= $block->escapeUrl($block->getUrl('customer/account')) ?>"><?= /* @noEscape */ __('My Account');?></a></li>
+                                <li><a href="<?= $block->escapeUrl($block->getUrl('customer/account/logout')) ?>"><?= /* @noEscape */ __('Logout');?></a></li>
+                            </ul>
+                        </div>
+                    <?php } else { ?>
+                        <a class="action account customer-account-link" href="<?= $block->escapeUrl($block->getUrl('customer/account/login')) ?>">
+                            <em class="icon-user porto-icon-user"></em>
+                            <span class="customer-account-text"><?= /* @noEscape */ __('My Account');?></span>
+                        </a>
+                    <?php } ?>
+                </div>
+            </div>
+
+            <div class="utilities wishlist-area">
+                <a data-bind="scope: 'wishlist'" href="<?= $block->escapeUrl($block->getUrl('guestwishlist/index/redirect')) ?>" class="action wishlist my-wishlist" title="My Wish List" role="button">
+                    <i class="icon-wishlist far fa-heart"></i>
+                    <!-- ko if: wishlist().counter --><span data-bind="text: wishlist().productIds.length" class="counter qty"></span><!-- /ko -->
+                </a>
+            </div>
+
+            <?php echo $this->getChildHtml("minicart"); ?>
+        </div>
+    </div>
+</div>
+
+<div class="header content">
+    <div class="logo">
+        <div class="utilities toggle-menu">
+            <span data-action="toggle-nav" class="action nav-toggle"><span><?= /* @noEscape */ __('Toggle Nav') ?></span></span>
+        </div>
+        <?php echo $this->getChildHtml("logo"); ?>
+    </div>
+</div>
+
+<?php echo $this->getChildHtml("navigation.sections"); ?>

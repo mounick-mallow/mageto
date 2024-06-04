@@ -1,0 +1,43 @@
+<div class="block social-accounts">
+    <div class="title"><strong><?= $block->escapeHtml(__('Linked Accounts')) ?></strong></div>
+    <div class="content">
+        <?php $socialAccounts = $block->getSocialAccounts()?>
+        <?php if ($socialAccounts):?>
+            <ul class="sl-unlinks">
+                <?php foreach ($socialAccounts as $sAccounts):
+                    $type = ($sAccounts->getType() == 'fb') ?
+                    'facebook' : $sAccounts->getType()?>
+                    <li class="sl-link-line">
+                        <a href="#" class="social-icons si-borderless si-
+                        <?= /* @noEscape */ $type ?>"
+                        alt="<?= /* @noEscape */ $type ?>"
+                        title="<?= /* @noEscape */ $type ?>">
+                            <i class="icon-<?= /* @noEscape */ $type ?>"></i>
+                            <i class="icon-<?= /* @noEscape */ $type ?>"></i>
+                        </a>
+
+                        <span class="sl-link-name">
+                            <?= /* @noEscape */ $sAccounts->getFirstname() . ' ' .$sAccounts->getLastname()?>
+                        </span>
+                        <a class="sl-link-unlink social-icons si-borderless si-unlink"
+                        href="<?= /* @noEscape */ $block->getUnlinkUrl($sAccounts->getData('id')) ?>"
+                        alt="<?= /* @noEscape */ __("Unlink")?>"
+                        title="<?= /* @noEscape */ __("Unlink")?>">
+                            <i class="icon-unlink"></i>
+                            <i class="icon-unlink"></i>
+                        </a>
+
+                    </li>
+                <?php endforeach;?>
+            </ul>
+        <?php else:?>
+            <div class="social_empty">
+                <div class="empty_icon"></div>
+                <p class="empty_txt"><?= /* @noEscape */ __('You have not added any social media links here') ?></p>
+                <div class="empty-button">
+                    <a href="#" class="action primary"><?= /* @noEscape */ __('Add social account') ?></a>
+                </div>
+            </div>
+        <?php endif;?>
+    </div>
+</div>

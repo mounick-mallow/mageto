@@ -1,0 +1,502 @@
+<?php use LuxuryUnlimited\TrackCmsPages\Block\Form\Login as TrackLoginBlock; ?>
+<?php /** @var TrackLoginBlock $block */ ?>
+<?php /** @var \Magento\Framework\Escaper $escaper */ ?>
+<?php if ($block->isLoggedInCustomer()): ?>
+    <?php $block->redirect('sales/order/history/'); ?>
+<?php endif; ?>
+
+<?php if (!$block->isLoggedInCustomer()): ?>
+    <div class="page-title-wrapper">
+        <h1 class="page-title">
+            <span class="base"><?= /* @noEscape */ __('Track Your Order'); ?></span>
+        </h1>
+    </div>
+
+    <div class="block track-order-login">
+        <div class="track-order-widget">
+            <div class="block-customer-login track-order-element" aria-labelledby="block-customer-login-heading">
+                <form class="form form-login form-control"
+                      action="<?= $escaper->escapeUrl($block->getPostActionUrl()); ?>"
+                      method="post"
+                      id="login-form"
+                      data-mage-init='{"validation":{}}'>
+                    <?= $block->getBlockHtml('formkey'); ?>
+                    <fieldset class="fieldset login-user"
+                              data-hasrequired="<?= $escaper->escapeHtml(__('* Required Fields')); ?>">
+                        <legend class="fieldset-legend">
+                            <span><?= $block->escapeHtml(__('Track Order')) ?></span>
+                        </legend>
+                        <h2><?= $escaper->escapeHtml(__('Registered Customers')); ?></h2>
+
+                        <div class="field note"><?= $escaper->escapeHtml(
+                                __('If you have an account, sign in with your email address.')
+                            ); ?></div>
+
+                        <div class="field email required">
+                            <label class="label" for="email">
+                                <span><?= $escaper->escapeHtml(__('Email')); ?></span>
+                            </label>
+                            <div class="control">
+                                <input placeholder="<?= $escaper->escapeHtml(__('Email')); ?>"
+                                       name="login[username]"
+                                       value="<?= $escaper->escapeHtmlAttr($block->getUsername()); ?>"
+                                       id="email"
+                                       autocomplete="off"
+                                       type="email"
+                                       class="input-text"
+                                       title="<?= $escaper->escapeHtmlAttr(__('Email')); ?>"
+                                       data-mage-init='{"mage/trim-input":{}}'
+                                       data-validate="{required:true, 'validate-email':true}">
+                                <div class="clslogin cls_user"></div>
+                            </div>
+                        </div>
+
+                        <div class="field password required">
+                            <label for="pass" class="label">
+                                <span><?= $escaper->escapeHtml(__('Password')); ?></span>
+                            </label>
+                            <div class="control cls_password">
+                                <input placeholder="<?= $escaper->escapeHtml(__('Password')); ?>"
+                                       name="login[password]"
+                                       type="password"
+                                       autocomplete="off"
+                                       class="input-text"
+                                       id="pass"
+                                       title="<?= $escaper->escapeHtmlAttr(__('Password')); ?>"
+                                       data-validate="{required:true}">
+                                <div class="clslogin cls_eye"></div>
+                            </div>
+                        </div>
+
+                        <?= $block->getChildHtml('form_additional_info'); ?>
+
+                        <div class="actions-toolbar">
+                            <div class="secondary cls_forget">
+                                <a class="action remind"
+                                   href="<?= $escaper->escapeUrl($block->getForgotPasswordUrl()); ?>">
+                                    <span><?= $escaper->escapeHtml(__('Forgot Your Password?')) ?></span>
+                                </a>
+                            </div>
+                            <div class="primary">
+                                <button type="submit" class="action login primary" name="send" id="send2">
+                                    <span><?= $escaper->escapeHtml(__('Sign In')); ?></span>
+                                </button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+
+            <div class="check-order-container block-new-customer track-order-element">
+                <form class="form form-login form-control"
+                      action="<?= $escaper->escapeUrl($block->getUrl('ajaxordertrack/index/track')); ?>"
+                      method="POST"
+                    <?php if ($block->getOrderIncrementId()): ?>
+                        style="display:none;"
+                    <?php endif; ?>>
+                    <fieldset class="fieldset login-guest">
+                        <legend class="fieldset-legend">
+                            <span><?= $block->escapeHtml(__('Guest Track Order')) ?></span>
+                        </legend>
+                        <h2><?= $escaper->escapeHtml(__('Guest Users')); ?></h2>
+
+                        <div class="field note">
+                            <?= $escaper->escapeHtml(__('Please enter order number to track your order.')); ?>
+                        </div>
+
+                        <div class="field order-id required">
+                            <label class="label" for="ordernumber">
+                                <span><?= $escaper->escapeHtml(__('Order Number')); ?></span>
+                            </label>
+                            <div class="control">
+                                <input type="text" class="" name="order-increment"
+                                       placeholder="<?= /* @noEscape */ __('Enter your order number here'); ?>" required>
+                                <input type="hidden" class="" name="website"
+                                       value="<?= $escaper->escapeHtml($block->getBaseUrl()); ?>"/>
+                            </div>
+                        </div>
+
+                        <div class="field order-reference">
+                            <span><?= $escaper->escapeHtml(__('How do I find my')); ?>
+                                <a href="#"><?= $escaper->escapeHtml(__('Order reference?')); ?></a>
+                            </span>
+                        </div>
+
+                        <div class="actions-toolbar">
+                            <div class="primary cop">
+                                <button type="submit" class="action login primary" id="order-track" name="order-track">
+                                    <span><?= /* @noEscape */ __('Submit') ?></span>
+                                </button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+
+                <div class="order-track-container" style="display: none">
+                    <div class="show-order-track modal-track-order">
+                        <div id="order-track-modal" class="track-order-content"></div>
+                    </div>
+                </div>
+
+                <div id="order-track-reference" class="order-reference-container" style="display:none">
+                    <div class="show-order-reference modal-track-reference modal-content">
+                        <?= __("Lorem ipsum dolor sit amet, consectetur adipiscing elit."); ?>
+                    </div>
+                </div>
+
+                <div id="order-track-help" class="order-help-container" style="display:none">
+                    <div class="show-order-help modal-track-help modal-content">
+                        <form class="form"
+                              action="<?= $escaper->escapeUrl($block->getUrl('mytickets/index/post')); ?>"
+                              id="order-popup-form"
+                              method="post" data-hasrequired="<?= $escaper->escapeHtmlAttr(__('* Required Fields')); ?>"
+                              data-mage-init='{"validation":{}}'
+                        >
+                            <div class="main-information">
+                                <div class="field order-number cls_comm_input">
+                                    <div class="control">
+                                        <input id="keyword"
+                                               class="input-text"
+                                               title="<?= $escaper->escapeHtml(__('Order Number')); ?>"
+                                               data-validate="{required:true}"
+                                               name="keyword"
+                                               type="text"
+                                               value=""
+                                               placeholder="<?= $escaper->escapeHtmlAttr(__('Enter Order #')); ?>">
+                                    </div>
+                                </div>
+                                <div class="field email cls_comm_input">
+                                    <div class="control">
+                                        <input id="order-email" class="input-text"
+                                               title="<?= $escaper->escapeHtml(__('Order Email')); ?>"
+                                               name="order-email" type="text" value=""
+                                               data-validate="{required:true,'validate-emails':true}"
+                                               placeholder="<?= $escaper->escapeHtmlAttr(__('Email Address')); ?>">
+                                        <input id="order-status" class="input-text" name="status" type="hidden"
+                                               value="1">
+                                    </div>
+                                </div>
+                                <div class="field reason cls_comm_input">
+                                    <div class="control">
+                                        <textarea id="remarks" class="input-text"
+                                                  title="<?= $escaper->escapeHtml(__('Reason')) ?>"
+                                                  name="remarks" type="text"
+                                                  data-validate="{required:true}"
+                                                  placeholder="<?= $escaper->escapeHtmlAttr(__('Enter Reason')); ?>"></textarea>
+                                    </div>
+                                </div>
+                                <div class="field create-ticket">
+                                    <button id="create-ticket" class="btn btn-create-ticket" name="create-ticket"
+                                            type="submit"><?= $escaper->escapeHtml(__('Submit')); ?>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="ticket-created-success" style="display:none">
+                            <div class="response-container" style="max-width: unset;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="track-order-modal-error">
+                    <div class="modal-content">
+                        <p class="track-order-modal-error-result"></p>
+                        <button class="action primary" id="track-order-error-ticket" type="button">
+                            <?= /* @noEscape */ __('Create a Ticket'); ?>
+                        </button>
+                    </div>
+                </div>
+
+                <script type="text/x-magento-init">
+                    {
+                        "*": {
+                            "Magento_Theme/js/track-order/ticket": {
+                            }
+                        }
+                    }
+                </script>
+
+                <?php if ($order = $block->getOrder()): ?>
+                    <?php $orderDetails = $block->getOrderDetails(); ?>
+                    <?php $shipTo = sprintf(
+                        '%s %s',
+                        ucwords($order->getCustomerFirstname()),
+                        ucwords($order->getCustomerLastname())
+                    );
+                    ?>
+
+                    <div class="order-result-container">
+                        <div class="order-title-block">
+                            <ul>
+                                <li class="col-md-2"><?= /* @noEscape */ __('Order #') ?></li>
+                                <li class="col-md-2"><?= /* @noEscape */ __('Date') ?></li>
+                                <li class="col-md-2"><?= /* @noEscape */ __('Ship To') ?></li>
+                                <li class="col-md-2"><?= /* @noEscape */ __('Order Total') ?></li>
+                                <li class="col-md-2"><?= /* @noEscape */ __('Status') ?></li>
+                                <li class="col-md-2"><?= /* @noEscape */ __('Action') ?></li>
+                            </ul>
+                        </div>
+
+                        <div class="order-data-block">
+                            <ul>
+                                <li class="col-md-2"><?= $escaper->escapeHtml($order->getIncrementId()); ?></li>
+                                <li class="col-md-2"><?= $escaper->escapeHtml($order->getCreatedAt()); ?></li>
+                                <li class="col-md-2"><?= $escaper->escapeHtml($shipTo); ?></li>
+                                <li class="col-md-2"><?= $escaper->escapeHtml($order->formatPrice($order->getGrandTotal())); ?></li>
+                                <!-- order status api -->
+                                <li class="col-md-2 order-cancel"><?= $escaper->escapeHtml($orderDetails['order_status']); ?></li>
+                                <!-- order status api end-->
+                                <li class="col-md-2">
+                                    <span class="order-cancel">
+                                        <?= ($orderDetails['is_canceled'] == 1) ? /* @noEscape */ __('Cancel') : '-'; ?>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- order cancel api -->
+                        <div class="show-<?= $escaper->escapeHtml($order->getIncrementId()); ?> modal order-cancel-modal">
+                            <div class="modal-content">
+                                <span class="close">&times;</span>
+                                <div id="result-<?= $escaper->escapeHtml($order->getIncrementId()); ?>"></div>
+                                <div id="loader-<?= $escaper->escapeHtml($order->getIncrementId()); ?>" style="display:none;">
+                                    <?= /* @noEscape */ __('Loading') ?>
+                                </div>
+                            </div>
+                        </div>
+
+                        <script type="text/javascript">
+                            require(['jquery'], function ($) {
+                                $(document).ready(function () {
+                                    var orderNo = '<?= $escaper->escapeJs($order->getIncrementId()); ?>';
+                                    $('.show-' + orderNo).click(function () {
+                                        $('.show-' + orderNo).fadeOut(200);
+                                    });
+                                });
+                            });
+                        </script>
+                        <!-- end -->
+
+                        <?php if ($orderItems = $order->getAllVisibleItems()): ?>
+                            <div class="order-details-items ordered"
+                                 style="margin-top: 30px;display: inline-block;margin-bottom: 0;">
+                                <div class="order-title">
+                                    <strong><?= $escaper->escapeHtml(__('Items Ordered')); ?></strong>
+                                </div>
+                                <div class="table-wrapper order-items">
+                                    <table class="data table table-order-items" id="my-orders-table"
+                                           summary="Items Ordered">
+                                        <caption class="table-caption"><?= $escaper->escapeHtml(__('Items Ordered')); ?></caption>
+                                        <thead>
+                                        <tr>
+                                            <th class="col name" scope="col"><?= $escaper->escapeHtml(__('Product Name')); ?></th>
+                                            <th class="col sku" scope="col"><?= $escaper->escapeHtml(__('SKU')); ?></th>
+                                            <th class="col price" scope="col"><?= $escaper->escapeHtml(__('Price')); ?></th>
+                                            <th class="col qty" scope="col"><?= $escaper->escapeHtml(__('Qty')); ?></th>
+                                            <th class="col subtotal" scope="col"><?= $escaper->escapeHtml(__('Subtotal')); ?></th>
+                                            <th class="col subtotal" scope="col" style="text-align:center"><?= $escaper->escapeHtml(__('Action')); ?></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php foreach ($orderItems as $_item): ?>
+                                            <!-- API code to check if the sku is eligible for return -->
+                                            <?php $isReturnEligible = $block->canOrderItemReturn($_item->getSku()); ?>
+                                            <!-- End -->
+                                            <?php $imageUrl = $block->getProductImageUrl($_item->getProduct()); ?>
+                                            <tr id="order-item-row-86">
+                                                <td class="col name" data-th="Product Name">
+                                                    <img alt="<?= $escaper->escapeHtml($_item->getName()); ?>"
+                                                         src="<?= $escaper->escapeUrl($imageUrl); ?>">
+                                                    <div class="item_group_order">
+                                                        <strong class="product name product-item-name">
+                                                            <?= $escaper->escapeHtml($_item->getName()); ?>
+                                                        </strong>
+                                                    </div>
+                                                </td>
+                                                <td class="col sku" data-th="<?= $escaper->escapeHtml(__('Sku')); ?>">
+                                                    <?= $escaper->escapeHtml($_item->getSku()); ?>
+                                                </td>
+                                                <td class="col price" data-th="<?= $escaper->escapeHtml(__('Price')); ?>">
+                                                    <?= /* @noEscape */$order->formatPrice($_item->getPrice()); ?>
+                                                </td>
+                                                <td class="col qty" data-th="<?= $escaper->escapeHtml(__('Qty')); ?>">
+                                                    <ul class="items-qty" style="border: 0;">
+                                                        <?php if ((int)$_item->getQtyOrdered() > 0): ?>
+                                                            <li class="item">
+                                                                <span class="title"><?= $escaper->escapeHtml(__('Ordered')); ?></span>
+                                                                <span class="content"><?= (int)$_item->getQtyOrdered(); ?></span>
+                                                            </li>
+                                                        <?php endif; ?>
+                                                        <?php if ((int)$_item->getQtyShipped() > 0): ?>
+                                                            <li class="item">
+                                                                <span class="title"><?= $escaper->escapeHtml(__('Shipped')); ?></span>
+                                                                <span class="content"><?= (int)$_item->getQtyShipped(); ?></span>
+                                                            </li>
+                                                        <?php endif; ?>
+                                                        <?php if ((int)$_item->getQtyCanceled() > 0): ?>
+                                                            <li class="item">
+                                                                <span class="title"><?= $escaper->escapeHtml(__('Canceled')); ?></span>
+                                                                <span class="content"><?= (int)$_item->getQtyCanceled(); ?></span>
+                                                            </li>
+                                                        <?php endif; ?>
+                                                        <?php if ((int)$_item->getQtyRefunded() > 0) : ?>
+                                                            <li class="item">
+                                                                <span class="title"><?= $escaper->escapeHtml(__('Refunded')); ?></span>
+                                                                <span class="content"><?= (int)$_item->getQtyRefunded(); ?></span>
+                                                            </li>
+                                                        <?php endif; ?>
+                                                    </ul>
+                                                </td>
+                                                <td class="col subtotal" data-th="<?= $escaper->escapeHtml(__('Subtotal')); ?>">
+                                                    <?= /* @noEscape */ $order->formatPrice($_item->getRowTotal()); ?>
+                                                </td>
+                                                <?php if ($isReturnEligible): ?>
+                                                    <td class="col return"
+                                                        data-th="<?= $escaper->escapeHtml(__('Return')); ?>"
+                                                        style="text-align:center;">
+                                                        <i class="porto-icon-action-undo"></i>
+                                                        <span class="order-return" data-item-sku="<?= $escaper->escapeHtml($_item->getSku()); ?>">
+                                                            <?= $escaper->escapeHtml(__('Return')); ?>
+                                                        </span>
+                                                    </td>
+                                                <?php else: ?>
+                                                    <td class="col return"
+                                                        data-th="<?= $escaper->escapeHtml(__('N/A')); ?>"
+                                                        style="text-align:center;">
+                                                        <span class="order-NA">
+                                                            <?= $escaper->escapeHtml(__('N/A')); ?>
+                                                        </span>
+                                                    </td>
+                                                <?php endif; ?>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                        </tbody>
+                                        <tfoot>
+                                        <tr class="subtotal">
+                                            <th colspan="4" class="mark" scope="row"><?= $escaper->escapeHtml(__('Subtotal')); ?></th>
+                                            <td class="amount" data-th="<?= $escaper->escapeHtml(__('Subtotal')); ?>">
+                                                <span class="price"><?= /* @noEscape */ $order->formatPrice($order->getSubTotal()); ?></span>
+                                            </td>
+                                        </tr>
+                                        <tr class="grand_total">
+                                            <th colspan="4" class="mark" scope="row"><?= $escaper->escapeHtml(__('Estimated Total')); ?></th>
+                                            <td class="amount"
+                                                data-th="<?= $escaper->escapeHtml(__('Estimated Total')); ?>">
+                                                <span class="price"><?= /* @noEscape */ $order->formatPrice($order->getGrandTotal()); ?></span>
+                                            </td>
+                                        </tr>
+                                        <?php if ($order->getDiscountAmount() != 0): ?>
+                                            <tr class="discount">
+                                                <th colspan="4" class="mark" scope="row"><?= $escaper->escapeHtml(__('Discount')); ?></th>
+                                                <td class="amount" data-th="<?= $escaper->escapeHtml(__('Discount')); ?>">
+                                                    <span class="price"><?= /* @noEscape */ $order->formatPrice($order->getDiscountAmount()); ?></span>
+                                                </td>
+                                            </tr>
+                                        <?php endif; ?>
+                                        <?php if ($order->getShippingAmount() != 0): ?>
+                                            <tr class="shipping">
+                                                <th colspan="4" class="mark" scope="row"><?= $escaper->escapeHtml(__('Shipping')); ?></th>
+                                                <td class="amount" data-th="<?= $escaper->escapeHtml(__('Shipping')); ?>">
+                                                    <span class="price"><?= /* @noEscape */ $order->formatPrice($order->getShippingAmount()); ?></span>
+                                                </td>
+                                            </tr>
+                                        <?php endif; ?>
+                                        <?php if ($order->getTaxAmount() != 0): ?>
+                                            <tr class="tax">
+                                                <th colspan="4" class="mark" scope="row"><?= $escaper->escapeHtml(__('Tax')); ?></th>
+                                                <td class="amount" data-th="<?= $escaper->escapeHtml(__('Tax')); ?>">
+                                                    <span class="price"><?= /* @noEscape */ $order->formatPrice($order->getTaxAmount()); ?></span>
+                                                </td>
+                                            </tr>
+                                        <?php endif; ?>
+                                        <?php if ($credit = $block->getStoreCredit($order)): ?>
+                                            <tr class="swarming_credits">
+                                                <th colspan="4" class="mark" scope="row"><?= $escaper->escapeHtml(__('Store Credit')); ?></th>
+                                                <td class="amount"
+                                                    data-th="<?= $escaper->escapeHtml(__('Store Credit')); ?>">
+                                                    <span class="price"><?= $escaper->escapeHtml($credit); ?></span>
+                                                </td>
+                                            </tr>
+                                        <?php endif; ?>
+                                        <tr class="base_grandtotal">
+                                            <th colspan="4" class="mark" scope="row"><?= $escaper->escapeHtml(__('Grand Total to be Charged')); ?></th>
+                                            <td class="amount" data-th="<?= $escaper->escapeHtml(__('Grand Total to be Charged')); ?>">
+                                                <span class="price"><?= /* @noEscape */ $order->getBaseCurrency()->formatTxt($order->getBaseGrandTotal()); ?></span>
+                                            </td>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+
+                        <div class="back-btn">
+                            <a href=""><?= $escaper->escapeHtml(__('Back to Track Order')); ?></a>
+                        </div>
+
+                        <?php $reasonData = $block->getReasonData(); ?>
+
+                        <!-- order return api -->
+                        <form id="form_referbox"
+                              action="<?= $escaper->escapeUrl($block->getUrl('orderreturn/index/post')); ?>"
+                              data-mage-init='{"validation": {}}'
+                              class="referbox-form-custom"
+                              method="POST"
+                              enctype="multipart/form-data">
+                            <div class="return-<?= $escaper->escapeHtmlAttr($block->getOrderIncrementId()); ?> modal order-return-modal">
+                                <div class="modal-content">
+                                    <span class="close">&times;</span>
+                                    <div id="result-return"></div>
+                                    <div id="loader-return" style="display:none;">loading</div>
+                                    <input type="hidden" name="customer_email"
+                                           value="<?= $escaper->escapeHtmlAttr($order->getCustomerEmail()); ?>">
+                                    <input type="hidden" name="website"
+                                           value="<?= $escaper->escapeHtmlAttr($block->getBaseUrl()); ?>">
+                                    <input type="hidden" name="order_id"
+                                           value="<?= $escaper->escapeHtmlAttr($block->getOrderIncrementId()); ?>">
+                                    <input type="hidden" name="type" value="return">
+                                    <input type="hidden" name="lang_code"
+                                           value="<?= $escaper->escapeHtmlAttr($block->getStore()->getCode()); ?>">
+                                    <input type="hidden" name="product_sku" id="return-item-sku" value="">
+                                    <div class="form-data">
+                                        <?php if (!empty($reasonData)): ?>
+                                            <select name="reason" class="choose-reason" required>
+                                                <option><?= $escaper->escapeHtml(__('Reason to Return')); ?></option>
+                                                <?php foreach ($reasonData as $reason): ?>
+                                                    <?php if (!empty($reason['reason_data'])): ?>
+                                                        <option value="<?= $escaper->escapeHtmlAttr($reason['reason_data']); ?>">
+                                                            <?= $escaper->escapeHtml($reason['reason_data']); ?>
+                                                        </option>
+                                                    <?php endif; ?>
+                                                <?php endforeach; ?>
+                                            </select>
+                                            <input type="submit" value="Return Item" name="submit" class="submit-return">
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        <script type="text/x-magento-init">
+                            {
+                                "*": {
+                                    "Magento_Theme/js/track-order/return": {
+                                    }
+                                }
+                            }
+                        </script>
+                        <!-- order return api end -->
+                    </div>
+                <?php else: ?>
+                    <div class="order-title-block">
+                        <div class="contentBlock">
+                            <div class="block-title">
+                                <?= /* @noEscape */ __('No order found'); ?>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>

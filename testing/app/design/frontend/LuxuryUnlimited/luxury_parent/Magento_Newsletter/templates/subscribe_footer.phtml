@@ -1,0 +1,92 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+$_helper = $this->helper('Smartwave\Porto\Helper\Data');
+
+$title = $_helper->getConfig('porto_settings/footer/footer_newsletter_title');//"Be the First to Know";
+$sub_title = $_helper->getConfig('porto_settings/footer/footer_newsletter_text');//"Get all the latest information on Events,<br>Sales and Offers. Sign up for newsletter today.";
+$ddHelper = $this->helper("\Dynamic\HomepageApi\Helper\Data");
+
+$storeManager  = $ddHelper->getStoreManager();
+$storeID       = $storeManager->getStore()->getStoreId();
+$storeName     = $storeManager->getStore()->getName();
+$storeCode = $storeManager->getStore()->getCode();
+
+$siteUrl = $_helper->getBaseLinkUrl();
+?>
+<div class="block newsletter test">
+    <div class="block-content content">
+        <div id="result-newsletter"></div>
+        <div id="loader-newsletter" style="display:none;">loading</div>
+        <div class="newslatter-content">
+            <div class="newslater-message">
+                <?php echo __($sub_title); ?>
+            </div>
+            <div class="form subscribe">
+                <div class="field newsletter">
+                    <label class="label" for="footer_newsletter"><span><?php echo __('Sign Up for Our Newsletter:') ?></span></label>
+                    <div class="control">
+                        <input name="email" placeholder="<?php echo __('Sign Up for Our Newsletter') ?>" type="email" id="footer_newsletter"
+                               data-validate="{required:true, 'validate-email':true}"/>
+                    </div>
+                </div>
+                <div class="actions">
+                    <button class="action subscribe primary" title="<?php echo __('Subscribe') ?>">
+                        <span class="sub-bttn"><?php echo __('Subscribe') ?></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    require(['jquery'], function($){
+        $(document).ready(function() {
+            var fileUrl = '<?php echo $siteUrl ?>newsletter/subscriber/new';
+            var storeName = '<?php echo $storeCode ?>';
+            $('.actions .subscribe').click(function(){
+                var custEmail = $("#footer_newsletter").val();
+                if(custEmail == ''){
+                    $("#result-newsletter").text('Email is required');
+                    $('#result-newsletter').delay(3000).fadeOut(800);
+                }
+                else{
+                    // console.log(email);
+                    $("#result-newsletter").text('').css({"display":"block"});
+                    $.ajax({
+                        url: fileUrl,
+                        type: "POST",
+                        data: {
+                            email: custEmail
+                        },
+                        dataType: "JSON",
+                        beforeSend: function() {
+                            $('span.sub-bttn').empty();
+                            $("span.sub-bttn").addClass("news-loading").removeClass("sub-bttn");
+                        },
+                        success: function (jsonStr) {
+                            var message = jsonStr['message'];
+                            console.log(message);
+                            $("span.news-loading").addClass("sub-bttn").removeClass("news-loading");
+                            $("span.sub-bttn").text("Subscribe");
+                            $("#result-newsletter").text(message);
+                            $('#result-newsletter').delay(8000).fadeOut(800);
+                        },
+                        error: function(data) {
+                            $("span.news-loading").addClass("sub-bttn").removeClass("news-loading");
+                            $("#result-newsletter").text("Please try after some time");
+                        }
+                    });
+                }
+            });
+        });
+    });
+</script>

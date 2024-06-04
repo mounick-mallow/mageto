@@ -1,0 +1,144 @@
+// /**
+//  * Copyright © 2015 Magento. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//  Common
+//  ---------------------------------------------
+
+& when (@media-common = true) {
+    .track-order-login {
+        .track-order-element {
+            background: @theme__secondary--color-50;
+        }
+
+        .fieldset {
+            padding-bottom: @indent__s;
+
+            h2 {
+                background: @theme__territory--color-500;
+                padding: 12px @indent__s;
+            }
+
+            .field {
+                &.note {
+                    max-width: 357px;
+                    margin: 0 auto 10px;
+                    text-align: center;
+                }
+            }
+
+            .field,
+            .actions-toolbar {
+                padding: 0 @indent__s;
+                width: 100%;
+            }
+
+            .actions-toolbar {
+                .secondary {
+                    .lib-css(justify-content, center, @_prefix: 1);
+
+                    a {
+                        text-decoration: underline;
+                    }
+                }
+
+                .primary {
+                    .action {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+
+    // Track Order Modal (popup)
+    .modal-track-order {
+        .modal-inner-wrap {
+            max-width: 640px;
+        }
+
+        .track-order-progress {
+            background: @theme__territory--white;
+            border: none;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .track-order-help {
+            .lib-vendor-prefix-flex-direction ();
+        }
+    }
+
+    .modal-track-help {
+        .field.create-ticket {
+            text-align: center;
+        }
+
+        #create-ticket {
+            background: @theme__primary--color-500;
+            color: @theme__territory--white;
+        }
+    }
+}
+
+//
+//  Desktop
+//  ---------------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__s) {
+    .track-order-login {
+        .track-order-widget {
+            .fieldset {
+                padding-bottom: 24px;
+
+                h2 {
+                    padding: 16.5px @indent__l;
+                }
+
+                .field,
+                .actions-toolbar {
+                    padding-left: 24px;
+                    padding-right: 24px;
+                }
+            }
+        }
+    }
+}
+
+& when (@media-target = 'desktop'), (@media-target = 'all') {
+    @media all and (min-width: 576px), print {
+        .modal-track-order {
+            .track-order-progress {
+                padding: @indent__l 0;
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  ---------------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum ='max')
+    and
+    (@break = @screen__m) {
+    .modal-popup.modal-slide.modal-track-help,
+    .modal-popup.modal-slide.modal-track-reference {
+        .modal-inner-wrap {
+            background: transparent;
+            padding: @indent__s;
+
+            .modal-content {
+                background: @theme__secondary--color-50;
+            }
+        }
+    }
+}

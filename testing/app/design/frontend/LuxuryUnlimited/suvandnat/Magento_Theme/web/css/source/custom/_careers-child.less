@@ -1,0 +1,91 @@
+//
+//  Common
+//  ---------------------------------------------
+
+& when (@media-common = true) {
+    .careers-content {
+        &:extend(.abs-add-clearfix all);
+
+        .careers-content-img {
+            margin-bottom: @indent__xl;
+
+            img {
+                width: 100%;
+            }
+        }
+
+        .careers-content-left {
+            margin-bottom: 68px;
+        }
+    }
+
+    .careers-wrap {
+        .careers-form-wrap {
+            .careers-form-title {
+                text-align: center;
+            }
+
+            .careers-form {
+                background-color: @theme__secondary--color-50;
+
+                .fieldset {
+                    margin: 0 0 26px;
+                }
+
+                .actions-toolbar {
+                    > .primary {
+                        width: 100%;
+
+                        .action.primary {
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+
+        .careers-search {
+            .careers-search-list {
+                ul.careers-items {
+                    > li {
+                        .careers-item-info {
+                            box-shadow: 3px 3px 0 0 @theme__secondary--color-50;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__m) {
+    .careers-content {
+        .careers-content-left {
+            float: right;
+            width: 41.666666666666664%;
+        }
+
+        .careers-content-img {
+            float: left;
+            width: 55.55555555555556%;
+        }
+    }
+
+    .careers-wrap {
+        .careers-search {
+            width: 48.611111111111114%;
+        }
+
+        .careers-form-wrap {
+            width: 48.611111111111114%;
+        }
+    }
+}

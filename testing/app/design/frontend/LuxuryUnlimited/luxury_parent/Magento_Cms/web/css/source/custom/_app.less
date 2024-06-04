@@ -1,0 +1,321 @@
+//
+//  APP - CMS Page Styles
+//  _____________________________________________
+
+//  App Page Variables
+@app-tabs-container__background: transparant;
+@app-tabs-container__padding: 0;
+@app-tabs-container__border-radius: 0;
+@app-tabs-tab__border: 1px solid @color-yellow-light1;
+@app-tabs-tab__color: @color-gray52;
+@app-tabs-tab__font-size: 16;
+@app-tabs-tab__font-weight: @font-weight__bold;
+@app-tabs-tab-active__border: 1px solid @theme__primary--color;
+@app-tabs-tab-active__color: @theme__primary--color;
+@app-tabs-tab__padding: @indent__s @indent__xs;
+@app-tabs-data__border: 1px solid @color-yellow-light1;
+@app-tabs-data__padding: @indent__m 0;
+@app-tabs-data__font-size: 20;
+@app-tabs-data__color: @color-gray52;
+
+@app-subscribe-form__height: 40px;
+@app-subscribe-button__background: @theme__primary--color;
+@app-subscribe-button__color: @color-white;
+@app-subscribe-button__font-size: 16;
+@app-subscribe-button__border-radius: 0;
+@app-subscribe-button__padding: 0 20px;
+@app-subscribe-button__min-width: 92px;
+@app-subscribe-button__text-align: center;
+@app-subscribe-title__font-size: 24px;
+@app-subscribe-title__color: @app-reasons-subtitle__color;
+@app-subscribe-title__font-weight: @font-weight__extrabold;
+@app-subscribe-title__font-family: @custom-secondary-font-family;
+@app-subscribe-subtitle__font-size: 16px;
+@app-subscribe-subtitle__font-weight: @font-weight__semibold;
+@app-subscribe-subtitle__color: @app-reasons-description__color;
+@app-subscribe-subtitle__font-family: @custom-secondary-font-family;
+
+@app-reasons-title__color: @theme-color-gray_dark;
+@app-reasons-title__font-size: 20;
+@app-reasons-title__font-family: @custom-secondary-font-family;
+@app-reasons-title__font-weight: @font-weight__semibold;
+@app-reasons-title__margin: 0;
+@app-reasons-subtitle__color: @color-gray20;
+@app-reasons-subtitle__font-family: @custom-secondary-font-family;
+@app-reasons-subtitle__font-size: 16;
+@app-reasons-subtitle__font-weight: @font-weight__bold;
+@app-reasons-description__color: @color-gray52;
+@app-reasons-description__font-size: 16;
+@app-reasons-description__font-weight: @font-weight__heavier;
+@app-reasons-block__background: transparent;
+@app-reasons-block-second__background: transparent;
+@app-reasons-block-third__background: transparent;
+@app-reasons-block__border-radius: 3px;
+@app-reasons-block__border: 0px solid @color-yellow-light1;
+@app-reasons-block__padding: 0 @indent__m @indent__m;
+@app-reasons-block__margin: 0 0 8px;
+@app-reasons-block__box-shadow: 0;
+@app-reasons-icon-wrapper__height: 110px;
+@app-reasons-icon-wrapper__width: 110px;
+@app-reasons-icon-wrapper__border: 1px solid @color-yellow-light1;
+@app-reasons-icon-wrapper__background: @color-white;
+@app-reasons-icon__height: 40px;
+@app-reasons-icon__width: 40px;
+@app-reasons-middle-wraper__border: 1px dashed @color-yellow-light1;
+
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .app-page-wraper {
+        & > .container {
+            padding: 0;
+        }
+
+        & > .container > .row {
+            .lib-vendor-prefix-display(flex);
+        }
+
+        .app-top-media {
+            text-align: center;
+
+            & > picture img {
+                .lib-css(margin-bottom, @indent__xs);
+            }
+        }
+
+        .app-top-left-wrapper {
+            h4 {
+                color: @app-subscribe-subtitle__color;
+                .lib-font-size(@app-subscribe-subtitle__font-size);
+                font-family: @app-subscribe-subtitle__font-family;
+                margin: @indent__xs auto @indent__m;
+                font-weight: @app-subscribe-subtitle__font-weight;
+
+                &:first-child {
+                    color: @app-subscribe-title__color;
+                    font-family: @app-subscribe-title__font-family;
+                    .lib-font-size(@app-subscribe-title__font-size);
+                    margin-bottom: @indent__xs;
+                    font-weight: @app-subscribe-title__font-weight;
+                }
+            }
+        }
+
+        .toptab {
+            background: @app-tabs-container__background;
+            border-radius: @app-tabs-container__border-radius;
+            padding: @app-tabs-container__padding;
+
+            & > ul {
+                .lib-vendor-prefix-display(flex);
+                margin: 0;
+                padding: 0;
+                position: relative;
+                list-style: none;
+                margin-bottom: -1px;
+                z-index: 1;
+
+                li.tab-switcher {
+                    color: @app-tabs-tab__color;
+                    border-bottom: @app-tabs-tab__border;
+                    .lib-font-size(@app-tabs-tab__font-size);
+                    font-weight: @app-tabs-tab__font-weight;
+                    padding: @app-tabs-tab__padding;
+                    margin: 0 0 0 20px;
+
+                    &:first-child {
+                        margin-left: 0;
+                    }
+
+                    &.active,
+                    &:hover {
+                        color: @app-tabs-tab-active__color;
+                        border-bottom: @app-tabs-tab-active__border;
+                    }
+                }
+            }
+            & > div {
+                border-top: @app-tabs-data__border;
+                padding: @app-tabs-data__padding;
+
+                .tab-container {
+                    .lib-font-size(@app-tabs-data__font-size);
+                    color: @app-tabs-data__color;
+                    .lib-line-height(24);
+
+                    .newsl {
+                        margin-top: @indent__m;
+                    }
+                }
+            }
+        }
+
+        .app-subscribe {
+            .lib-vendor-prefix-display(flex);
+            align-items: start;
+            justify-content: start;
+
+            & > input[type='text'] {
+                height: @app-subscribe-form__height;
+                margin-bottom: @indent__xs;
+            }
+
+            .sub-bttn {
+                color: @app-subscribe-button__color;
+                background: @app-subscribe-button__background;
+                border-radius: @app-subscribe-button__border-radius;
+                .lib-font-size(@app-subscribe-button__font-size);
+                height: @app-subscribe-form__height;
+                .lib-line-height(@app-subscribe-form__height);
+                padding: @app-subscribe-button__padding;
+                min-width: @app-subscribe-button__min-width;
+                text-align: @app-subscribe-button__text-align;
+
+                display: inline-block;
+                cursor: pointer;
+            }
+        }
+    }
+
+    .app-middle-wraper {
+        border-bottom: @app-reasons-middle-wraper__border;
+        border-top: @app-reasons-middle-wraper__border;
+        padding-top: @indent__xl;
+        padding-bottom: 0;
+
+        .container {
+            padding: 0;
+
+            h2 {
+                color: @app-reasons-title__color;
+                .lib-font-size(@app-reasons-title__font-size);
+                font-weight: @app-reasons-title__font-weight;
+                font-family: @app-reasons-title__font-family;
+                margin: @app-reasons-title__margin;
+                text-align: center;
+            }
+
+            .row {
+                .lib-vendor-prefix-display(flex);
+                justify-content: space-between;
+                text-align: center;
+
+                .col-md-4 {
+                    background: @app-reasons-block__background;
+                    border-radius: @app-reasons-block__border-radius;
+                    box-shadow: @app-reasons-block__box-shadow;
+                    border: @app-reasons-block__border;
+                    margin: @app-reasons-block__margin;
+                    padding: @app-reasons-block__padding;
+                    flex-basis: 100%;
+
+                    h3 {
+                        .lib-font-size(@app-reasons-subtitle__font-size);
+                        color: @app-reasons-subtitle__color;
+                        font-weight: @app-reasons-subtitle__font-weight;
+                        font-family: @app-reasons-subtitle__font-family;
+                        margin: 20px auto;
+                    }
+
+                    p {
+                        .lib-font-size(@app-reasons-description__font-size);
+                        color: @app-reasons-description__color;
+                        font-weight: @app-reasons-description__font-weight;
+                    }
+
+                    &:nth-child(2n) {
+                        background: @app-reasons-block-second__background;
+                    }
+
+                    &:nth-child(3n) {
+                        background: @app-reasons-block-third__background;
+                    }
+                }
+
+                .middle-icon-wraper {
+                    background: @app-reasons-icon-wrapper__background;
+                    border: @app-reasons-icon-wrapper__border;
+                    height: @app-reasons-icon-wrapper__height;
+                    width: @app-reasons-icon-wrapper__width;
+                    .lib-css(border-radius, 50%, 1);
+                    .lib-vendor-prefix-display(flex);
+                    align-items: center;
+                    justify-content: center;
+                    margin: 30px auto;
+
+                    & > picture {
+                        .lib-css(height, @app-reasons-icon__height);
+                        .lib-css(width, @app-reasons-icon__width);
+                        .lib-vendor-prefix-display(flex);
+                        align-items: center;
+                    }
+                }
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  ---------------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum ='max')
+    and
+    (@break = @screen__m) {
+    .app-page-wraper {
+        & > .container > .row {
+            .lib-css(flex-direction, column-reverse, @_prefix: 1);
+        }
+    }
+
+    .app-middle-wraper {
+        .container {
+            .row {
+                .lib-css(flex-direction, column, @_prefix: 1);
+            }
+        }
+    }
+}
+
+//
+//  Desktop
+//  ---------------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum ='min')
+    and
+    (@break = @screen__m) {
+    .app-page-wraper {
+        & > .container > .row {
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+
+            & > * {
+                flex-basis: 50%;
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum ='min')
+    and
+    (@break = @screen__l) {
+    .app-middle-wraper {
+        .container {
+            .row {
+                flex-direction: row;
+
+                .col-md-4 {
+                    flex-basis: 32%;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,33 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .modals-wrapper {
+        .modal-popup.priceMatchModal._inner-scroll {
+            .modal-inner-wrap {
+                .modal-content {
+                    border-radius: 0 0 @indent__base @indent__base;
+                }
+            }
+
+            .modal-header {
+                border-radius: @indent__base @indent__base 0 0;
+            }
+
+            label {
+                .lib-font-size(@font-size__l);
+            }
+
+            .field.actions.required.spBtn.width-100 {
+                text-align: center;
+            }
+
+            input.valid,
+            select.valid,
+            textarea.valid {
+                color: @price-match-popup__content-color;
+            }
+        }
+    }
+}

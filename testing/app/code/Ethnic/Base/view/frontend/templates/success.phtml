@@ -1,0 +1,42 @@
+<?php
+/**
+ * Ethnic_Base
+ *
+ * @copyright   Copyright (c) 2023 IdeaInYou
+ * @author      RuslanP <ruslan.p@ideainyou.com>
+ */
+use Ethnic\Base\ViewModel\Success;
+use Magento\Framework\Escaper;
+use Magento\Framework\View\Element\Template;
+
+/**
+ * @var $escaper Escaper
+ * @var $block Template
+ * @var $successViewModel Success
+ */
+
+$successViewModel = $block->getSuccessViewModel();
+?>
+<div class="success-div">
+    <h2><?= /* @noEscape */ __('Forget Your Password?'); ?></h2>
+    <p>
+
+    <?php $params = $successViewModel->getEmail(); ?>
+    <?php if (isset($params['email'])): ?>
+        <?= $escaper->escapeHtml(
+            __(
+                'If there is an account associated with ( %1 )
+                 we will send you an email with a instructions to
+                  reset your password. if you need any further assistance pls',
+                $successViewModel->decodeUrl($params['email'])
+            )
+        ); ?>
+    <?php endif; ?>
+    </p>
+    <a href=" <?= $escaper->escapeHtmlAttr($escaper->escapeUrl($block->getBaseUrl())); ?>">
+        <?= /* @noEscape */ __('CONTINUE SHOPPING')?>
+    </a>
+    <a href="<?= $escaper->escapeHtmlAttr($escaper->escapeUrl($block->getUrl('customer/account/login'))); ?>">
+        <?= /* @noEscape */ __('BASE TO SIGN IN SCREEN')?>
+    </a>
+</div>

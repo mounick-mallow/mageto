@@ -1,0 +1,58 @@
+//
+//  Common
+//  ---------------------------------------------
+
+& when (@media-common = true) {
+    .customer-account-index {
+        .page-wrapper {
+            .page-title-wrapper {
+                .page-title {
+                    color: @custom__color-black;
+                }
+            }
+        }
+    }
+
+    .block {
+        .title {
+            strong {
+                color: @custom__color-gray1;
+            }
+        }
+    }
+
+    .customer-account-index {
+        .block {
+            .block-title {
+                color: @color-gray20;
+                strong {
+                    .lib-font-size(16);
+                    line-height: @indent__l;
+                    font-weight: @font-weight__semibold;
+                    color: @color-black;
+                }
+                a.action.edit {
+                    font-size: @font-size__s;
+                    .lib-line-height(19);
+                    text-transform: capitalize;
+                    text-decoration: underline;
+                    font-weight: @font-weight__heavier;
+                    border: none;
+                    color: @custom__color-black;
+                    padding: 0;
+                }
+            }
+        }
+    }
+
+    .block {
+        .title {
+            strong {
+                font-size: @font-size__base;
+                margin: 0;
+                .lib-line-height(23);
+                font-weight: @font-weight__heavier;
+            }
+        }
+    }
+}

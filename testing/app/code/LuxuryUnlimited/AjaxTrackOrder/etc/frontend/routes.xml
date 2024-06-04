@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * LuxuryUnlimited_AjaxTrackOrder
+ *
+ * @copyright   Copyright (c) 2023
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
+    <router id="standard">
+        <route id="ajaxordertrack" frontName="ajaxordertrack">
+            <module name="LuxuryUnlimited_AjaxTrackOrder" />
+        </route>
+    </router>
+</config>

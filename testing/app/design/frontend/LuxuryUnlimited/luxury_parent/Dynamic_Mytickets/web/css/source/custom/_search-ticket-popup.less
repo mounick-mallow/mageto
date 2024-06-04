@@ -1,0 +1,127 @@
+// /**
+//  * Copyright © Magento, Inc. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .search-request-modal {
+        .create-search-text {
+            text-align: center;
+        }
+
+        .form.contact .fieldset {
+            padding: 0;
+            border: none;
+        }
+
+        .fieldset > .fields {
+            gap: 15px;
+            width: 98%;
+            margin: 0 auto 0;
+        }
+
+        .field {
+            position: relative;
+
+            .specialgenderbox {
+                position: absolute;
+                width: 80px;
+
+                .specialgender {
+                    width: 80px;
+                    padding: 0 @indent__xs 0 16px;
+                    border: 0;
+                    border-radius: 0;
+                    box-shadow: none;
+                    background-color: transparent;
+
+                    option {
+                        color: @color-black;
+                    }
+                }
+
+                &:after {
+                    content: '';
+                    background: @color-gray_light;
+                    height: 22px;
+                    width: 1px;
+                    display: inline-block;
+                    position: absolute;
+                    right: 10px;
+                    top: ~'calc(50% - 11px)';
+                }
+            }
+            .special-number-dropdown {
+                position: absolute;
+                width: 74px;
+                padding-left: 17px;
+
+                &::after {
+                    content: '';
+                    background: @color-gray_light;
+                    height: 22px;
+                    width: 1px;
+                    display: inline-block;
+                    position: absolute;
+                    right: 5px;
+                    top: 50%;
+                    top: ~'calc(50% - 11px)';
+                }
+
+                select#specialcountry {
+                    padding: 0 @indent__xs 0 16px;
+                    border-left: 0;
+                    border-right: 0;
+                    text-indent: -9999px;
+                    border-radius: 0;
+                    overflow: hidden;
+                    margin-top: 0;
+                    box-shadow: none;
+                    background-color: transparent;
+
+                    option {
+                        color: @color-black;
+                    }
+                }
+
+                .selected-flag {
+                    position: absolute;
+                    top: ~'calc(50% - 12px)';
+                    pointer-events: none;
+                }
+            }
+
+            &.name,
+            &.phone {
+                .input-text {
+                    padding-left: 80px;
+                }
+            }
+        }
+
+        .modal-footer {
+            display: none; // hide modal footer
+        }
+    }
+
+    .coupon-ticket {
+        .modal-footer {
+            .lib-vendor-prefix-display(flex);
+            justify-content: center;
+            gap: 20px;
+
+            button {
+                margin: 0;
+            }
+        }
+    }
+
+    .coupon-ticket-modal,
+    .coupon-error-modal {
+        display: none;
+    }
+}

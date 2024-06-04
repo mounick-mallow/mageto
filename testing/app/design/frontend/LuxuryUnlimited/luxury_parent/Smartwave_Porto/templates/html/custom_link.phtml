@@ -1,0 +1,6 @@
+<?php
+$porto_helper = $this->helper('Smartwave\Porto\Helper\Data');
+$_loggedin = $this->helper('Magento\Checkout\Helper\Cart')->getCart()->getCustomerSession()->isLoggedIn();
+if ($_loggedin == true) {  ?>
+    <li><a href="<?= $block->escapeUrl($porto_helper->getBaseLinkUrl()) ?>customer/account/"><?= /* @noEscape */ __('My Account'); ?></a></li>
+<?php } ?>

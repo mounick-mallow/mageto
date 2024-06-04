@@ -1,0 +1,243 @@
+// /**
+//  * Copyright © Magento, Inc. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .table-wrapper {
+        border: @table-custom__border-width @table-custom__border-style
+            @table-custom__border-color;
+        border-radius: @table-custom__border-radius;
+        overflow: hidden;
+        padding: @table-custom__inner-padding;
+        margin-bottom: @table-custom__bottom-space;
+    }
+
+    table {
+        .lib-table-caption();
+    }
+
+    .table {
+        thead {
+            > tr {
+                th,
+                td {
+                    background-color: @table-custom__th-background;
+                    font-size: @table-custom__th-font-size;
+                    font-weight: @table-custom__th-font-weight;
+                    color: @table-custom__th-color;
+                    padding: @table-custom__th-padding;
+
+                    &:first-child {
+                        padding-left: @table-custom__th-extra-padding;
+                    }
+                    &:last-child {
+                        padding-right: @table-custom__th-extra-padding;
+                    }
+                }
+            }
+        }
+
+        tbody {
+            > tr {
+                td {
+                    background-color: @table-custom__td-background;
+                    font-size: @table-custom__td-font-size;
+                    color: @table-custom__td-color;
+                    padding: @table-custom__td-padding;
+                    border-color: @table-custom__row-border-color;
+                    border-style: @table-custom__row-border-style;
+                    border-width: @table-custom__row-border-width;
+
+                    &:first-child {
+                        padding-left: @table-custom__td-extra-padding;
+                    }
+                    &:last-child {
+                        padding-right: @table-custom__td-extra-padding;
+                    }
+                }
+            }
+        }
+
+        tfoot {
+            .lib-css(background, @sidebar__background-color);
+            > tr {
+                &:first-child {
+                    th,
+                    td {
+                        border-top: @table__border-width @table__border-style
+                            @table__border-color;
+                        padding-top: @indent__base;
+                    }
+                }
+            }
+
+            th,
+            td {
+                border: 0;
+            }
+
+            .mark {
+                font-weight: @font-weight__regular;
+                text-align: right;
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    .table-wrapper {
+        //
+        .lib-table-overflow();
+        position: relative; // To hide unnecessary horizontal scrollbar in Safari
+
+        .table:not(.totals):not(.cart):not(.table-comparison) {
+            .lib-table-responsive();
+
+            tbody {
+                > tr {
+                    > td:first-child {
+                        padding-top: 15px;
+                    }
+
+                    > td:last-child {
+                        border-bottom: @table-custom__border-width
+                            @table-custom__border-style
+                            @table-custom__border-color;
+                        padding-bottom: 15px;
+                    }
+
+                    > td.col.qty {
+                        text-align: left;
+                    }
+
+                    > td.col.actions {
+                        padding-left: 16px;
+                        text-align: center;
+                        .lib-css(justify-content, flex-end, @_prefix: 1);
+
+                        &:before {
+                            display: none;
+                        }
+                    }
+
+                    > td[data-th],
+                    > th[data-th] {
+                        .lib-vendor-prefix-display(flex);
+                        .lib-css(justify-content, space-between, @_prefix: 1);
+                        text-align: right;
+                        width: 100%;
+
+                        &:before {
+                            font-size: @table-custom__th-font-size;
+                            font-weight: @table-custom__th-font-weight;
+                            color: @table-custom__th-color;
+                            text-align: left;
+                        }
+                    }
+                }
+            }
+
+            &.additional-attributes {
+                tbody {
+                    th {
+                        &:extend(.abs-no-display-s all);
+                    }
+
+                    td {
+                        &:last-child {
+                            border: none;
+                            padding: 0 0 @indent__xs;
+                        }
+                    }
+                }
+            }
+        }
+
+        .table:not(.totals):not(.table-comparison) {
+            tfoot {
+                display: block;
+
+                tr {
+                    display: block;
+
+                    &:extend(.abs-add-clearfix-mobile all);
+                    &:first-child {
+                        th,
+                        td {
+                            padding-top: @indent__base;
+                        }
+                    }
+                }
+
+                .mark {
+                    box-sizing: border-box;
+                    float: left;
+                    text-align: left;
+                    width: 70%;
+                }
+
+                .amount {
+                    box-sizing: border-box;
+                    float: left;
+                    text-align: right;
+                    width: 30%;
+                }
+
+                .grand.totals {
+                    .lib-font-size(16);
+                    .amount {
+                        padding-bottom: @indent__s;
+                    }
+                }
+            }
+        }
+    }
+
+    .data-table-definition-list {
+        thead {
+            display: none;
+        }
+
+        tbody th {
+            padding-bottom: 0;
+        }
+
+        tbody {
+            th,
+            td {
+                display: block;
+                padding-left: 0;
+                padding-right: 0;
+            }
+        }
+    }
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__m) {
+    .table {
+        .lib-table-bordered(
+            @_table_type: horizontal_body
+        );
+    }
+}

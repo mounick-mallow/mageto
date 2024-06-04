@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * LuxuryUnlimited_GoogleAnalytics
+ *
+ * @copyright   Copyright (c) 2023
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="head.additional">
+            <block class="LuxuryUnlimited\GoogleAnalytics\Block\Product\View" name="ga.product.view.js"
+                   template="LuxuryUnlimited_GoogleAnalytics::js/script.phtml" after="-"/>
+        </referenceContainer>
+    </body>
+</page>

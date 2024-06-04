@@ -1,0 +1,25 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common =true) {
+    .my-account-coupons {
+        table {
+            tr {
+                td {
+                    &.col {
+                        &.actions {
+                            a.action.primary {
+                                .lib-button-reset();
+                                .lib-font-size(14);
+                                color: @theme__primary--color-26;
+                                font-weight: @font-weight__bold;
+                                text-decoration: underline;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

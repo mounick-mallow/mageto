@@ -1,0 +1,59 @@
+<?php
+$baseUrl = $block->getBaseUrl();
+$_helper = $this->helper('Smartwave\Porto\Helper\Data');
+$imageUrl = $_helper->getBaseUrl();
+$supportEmail = $_helper->getConfig('trans_email/ident_support/email')
+?>
+<div class="need-help-container">
+  <div class="top-banner"><img src="https://dummyimage.com/1700x300/b8e0f1/000000.jpg"/></div>
+  <div class="help-acc-content">
+    <ul>
+      <li>
+        <div class="help-icon-con">
+          <i class="icon-icon-add-to-cart"></i>
+        </div>
+        <a href="<?= $block->escapeUrl($baseUrl.'faqs?q=#shopPlaceOrder') ?>"><?= /* @noEscape */ __('How to shop & place an order?') ?></a>
+      </li>
+      <li>
+        <div class="help-icon-con">
+          <i class="icon-icon-credit-card"></i>
+        </div>
+        <a href="<?= $block->escapeUrl($baseUrl.'faqs?q=#pricing') ?>"><?= /* @noEscape */ __('Avoirchic pricing & payment') ?></a>
+      </li>
+      <li>
+        <div class="help-icon-con">
+          <i class="icon-icon-on-hold"></i>
+        </div>
+        <a href="<?= $block->escapeUrl($baseUrl.'faqs?q=#availabilityAuthenticity') ?>"><?= /* @noEscape */ __('Product availability & authenticity') ?></a>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <div class="help-icon-con">
+          <i class="icon-icon-shopping"></i>
+        </div>
+        <a href="<?= $block->escapeUrl($baseUrl.'faqs?q=#shippingTaxes') ?>"><?= /* @noEscape */ __('Shipping, taxes & duties') ?></a>
+      </li>
+      <li>
+        <div class="help-icon-con">
+          <i class="icon-icon-return"></i>
+        </div>
+        <a href="<?= $block->escapeUrl($baseUrl.'faqs?q=#returnsRefunds') ?>"><?= /* @noEscape */ __('Returns & refunds') ?></a>
+      </li>
+      <li>
+        <div class="help-icon-con">
+          <i class="icon-icon-radio"></i>
+        </div>
+        <a href="<?= $block->escapeUrl($baseUrl.'faqs?q') ?>"><?= /* @noEscape */ __('International') ?></a>
+      </li>
+    </ul>
+  </div>
+  <div class="help-text-content">
+    <h3><?= /* @noEscape */ __('NEED MORE INFORMATION?') ?></h3>
+    <p><?= /* @noEscape */ __('Whatever your query, use the contact form below to click') ?></p>
+    <a href="<?= $block->escapeUrl($baseUrl.'contact-us') ?>" class="cont-btn"><?= /* @noEscape */ __('GET IN TOUCH') ?></a>
+    <p class="help-or"><?= /* @noEscape */ __('OR') ?></p>
+    <p><?= /* @noEscape */ __('Send us a Email at') ?></p>
+    <a href="mailto:<?= $block->escapeHtml($supportEmail) ?>" class="email-btn"><?= $block->escapeHtml($supportEmail) ?></a>
+  </div>
+</div>

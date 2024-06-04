@@ -1,0 +1,157 @@
+<?php /** @var $block \LuxuryUnlimited\Checkout\Block\Onepage\Success\Order\Info */ ?>
+<?php $_order = $block->getOrder(); ?>
+<div class="block block-order-details-view">
+    <div class="block-content">
+        <div class="box box-order-date">
+            <strong class="box-title"><span><?=/* @noEscape */ __('Order Date :') ?></span></strong>
+            <div class="box-content-order">
+                <span><?= /* @noEscape */ $block->getConvertedDate($_order->getCreatedAt()) ?></span>
+            </div>
+        </div>
+        <div class="box box-order-date">
+            <strong class="box-title"><span><?= /* @noEscape */ __('Expected Shipment Date :') ?></span></strong>
+            <div class="box-content-order">
+                <span><?= /* @noEscape */ $block->getExpectedShipmentDate($_order) ?></span>
+            </div>
+        </div>
+        <div class="box box-order-date">
+            <div class="box-content-order">
+                <button href="javascript:void(0);" class="order-status-popup"
+                   order-content-id="<?= $block->escapeJs($_order->getId()) ?>">
+                    <span><?= /* @noEscape */ __('Track Order') ?></span>
+                </button>
+                <?php $orderStatus = $block->getOrderStatusList($_order); ?>
+                <?php if (!empty($orderStatus) && count($orderStatus) > 0): ?>
+                    <div class="order-status-modal"
+                         id="order-status-model-<?= $block->escapeHtmlAttr($_order->getId()) ?>"
+                         style="display: none;"
+                    >
+                        <div class="modal-content modal-inner-content">
+                            <strong><?php echo __('Track Order'); ?></strong>
+                            <div class="modal-progress-bar">
+                                <div class="card card-timeline">
+                                    <div style="display:none">
+                                        <span class="order-inc-no">
+                                            <?= /* @noEscape */ $_order->getIncrementId()?>
+                                        </span>
+                                        <span class="order-customer-email">
+                                            <?= /* @noEscape */ $_order->getCustomerEmail()?>
+                                        </span>
+                                        <span class="order-customer-id">
+                                            <?= /* @noEscape */ $_order->getCustomerId()?>
+                                        </span>
+                                    </div>
+                                    <ul class="order-tracking-steps">
+                                        <?php $i = 1; ?>
+                                        <?php foreach ($orderStatus as $statusData): ?>
+                                            <?php
+                                                $statusActive = isset($statusData['status_date']) ? 'active' : '';
+                                            ?>
+                                            <li class="step <?= /* @noEscape */ $statusActive; ?>">
+                                                <div><?= $block->escapeHtml($i) ?></div>
+                                                <span><?= $block->escapeHtml($statusData['status_title']) ?></span>
+                                                <?php if (isset($statusData['status_date'])): ?>
+                                                    <p><?= $block->escapeHtml($statusData['status_date']) ?></p>
+                                                <?php endif; ?>
+                                            </li>
+                                            <?php $i++; ?>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                </div>
+                                <div class="main-information track-order-help">
+                                    <?= /* @noEscape */__('Have you any query?')?>
+                                    <a class="need-help"
+                                       id="order-status-help-<?= /* @noEscape */ $_order->getIncrementId()?>"
+                                       href="javascript:void(0)"><?= /* @noEscape */ __('Need help.')?></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+        <div class="box-order-addresses">
+            <?php if (!$_order->getIsVirtual()): ?>
+                <div class="box box-order-shipping-address">
+                    <strong class="box-title"><span><?= /* @noEscape */ __('Shipping Address') ?></span></strong>
+                    <div class="box-content">
+                        <address><?= /* @noEscape */ $block->getFormattedAddress($_order->getShippingAddress()) ?></address>
+                    </div>
+                </div>
+            <?php endif; ?>
+
+            <div class="box box-order-billing-address">
+                <strong class="box-title">
+                    <span><?= /* @noEscape */ __('Billing Address') ?></span>
+                </strong>
+                <div class="box-content">
+                    <address><?= /* @noEscape */ $block->getFormattedAddress($_order->getBillingAddress()) ?></address>
+                </div>
+            </div>
+        </div>
+        <div class="box-order-billing-info">
+            <div class="box box-order-billing-method">
+                <strong class="box-title">
+                    <span><?= /* @noEscape */ __('Payment Method:') ?></span></strong>
+                <div class="box-content">
+                    <div class="payment-method-content"
+                    <?= $block->getPaymentInfoHtml() ?>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+<div id="order-track-help" class="order-help-container" style="display:none">
+    <div class="show-order-help modal-track-help modal-inner-content">
+        <div  class="track-order-help">
+            <form class="form"
+                  action="<?= $block->escapeUrl($block->getUrl('mytickets/index/post')) ?>"
+                  id="order-popup-form"
+                  method="post" data-hasrequired="<?= $block->escapeHtmlAttr(__('* Required Fields')) ?>"
+                  data-mage-init='{"validation":{}}'>
+                <div class="main-information">
+                    <div class="field order-number required cls_comm_input">
+                        <div class="control">
+                            <input id="keyword" class="input-text"
+                                   required="" name="keyword" type="text" value="" readonly
+                                   placeholder="<?= $block->escapeHtmlAttr(__('Enter Order #')) ?>">
+                        </div>
+                    </div>
+                    <div class="field email required cls_comm_input">
+                        <div class="control">
+                            <input id="order-email"  class="input-text"
+                                   required="" name="order-email" type="text" value="" readonly
+                                   placeholder="<?= $block->escapeHtmlAttr(__('Email Address')) ?>">
+                            <input id="order-status"  class="input-text" name="status" type="hidden" value="1">
+                            <input id="customer_id" readonly
+                                   class="input-text" name="customer_id" type="hidden" value="">
+                        </div>
+                    </div>
+                    <div class="field reason required cls_comm_input">
+                        <div class="control">
+                            <textarea id="remarks" class="input-text" required=""
+                                      name="remarks" type="text"
+                                      placeholder="<?= $block->escapeHtmlAttr(__('Query')) ?>"></textarea>
+                        </div>
+                    </div>
+                    <div class="field create-ticket">
+                        <button id="create-ticket" class="btn btn-create-ticket" name="create-ticket"
+                                type="submit"><?= $block->escapeHtml(__('Submit')) ?>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <div class="ticket-created-success" style="display:none">
+                <div class="response-container"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "LuxuryUnlimited_FrontendConfigs/js/recent" : {}
+        }
+    }
+</script>

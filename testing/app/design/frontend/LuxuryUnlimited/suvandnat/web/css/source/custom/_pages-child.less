@@ -1,0 +1,27 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common =true) {
+    .pages {
+        .action,
+        .action:hover {
+            border: none;
+        }
+
+        strong {
+            &.page {
+                background: @pager-action__background;
+                color: @pager-action__color;
+                border: none;
+            }
+        }
+
+        a.page {
+            &:hover {
+                background-color: @pager__background;
+                color: @pager-action__color;
+            }
+        }
+    }
+}

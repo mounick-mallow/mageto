@@ -1,0 +1,74 @@
+
+version: '3'
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: .docker/php.Dockerfile
+    volumes:
+      - "./:/var/www/magento"
+      - "composer_var:/var/www/.composer"
+      - "php_run:/var/run/php"
+      - "redis_run:/var/run/redis"
+      - "mysql_run:/var/run/mysqld"
+    links:
+      - db
+      - elastic
+      - redis
+
+  db:
+    image: mariadb:10.3
+    command:
+      - '--skip-log-bin'
+    volumes:
+      - "./mysql_var:/var/lib/mysql"
+      - "./.docker/db_dumps:/docker-entrypoint-initdb.d"
+      - "mysql_run:/var/run/mysqld"
+    environment:
+      MYSQL_USER: "admin"
+      MYSQL_PASSWORD: "admin"
+      MYSQL_DATABASE: "magento"
+      MYSQL_ROOT_PASSWORD: "root"
+    ports:
+      - "33066:3306"
+
+  nginx:
+    image: nginx:stable
+    ports:
+      - "81:80"
+    volumes:
+      - "./:/var/www/magento"
+      - "./.docker/brands-labels.conf:/etc/nginx/conf.d/default.conf"
+      - "./.docker/nginx_usermod.sh:/docker-entrypoint.d/50-change-user-ids.sh"
+      - "php_run:/var/run/php"
+    links:
+      - app
+
+  redis:
+    build:
+      context: ./
+      dockerfile: .docker/redis.Dockerfile
+    volumes:
+      - "redis_var:/data"
+      - "redis_run:/var/run/redis"
+
+  elastic:
+    build:
+      context: ./
+      dockerfile: .docker/elasticsearch.Dockerfile
+    volumes:
+      - "elastic_var:/usr/share/elasticsearch/data"
+    environment:
+      ES_JAVA_OPTS: "-Xmx1g"
+      discovery.type: single-node
+    ports:
+      - "9201:9200"
+
+volumes:
+  redis_run:
+  redis_var:
+  php_run:
+  mysql_run:
+  mysql_var:
+  elastic_var:
+  composer_var:

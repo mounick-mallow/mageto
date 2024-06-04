@@ -1,0 +1,102 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common =true) {
+    .about-us-wrapper {
+        .lib-vendor-prefix-display(flex);
+        .lib-css(flex-direction, row, @_prefix: 1);
+        .lib-vendor-prefix-flex-wrap(wrap);
+        color: @theme__primary--color-26;
+
+        &,
+        & .header,
+        & .content {
+            width: 100%;
+        }
+
+        .header {
+            h1,
+            p:last-child {
+                color: @theme__primary--color-500;
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin: 0 0 @indent__l 0;
+
+            p {
+                .lib-font-size(24);
+            }
+        }
+
+        .content {
+            .paragraph {
+                .lib-vendor-prefix-display(flex);
+                margin: 0 0 50px 0;
+
+                &:nth-child(even) {
+                    .lib-css(flex-direction, row-reverse, @_prefix: 1);
+
+                    .paragraph-text {
+                        padding: @indent__l 0 @indent__l @indent__l;
+                    }
+                }
+
+                &:nth-child(odd) {
+                    .paragraph-text {
+                        padding: @indent__l @indent__l @indent__l 0;
+                    }
+                }
+
+                .paragraph-text {
+                    width: 100%;
+                }
+
+                .paragraph-img-left,
+                .paragraph-img-right {
+                    width: 445px;
+                    height: 237px;
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  ---------------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum ='max')
+    and
+    (@break = @screen__m) {
+    .cms-page-view {
+        .about-us-wrapper {
+            .header {
+                h1 {
+                    margin: 0 0 @indent__s;
+                }
+            }
+
+            .content {
+                .paragraph {
+                    .lib-vendor-prefix-flex-wrap(wrap);
+                    margin: 0 0 @indent__s 0;
+
+                    .paragraph-img-left,
+                    .paragraph-img-right {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+}

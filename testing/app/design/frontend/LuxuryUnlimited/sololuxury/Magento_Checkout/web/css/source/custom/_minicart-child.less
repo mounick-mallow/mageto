@@ -1,0 +1,230 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .page-wrapper {
+        .minicart-wrapper {
+            .block-minicart {
+                padding: 20px;
+                background-color: @theme__primary--color-bg;
+
+                &:before {
+                    border-color: transparent transparent
+                        @theme__primary--color-bg transparent;
+                }
+
+                .block-title span,
+                .subtotal,
+                .subtotal .price-container .price {
+                    color: @color-light-shadow-dark;
+                }
+
+                .block-title {
+                    margin: 0;
+                }
+
+                .subtitle.empty {
+                    padding: @indent__l 0 14px;
+                }
+            }
+
+            .minicart-items-wrapper {
+                overflow: visible;
+            }
+        }
+
+        .minicart-items {
+            .product-item {
+                padding: @indent__s 0 0 0;
+            }
+
+            .product-item-details,
+            .product-item-details .price,
+            .product-item-details .product-item-name a {
+                color: @color-light-shadow-dark;
+            }
+
+            .product-item-details {
+                padding: 0 @indent__m 0 72px;
+                border-bottom: 1px solid @theme__primary--brd-light;
+
+                .product-item-name {
+                    margin: 0;
+                }
+
+                .product-item-pricing {
+                    margin: 0;
+                }
+
+                .action {
+                    border: none;
+
+                    &.delete {
+                        &::before {
+                            color: @theme__secondary--color-800;
+                            content: @icon-close;
+                        }
+                    }
+                }
+
+                .item-qty {
+                    border: 1px solid @theme__primary--200;
+                    border-radius: 0;
+                }
+            }
+
+            .product {
+                .product-image-container {
+                    width: 60px !important; // Magento Core HTML template has inline style which overrides this value
+
+                    .product-image-photo {
+                        margin: 0;
+                        border: 1px solid @theme__primary--brd-light;
+                    }
+                }
+
+                .options {
+                    dl {
+                        margin: 0;
+                    }
+
+                    .values {
+                        &:not(:last-child):after {
+                            content: ' -';
+                        }
+
+                        display: inline;
+                    }
+                }
+            }
+
+            .details-qty {
+                .label {
+                    text-transform: uppercase;
+
+                    &::after {
+                        content: '';
+                    }
+                }
+            }
+        }
+
+        .block-content {
+            .actions {
+                .secondary,
+                .primary {
+                    .action {
+                        &.checkout,
+                        &.viewcart {
+                            background-color: @theme__primary--color-bg;
+                            border: none;
+
+                            &:hover {
+                                background-color: @theme__primary--color-bg;
+                                color: @theme__primary--500;
+                            }
+                        }
+
+                        span {
+                            color: @theme__primary--500;
+                        }
+                    }
+                }
+            }
+        }
+
+        .minicart-donation {
+            color: @color-light-shadow-dark;
+
+            .firas-donation {
+                .lib-vendor-prefix-display(flex);
+                .lib-css(flex-direction, column, @_prefix: 1);
+                padding: 0;
+                background-color: @theme__primary--color-bg;
+
+                .firas-donation-title {
+                    margin: 0;
+                    font-size: @font-size__s;
+                    text-align: center;
+                }
+
+                .firas-donation-product-list {
+                    .firas-donation-product {
+                        width: 100%;
+                        .lib-vendor-prefix-display(flex);
+                        .lib-css(flex-direction, row, @_prefix: 1);
+                        padding: 0;
+                        box-shadow: none;
+                        background-color: @theme__primary--color-bg;
+                    }
+
+                    .donateRight {
+                        font-size: @font-size__s;
+                        padding: 0 0 0 20px;
+
+                        .donateTxt {
+                            text-decoration: underline;
+                            color: @theme-color-brown-dark;
+                        }
+
+                        .donateBtn {
+                            display: none;
+                        }
+
+                        .donate-sort-info {
+                            margin: 0;
+                        }
+                    }
+
+                    .firas-donation-image-wrapper {
+                        display: inline;
+                        padding: 0;
+
+                        .firas-donation-product-image {
+                            position: relative;
+                            width: 76px;
+                            top: 44%;
+                            border: 1px solid @theme__primary--brd-light;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    .page-wrapper {
+        .minicart-wrapper {
+            .block-minicart {
+                width: 92vw;
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__s) {
+    .page-wrapper {
+        .page-header .header {
+            .minicart-wrapper {
+                .block-minicart {
+                    width: 90vw;
+                    right: -36px;
+                }
+            }
+        }
+    }
+}

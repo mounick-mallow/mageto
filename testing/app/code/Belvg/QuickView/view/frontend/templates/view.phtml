@@ -1,0 +1,37 @@
+<?php
+    /** @var Belvg\QuickView\Block\Result  $block */
+    $productId = (int) $block->getRequest()->getParam('id');
+
+    /** @var Belvg\QuickView\ViewModel\Product  $productModel */
+    $productModel = $block->getData('belvg_quick_view_product_view_model');
+    $product = $productModel->getProduct($productId);
+
+    if (is_object($product)):
+        $imageList = $productModel->getImages($product);
+    ?>
+
+    <div id="belvg-quick-view">
+        <div class="belvg-item-carousel">
+            <?php $counter = 1; ?>
+            <?php foreach ($imageList as $image): ?>
+                <div class="item">
+                    <img src="<?php echo $image?>" alt="im-<?php echo $counter?>">
+                </div>
+                <?php $counter ++; ?>
+            <?php endforeach; ?>
+        </div>
+        <div class="quick-view-titles">
+            <div class="belvg-quick-brand-name"><?php echo $product->getAttributeText('brands'); ?></div>
+            <div class="belvg-quick-brand-title"><?php echo $product->getName(); ?></div>
+       </div>
+    </div>
+    <?php else: ?>
+    <div id="belvg-quick-view">
+        <span><?= $product ?></span>
+    </div>
+    <?php endif; ?>
+
+
+
+
+

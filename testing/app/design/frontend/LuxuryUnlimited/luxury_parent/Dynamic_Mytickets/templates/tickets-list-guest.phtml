@@ -1,0 +1,147 @@
+<?php
+
+declare(strict_types=1);
+
+use Dynamic\Mytickets\Block\Guest\Myticketslist as MyticketslistGuestBlock;
+
+/** @var MyticketslistGuestBlock $block */
+$itemCollections = $block->getMyTicketsCollection();
+$ticketTypes = [];
+$ticketTypes[0] = __('N/A');
+$ticketTypes[1] = __('Special Request');
+$ticketTypes[2] = __('Item Return Request');
+$ticketTypes[3] = __('Order Cancel Request');
+$ticketList = '';
+$ticketreply = "";
+?>
+<div class="mytickets-container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2><?= /* @noEscape */ __('My Tickets') ?></h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12" id="ticketresult-message"></div>
+    </div>
+    <div class="desktop-view">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="titles test">
+                    <li><?= /* @noEscape */ __('ID') ?></li>
+                    <li><?= /* @noEscape */ __('Name') ?></li>
+                    <li><?= /* @noEscape */ __('Type') ?></li>
+                    <li><?= /* @noEscape */ __('Created') ?></li>
+                    <li><?= /* @noEscape */ __('Message') ?></li>
+                    <li><?= /* @noEscape */ __('Current Status') ?></li>
+                    <li><?= /* @noEscape */ __('Action') ?></li>
+                </ul>
+                <div class="ticket-content">
+                    <?php if ($itemCollections && $itemCollections->getSize()): ?>
+                        <?php foreach ($itemCollections as $item): ?>
+                            <?php
+                                $ticketCode = $item->getTicketCode();
+                                $ticketType = $item->getTicketType();
+                            ?>
+                            <ul>
+                                <li><?= /* @noEscape */ ($ticketCode!='')?
+                                        $block->escapeHtml($ticketCode):__('Ticket id Shall be Updated Shortly') ?>
+                                </li>
+                                <li><?= $block->escapeHtml($item->getName() . ' ' . $item->getLastName()) ?></li>
+                                <li>
+                                    <?php echo array_key_exists($ticketType, $ticketTypes) ?
+                                        $block->escapeHtml($ticketTypes[$ticketType]) : ''
+                                    ?>
+                                </li>
+                                <li><?= $block->escapeHtml($item->getCreatedAt()) ?></li>
+                                <li><?= $block->escapeHtml($item->getRemarks()) ?></li>
+                                <li><?= /* @noEscape */ ($item->getStatus() == 1)?
+                                        $block->escapeHtml(__('Active')): $block->escapeHtml(__('Inactive'));?>
+                                </li>
+                                <?php if (isset($ticketCode) && $ticketCode != ''): ?>
+                                <li class="text-center">
+                                    <a class="porto-icon-eye showticketmessage"
+                                       data-tcode="<?= $block->escapeHtmlAttr($ticketCode) ?>"
+                                       data-tid="<?= $block->escapeHtmlAttr($item->getMyticketsId()) ?>">View</a>
+                                    <?php else: ?>
+                                <li class="text-center">
+                                    <a class="showticketnomessage"
+                                       data-tcode="<?= $block->escapeHtmlAttr($ticketCode) ?>"
+                                       data-tid="<?= $block->escapeHtmlAttr($item->getMyticketsId()) ?>">View</a>
+                                    <?php endif; ?>
+                                </li>
+                            </ul>
+                        <?php endforeach; ?>
+                    <?php  else: ?>
+                        <ul>
+                            <li><?= /* @noEscape */ __('No Records Found') ?></li>
+                        </ul>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Start Mobile View-->
+    <div class="mobile-view">
+        <div class="row">
+            <div class="col-md-12">
+                <br /><br /><br /><br /><br /><br /><br /><br /><br />
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="titles">
+                    <li><?= /* @noEscape */ __('ID') ?></li>
+                    <li><?= /* @noEscape */ __('Message') ?></li>
+                    <li class="text-center"><?= /* @noEscape */ __('Action') ?></li>
+                </ul>
+                <div class="ticket-content">
+                    <?php if ($itemCollections && $itemCollections->getSize()): ?>
+                        <?php foreach ($itemCollections as $item): ?>
+                            <?php $ticketCode = $item->getTicketCode();?>
+                            <ul>
+                                <li><?=  /* @noEscape */ ($ticketCode!='')?
+                                        $block->escapeHtml($ticketCode):__('Ticket id Shall be Updated Shortly');?></li>
+                                <li><?= $block->escapeHtml($item->getRemarks()) ?></li>
+                                <?php if (isset($ticketCode) && $ticketCode!=''): ?>
+                                <li class="text-center">
+                                    <a class="porto-icon-eye showticketmessage"
+                                       data-tcode="<?= $block->escapeHtmlAttr($ticketCode) ?>"
+                                       data-tid="<?= $block->escapeHtmlAttr($item->getMyticketsId()) ?>">View</a>
+                                    <?php  else: ?>
+                                <li class="text-center">
+                                    <a class="porto-icon-eye showticketnomessage"
+                                       data-tcode="<?= $block->escapeHtmlAttr($ticketCode) ?>"
+                                       data-tid="<?= $block->escapeHtmlAttr($item->getMyticketsId()) ?>">View</a>
+                                    <?php endif; ?>
+                                </li>
+                            </ul>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <ul>
+                            <li><?= /* @noEscape */ __('No Records Found') ?></li>
+                        </ul>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End Mobile View-->
+    <div class="row">
+        <div class="col-md-12">
+            <div class='replymessages' id="replymessages" style='display:none;'></div>
+        </div>
+    </div>
+</div>
+
+<div id="ticketmesage-modal" style="display:none;"></div>
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Dynamic_Mytickets/js/tickets-list-guest": {
+            }
+        }
+    }
+</script>

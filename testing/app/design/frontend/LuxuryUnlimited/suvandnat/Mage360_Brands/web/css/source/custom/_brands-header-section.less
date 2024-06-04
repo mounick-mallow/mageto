@@ -1,0 +1,150 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .lx-brands__header {
+        margin: 35px auto 0;
+
+        .lx-brands__page-title {
+            .lib-font-size(24);
+            .lib-line-height(35);
+            text-transform: uppercase;
+            color: @theme__territory--color-300;
+            font-weight: @font-weight__bold;
+        }
+
+        .lx-brands__search {
+            margin: 0 0 @indent__l;
+            .lib-icon-font(
+                @_icon-font-content: @icon-search,
+                @_icon-font: @icon-font-family,
+                @_icon-font-color: @theme__territory--color-300,
+                @_icon-font-size: 20px,
+                @_icon-font-line-height: 1,
+                @_icon-font-position: before,
+                @_icon-font-display: block
+            );
+
+            &:before {
+                color: @theme__territory--color-300;
+                right: 20px;
+            }
+
+            &.active {
+                .lx-brands__clear-search {
+                    color: @theme__territory--color-300;
+                    right: 20px;
+                    .lib-icon-font(
+                        @_icon-font-content: @icon-close,
+                        @_icon-font: @icon-font-family,
+                        @_icon-font-color: @theme__territory--color-300,
+                        @_icon-font-size: 20px,
+                        @_icon-font-line-height: 1,
+                        @_icon-font-position: before,
+                        @_icon-font-display: block
+                    );
+                }
+
+                &:before {
+                    display: none;
+                }
+            }
+
+            .lx-brands__search-field {
+                padding: @indent__s (@indent__xl + @indent__xs) @indent__s
+                    @indent__m;
+                border: 2px solid @theme__secondary--color-100;
+                border-radius: 5px;
+
+                &::placeholder {
+                    color: @theme__territory--color-300;
+                    font-weight: @font-weight__heavier;
+                }
+            }
+
+            .lx-brands__clear-search {
+                display: none;
+            }
+        }
+    }
+
+    .lx-brands__alphabet {
+        .lx-brands__letters {
+            .lx-brands__alphabet-item a {
+                .lib-font-size(16);
+                .lib-line-height(40);
+                text-align: center;
+                color: @theme__secondary--color-500;
+                font-weight: @font-weight__heavier;
+            }
+        }
+    }
+}
+
+//
+//  Tablet
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__m) {
+    .lx-brands__header {
+        .lx-brands__search {
+            max-width: 580px;
+        }
+    }
+}
+
+//
+//  Tablet large
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__l) {
+    .lx-brands__header {
+        .lx-brands__search {
+            max-width: 640px;
+        }
+    }
+
+    .lx-brands__alphabet {
+        margin: 0 auto 110px;
+    }
+}
+
+//
+//  Mobile
+//  ---------------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    div.lx-brands__header {
+        padding: 0;
+
+        .lx-brands__page-title {
+            text-align: center;
+            margin: 0 auto @indent__l;
+        }
+    }
+
+    div.lx-brands__alphabet {
+        padding: 0;
+
+        .lx-brands__letters {
+            margin: 0 -@indent__xs @indent__l;
+
+            .lx-brands__alphabet-item {
+                margin: 0 @indent__xs @indent__xxs;
+            }
+        }
+    }
+}

@@ -1,0 +1,51 @@
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    .page-header {
+        .header {
+            &.content {
+                .toggle-menu {
+                    padding-left: 0;
+                    padding-right: 8px;
+                }
+
+                .logo {
+                    margin-left: auto;
+                    margin-right: 0;
+                }
+
+                .content-right {
+                    .lib-vendor-prefix-order (1);
+                }
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    .page-header {
+        .header {
+            &.content {
+                .toggle-menu {
+                    padding-left: 0;
+                    padding-right: 8px;
+                }
+
+                .logo {
+                    margin-left: auto;
+                    margin-right: 0;
+                }
+            }
+        }
+    }
+}

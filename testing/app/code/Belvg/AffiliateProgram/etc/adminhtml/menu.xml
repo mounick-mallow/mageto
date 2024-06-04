@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add
+            id="Belvg_AffiliateProgram::content_elements"
+            title="Affiliate Program"
+            translate="title"
+            module="Belvg_AffiliateProgram"
+            sortOrder="10"
+            parent="Magento_Backend::content"
+            resource="Magento_Backend::admin"
+        />
+        <add
+            id="Belvg_AffiliateProgram::post"
+            title="Posts"
+            translate="title"
+            module="Belvg_AffiliateProgram"
+            sortOrder="0"
+            parent="Belvg_AffiliateProgram::content_elements"
+            action="belvg_affiliate/post"
+            resource="Magento_Backend::admin"
+        />
+    </menu>
+</config>

@@ -1,0 +1,96 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \Magento\Customer\Block\Form\Login $block */
+?>
+<div class="block block-customer-login">
+    <div class="block-title">
+        <strong id="block-customer-login-heading" role="heading" aria-level="2"><?= $block->escapeHtml(__('Registered Customers')) ?></strong>
+    </div>
+    <div class="block-content" aria-labelledby="block-customer-login-heading">
+        <form class="form form-login"
+              action="<?= $block->escapeUrl($block->getPostActionUrl()) ?>"
+              method="post"
+              id="ajax-login-form"
+              data-mage-init='{"validation":{}}'>
+            <?= $block->getBlockHtml('formkey') ?>
+            <fieldset class="fieldset login" data-hasrequired="<?= $block->escapeHtml(__('* Required Fields')) ?>">
+                <legend class="fieldset-legend">
+                    <span><?= $block->escapeHtml(__('Login')) ?></span>
+                </legend>
+                <div class="field note"><?= $block->escapeHtml(__('If you have an account, sign in with your email address.')) ?></div>
+                <div class="field email required">
+                    <label class="label" for="email"><span><?= $block->escapeHtml(__('Email')) ?></span></label>
+                    <div class="control">
+                        <input name="email" value="<?= $block->escapeHtmlAttr($block->getUsername()) ?>" <?php if ($block->isAutocompleteDisabled()) : ?> autocomplete="off"<?php endif; ?> id="email" type="email" class="input-text" title="<?= $block->escapeHtmlAttr(__('Email')) ?>" data-mage-init='{"mage/trim-input":{}}' data-validate="{required:true, 'validate-email':true}" placeholder="<?= /* @noEscape */ __('Email Address');?>*">
+                    </div>
+                </div>
+                <div class="field password required">
+                    <label for="pass" class="label"><span><?= $block->escapeHtml(__('Password')) ?></span></label>
+                    <div class="control luxb_password">
+                        <span toggle="#pass" class="psw-eye toggle-password"></span>
+                        <input name="password" type="password" <?php if ($block->isAutocompleteDisabled()) : ?> autocomplete="off"<?php endif; ?> class="input-text" id="pass" title="<?= $block->escapeHtmlAttr(__('Password')) ?>" data-validate="{required:true}" placeholder="<?= /* @noEscape */ __('Password');?>*">
+                    </div>
+                </div>
+                <?= $block->getChildHtml('form_additional_info') ?>
+                <div class="actions-toolbar">
+                    <div class="secondary">
+                        <a class="action remind" href="<?= $block->escapeUrl($block->getForgotPasswordUrl()) ?>">
+                            <span><?= $block->escapeHtml(__('Forgot Your Password?')) ?></span>
+                        </a>
+                    </div>
+                    <div class="primary">
+                        <button
+                            type="button"
+                            class="action login primary"
+                            name="send"
+                            id="ajax-login-button">
+                            <span><?= $block->escapeHtml(__('Sign In')) ?></span>
+                        </button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+
+         <!-- START RESUTLT BOX -->
+         <div id="loader" style="display:none;"><?= /* @noEscape */ __('loading...'); ?></div>
+
+            <div class="siginerror-modal">
+                    <div id="signin-error">
+                        <div class="signin-error-content">
+                            <div id="signin-invalid-password" class="signin-invalid-password" style="display:block;">
+                                <p id="result-message"><?= /* @noEscape */ __('We cannot find an account associated with this Email.
+                                    If you have created an account with us in another country, please change the country here and sign in or please try again or create a new account'); ?></p>
+                                <div class="actions-toolbar">
+                                    <div class="sigin-popup-buttons">
+                                        <a href="<?php echo $block->escapeUrl($block->getUrl('customer/account/create')); ?>">
+                                            <button class="action primary" name="Buttoncreate" style="width: unset;">
+                                                <?php echo  /* @noEscape */ __('Create a New Account') ?>
+                                            </button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="account-not-found" class="account-not-found" style="display:block;">
+                                <p id="result-message"></p>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+         <!-- END RESULT BOX -->
+
+    </div>
+</div>
+
+<div id="errorpopup-modal" style="display:none;" >   </div>
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Belvg_LoggedCustomer/js/login": ""
+        }
+    }
+</script>

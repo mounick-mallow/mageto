@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system> 
+        <section id="home_page" translate="label" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+            <group id="most_popular" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Most Popular</label>
+                <field id="enable" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Section</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="product_count" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>No. of Products to display</label>
+                    <comment>If not set, default will be 4</comment>
+                </field>
+                <field id="category" translate="label" type="select" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1" >
+                    <label>Choose Category</label>
+                    <source_model>LuxuryUnlimited\HomeProductSection\Model\Source\CategoryTree</source_model>
+                </field>
+                <field id="cron_batch_count" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Cron Batch Count</label>
+                    <comment>If not set, default will be 100</comment>
+                </field>
+                <field id="overall_count" translate="label" type="text" sortOrder="3" showInDefault="0" showInWebsite="0" showInStore="0">
+                    <label>Overall Count</label>
+                </field>
+                <field id="last_processed_page" translate="label" type="text" sortOrder="3" showInDefault="0" showInWebsite="0" showInStore="0">
+                    <label>Last Processed Page</label>
+                </field>
+                <field id="last_processed_date" translate="label" type="text" sortOrder="3" showInDefault="0" showInWebsite="0" showInStore="0">
+                    <label>Last Processed Date</label>
+                </field>
+            </group>
+             
+        </section>
+    </system>
+</config>

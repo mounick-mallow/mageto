@@ -1,0 +1,335 @@
+<?php
+$dynamicHelper = $this->helper("Dynamic\Customization\Helper\Data");
+$storeManager = $dynamicHelper->getStoreManager();
+$storeCode = $storeManager->getStore()->getCode();
+$countryHelper = $dynamicHelper->getCountry();
+$siteUrl = $dynamicHelper->getBaseUrl();
+
+$countryCollection = $countryHelper->toOptionArray();
+if (!empty($_POST)) {
+    $firstname = $_POST['firstname'];
+    $lastname = $_POST['lastname'];
+    //$websitename = $_POST['website2'];
+    //$websiteurl = $_POST['url'];
+    $email = $_POST['email'];
+    $phone = $_POST['phone'];
+    //$visitors = $_POST['visitors'];
+    //$views = $_POST['views'];
+    $street = $_POST['street'];
+    $street2 = $_POST['street2'];
+    $city = $_POST['city'];
+    $postcode = $_POST['postcode'];
+    $country = $_POST['country'];
+    $storewebsite = $siteUrl;
+
+    $company = $_POST['company'];
+    //$dateestablished = $_POST['dateestablished'];
+    //$businesmodel = $_POST['businesmodel'];
+    //$comment = $_POST['comment'];
+    //$category = $_POST['category'];
+    //$gender = $_POST['gender'];
+
+    //$age18 = $_POST['age18'];
+    //$age18_25 = $_POST['age18_25'];
+    //$age26_35 = $_POST['age26_35'];
+    //$age36_50 = $_POST['age36_50'];
+    //$age51_65 = $_POST['age51_65'];
+    //$age65 = $_POST['age65'];
+    // echo $firstname.'=='.$lastname.'=='.$websitename.'='.$websiteurl.'='.$email.'='.$phone.'='.$visitors.'='.$views.'='.$street.'='.$city.'='.$postcode.'='.$country.'='.$storewebsite.'<br/>';
+
+    //The JSON data.
+    $newjsonData = array(
+        "website" => $storewebsite,
+        "first_name" => $firstname,
+        "last_name" => $lastname,
+        "phone" => $phone,
+        "emailaddress" => $email,
+        //"website_name" => $websitename,
+        //"url" => $websiteurl,
+        //"unique_visitors_per_month" => $visitors,
+        //"page_views_per_month" => $views,
+        "street_address" => $street,
+        "street_address2" => $street2,
+        "city" => $city,
+        "postcode" => $postcode,
+        "country" => $country,
+        "lang_code" => $storeCode,
+
+        "company" => $company,
+        //"dateestablished" => $dateestablished,
+        //"businesmodel" => $businesmodel,
+        //"comment" => $comment,
+        //"category" => $category,
+
+        //"age18" => $age18,
+        //"age18_25" => $age18_25,
+        //"age26_35" => $age26_35,
+        //"age36_50" => $age36_50,
+        //"age51_65" => $age51_65,
+        //"age65" => $age65,
+    );
+
+    $erpClient = \Magento\Framework\App\ObjectManager::getInstance()->get(\Shellpea\ERP\Client\Client::class);
+    $result = $erpClient->addAffiliate($newjsonData)[0];
+    $class = '';
+    $message = '';
+    if(isset($response['code'])) {
+        $class = $result['status'] == 'success' ? 'aff-success' : 'aff-failed';
+        $message = $result['message'];
+    }
+
+    ?>
+    <div class="message-container">
+        <div class="<?= /** noEscape */ $class ?>">
+            <?= /** noEscape */ $message ?><span id="close-message">X</span>
+        </div>
+    </div>
+    <?php
+}
+
+?>
+
+<div class="returns-container affiliate-container cls_shipping_panelmain">
+    <div class="formBlock search-request-modal">
+        <form
+            method="post"
+            action="<?php echo $block->escapeUrl($block->getUrl('belvg_affiliate/index/post')) ?>"
+            id="affiliate-form"
+            data-mage-init='{"validation":{}}'
+        >
+            <input name="form_key" type="hidden" value="<?php echo $block->getFormKey(); ?>" />
+            <div class="personal-info mar-bot">
+                <h3 class="tittle"><?= /* @noEscape */ __('Join the affiliate program') ?></h3>
+                <fieldset class="fieldset specialrequest" data-hasrequired="* Required Fields">
+                    <legend class="fieldset-legend">
+                        <span><?= $block->escapeHtml(__('Affiliate Registration')) ?></span>
+                    </legend>
+                    <div class="fields">
+                        <div class="form-control field name prifix-field">
+                            <label for="firstname" class="label">
+                                <span><?= $escaper->escapeHtml(__('First Name')) ?></span>
+                            </label>
+                            <div class="control prifix-input-with-option">
+                                <select name="name_with_initials" id="initial" class="name_initial specialgender input-prefix prefix-select">
+                                    <option selected="selected" value="mr."><?= /* @noEscape */ __('Mr.'); ?></option>
+                                    <option value="mrs."><?= /* @noEscape */ __('Mrs.'); ?></option>
+                                    <option value="miss."><?= /* @noEscape */ __('Miss.'); ?></option>
+                                </select>
+                                <input type="text" class="form-control input-text prefix-text"
+                                       id="firstname"
+                                       name="first_name"
+                                       placeholder="<?= /* @noEscape */ __('First Name'); ?>"
+                                       required
+                                />
+                            </div>
+                        </div>
+                        <div class="form-control field">
+                            <label for="lastname" class="label">
+                                <span><?= $escaper->escapeHtml(__('Last Name')) ?></span>
+                            </label>
+                            <div class="control">
+                                <input type="text" class="form-control " placeholder="<?= /* @noEscape */ __('Last Name') ?>"
+                                   id="lastname" name="last_name"
+                                   required
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fields">
+                        <div class="form-control email field">
+                            <label for="email" class="label">
+                                <span><?= $escaper->escapeHtml(__('Email')) ?></span>
+                            </label>
+                            <div class="control">
+                                <input type="email" class="form-control" placeholder="<?= /* @noEscape */ __('Email') ?>"
+                                       required id="email"
+                                       name="email"
+                                />
+                            </div>
+                        </div>
+                        <div class="form-control phone field">
+                            <label for="phone" class="label">
+                                <span><?= $escaper->escapeHtml(__('Contact No')) ?></span>
+                            </label>
+                            <div class="control">
+                                <div class="special-number-dropdown">
+                                    <div class="selected-flag">
+                                        <i class="fi fi-in"></i>
+                                    </div>
+                                    <?php
+                                        $countryBlock = $block->getLayout()->createBlock('Magento\Directory\Block\Data');
+                                        $defaultValue = 'IN'; // Use the country code for India as the default value
+                                    ?>
+                                    <?= $countryBlock->getCountryHtmlSelect($defaultValue, 'country_id', 'specialcountry', 'Country', 'class="specialcountry"'); ?>
+                                </div>
+                            </div>
+                            <input
+                                type="text" class="form-control input-text"
+                                placeholder="<?= /* @noEscape */ __('Contact No') ?>"
+                                required
+                                id="phone"
+                                name="phone"
+                            />
+                        </div>
+                    </div>
+
+                    <div class="fields">
+                        <div class="form-control field" style="width: 100%; ">
+                            <label class="label" for="website_url">
+                                <span><?= /* @noEscape */ __('Website URL')?></span>
+                            </label>
+                            <div class="control">
+                                <input type="url"
+                                       class="input-text"
+                                       id="website_url"
+                                       name="website_url"
+                                       placeholder="<?= /* @noEscape */ __('Website URL')?>"
+                                       value=""
+                                       required
+                                >
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fields">
+                        <div class="form-control field">
+                            <label for="affiliate-visitors" class="label">
+                                <span><?= $escaper->escapeHtml(__('Visitors Number')) ?></span>
+                            </label>
+                            <div class="control">
+                                <select id="affiliate-visitors" name="visitors" required>
+                                    <option><?= /* @noEscape */ __('Select Visitors Number') ?></option>
+                                    <option value="1000">1000</option>
+                                    <option value="100000">100000</option>
+                                    <option value="1000000">1000000</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-control field">
+                            <label for="affiliate-views" class="label">
+                                <span><?= $escaper->escapeHtml(__('Views Number')) ?></span>
+                            </label>
+                            <div class="control">
+                                <select id="affiliate-views" name="views" required>
+                                    <option><?= /* @noEscape */ __('Select Views Number') ?></option>
+                                    <option value="1000">1000</option>
+                                    <option value="100000">100000</option>
+                                    <option value="1000000">1000000</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fields">
+                        <div class="form-control address field">
+                            <label for="street1" class="label">
+                                <span><?= $escaper->escapeHtml(__('Street Address')) ?></span>
+                            </label>
+                            <div class="control">
+                                <input type="text" class="form-control" id="street1" name="street_address_1"
+                                   placeholder="<?= /* @noEscape */ __('Street Address 1') ?>">
+                            </div>
+                        </div>
+                        <div class="form-control address field">
+                            <label for="street2" class="label">
+                                <span><?= $escaper->escapeHtml(__('Street Address')) ?></span>
+                            </label>
+                            <div class="control">
+                                <input type="text" class="form-control" id="street2" name="street_address_2"
+                                   placeholder="<?= /* @noEscape */ __('Street Address 2') ?>">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fields fields-col-3">
+                        <div class="form-control city field" style="margin-left: 0; margin-right: 0">
+                            <label for="city" class="label">
+                                <span><?= $escaper->escapeHtml(__('City')) ?></span>
+                            </label>
+                            <div class="control">
+                                <input type="text" class="form-control" placeholder="<?= /* @noEscape */ __('City') ?>" id="city"
+                                    name="city" required>
+                            </div>
+                        </div>
+                        <div class="form-control country field" style="margin-left: 0; margin-right: 0">
+                            <label for="country" class="label">
+                                <span><?= $escaper->escapeHtml(__('Country')) ?></span>
+                            </label>
+                            <div class="control">
+                                <select name="country" required id="country">
+                                    <option><?= /* @noEscape */ __('Select Country') ?></option>
+                                    <?php foreach ($countryCollection as $key => $country) {
+                                        if ($key > 0) {
+                                            ?>
+                                            <option value="<?= $block->escapeHtmlAttr($country['label']) ?>"><?= $block->escapeHtml(__($country['label'])) ?></option>
+                                        <?php }
+                                    } ?>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="fields">
+                        <div class="form-control postcode field" style="width: 100%; ">
+                            <label for="country" class="label">
+                                <span><?= $escaper->escapeHtml(__('Post Code')) ?></span>
+                            </label>
+                            <div class="control">
+                                <input type="text" class="form-control" id="postcode" name="post_code"
+                                       placeholder="<?= /* @noEscape */ __('Post Code') ?>">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sendinfo" style="text-align: center;">
+                        <input type="button"  class="send-request btn btn-primary return-submit primary action"
+                                value="<?= /* @noEscape */ __('Let\'s Go') ?>" id="affiliate-submit" name="aff-submit">
+                    </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+</div>
+
+<div id="affiliate-request-result" style="display:none;">
+    <div class="modal-content" style="text-align: center;"><?php echo __('Affiliate Request Has Been Sent'); ?></div>
+</div>
+
+<script type="text/javascript">
+    require([
+        'jquery',
+        'mage/url',
+        'Magento_Ui/js/modal/modal'
+        ], function ($, url, modal) {
+        const affiliateForm = $('#affiliate-form');
+        const resultPopup = $('#affiliate-request-result');
+
+        $(document).on('click', '#affiliate-submit', function(e) {
+            e.preventDefault();
+            const isValid = affiliateForm.validation('isValid');
+            if (isValid === true) {
+                $.ajax({
+                    url: url.build('affiliate/index/post'),
+                    dataType: 'json',
+                    type: 'post',
+                    data: affiliateForm.serialize()
+                }).done(msg => {
+                    if (msg.error === false) {
+                        const options = {
+                            type: 'popup',
+                            responsive: true,
+                            innerScroll: true,
+                            title: $.mage.__('Success!'),
+                        };
+
+                        affiliateForm[0].reset();
+                        const popup = modal(options, resultPopup);
+                        resultPopup.modal("openModal");
+                    }
+                });
+            }
+        });
+    });
+</script>
+

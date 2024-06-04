@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--
+
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../Magento/Catalog/etc/product_types.xsd">
+    <type name="giftcard" label="Gift Card" modelInstance="Magetop\GiftCard\Model\Product\Type\GiftCard" composite="false" isQty="true" canUseQtyDecimals="false" sortOrder="70">
+        <customAttributes>
+            <attribute name="refundable" value="false"/>
+            <attribute name="is_real_product" value="false"/>
+        </customAttributes>
+    </type>
+</config>

@@ -1,0 +1,38 @@
+& when (@media-common = true) {
+    .products-grid {
+        .product-items {
+            .product-item-info {
+                text-align: right;
+
+                .product-item-inner {
+                    .actions-primary {
+                        .action.tocart {
+                            left: 0;
+                            right: auto;
+                            border-radius: 0 65px 0 5px;
+                            padding: 18px 18px 8px 8px;
+                        }
+                    }
+
+                    .action.towishlist {
+                        left: 15px;
+                        right: auto;
+                    }
+                }
+
+                .product-brand-name {
+                    right: 20px;
+                    left: auto;
+                }
+            }
+
+            .product-item-details {
+                .product-item-name {
+                    a {
+                        direction: rtl;
+                    }
+                }
+            }
+        }
+    }
+}

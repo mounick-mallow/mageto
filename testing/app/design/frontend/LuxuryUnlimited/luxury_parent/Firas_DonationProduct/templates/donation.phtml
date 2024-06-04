@@ -1,0 +1,141 @@
+<?php /* @var $block Firas\DonationProduct\Block\Donation\ListProduct */  ?>
+<?php
+/* @var $item Magento\Catalog\Model\Product */
+$items = $block->getProductCollection();
+$imageThumbnailId = 'category_page_grid';
+$imageDetailId = 'category_page_grid';
+$dynamicHelper = $this->helper(Dynamic\Customization\Helper\Data::class);
+
+$priceCurrencyFactory = $dynamicHelper->getCurrencyManager();
+$storeManager = $dynamicHelper->getStoreManager();
+
+$currencyCodeTo = $storeManager->getStore()->getCurrentCurrency()->getCode();
+$currencyCodeFrom = $storeManager->getStore()->getBaseCurrency()->getCode();
+?>
+
+<?php
+    /** @var  Belvg\StoresManager\Helper\Data $storeHelper */
+    $storeHelper = $this->helper(Belvg\StoresManager\Helper\Data::class);
+    $storeName = $storeHelper->getStoreName();
+?>
+
+<?php if (!empty($items)) : ?>
+    <section class="firas-donation">
+        <h3 class="firas-donation-title">
+            <?= /* @noEscape */ __('Support a charity with your donation') ?>
+        </h3>
+        <p>
+            <?php
+            $uri = $block->getRequest()->getRequestUri();
+            $uri = rtrim($uri, '/\\');
+            $uri = preg_replace( "#^[^:/.]*[:/]+#i", "", $uri);
+
+            if($uri == 'onepage'){
+            ?>
+                <a href="<?= $block->escapeUrl($this->getUrl('donations.html')) ?>"><?= __('Click here to donate') ?></a>
+            <?php
+            }
+            ?>
+        </p>
+        <?php if($uri != 'onepage'){ ?>
+
+
+        <section class="firas-donation-product-list">
+            <?php foreach ($items as $item) : ?>
+                <article
+                    class="firas-donation-product"
+                    data-title="<?= $block->escapeHtmlAttr($item->getName()) ?>"
+                    data-description="<?= $block->escapeHtmlAttr(htmlspecialchars($item->getShortDescription() ?: '')) ?>"
+                    data-imageurl="<?= $block->escapeHtmlAttr($block->getImage($item, $imageDetailId)->getImageUrl()) ?>"
+                    data-productid="<?= $block->escapeHtmlAttr($item->getId()) ?>"
+                    data-htmlvalidation="<?= $block->escapeHtmlAttr($block->getHtmlValidationClasses($item)) ?>"
+                    data-minimal-amount="<?= $block->escapeHtmlAttr(__('Choose your own Amount %1 (minimum %2)', $currencyCodeTo, $block->getMinimalDonationAmount($item))) ?>"
+                    data-addtocarturl="<?= $block->escapeUrl($block->getAddToCartUrl($item)) ?>">
+                    <div class="donateImg">
+                        <a title="<?= $block->escapeHtmlAttr($item->getName()) ?>" class="firas-donation-image-wrapper" role="button">
+                            <img src="<?= $block->escapeUrl($block->getImage($item, $imageThumbnailId)->getImageUrl()) ?>" alt="<?= $block->escapeHtmlAttr($item->getName()) ?>" class="firas-donation-product-image" />
+                        </a>
+                   </div>
+                   <div class="donateRight">
+                        <p class="donate-sort-info"> <?= /* @noEscape */ __('15% of the order value will be donated by ' . $storeName . ' for donations. ') ?></p>
+                        <div class="donateTxt"><?= /* @noEscape */ __('Please click here to donate now.') ?></div>
+                        <div class="donateBtn">
+                            <a class="firas-donation-product-tocart" role="button">
+                                <?= /* @noEscape */ __('I want to donate') ?>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            <?php endforeach; ?>
+        </section>
+        <?php } ?>
+    </section>
+
+    <div class="firas-donation-modal">
+        <article>
+            <p class="charity-description"></p>
+        </article>
+        <form method="POST" class="charity-form" id="firas-donation-product-addtocart-form-<?= $block->escapeHtmlAttr($block->getIdentifier()) ?>">
+            <input name="form_key" type="hidden" value="<?= $block->escapeHtmlAttr($block->getFormKey()) ?>">
+            <div class="firas-donation-amounts" data-role="">
+                <div class="firas-donations-fixed-amounts">
+                    <?php foreach ($block->getFixedAmounts() as $fixedAmount => $viewFixedAmount) : ?>
+                      <?php
+                        $rate = $priceCurrencyFactory->create()->load($currencyCodeTo)->getAnyRate($currencyCodeFrom);
+                        $fixedAmount = $fixedAmount * $rate;
+                      ?>
+                        <input type="radio" name="amount_fixed" class="input-radio-amount-<?= $block->escapeHtmlAttr($block->getIdentifier()) ?>" id="amount-fixed-<?= $block->escapeHtmlAttr($fixedAmount) ?>-<?= $block->escapeHtmlAttr($block->getIdentifier()) ?>" value="<?= $block->escapeHtmlAttr($fixedAmount) ?>">
+                        <label for="amount-fixed-<?= $block->escapeHtmlAttr($fixedAmount) ?>-<?= $block->escapeHtmlAttr($block->getIdentifier()) ?>" class="firas-donation-amount-label" data-amount="<?= $block->escapeHtmlAttr($fixedAmount) ?>">
+                            <span><?= $block->escapeHtml($viewFixedAmount) ?></span>
+                        </label>
+                    <?php endforeach; ?>
+                </div>
+                <label class="label">
+                    <span class="firas-donation-minimal-amount-label-<?= $block->escapeHtmlAttr($block->getIdentifier()) ?>"><?= $block->escapeHtml(__('Choose your own Amount %1 (minimum %2)', $currencyCodeTo)) ?></span>
+                </label>
+                <p class="firas-donation-custom-amount">
+                    <span class="custom-donation-amount-field">
+                        <span class="custom-amount-currency-symbol"><?= $block->escapeHtml($currencyCodeTo) ?></span>
+                        <input id="custom-amount-input-<?= $block->escapeHtmlAttr($block->getIdentifier()) ?>" name="amount" title="amount" class="input-text validate-number test" type="hidden" value="">
+                        <input id="donation-value" type="text" value="">
+                    </span>
+                </p>
+                <p class="firas-donation-amount-notification">
+                    <?= /* @noEscape */ __('The selected amount will be added to your shopping cart.') ?>
+                </p>
+            </div>
+            <div class="firas-donation-form-actions">
+                <button type="submit" class="button charity-button action primary"><?= /* @noEscape */ __('I want to donate this amount') ?></button>
+            </div>
+        </form>
+    </div>
+
+    <script type="text/x-magento-init">
+        {
+            "*": {
+                "Firas_DonationProduct/js/donation": {
+                    "rate": "<?php echo $block->escapeJs($rate) ?>"
+                }
+            }
+        }
+    </script>
+
+    <script type="text/x-magento-init">
+    {
+        "*": {
+            "donation":
+            {
+                "popupContainer":".firas-donation-modal",
+                "productSelector":".firas-donation-product",
+                "addToCartFormId":"#firas-donation-product-addtocart-form-<?= $block->escapeJs($block->getIdentifier()) ?>",
+                "modalClass":".firas-donation-modal",
+                "ajaxCart": true,
+                "identifier": "<?= $block->escapeJs($block->getIdentifier()) ?>",
+                "inputRadioSelector": ".input-radio-amount-<?= $block->escapeJs($block->getIdentifier()) ?>",
+                "setAjaxRefreshOnSuccess": true,
+                "setAjaxRefreshOnSuccessMsg": "<?= /* @noEscape */ __('The page will be refreshed.') ?>"
+            }
+        }
+    }
+    </script>
+<?php endif; ?>

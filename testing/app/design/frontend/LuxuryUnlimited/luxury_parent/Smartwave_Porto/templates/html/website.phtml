@@ -1,0 +1,63 @@
+<?php
+$websites = $block->getWebsites();
+$websiteId = $block->getCurrentWebsiteId();
+$id = $block->getIdModifier() ? '-' . $block->getIdModifier() : '';
+$ddHelper = $this->helper("\Dynamic\HomepageApi\Helper\Data");
+$store = $ddHelper->getLocaleResolver();
+$languageCode = strstr($store->getLocale(), '_', true);
+$storeManager = $ddHelper->getStoreManager();
+$store = $storeManager->getStore();
+$url_path = explode('/',$block->getRequest()->getRequestUri());
+$base_url=$store->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_WEB);
+?>
+<?php if (count($block->getWebsites()) > 1): ?>
+    <div class="switcher website switcher-website" id="switcher-website<?= $block->escapeHtmlAttr($id) ?>">
+        <strong class="label switcher-label"><span><?= /* @noEscape */ __('Select Website') ?></span></strong>
+        <div class="actions dropdown options switcher-options">
+            <?php foreach ($websites as $website): ?>
+                <?php if ($websiteId == $website->getId()): ?>
+                    <div class="action toggle switcher-trigger" id="switcher-website-trigger<?= $block->escapeHtmlAttr($id) ?>">
+                        <strong>
+                            <span><?= $block->escapeHtml(__('%1', $website->getName())) ?>
+                        </strong>
+                    </div>
+                <?php endif; ?>
+            <?php endforeach; ?>
+            <ul class="dropdown switcher-dropdown" data-target="dropdown"   data-mage-init='{"dropdownDialog":{
+                "appendTo":"#switcher-website<?= $block->escapeHtmlAttr($id) ?> > .options",
+                "triggerTarget":"#switcher-website-trigger<?= $block->escapeHtmlAttr($id) ?>",
+                "closeOnMouseLeave": false,
+                "triggerClass":"active",
+                "parentClass":"active",
+                "buttons":null}}'>
+                <?php foreach ($websites as $website): ?>
+                    <?php if (!($websiteId == $website->getId())): ?>
+                        <?php if ($website->getDefaultStore()->getIsActive()==1): ?>
+                        <?php
+                          $websiteCode = $website->getCode();
+                          $code = $websiteCode.'_';
+                        ?>
+                        <li class="switcher-option dd111">
+                            <?php
+                             if($languageCode=="en"){
+                                 $lan="en";
+                             }else{
+                                 $lan="ar";
+                             }
+                            $code = $code.$lan;
+                            unset($url_path[0]);
+                            $url_path[1]=$code;
+                            $newcode = implode('/', $url_path);
+                            $url=$base_url.$newcode;
+                            ?>
+                            <a href='<?= $block->escapeUrl($url) ?>'>
+                                <?php echo $block->escapeHtml(__('%1', $website->getName())); ?>
+                            </a>
+                        </li>
+                        <?php endif; ?>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    </div>
+<?php endif; ?>

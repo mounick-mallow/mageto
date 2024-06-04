@@ -1,0 +1,22 @@
+& when (@media-common =true) {
+    p.cls_cont_static {
+        .lib-font-size(16);
+        .lib-line-height(22);
+        font-weight: @font-weight__heavier;
+        text-align: @contact-align-subtitle;
+        margin-bottom: @contact-cont-static-margin-bottom;
+    }
+
+    .cms-contact-us {
+        .actions-toolbar {
+            text-align: @contact-align-subtitle;
+            .primary {
+                float: @contact-none-value;
+
+                .action.primary {
+                    float: @contact-none-value;
+                }
+            }
+        }
+    }
+}

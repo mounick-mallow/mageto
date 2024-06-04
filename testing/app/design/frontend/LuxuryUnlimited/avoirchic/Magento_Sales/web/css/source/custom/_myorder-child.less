@@ -1,0 +1,324 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common =true) {
+    .block-dashboard-orders {
+        .block-title {
+            display: none;
+        }
+    }
+
+    .block-dashboard-orders {
+        .lib-font-size(16);
+    }
+
+    .orders-recent {
+        border: 1px solid @custom__color-transparent-gray7;
+        border-radius: 20px;
+        padding: @indent__m;
+
+        .orders-recent-items {
+            border: none;
+            margin: 0 0 @indent__l 0;
+            padding: 0;
+
+            .id {
+                background-color: @custom__background-color;
+                margin: 0;
+                padding: 0 0 @indent__s 0;
+            }
+
+            .orders-recent-details,
+            .orders-recent-details .order-status a,
+            .id {
+                color: @theme__primary--color-400;
+            }
+
+            .orders-recent-details {
+                border-radius: @indent__xxs;
+                padding: @indent__s;
+                border-top: 1px solid @custom__color-transparent-gray7;
+
+                .product-name,
+                .product-price {
+                    color: @theme__primary--color-500;
+                    .lib-font-size(16);
+                }
+            }
+
+            .action {
+                height: auto;
+
+                &.cancel,
+                &.return {
+                    color: @theme__primary--color-800;
+                    background-color: @theme__primary--color-300;
+                    padding: @indent__xs @indent__m;
+                    border-radius: @indent__xs;
+                }
+            }
+
+            &:not(:last-of-type) {
+                .orders-recent-details {
+                    border-bottom: 1px solid @custom__color-transparent-gray7;
+                }
+            }
+        }
+    }
+
+    body.account.sales-order-view {
+        .page-main {
+            .page-title-wrapper {
+                padding: @indent__base;
+
+                .page-title {
+                    padding: @indent__xxs;
+                }
+
+                .order-status {
+                    padding: 2px @indent__xxs;
+                    display: table-cell;
+                    vertical-align: middle;
+                    height: 40px;
+                }
+
+                .order-date {
+                    margin: 0;
+                }
+            }
+        }
+    }
+
+    ul.order-tracking-steps {
+        .lib-vendor-prefix-display(flex);
+        list-style-type: none;
+
+        .step {
+            position: relative;
+            padding: 0 @indent__xxs;
+
+            > div {
+                .lib-hide-content();
+            }
+
+            &:before {
+                content: '';
+                display: block;
+                width: 20px;
+                height: 20px;
+                border: 1px solid @theme__primary--color-800;
+                position: relative;
+                margin: 0 auto @indent__s auto;
+                z-index: 2;
+                background: @custom__color-white;
+            }
+
+            &.active:before {
+                background: @theme__primary--color-50;
+                content: @icon-success;
+                color: @custom__color-black;
+                font-family: @icon-font-family;
+            }
+
+            &:after {
+                content: '';
+                background: @theme__primary--color-800;
+                height: 2px;
+                width: 100%;
+                position: absolute;
+                top: 10px;
+                left: -50%;
+                z-index: 0;
+            }
+
+            &:first-child:after {
+                content: none;
+            }
+
+            p,
+            span {
+                .lib-font-size(13);
+            }
+        }
+    }
+
+    .product-status-bar {
+        .status-item {
+            &:before {
+                border-radius: 0;
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__s) {
+    body.layout-fullwidth.page-layout-2columns-left.account {
+        .block-dashboard-orders {
+            .orders-recent {
+                .orders-recent-details {
+                    .lib-css(flex-wrap, wrap, @_prefix: 1);
+
+                    .actions {
+                        .lib-vendor-prefix-display(flex);
+                        .lib-css(flex-direction, row-reverse, @_prefix: 1);
+                        .lib-css(justify-content, space-between, @_prefix: 1);
+
+                        .return-order-button {
+                            margin: 0;
+                        }
+
+                        .cancel-order-button {
+                            .action.cancel {
+                                margin: 0 @indent__xxs 0 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    ul.order-tracking-steps {
+        .lib-css(flex-direction, column, @_prefix: 1);
+
+        li.step {
+            &:before {
+                position: absolute;
+                margin: 0 0 0 -@indent__xl;
+            }
+
+            &:after {
+                width: 2px;
+                height: 100%;
+                left: -25px;
+                top: 20px;
+            }
+
+            &:first-child:after {
+                content: '';
+            }
+
+            &:last-child:after {
+                content: none;
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    body.layout-fullwidth.page-layout-2columns-left.account {
+        .page-wrapper {
+            .page-title-wrapper {
+                order: 3;
+            }
+
+            .columns {
+                .lib-css(flex-direction, column-reverse, @_prefix: 1);
+
+                .column.main {
+                    order: 1;
+                }
+
+                .sidebar.sidebar-main {
+                    order: 2;
+                    width: 100%;
+                }
+            }
+        }
+
+        .block-dashboard-orders {
+            margin: @indent__l 0 0 0;
+
+            .orders-recent {
+                .orders-recent-items {
+                    .items {
+                        .item {
+                            .product-img {
+                                margin: 0 @indent__s 0 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .block-collapsible-nav {
+        position: relative;
+    }
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__s) {
+    body.layout-fullwidth.page-layout-2columns-left.account {
+        .block-dashboard-orders {
+            .orders-recent {
+                .orders-recent-items {
+                    .action.cancel {
+                        margin: 0 0 @indent__xxs 0;
+                    }
+                }
+
+                .orders-recent-details {
+                    .lib-css(flex-wrap, nowrap, @_prefix: 1);
+
+                    .actions {
+                        .lib-vendor-prefix-display(flex);
+                        .lib-css(flex-direction, column-reverse, @_prefix: 1);
+                    }
+                }
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__xl) {
+    body.layout-fullwidth.page-layout-2columns-left.account {
+        .block-dashboard-orders {
+            .orders-recent {
+                .orders-recent-items {
+                    .action.cancel {
+                        margin: 0 @indent__xxs 0 0;
+                    }
+                }
+
+                .orders-recent-details {
+                    .lib-css(flex-wrap, nowrap, @_prefix: 1);
+
+                    .actions {
+                        .lib-vendor-prefix-display(flex);
+                        .lib-css(flex-direction, row-reverse, @_prefix: 1);
+                    }
+
+                    .status {
+                        padding: 0 @indent__xxs 0 0;
+                    }
+                }
+            }
+        }
+    }
+}

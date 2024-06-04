@@ -1,0 +1,164 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common =true) {
+    .my-account-coupons {
+        border: @my-coupon-table-border-width solid
+            @my-coupon-table-border-color;
+        border-radius: @my-coupon-table-border-radius;
+
+        table {
+            tr {
+                th {
+                    .lib-font-size(@my-coupon-table-th-font-size);
+                    font-weight: @my-coupon-table-th-font-weight;
+                    color: @my-coupon-table-th-color;
+                    border-bottom: @my-coupon-table-border-width solid
+                        @my-coupon-table-border-color;
+                    background-color: @my-coupon-table-th-background-color;
+                    text-transform: @my-coupon-table-th-text-transform;
+                }
+
+                td {
+                    color: @my-coupon-table-main-td-color;
+                    .lib-font-size(@my-coupon-table-td-font-size);
+                    font-weight: @font-weight__regular;
+                    vertical-align: middle;
+
+                    &.col {
+                        &.exp-date {
+                            white-space: nowrap;
+                        }
+                    }
+
+                    &.col {
+                        &.actions {
+                            a.action.primary {
+                                .lib-button();
+                                background: @my-coupon-primary-button-background;
+                                color: @my-coupon-primary-button-color;
+                                padding: @indent__xs @indent__s;
+                                font-weight: @my-coupon-table-th-font-weight;
+                                .lib-font-size(@my-coupon-primary-font-size);
+                                border: @my-coupon-border;
+                                text-decoration: @my-coupon-primary-text-decoration;
+                                border-radius: @my-coupon-primary-border-radius;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .badge {
+        .lib-font-size(@my-coupon-active-font-size);
+        .lib-line-height(@my-coupon-active-line-height);
+        font-weight: @my-coupon-active-font-weight;
+        padding: @my-coupon-active-badge-padding;
+        border-radius: @my-coupon-table-btn-border-radius;
+        display: inline-block;
+
+        &.active {
+            background-color: @my-coupon-active-background;
+            color: @my-coupon-active-color;
+        }
+
+        &.expire {
+            background-color: @badge-expire-background-color;
+            color: @badge-expire-color;
+        }
+    }
+
+    .couponlist-coupon-index {
+        .no-coupons {
+            text-align: center;
+
+            .empty_icon {
+                margin-bottom: 24px;
+
+                .lib-icon-font(
+                    @_icon-font-content: @icon-coupon-empty,
+                    @_icon-font: @icon-font-family,
+                    @_icon-font-size: @coupon-empty-icon__font-size,
+                    @_icon-font-line-height: @coupon-empty-icon__line-height,
+                    @_icon-font-color: @coupon-empty-icon__font-color,
+                    @_icon-font-text-hide: false,
+                    @_icon-font-position: before,
+                    @_icon-font-display: block
+                );
+            }
+
+            p {
+                .lib-font-size(@coupon-content-font-size);
+                .lib-line-height(@coupon-content-line-height);
+                font-weight: @coupon-content-font-weight;
+                color: @coupon-content-color;
+                text-align: center;
+            }
+        }
+    }
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__m) {
+    .my-account-coupons {
+        table {
+            > tr {
+                > td {
+                    &.col {
+                        &.status,
+                        &.actions {
+                            width: 1%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    .table-wrapper {
+        .table:not(.totals):not(.cart):not(.table-comparison) {
+            > tbody {
+                > tr {
+                    td[data-th],
+                    th[data-th] {
+                        &:before {
+                            content: attr(data-th) ' ';
+                            .lib-font-size(@my-coupon-table-th-font-size);
+                            font-weight: @my-coupon-table-th-font-weight;
+                            color: @my-coupon-table-th-color;
+                            text-transform: @my-coupon-table-th-text-transform;
+                        }
+                    }
+
+                    > td {
+                        &.col {
+                            &.actions {
+                                padding-bottom: 24px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

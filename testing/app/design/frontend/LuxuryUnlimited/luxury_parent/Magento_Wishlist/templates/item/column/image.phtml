@@ -1,0 +1,20 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \Magento\Wishlist\Block\Customer\Wishlist\Item\Column\Image $block */
+
+/** @var \Magento\Wishlist\Model\Item $item */
+$item = $block->getItem();
+$product = $item->getProduct();
+?>
+<a class="belvg-quick-view-link" data-id="<?php echo $product->getId(); ?>" role="button">
+    <?php echo __('Quick View'); ?>
+</a>
+<div class="prodImage">
+    <a href="<?= $block->escapeUrl($block->getProductUrl($item)) ?>" tabindex="-1" href="" title="<?= $block->escapeHtmlAttr($product->getName()) ?>">
+        <?= $block->getImage($block->getProductForThumbnail($item), 'wishlist_thumbnail')->toHtml() ?>
+    </a>
+</div>

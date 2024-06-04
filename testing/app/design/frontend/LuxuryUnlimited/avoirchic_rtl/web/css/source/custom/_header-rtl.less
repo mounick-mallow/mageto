@@ -1,0 +1,52 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .page-header {
+        .switcher {
+            &:not(:last-child) {
+                &::after {
+                    left: -0.5px;
+                    right: auto;
+                }
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__s) {
+    .page-header {
+        .header.content {
+            padding-left: @layout__width-xs-indent;
+            padding-right: @layout__width-xs-indent + 33px;
+
+            .toggle-menu {
+                left: auto;
+                right: @layout__width-xs-indent;
+            }
+        }
+    }
+}
+
+& when (@media-target = 'mobile'), (@media-target = 'all') {
+    @media screen and (min-width: (@screen__s + 1)) and (max-width: @screen__l) {
+        .page-header {
+            .header.content {
+                .toggle-menu {
+                    left: auto;
+                    right: @layout__width-s-indent;
+                }
+
+                .content-right {
+                    left: @layout__width-s-indent;
+                    right: auto;
+                }
+            }
+        }
+    }
+}

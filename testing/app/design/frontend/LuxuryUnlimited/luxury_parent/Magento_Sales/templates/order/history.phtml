@@ -1,0 +1,369 @@
+<?php
+
+declare(strict_types=1);
+
+use Dynamic\Customization\Helper\Data as CustomizationHelper;
+use Dynamic\Mytickets\ViewModel\TicketCollection as TicketCollectionViewModel;
+use Dynamic\Orderreturn\Helper\Data as OrderReturnHelper;
+use Dynamic\OrderTracking\Helper\Data as OrderTrackingHelper;
+use LuxuryUnlimited\Sales\Model\Order;
+use Magento\Framework\Escaper;
+use Magento\Sales\Block\Order\History as OrderHistoryBlock;
+use Dynamic\OrderHistory\Helper\Data as OrderHistoryHelper;
+
+// phpcs:disable Magento2.Templates.ThisInTemplate
+
+/**
+ * @var OrderHistoryBlock $block
+ * @var Escaper $escaper
+ */
+?>
+<?php
+/** @var TicketCollectionViewModel $ticketViewModel */
+$ticketViewModel = $block->getData('viewModelCancelReturn');
+//echo get_class($ticketViewModel);die;
+/** @var OrderTrackingHelper $trackingHelper */
+$trackingHelper = $this->helper(OrderTrackingHelper::class);
+/** @var CustomizationHelper $customizationHelper */
+$customizationHelper = $this->helper(CustomizationHelper::class);
+/** @var OrderReturnHelper $returnHelper */
+$returnHelper = $this->helper(OrderReturnHelper::class);
+
+$_orders = $block->getOrders();
+$storeManager = $customizationHelper->getStoreManager();
+$storeCode = $storeManager->getStore()->getCode();
+$imageUrl = $customizationHelper->getBaseUrl();
+
+$returnReasonValue =  $returnHelper->getConfigValue('orderreturn_reason/orderreturn_configuration/reason');
+$returnReasonData = !empty($returnReasonValue) ? json_decode($returnReasonValue, true) : [];
+
+$erpClient = \Magento\Framework\App\ObjectManager::getInstance()->get(\Shellpea\ERP\Client\Client::class);
+?>
+<?= $block->getChildHtml('info') ?>
+<?php if ($_orders && count($_orders)): ?>
+    <div class="table-wrapper orders-history">
+        <table class="data table table-order-items history" id="my-orders-table">
+            <caption class="table-caption"><?= $escaper->escapeHtml(__('Orders')) ?></caption>
+            <thead>
+            <tr>
+                <th scope="col" class="col id"><?= $escaper->escapeHtml(__('Order')) ?></th>
+                <th scope="col" class="col date"><?= $escaper->escapeHtml(__('Date')) ?></th>
+                <?= $block->getChildHtml('extra.column.header') ?>
+                <th scope="col" class="col shipping"><?= $escaper->escapeHtml(__('Ship To')) ?></th>
+                <th scope="col" class="col total"><?= $escaper->escapeHtml(__('Order Total')) ?></th>
+                <th scope="col" class="col status"><?= $escaper->escapeHtml(__('Status')) ?></th>
+                <th scope="col" class="col actions"><?= $escaper->escapeHtml(__('Action')) ?></th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php /** @var Order $_order */ ?>
+            <?php foreach ($_orders as $_order): ?>
+                <?php $realOrderId = $_order->getIncrementId();
+                $isCancellable = $ticketViewModel->isTicketsCancelReturnOrder($_order, 'Cancel');
+                $isReturnable = $ticketViewModel->isTicketsCancelReturnOrder($_order, 'Return');
+                ?>
+                <tr>
+                    <td data-th="<?= $escaper->escapeHtml(__('Order #')) ?>" class="col id">
+                        <a href="<?= $escaper->escapeUrl($block->getViewUrl($_order)) ?>" class="action view">
+                            <?= $escaper->escapeHtml($_order->getRealOrderId()) ?>
+                        </a>
+                    </td>
+                    <td data-th="<?= $escaper->escapeHtml(__('Date')) ?>"
+                        class="col date"><?= $escaper->escapeHtml($block->formatDate($_order->getCreatedAt())) ?></td>
+                    <?php $extra = $block->getChildBlock('extra.container'); ?>
+                    <?php if ($extra): ?>
+                        <?php $extra->setOrder($_order); ?>
+                        <?= $extra->getChildHtml() ?>
+                    <?php endif; ?>
+                    <td data-th="<?= $escaper->escapeHtml(__('Ship To')) ?>"
+                        class="col shipping"><?= $_order->getShippingAddress() ? $escaper->escapeHtml($_order->getShippingAddress()->getName()) : '&nbsp;' ?></td>
+                    <td data-th="<?= $escaper->escapeHtml(__('Order Total')) ?>"
+                        class="col total"><?= /** @noEscape */ $_order->formatPrice($_order->getGrandTotal()) ?></td>
+                    <td data-th="<?= $block->escapeHtml(__('Status')) ?>" class="col status">
+                      <?php $customerEmail = $_order->getCustomerEmail();
+                        $orderItems = $_order->getAllItems();
+                        $allSku = [];
+
+                        foreach ($orderItems as $orderItem) {
+                            $allSku[] = $orderItem->getSku();
+                        }
+                        ?>
+                        <span><?= $block->escapeHtml('Status not available') ?></span>
+                        <a href="javascript:void(0);" class="order-status-popup"
+                            order-content-id="<?= $block->escapeHtmlAttr($_order->getId()) ?>">
+                            <span><?= $block->escapeHtml(__('View order Status')) ?></span>
+                        </a>
+                    </td>
+                    <td data-th="<?= $escaper->escapeHtml(__('Actions')) ?>" class="col actions">
+                        <?php $orderStatus = $trackingHelper->getOrderStatusList($_order); ?>
+
+                        <a href="<?= $escaper->escapeUrl($block->getViewUrl($_order)) ?>" class="action view">
+                            <span class="order-view"><?= $escaper->escapeHtml(__('View Order')) ?></span>
+                        </a>
+                        <?php if (!empty($orderStatus) && count($orderStatus) > 0): ?>
+                            <div class="order-status-modal modal"
+                                 id="order-status-model-<?= $escaper->escapeHtmlAttr($_order->getId()) ?>">
+                                <div class="modal-content">
+                                        <span class="close"
+                                              order-content-id="<?= $escaper->escapeHtmlAttr($_order->getId()) ?>">×</span>
+                                    <div class="modal-progress-bar">
+                                        <div class="card card-timeline">
+                                            <ul class="order-tracking-steps">
+                                                <?php $i = 1; ?>
+                                                <?php foreach ($orderStatus as $statusData): ?>
+                                                    <li class="step <?= /* @noEscape */ (isset($statusData['status_date']) ? 'active' : ''); ?>">
+                                                        <div><?= $escaper->escapeHtml($i) ?></div>
+                                                        <span><?= $escaper->escapeHtml($statusData['status_title']) ?></span>
+                                                        <?php if (isset($statusData['status_date'])): ?>
+                                                            <p><?= $escaper->escapeHtml($statusData['status_date']) ?></p>
+                                                        <?php endif; ?>
+                                                    </li>
+                                                    <?php $i++; ?>
+                                                <?php endforeach; ?>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                        <?php $totalItem = count($_order->getAllItems()); ?>
+                        <?php if ($_order->canCancel()): ?>
+                            <?php if ($isCancellable || $isReturnable): ?>
+                                <span class="order-request-pending">
+                                    <?= $escaper->escapeHtml(__('Request Pending')) ?>
+                                </span>
+                            <?php else : ?>
+                                <span id="return-order-<?= $escaper->escapeHtmlAttr($_order->getRealOrderId()) ?>"
+                                      class="order-cancel <?= $escaper->escapeHtmlAttr('return-' . $_order->getRealOrderId()) ?>">
+                                    <span class="cancel"><?= $escaper->escapeHtml(__('Return')) ?></span>
+                                </span>
+                                <div id="order-return-popup<?= $escaper->escapeHtmlAttr($_order->getRealOrderId()) ?>"
+                                     style="display:none">
+                                    <div class="modal-content">
+                                        <p><?= $escaper->escapeHtml(__('Return Order #%1', $_order->getRealOrderId())) ?></p>
+                                        <div id="return-result-<?= $escaper->escapeHtmlAttr($_order->getRealOrderId()) ?>"></div>
+                                        <div class="form-data">
+                                            <?php if (!empty($returnReasonData)): ?>
+                                                <label><?= $escaper->escapeHtml(__('Select Reason')) ?></label>
+                                                <select name="order-return-reason"
+                                                        id="order-return-reason-<?= $escaper->escapeHtmlAttr($_order->getRealOrderId()) ?>">
+                                                    <option value=""><?= $escaper->escapeHtml(__('Reason to return')) ?></option>
+                                                    <?php foreach ($returnReasonData as $reason): ?>
+                                                        <option value="<?= $escaper->escapeHtmlAttr($reason['reason_data']) ?>">
+                                                            <?= $escaper->escapeHtml($reason['reason_data']) ?>
+                                                        </option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            <?php endif; ?>
+                                            <div id="return-loader-<?= $escaper->escapeHtmlAttr($_order->getRealOrderId()) ?>"
+                                                 style="display:none;">
+                                                <?= $escaper->escapeHtml(__('loading')) ?>
+                                            </div>
+                                            <input type="button" value="Send" name="submit"
+                                                   id="order-return-submit-<?= $escaper->escapeHtmlAttr($_order->getRealOrderId()) ?>">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <span class="order-cancel <?= $escaper->escapeHtmlAttr('cancel-' . $_order->getRealOrderId()) ?>">
+                                    <span class="cancel"><?= $escaper->escapeHtml(__('Cancel')) ?></span>
+                                </span>
+                                <div class="show-<?= $escaper->escapeHtmlAttr($_order->getRealOrderId()) ?> modal">
+                                    <div class="modal-content">
+                                        <span class="close">&times;</span>
+                                        <p><?= $escaper->escapeHtml(__('Cancel Order #%1', $_order->getRealOrderId())) ?></p>
+                                        <div id="result-<?= $escaper->escapeHtmlAttr($_order->getRealOrderId()) ?>"></div>
+                                        <div class="form-data">
+                                            <?php
+                                            $configReason = $returnHelper->getConfigValue(
+                                                'ordercancel_reason/ordercancel_configuration/reason'
+                                            );
+
+                                            $reasonData = !empty($configReason) ?
+                                                json_decode($configReason,true) : [];
+
+                                            ?>
+                                            <?php if (!empty($reasonData)): ?>
+                                                <label><?= $escaper->escapeHtml(__('Select Reason')) ?></label>
+                                                <select name="ordercancel-reason"
+                                                        id="ordercancel-reason-<?= $escaper->escapeHtmlAttr($_order->getRealOrderId()) ?>">
+                                                    <option value="">
+                                                        <?= $escaper->escapeHtml(__('Reason to cancel')) ?></option>
+                                                    <?php foreach ($reasonData as $reason): ?>
+                                                        <option value="<?= $escaper->escapeHtmlAttr($reason['reason_data']) ?>">
+                                                            <?= $escaper->escapeHtml($reason['reason_data']) ?></option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            <?php endif; ?>
+                                            <div id="loader-<?= $escaper->escapeHtmlAttr($_order->getRealOrderId()) ?>"
+                                                 style="display:none;"><?= $escaper->escapeHtml(__('loading')) ?></div>
+                                            <input type="button" value="Send" name="submit"
+                                                   id="ordercancel-submit-<?= $escaper->escapeHtmlAttr($_order->getRealOrderId()) ?>">
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                        <?php else : ?>
+                            <?php if ($isCancellable): ?>
+                                <span class="order-cancelled"><?= $escaper->escapeHtml(__('Cancelled')) ?></span>
+                            <?php elseif ($isReturnable): ?>
+                                <span class="order-returned"><?= $escaper->escapeHtml(__('Returned')) ?></span>
+                            <?php endif; ?>
+                        <?php endif; ?>
+                        <?php /** @var OrderHistoryHelper $orderHistoryHelper */
+                        $orderHistoryHelper = $this->helper(OrderHistoryHelper::class); ?>
+                        <?php if ($orderHistoryHelper->isorderHistoryExist($_order->getEntityId())): ?>
+                            <a target="_blank" href="<?= $escaper->escapeUrl($this->getURL(
+                                'orderhistory/view/index',
+                                ['orderoriginal_id' => $_order->getEntityId()]
+                            )) ?>">
+                                <?= $escaper->escapeHtml(__('Org. Order')) ?></a>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+            <?php $orderCancelComment = $_order->getCancelComment(); ?>
+            <?php if ($orderCancelComment != ''): ?>
+                <tr>
+                    <td colspan="6">
+                        <span class="oi oi-comment-square"></span>
+                        <span class="alert" role="alert" >
+                                <a href="<?= $escaper->escapeUrl($block->getViewUrl($_order)) ?>" class="action view">
+                                    <?= /* @noEscape */ '<strong>' . __('Order # %1', $escaper->escapeHtml($_order->getRealOrderId())) . '</strong> : ';?>
+                                </a>
+                                <?= $escaper->escapeHtml($orderCancelComment) ?>
+                            </span>
+                    </td>
+                </tr>
+            <?php endif; ?>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+    <?php if ($block->getPagerHtml()): ?>
+        <div class="order-products-toolbar toolbar bottom"><?= $block->getPagerHtml() ?></div>
+    <?php endif ?>
+<?php else: ?>
+    <div class="cart-empty">
+            <div class="no-page">
+                <img alt="<?= /* @noEscape */ __('Oops') ?>" src="<?= $block->getViewFileUrl('images/oops.svg') ?>">
+                <h3><?= __("You Don't Seem to Have Any Orders Yet"); ?> </h3>
+                <div class="re-result-btns">
+                    <a class="action primary" href="<?php echo $block->getUrl('brands'); ?>"><?= $block->escapeHtml(__('Continue Shopping')); ?></a>
+                </div>
+            </div>
+        </div>
+<?php endif ?>
+
+<?php
+$subject = __('Request for Cancel of Order');
+$customerSession = $customizationHelper->getCustomerSessionManager();
+$fname = ''; $lname = ''; $email = '';
+if ($customerSession->isLoggedIn()) {
+    $fname = $customerSession->getCustomer()->getFirstname();
+    $lname = $customerSession->getCustomer()->getLastname();
+    $email = $customerSession->getCustomer()->getEmail();
+}
+?>
+<div id="order-return-ticket-modal" style="display:none;">
+    <div id="order-refund-details">
+        <span id="order-refund-amount"></span>
+    </div>
+    <form class="form"
+          action="<?= $escaper->escapeUrl($this->getUrl('mytickets/ajax/create')) ?>"
+          id="ordercancel-popup-form"
+          method="post"
+          data-hasrequired="<?= $escaper->escapeHtmlAttr(__('* Required Fields')) ?>"
+          data-mage-init='{"validation":{}}'>
+        <div id="ordercancelreturn_reason" class="alert alert-danger" role="alert"></div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="field name required cls_comm_input">
+                    <div class="control">
+                        <select name="orddercancel_item" id="orddercancel_item" required="true" class="input-text">
+                            <option value=""><?= $escaper->escapeHtml(__('Select Item')) ?></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="field name required cls_comm_input">
+                    <div class="control">
+                        <input id="orddercancel_name" class="input-text" title="Name" name="orddercancel_name" required=""
+                               type="text" value="<?= $escaper->escapeHtmlAttr($fname) ?>"
+                               placeholder="<?= $escaper->escapeHtmlAttr(__('Enter Your Name')) ?>">
+                    </div>
+                </div>
+                <div class="field name required cls_comm_input">
+                    <div class="control">
+                        <input id="orddercancel_last_name" class="input-text" title="Last Name" required=""
+                               name="orddercancel_last_name" type="text"
+                               value="<?= $escaper->escapeHtmlAttr($lname) ?>"
+                               placeholder="<?= $escaper->escapeHtmlAttr(__('Enter Your Last Name')) ?>">
+                    </div>
+                </div>
+                <div class="field name required cls_comm_input">
+                    <div class="control">
+                        <input id="orddercancel_email" class="input-text" required="" title="Email"
+                               name="orddercancel_email"
+                               type="email" <?php if ($email != '') { ?> readonly="readonly" <?php } ?>
+                               value="<?= $escaper->escapeHtmlAttr($email) ?>"
+                               placeholder="<?= $escaper->escapeHtmlAttr(__('Enter email')) ?>">
+                    </div>
+                </div>
+                <div class="field name required cls_comm_input">
+                    <div class="control">
+                        <input id="orddercancel_phone" class="input-text" title="Phone" required=""
+                               name="orddercancel_phone" type="text" value=""
+                               placeholder="<?= $escaper->escapeHtmlAttr((__('Enter Phone Number'))) ?>">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="field name required cls_comm_input">
+                    <div class="control">
+                        <input id="orddercancel_brand" readonly="true" class="input-text" title="Brand"
+                               required="" name="orddercancel_brand" type="text" value=""
+                               placeholder="<?= $escaper->escapeHtmlAttr(__('Enter Brand Name')) ?>">
+                    </div>
+                </div>
+                <div class="field name required cls_comm_input">
+                    <div class="control">
+                        <input id="orddercancel_style" readonly="true" class="input-text" title="Style"
+                               required="" name="orddercancel_style" type="text" value=""
+                               placeholder="<?= $escaper->escapeHtmlAttr(__('Enter Style')) ?>">
+                    </div>
+                </div>
+                <div class="field name required cls_comm_input">
+                    <div class="control">
+                        <input id="orddercancel_keyword" readonly="true" class="input-text" title="Keyword"
+                               required="" name="orddercancel_keyword" type="text"
+                               value="<?= $escaper->escapeHtmlAttr(__('Order Cancel request')) ?>"
+                               placeholder="<?= $escaper->escapeHtmlAttr(__('Enter Keyword')) ?>">
+                    </div>
+                </div>
+                <div class="field remarks required cls_comm_input">
+                    <div class="control">
+                    <textarea id="orddercancel_remarks" class="input-text" title="Remarks" required=""
+                              name="orddercancel_remarks" type="text" value=""
+                              placeholder="<?= $escaper->escapeHtmlAttr(__('Enter Remarks')) ?>"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="field name required spBtn">
+                <div class="control">
+                    <input type="hidden" name="orddercancel_tickettype" id="orddercancel_tickettype" value="0"/>
+                    <input type="hidden" name="orddercancel_itemskus" id="orddercancel_itemskus" value=""/>
+                    <input type="hidden" name="orddercancel_order_id" id="orddercancel_order_id" value=""/>
+                    <input type="hidden" name="orddercancel_lang_code" id="orddercancel_lang_code"
+                           value="<?= $escaper->escapeHtmlAttr($storeCode) ?>"/>
+                    <input type="hidden" name="orddercancel_hdn_subject" id="orddercancel_hdn_subject" value=""/>
+                    <input type="hidden" name="orddercancel_hdn_message" id="orddercancel_hdn_message" value=""/>
+                    <input type="hidden" name="orddercancelreturn_requesttype" id="orddercancelreturn_requesttype"
+                           value=""/>
+                    <div class="mm-action">
+                        <button id="orddercancel_btn_submit" class="btn btn-custom" name="orddercancel_btn_submit"
+                                type="submit"><?= $escaper->escapeHtml(__('Submit')) ?></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

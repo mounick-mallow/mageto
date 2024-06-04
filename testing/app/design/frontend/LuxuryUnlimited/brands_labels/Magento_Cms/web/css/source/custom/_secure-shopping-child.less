@@ -1,0 +1,101 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .secureshippingcont {
+        .ctitle {
+            display: none;
+        }
+
+        .innerpart {
+            margin: @secure-content__margin;
+
+            .imgpart {
+                width: ~'calc(100% - @{secure-img__width})';
+                margin-bottom: @indent__l;
+
+                img {
+                    width: 100%;
+                    object-fit: cover;
+                }
+            }
+
+            .textpart {
+                width: 100%;
+
+                h4 {
+                    .lib-font-size(24);
+                    font-weight: @font-weight__bold;
+                }
+            }
+        }
+
+        .paymenticons {
+            .lib-vendor-prefix-display(flex);
+            justify-content: center;
+
+            .icon-wrap {
+                .lib-vendor-prefix-display(flex);
+                justify-content: center;
+                align-items: center;
+                background-color: @color-white-smoke;
+                max-width: 294px;
+                width: 100%;
+
+                img {
+                    width: auto;
+                }
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  ---------------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    .cms-secure-shopping {
+        .secureshippingcont {
+            .innerpart {
+                margin: @secure-content-mobile__margin;
+
+                .imgpart {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+
+//
+//  Desktop
+//  ---------------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__l) {
+    .secureshippingcont {
+        .innerpart {
+            .imgpart {
+                width: auto;
+                margin-bottom: 0;
+
+                img {
+                    max-height: @secure-img__height;
+                }
+            }
+
+            .textpart {
+                flex: ~'calc(100% - @{secure-img__width})';
+            }
+        }
+    }
+}

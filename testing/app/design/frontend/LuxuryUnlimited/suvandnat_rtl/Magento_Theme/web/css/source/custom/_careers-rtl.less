@@ -1,0 +1,19 @@
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__m) {
+    .careers-content {
+        .careers-content-left {
+            float: left;
+        }
+
+        .careers-content-img {
+            float: right;
+        }
+    }
+}

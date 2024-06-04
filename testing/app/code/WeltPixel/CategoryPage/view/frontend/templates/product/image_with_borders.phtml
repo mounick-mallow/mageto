@@ -1,0 +1,53 @@
+<?php /** @var $block \Magento\Catalog\Block\Product\Image */ ?>
+<?php $lazyLoadHelper = $block->helper(\WeltPixel\LazyLoading\Helper\Data::class);
+$pWidth = $lazyLoadHelper->getPlaceholderWidth() ?? '100%';
+$isRequestAjax = $lazyLoadHelper->isRequestAjax();
+$lazyLodImgSrc = $lazyLoadHelper->getImageLoader();
+$lazyLoadImgDataOriginal = $block->getImageUrl();
+if ($isRequestAjax) {
+    $lazyLodImgSrc = $lazyLoadImgDataOriginal;
+}
+?>
+
+<?php
+$lazyLoadClass = '';
+if ($block->getLazyLoad()) {
+    $lazyLoadClass = 'owl-lazy';
+} elseif ($lazyLoadHelper->isEnabled() && !$block->getOwlcarousel()) {
+    $lazyLoadClass = 'lazy';
+}
+?>
+
+<span class="product-image-container"
+      style="width:<?= /* @noEscape */ $block->getWidth()?>px;">
+    <span class="product-image-wrapper"
+          style="padding-bottom: <?= /* @noEscape */ ($block->getRatio() * 100); ?>%;">
+        <img alt="<?= /* @noEscape */ $block->stripTags($block->getLabel(), null, true); ?>"
+             class="<?= /* @noEscape */ $block->getClass() ?> <?= /* @noEscape */ $lazyLoadClass; ?>"
+            <?= /* @noEscape */ $block->getCustomAttributes(); ?>
+            <?php if (!$block->getLazyLoad()): ?>
+                <?php if ($lazyLoadHelper->isEnabled() && !$block->getOwlcarousel()): ?>
+                    src="<?= /* @noEscape */ $lazyLodImgSrc; ?>"
+                    data-original="<?= /* @noEscape */ $lazyLoadImgDataOriginal; ?>"
+                    style="max-width: <?= /* @noEscape */ $pWidth ?>"
+                <?php else:  ?>
+                    src="<?= /* @noEscape */ $block->getImageUrl(); ?>"
+                <?php endif; ?>
+            <?php endif ;?>
+            <?php if ($block->getHoverImageUrl()):  ?>
+                data-hoversrc="<?= /* @noEscape */ $block->getHoverImageUrl(); ?>"
+                data-origsrc="<?= /* @noEscape */ $lazyLoadImgDataOriginal; ?>"
+                onmouseover="this.setAttribute('data-tmp', this.src);this.src=this.getAttribute('data-hoversrc');"
+                onmouseout="this.src=this.getAttribute('data-tmp')"
+                onmousemove="if (this.getAttribute('data-hoversrc')
+                != this.src) this.setAttribute('data-tmp', this.src)"
+            <?php endif; ?>
+             width="<?= /* @noEscape */ $block->getWidth(); ?>"
+             height="<?= /* @noEscape */ $block->getHeight(); ?>"
+            <?php if ($block->getLazyLoad()): ?>
+                data-src="<?= /* @noEscape */ $block->getImageUrl(); ?>"
+                data-src-retina="<?= /* @noEscape */ $block->getImageUrl(); ?>"
+                style="max-width: <?= /* @noEscape */ $pWidth ?>"
+            <?php endif; ?>
+        /></span>
+</span>

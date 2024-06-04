@@ -1,0 +1,37 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * @var \Magento\Framework\View\Element\AbstractBlock $block
+ */
+?>
+<div class="secure_shopping">
+	<div class="help-btn">
+		<span>
+			<svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+				<path d="M4.99967 18.832C4.54134 18.832 4.14898 18.6688 3.82259 18.3424C3.4962 18.0161 3.33301 17.6237 3.33301 17.1654V8.83203C3.33301 8.3737 3.4962 7.98134 3.82259 7.65495C4.14898 7.32856 4.54134 7.16536 4.99967 7.16536H5.83301V5.4987C5.83301 4.34592 6.23926 3.36328 7.05176 2.55078C7.86426 1.73828 8.8469 1.33203 9.99967 1.33203C11.1525 1.33203 12.1351 1.73828 12.9476 2.55078C13.7601 3.36328 14.1663 4.34592 14.1663 5.4987V7.16536H14.9997C15.458 7.16536 15.8504 7.32856 16.1768 7.65495C16.5031 7.98134 16.6663 8.3737 16.6663 8.83203V17.1654C16.6663 17.6237 16.5031 18.0161 16.1768 18.3424C15.8504 18.6688 15.458 18.832 14.9997 18.832H4.99967ZM4.99967 17.1654H14.9997V8.83203H4.99967V17.1654ZM9.99967 14.6654C10.458 14.6654 10.8504 14.5022 11.1768 14.1758C11.5031 13.8494 11.6663 13.457 11.6663 12.9987C11.6663 12.5404 11.5031 12.148 11.1768 11.8216C10.8504 11.4952 10.458 11.332 9.99967 11.332C9.54134 11.332 9.14898 11.4952 8.82259 11.8216C8.4962 12.148 8.33301 12.5404 8.33301 12.9987C8.33301 13.457 8.4962 13.8494 8.82259 14.1758C9.14898 14.5022 9.54134 14.6654 9.99967 14.6654ZM7.49967 7.16536H12.4997V5.4987C12.4997 4.80425 12.2566 4.21398 11.7705 3.72786C11.2844 3.24175 10.6941 2.9987 9.99967 2.9987C9.30523 2.9987 8.71495 3.24175 8.22884 3.72786C7.74273 4.21398 7.49967 4.80425 7.49967 5.4987V7.16536Z" fill="black"/>
+			</svg>
+		</span>
+		<p><?= /* @noEscape */ __('Secure shopping with ') ?><u><?= /* @noEscape */ __('Veralusso encryption') ?></u></p>
+	</div>
+	<div class="secure-modal">
+		<div id="secure_shopping">
+			<div class="secure-content">
+				<p><?= /* @noEscape */ __('WWW.Veralusso.com is validated as a secure site for sending and receiving sensitive data DIGICert OV SSL Certificate.') ?></p>
+				<p><?= /* @noEscape */ __('The SSL technology encrypts the communication between the web browser and website, ensuring that no information can be intercepted or accessed by a third party.') ?></p>
+					<img class="rss-icon" src="<?= $block->escapeUrl($block->getViewFileUrl('images/digicert.png')) ?>" alt="digicert" width="124" height="50" loading="lazy">
+					<img class="rss-icon" src="<?= $block->escapeUrl($block->getViewFileUrl('images/secureSSL.png')) ?>" alt="secureSSL" width="122" height="50" loading="lazy">
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Checkout/js/view/cart/secure": {}
+        }
+    }
+</script>

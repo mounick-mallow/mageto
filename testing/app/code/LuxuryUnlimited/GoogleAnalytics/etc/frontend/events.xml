@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * LuxuryUnlimited_GoogleAnalytics
+ *
+ * @copyright   Copyright (c) 2023
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="checkout_cart_add_product_complete">
+        <observer name="after_add_to_cart" instance="LuxuryUnlimited\GoogleAnalytics\Observer\ProductAddCartAfter" />
+    </event>
+    <event name="sales_quote_remove_item">
+        <observer name="after_remove_from_cart" instance="LuxuryUnlimited\GoogleAnalytics\Observer\ProductRemoveCartAfter" />
+    </event>
+    <event name="checkout_cart_update_items_after">
+        <observer name="cart_update_qty" instance="LuxuryUnlimited\GoogleAnalytics\Observer\UpdateQty"/>
+    </event>
+    <event name="checkout_onepage_controller_success_action">
+        <observer name="order_save_after" instance="LuxuryUnlimited\GoogleAnalytics\Observer\PlaceOrderAfter" />
+    </event>
+</config>

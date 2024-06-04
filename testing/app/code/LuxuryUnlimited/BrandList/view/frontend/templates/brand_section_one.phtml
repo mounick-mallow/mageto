@@ -1,0 +1,32 @@
+<?php
+/**
+ * @var \LuxuryUnlimited\BrandList\Block\SectionOne $block
+ */
+$isEnabledSectionOne = $block->isEnabledSectionOne();
+
+$showSection = false;
+if ($isEnabledSectionOne):
+    $brands = $block->getSectionOneBrands();
+    if (count($brands)):
+        $showSection =  true;
+    endif;
+endif;
+?>
+<?php if ($showSection): ?>
+    <div class="brand-slide">
+        <?php foreach ($brands as $brand): ?>
+            <?php if ($brand->getLogoPath() && $brand->getUrlKey()): ?>
+                <div class="brand" title="<?= $block->escapeHtml($brand->getName()) ?>">
+                    <a href="<?= /** @noEscape */ $block->getBrandUrl($brand->getUrlKey()) ?>">
+                        <?php if ($block->checkLogoExist($brand->getLogoPath())): ?>
+                            <?php $src = $block->getBrandMediaUrl() . $brand->getLogoPath() ?>
+                            <img alt="<?= $block->escapeHtml($brand->getName()) ?>"
+                                 src="<?= /** @noEscape */ $src ?>" />
+                        <?php endif; ?>
+                        <div class="brand-title"><?= $block->escapeHtml($brand->getName()) ?></div>
+                    </a>
+                </div>
+            <?php endif; ?>
+        <?php endforeach; ?>
+    </div>
+<?php endif;?>

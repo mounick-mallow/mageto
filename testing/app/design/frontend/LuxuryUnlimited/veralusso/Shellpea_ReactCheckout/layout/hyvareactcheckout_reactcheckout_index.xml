@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:module:View/Layout:etc/page_configuration.xsd">
+      <head>
+        <remove src="Hyva_ReactCheckout::css/styles.css"/>
+        <remove src="Hyva_ReactCheckout::js/react-checkout.js"/>
+        <css src="Shellpea_ReactCheckout::css/styles.css" defer="defer" />
+        <script src="Shellpea_ReactCheckout::js/react-checkout.js" defer="defer" />
+      </head>
+    <body>
+        <referenceBlock name="checkout.scripts" template="Shellpea_ReactCheckout::react-script.phtml" />
+    </body>
+</page>

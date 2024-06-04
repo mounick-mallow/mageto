@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--
+
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="controller_action_catalog_product_save_entity_after">
+        <observer name="magetop_giftcard_AfterProductSave" instance="Magetop\GiftCard\Observer\AfterProductSave" shared="false" />
+    </event>
+    <event name="sales_order_invoice_save_after">
+        <observer name="magetop_giftcard_AfterInvoiceGeneration" instance="Magetop\GiftCard\Observer\AfterInvoiceGeneration" shared="false" />
+    </event>
+    <event name="checkout_onepage_controller_success_action">
+        <observer name="magetop_giftcard_AfterPlaceOrder" instance="Magetop\GiftCard\Observer\AfterPlaceOrder" shared="false" />
+    </event>
+</config>

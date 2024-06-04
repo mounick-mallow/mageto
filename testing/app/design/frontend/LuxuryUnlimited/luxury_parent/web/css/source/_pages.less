@@ -1,0 +1,75 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common =true) {
+    .pages {
+        .lib-pager();
+        width: 100%;
+        text-align: center;
+
+        .item {
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+    .pages {
+        .page,
+        .action {
+            border-radius: 50%;
+        }
+
+        .page {
+            padding: @indent__xs;
+            .lib-line-height(5);
+        }
+
+        .item {
+            .action {
+                display: inline;
+                padding: 7px;
+            }
+        }
+
+        strong {
+            &.page {
+                padding: 0 @pager-item__padding;
+            }
+        }
+    }
+
+    .pages {
+        .action {
+            &.next {
+                background: @pager-action__background;
+
+                &:before {
+                    content: @icon-right;
+                    padding: @indent__xxs 0;
+                    color: @pager-action__color;
+                }
+
+                &:hover:before,
+                &:visited:before {
+                    color: @pager-action__hover__color;
+                }
+            }
+
+            &.previous {
+                background: @pager-action__background;
+
+                &:before {
+                    content: @icon-left;
+                    padding: @indent__xxs 0;
+                    color: @pager-action__color;
+                }
+
+                &:hover:before,
+                &:visited:before {
+                    color: @pager-action__hover__color;
+                }
+            }
+        }
+    }
+}

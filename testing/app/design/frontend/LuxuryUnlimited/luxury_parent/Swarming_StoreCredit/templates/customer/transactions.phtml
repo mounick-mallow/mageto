@@ -1,0 +1,104 @@
+<?php
+/**
+ * Copyright © Swarming Technology, LLC. All rights reserved.
+ */
+
+/* @var $block \Swarming\StoreCredit\Block\Customer\Transactions */
+?>
+<?php $transactions = $block->getTransactions(); ?>
+
+<?php if ($transactions && count($transactions)): ?>
+    <div class="table-wrapper store-credit-table-section">
+        <table class="data table credit-table-data" id="my-swarming-credits-transaction-table">
+            <caption class="table-caption"><?php echo __('Transactions') ?></caption>
+            <thead>
+                <tr>
+                    <th scope="col" class="col date"><?php echo __('Updated') ?></th>
+                    <th scope="col" class="col type"><?php echo __('Type') ?></th>
+                    <th scope="col" class="col amount"><?php echo __('Amount') ?></th>
+                    <th scope="col" class="col amount"><?php echo __('Info') ?></th>
+                    <th scope="col" class="col summary"><?php echo __('Summary') ?></th>
+                    <th scope="col" class="col balance"><?php echo __('Balance') ?></th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php /** @var $transaction \Swarming\StoreCredit\Api\Data\TransactionInterface */ ?>
+            <?php foreach ($transactions as $transaction): ?>
+                <tr>
+                    <td data-th="<?php echo $block->escapeHtml(__('Updated')) ?>" class="col date"><?php echo $block->formatDate($transaction->getAtTime()) ?></td>
+                    <td data-th="<?php echo $block->escapeHtml(__('Type')) ?>" class="col type"><?php echo $transaction->getTypeLabel() ?></td>
+                    <td data-th="<?php echo $block->escapeHtml(__('Amount')) ?>" class="col amount"><?php echo $block->formatCreditsGrid($transaction->getAmount(), $transaction) ?></td>
+                    <td data-th="<?php echo $block->escapeHtml(__('Info')) ?>" class="col amount"><?php echo $block->getAmountInfo($transaction) ?></td>
+                    <td data-th="<?php echo $block->escapeHtml(__('Summary')) ?>" class="col summary"><?php echo $block->getSummary($transaction) ?></td>
+                    <td data-th="<?php echo $block->escapeHtml(__('Balance')) ?>" class="col balance"><?php echo $block->formatCreditsGrid($transaction->getBalance(), $transaction) ?></td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+    <div class="returns_footer">
+        <div class="clsspecialrequest">
+            <button id="help-btn" class="primary action help-btn"><?= /* @noEscape */ __('Need Help') ?></button>
+        </div>
+        <?php if ($block->getPagerHtml()): ?>
+            <div class="swarming-credits-transaction-toolbar toolbar bottom"><?php echo $block->getPagerHtml(); ?></div>
+        <?php endif ?>
+    </div>
+    <div class="order-help-container" style="display:none">
+        <div class="show-order-help modal-track-help">
+            <div id="order-track-help" class="track-order-help">
+                <form class="form"
+                      action="<?= $escaper->escapeUrl($this->getUrl('mytickets/index/post')) ?>"
+                      id="order-popup-form"
+                      method="post" data-hasrequired="<?= $escaper->escapeHtmlAttr(__('* Required Fields')) ?>"
+                      data-mage-init='{"validation":{}}'>
+                    <fieldset class="fieldset main-information">
+                        <div class="field order-number required cls_comm_input">
+                            <div class="control">
+                                <input id="keyword" class="input-text" title="<?= $block->escapeHtml(__('Order Number')) ?>"
+                                       required="" name="keyword" type="text" value=""
+                                       placeholder="<?= $escaper->escapeHtmlAttr(__('Enter Order #')) ?>">
+                            </div>
+                        </div>
+                        <div class="field email required cls_comm_input">
+                            <div class="control">
+                                <input id="order-email"  class="input-text" title="<?= $block->escapeHtml(__('Style')) ?>"
+                                       required="" name="order-email" type="text" value=""
+                                       placeholder="<?= $escaper->escapeHtmlAttr(__('Email Address')) ?>">
+                                <input id="order-status"  class="input-text" name="status" type="hidden" value="1">
+                                <input id="customer_id" readonly  class="input-text" name="customer_id" type="hidden" value="">
+                            </div>
+                        </div>
+                        <div class="field reason required cls_comm_input">
+                            <div class="control">
+                                <textarea id="remarks" class="input-text" title="<?= $block->escapeHtml(__('Reason')) ?>" required=""
+                                          name="remarks" type="text"
+                                          placeholder="<?= $escaper->escapeHtmlAttr(__('Enter Reason')) ?>"></textarea>
+                            </div>
+                        </div>
+                        <div class="field create-ticket">
+                            <button id="create-ticket" class="btn btn-create-ticket" name="create-ticket"
+                                    type="submit"><?= $escaper->escapeHtml(__('Submit')) ?>
+                            </button>
+                        </div>
+                    </fieldset>
+                </form>
+                <div class="ticket-created-success" style="display:none">
+                    <div class="response-container"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php else: ?>
+    <div class="empty-store-credit">
+        <p><?= $escaper->escapeHtml(__('Our website give you the opportunity to spend store credit in addition to real currency. you can use Store Discount for future  purchases at our store')) ?></p>
+    </div>
+<?php endif ?>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Swarming_StoreCredit/js/transactions": {
+            }
+        }
+    }
+</script>

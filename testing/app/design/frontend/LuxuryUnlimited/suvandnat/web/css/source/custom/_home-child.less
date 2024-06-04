@@ -1,0 +1,282 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .brand_labels_hero_banner.suv_banner {
+        margin-bottom: 50px;
+
+        .slick-dots {
+            bottom: -40px;
+
+            li {
+                button::before {
+                    border: 2px solid @theme__territory--color-100;
+                    background: @theme__territory--color-100;
+                }
+
+                &.slick-active {
+                    button {
+                        &::before {
+                            background: @theme__territory--white;
+                            border: 2px solid @theme__primary--color-500;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .brands_logos {
+        border-color: @custom__color-gray5;
+        border: none;
+
+        p {
+            .lib-font-size(18);
+            color: @theme__territory--color-500;
+            font-weight: @pager-current__font-weight;
+        }
+
+        .brand-slide {
+            .brand {
+                .brand-title {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    .most_popular {
+        .tile-caption {
+            .category-name {
+                .lib-font-size(40);
+                color: @theme__territory--color-500;
+                font-weight: @menu-font-weight;
+            }
+
+            .view-more {
+                .lib-font-size(18);
+                color: @custom__color-gray2;
+                font-weight: @menu-font-weight;
+            }
+        }
+
+        .products {
+            margin: 0;
+            padding: 0;
+
+            .product-tile {
+                border: 2px solid @custom__color-gray5;
+
+                .product-item-inner {
+                    float: right;
+                    position: absolute;
+                    top: 10px;
+                    right: 15px;
+                }
+
+                .brand-name {
+                    a {
+                        color: @theme__primary--color-500;
+                        .lib-font-size(14);
+                        text-transform: @dropdown-menu-text-transform;
+                        font-weight: @font-weight__bold;
+                    }
+                }
+
+                .product-name {
+                    a {
+                        color: @custom__color-gray2;
+                        .lib-font-size(18);
+                        font-weight: @menu-font-weight;
+                        text-transform: @mobile-menu-text-transform;
+                    }
+                }
+
+                .product-price {
+                    color: @theme__primary--color-500;
+                    .lib-font-size(18);
+                    font-weight: @menu-font-weight;
+                }
+
+                .in_wishlist {
+                    float: right;
+                    position: absolute;
+                    top: 10px;
+                    right: 15px;
+
+                    &:before {
+                        color: @theme__primary--color-500;
+                    }
+                }
+            }
+        }
+    }
+
+    .brand_labels_hero_banner {
+        .slick-prev {
+            left: 50px;
+
+            &:before {
+                content: @icon-left;
+                .lib-font-size(24);
+                position: absolute;
+                left: 4px;
+                top: 4px;
+            }
+        }
+
+        .slick-next {
+            right: 50px;
+
+            &:before {
+                content: @icon-right;
+                font-size: 24px;
+                position: absolute;
+                left: 2px;
+                top: 4px;
+            }
+        }
+
+        .slick-arrow {
+            padding: @indent__s 17px;
+            border-radius: 50%;
+            background: @theme__territory--white;
+        }
+
+        .pagebuilder-slide-wrapper {
+            background-size: 100% 100% !important; // override important from Magento core
+        }
+    }
+
+    .brand-slide {
+        .lib-vendor-prefix-display(flex);
+        .lib-css(justify-content, space-between, @_prefix: 1);
+        .lib-vendor-prefix-flex-wrap(wrap);
+        .lib-css(align-items, center, @_prefix: 1);
+    }
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    .products-grid .product-item {
+        width: 50%;
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__992) {
+    .most_popular {
+        .product-tile {
+            .product.product-name a {
+                .lib-font-size(16);
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__xs) {
+    .most_popular {
+        .product-tile {
+            .product-name {
+                a {
+                    .lib-font-size(16);
+                }
+            }
+        }
+
+        .tile-caption {
+            div.category-name {
+                .lib-font-size(20);
+            }
+        }
+    }
+
+    .static_home_banner2 {
+        display: block;
+
+        .footwear_home_banner {
+            width: 100%;
+        }
+
+        .calvin_klein_home_banner {
+            width: 100%;
+        }
+    }
+
+    .pagebuilder-slider.brand_labels_hero_banner.suv_banner {
+        margin-bottom: 0;
+
+        ul.slick-dots {
+            bottom: -30px;
+        }
+    }
+
+    .cms-index-index {
+        .brand_labels_hero_banner {
+            .slick-prev {
+                left: 10px;
+            }
+
+            .slick-next {
+                right: 10px;
+            }
+        }
+
+        .static_home_banner2 {
+            .lib-vendor-prefix-display(flex);
+            .lib-css(flex-direction, column, @_prefix: 1);
+
+            .footwear_home_banner,
+            .calvin_klein_home_banner {
+                width: 100%;
+            }
+        }
+    }
+
+    .brand-labels-prices-banner {
+        margin: 60px 0 0 0;
+    }
+
+    .brands_logos {
+        .brand-slide {
+            div.brand {
+                width: 38%;
+            }
+        }
+    }
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__xl) {
+    .cms-index-index .products-grid .product-item {
+        width: 25%;
+    }
+
+    .cms-index-index {
+        [data-content-type='row'][data-appearance='contained'] {
+            max-width: 1440px;
+        }
+    }
+}

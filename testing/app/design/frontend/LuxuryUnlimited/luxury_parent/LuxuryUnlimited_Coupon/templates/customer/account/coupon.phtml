@@ -1,0 +1,52 @@
+<?php
+/**
+ * @author      LuxuryUnlimited
+ * @copyright   Copyright © 2022. All rights reserved.
+ */
+
+/** @var $block \LuxuryUnlimited\Coupon\Block\CouponList */
+
+$coupons = $block->getCoupons();
+?>
+<?php if (!empty($coupons)) : ?>
+    <div id="customer-coupon" class="coupon-list-container my-account-coupons table-wrapper">
+            <table class="data table table-coupon-items" aria-describedby="customer-coupon">
+                <thead>
+                    <tr>
+                        <th scope="col" class="col name"><?= $block->escapeHtml(__('Coupon Name')) ?></th>
+                        <th scope="col" class="col description"><?= $block->escapeHtml(__('Description')) ?></th>
+                        <th scope="col" class="col exp-date"><?= $block->escapeHtml(__('Expiry Date')) ?></th>
+                        <th scope="col" class="col status"><?= $block->escapeHtml(__('Status')) ?></th>
+                        <th scope="col" class="col actions"><?= $block->escapeHtml(__('Action')) ?></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($coupons as $k => $coupon): ?>
+                        <tr>
+                            <td data-th="<?= $block->escapeHtml(__('Coupon Name')) ?>" class="col name"><?= $block->escapeHtml($coupon['name']) ?></td>
+                            <td data-th="<?= $block->escapeHtml(__('Description')) ?>" class="col description"><?= /* @noEscape */ __('Buy over $1500 get 20% off on cart') ?> <?= $block->escapeHtml($coupon['description']) ?></td>
+                            <td data-th="<?= $block->escapeHtml(__('Expiry Date')) ?>" class="col exp-date"><?= /* @noEscape */ __('May 23, 2023') ?> <?php /* $block->escapeHtml($coupon['expiry_date']) */ ?></td>
+                            <td data-th="<?= $block->escapeHtml(__('Status')) ?>" class="col status">
+                                <span class="coupon-status badge active <?php /* $coupon['is_expired'] ? 'expire' : 'active' */ ?>">
+                                    <?= $block->escapeHtml(__('Active')) ?>
+                                </span>
+                            </td>
+                            <td data-th="<?= $block->escapeHtml(__('Action')) ?>" class="col actions">
+                                <a href="#" class="coupon-need-help action primary <?php /* $coupon['is_expired'] ? 'expire' : 'active' */ ?>">
+                                    <?= $block->escapeHtml(__('Need Help')) ?>
+                                </a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+            <?php if ($block->getPagerHtml()): ?>
+                <div class="customer-coupon-toolbar toolbar bottom"><?php echo $block->getPagerHtml(); ?></div>
+            <?php endif ?>
+    </div>
+<?php else : ?>
+    <div class="no-coupons">
+        <div class="empty_icon"></div>
+        <p class="empty_txt"><?= /* @noEscape */ __('No coupon list found') ?></p>
+    </div>
+<?php endif ?>

@@ -1,0 +1,72 @@
+//
+//  Common
+//  ---------------------------------------------
+
+& when (@media-common = true) {
+    .page-wrapper {
+        .page-header.sticky.active {
+            position: fixed;
+            margin: @sticky-active-margin;
+            height: @sticky-active-height;
+            padding: @sticky-active-padding;
+            z-index: @sticky-active-z-index;
+            background: @custom__color-white;
+            box-shadow: @sticky-active-boxshadow;
+            width: 100%;
+            animation: scroll 0s ease-in-out;
+
+            .sections.nav-sections {
+                top: @sticky-active-childTopPos;
+                z-index: 6;
+                .navigation {
+                    .level0 {
+                        .submenu {
+                            top: @sticky-active-childTopPos;
+                            z-index: 5;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .cms-index-index {
+        .page-header.sticky.active {
+            .sections.nav-sections {
+                .navigation {
+                    .level0 {
+                        .submenu {
+                            top: @sticky-active-childTopPos;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @keyframes scroll {
+        from {
+            top: -100%;
+        }
+        to {
+            top: 0px;
+        }
+    }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    .page-wrapper {
+        .page-header.sticky {
+            &.active {
+                max-height: 75px;
+            }
+        }
+    }
+}

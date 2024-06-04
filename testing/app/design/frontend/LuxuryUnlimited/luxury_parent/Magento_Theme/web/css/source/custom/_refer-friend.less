@@ -1,0 +1,61 @@
+//
+//  Common
+//  ---------------------------------------------
+
+& when (@media-common = true) {
+    .cls_refer_friend_box {
+        max-width: 700px;
+        margin: 0 auto;
+
+        .title-section {
+            text-align: center;
+        }
+
+        .actions-toolbar {
+            text-align: center;
+
+            .primary {
+                float: none;
+            }
+        }
+    }
+
+    .cls_referfrind_form {
+        .fields {
+            .control {
+                position: relative;
+
+                #specialcountry {
+                    font-size: 0;
+                }
+
+                .special-number-dropdown {
+                    .selected-flag {
+                        position: absolute;
+                        z-index: 1;
+
+                        .fi {
+                            .lib-font-size(23);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .modal-popup {
+        &.referral-modal {
+            .result_referbox {
+                .actions-toolbar {
+                    .primary {
+                        width: auto;
+                    }
+                }
+            }
+
+            .modal-footer {
+                display: none;
+            }
+        }
+    }
+}

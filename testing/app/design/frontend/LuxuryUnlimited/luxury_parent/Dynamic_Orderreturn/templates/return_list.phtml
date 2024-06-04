@@ -1,0 +1,62 @@
+<?php
+/** @var \Dynamic\Orderreturn\Block\Account\ReturnList $block */
+$returnCollection = $block->getItemCollection();
+?>
+
+
+<div class="orders-history">
+    <?php if ($returnCollection && count($returnCollection)): ?>
+        <div class="table-order-items" id="my-orders-table">
+            <div class="myreturns-table-header">
+                <div class="myreturns-table-row">
+                    <div class="myreturns-table-col  order_id"><?= $block->escapeHtml(__('Order Id')) ?></div>
+                    <div class="myreturns-table-col  orderreturn_id"><?= $block->escapeHtml(__('Order Return Id')) ?></div>
+                    <div class="myreturns-table-col  created_at"><?= $block->escapeHtml(__('Date Requested')) ?></div>
+                    <div class="myreturns-table-col  product_sku"><?= $block->escapeHtml(__('Product SKU')) ?></div>
+                    <div class="myreturns-table-col  type"><?= $block->escapeHtml(__('Type')) ?></div>
+                    <div class="myreturns-table-col  reason-msg">
+                        <?= $block->escapeHtml(__('Return/Cancel Reason')) ?>
+                    </div>
+                    <div class="myreturns-table-col  status"><?= $block->escapeHtml(__('Status')) ?></div>
+                </div>
+            </div>
+            <div class="myreturns-table-body">
+                <?php foreach ($returnCollection as $item):?>
+                    <div class="myreturns-table-row">
+                        <div class="myreturns-table-col order_id">
+                            <span class="myreturns-txt-cnt"><?= $block->escapeHtml($item->getOrderId()); ?></span>
+                        </div>
+                        <div class="myreturns-table-col orderreturn_id">
+                            <span class="myreturns-txt-cnt"><?= $block->escapeHtml($item->getOrderreturnId()) ?></span>
+                        </div>
+                        <div class="myreturns-table-col created_at">
+                            <span class="myreturns-txt-cnt"><?= $block->escapeHtml($item->getCreatedAt()) ?></span>
+                        </div>
+                        <div class="myreturns-table-col product_sku">
+                            <span class="myreturns-txt-cnt"><?= $block->escapeHtml($item->getProductSku()) ?></span>
+                        </div>
+                        <div class="myreturns-table-col type">
+                            <span class="myreturns-txt-cnt"><?= $block->escapeHtml($item->getType()) ?></span>
+                        </div>
+                        <div class="myreturns-table-col reason-msg">
+                            <span class="myreturns-txt-cnt"><?= $block->escapeHtml($item->getReason()) ?></span>
+                        </div>
+                        <div class="myreturns-table-col status">
+                            <span class="myreturns-txt-cnt ticket-status <?= /* @noEscape */ ($item->getErpStatus() == 0) ? __('Completed') : __('pending'); ?>"><?= /* @noEscape */ ($item->getErpStatus() == 0) ? __('Completed') : __('Pending'); ?></span>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+        <div class="returns_footer">
+            <?php if ($block->getPagerHtml()): ?>
+                <div class="order-products-toolbar toolbar bottom pagination"><?= /* @noEscape */ $block->getPagerHtml(); ?></div>
+            <?php endif; ?>
+        </div>
+    <?php else: ?>
+        <div class="empty-return-list">
+            <p><?= $escaper->escapeHtml(__('No return list found')) ?></p>
+        </div>
+    <?php endif; ?>
+</div>
+

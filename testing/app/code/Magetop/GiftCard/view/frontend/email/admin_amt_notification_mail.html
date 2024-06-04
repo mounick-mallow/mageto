@@ -1,0 +1,57 @@
+<!--@subject Gift card usage notification  @-->
+<!--@vars {
+"var this.getUrl($store, 'admin')":"Warehouse Account URL",
+"var customer.email":"Customer Email",
+"var customer.name":"Customer Name",
+"var myvar3|raw" : "my var 3",
+"var myvar2|raw" : "my var 2",
+"var myvar6|raw" : "my var 6",
+"var myvar8" : "my var 8",
+"var myvar5" : "my var 5",
+"var myvar4" : "my var 4",
+"var myvar7" : "my var 7",
+"var myvar9" : "my var 9",
+"var myvar10" : "my var 10"
+} @-->
+{{template config_path="design/email/header_template"}} <!-- pathe of template header-->
+<table aria-describedby="admin_amt_notification_mail">
+    <tr class="email-intro">
+        <td>
+            <p class="greeting"><h2>{{trans "Hi %customer_name," customer_name=$myvar3}}</h2></p>
+            <p><h2>
+                {{trans "Your Gift Card Usage Details:"}}
+            </h2></p>
+        </td>
+    </tr>
+    <tr class="email-summary">
+        <td>
+            <h3><b>{{trans "Name:"}}<b></h3>
+            <p>{{var myvar3|raw}}</p>
+            <h3><b>{{trans "Email:"}}<b></h3>
+            <p>{{var myvar2|raw}}</p>
+        </td>
+    </tr>
+    <tr class="email-information">
+        <td>
+            <table aria-describedby="order-details" class="order-details">
+                <tr>
+                    <td class="address-details">
+                        <h3><b>{{trans "Gift Card Code:"}}<b></h3>
+                        <p>{{var myvar6|raw}}</p>
+                        <h3><b>{{trans "Previous Amount:"}}<b></h3>
+                        <p>{{trans "%symbol %price" symbol=$myvar8 price=$myvar5}}</p>
+                        <h3><b>{{trans "Reduced Amount:"}}</b></h3>
+                        <p>{{trans "%symbol %price" symbol=$myvar8 price=$myvar4}}</p>
+                        <h3><b>{{trans "Remaining Amount:"}}</b></h3>
+                        <p>{{trans "%symbol %price" symbol=$myvar8 price=$myvar7}}</p>
+                        <h3><b>{{trans "Issue Date:"}}</b></h3>
+                        <p>{{trans "%issuedate"  issuedate=$myvar9}}</p>
+                        <h3><b>{{trans "Expiry Date:"}}</b></h3>
+                        <p>{{trans "%expirydate"  expirydate=$myvar10}}</p>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+{{template config_path="design/email/footer_template"}} <!--footer of template-->

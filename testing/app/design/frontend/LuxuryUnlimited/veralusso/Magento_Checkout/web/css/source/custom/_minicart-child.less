@@ -1,0 +1,298 @@
+// /**
+//  * Copyright © 2015 Magento. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//  Common
+//  _____________________________________________
+& when (@media-common = true) {
+    .page-wrapper {
+        .minicart-wrapper {
+            .action {
+                &.showcart {
+                    .counter.qty {
+                        .lib-css(background-color, @theme__color__primary);
+                        .lib-font-size(10);
+                        .lib-line-height(10);
+                        color: @minicart__qty_color;
+                        border-radius: 100%;
+                        width: @minicart-qty__height;
+                        height: @minicart-qty__height;
+                        min-width: @minicart-qty__height;
+                        position: absolute;
+                        top: -5px;
+                        right: -5px;
+                        &.empty {
+                            .lib-css(background-color, @theme__color__primary);
+                            width: @minicart-qty__height;
+                            height: @minicart-qty__height;
+                            top: -5px;
+                            right: -5px;
+                        }
+                    }
+                }
+            }
+
+            .block-minicart {
+                border-radius: 0;
+                box-shadow: none;
+                border: 1px solid @custom__color-black;
+
+                .block-title {
+                    border-bottom: 1px solid @custom__color-black;
+                    margin: 0;
+
+                    span {
+                        color: @custom__color-black;
+                        .lib-font-size(16);
+                    }
+
+                    .items-total {
+                        span {
+                            color: @custom__color-gray1;
+                            .lib-font-size(16);
+                        }
+                    }
+                }
+
+                .subtotal-section {
+                    width: 100%;
+
+                    .subtotal {
+                        border-bottom: 1px solid @custom__color-black;
+                        border-top: 1px solid @custom__color-black;
+
+                        .label {
+                            span {
+                                color: @custom__color-gray1;
+                            }
+                        }
+
+                        .amount {
+                            .price {
+                                color: @custom__color-black;
+                            }
+                        }
+                    }
+                }
+
+                .block-content {
+                    .actions {
+                        width: 100%;
+
+                        .secondary .action.viewcart,
+                        .primary .action {
+                            border: none;
+                            color: @custom__color-black;
+                            .lib-font-size(16);
+                            font-weight: @font-weight__semibold;
+                            text-decoration: underline;
+                        }
+
+                        .secondary .action.viewcart:hover,
+                        .primary .action:hover {
+                            background: none;
+                        }
+                    }
+                }
+            }
+        }
+
+        .minicart-items {
+            .product-item-name {
+                margin-top: 0;
+                a {
+                    color: @custom__color-black;
+                    .lib-font-size(14);
+                    text-transform: capitalize;
+                    font-weight: @font-weight__bold;
+                }
+            }
+
+            .product-item-details {
+                color: @custom__color-gray1;
+                .lib-font-size(12);
+                padding: 0 60px 0 70px;
+
+                .details-qty {
+                    .label {
+                        color: @custom__color-gray7;
+                        .lib-font-size(16);
+                        text-transform: uppercase;
+                    }
+                }
+
+                .price {
+                    color: @custom__color-black;
+                    .lib-font-size(14);
+                }
+            }
+
+            .item-qty {
+                color: @custom__color-gray1;
+                .lib-font-size(16);
+                font-weight: @font-weight__bold;
+            }
+
+            .product-item {
+                &:not(:last-child) {
+                    border-bottom: 1px solid @custom__color-black;
+                }
+            }
+
+            .action {
+                &.delete {
+                    float: right;
+
+                    &:before {
+                        content: @icon-close;
+                        color: @theme-color-gray_dark;
+                    }
+                }
+            }
+
+            .product-item-pricing {
+                margin: 0;
+            }
+
+            .product {
+                .options {
+                    .values {
+                        &:not(:last-child):after {
+                            content: ' -';
+                        }
+
+                        display: inline;
+                    }
+                }
+            }
+
+            .product-image-container {
+                width: 60px !important; // override Magento core inline styles
+            }
+
+            .product-image-photo {
+                height: 60px !important; // override Magento core inline styles
+            }
+        }
+    }
+
+    .product.options.list,
+    .product.options.list .values {
+        margin: 0;
+    }
+
+    .item.product.product-item.odd.last {
+        padding: 15px 0;
+    }
+
+    .minicart-donation {
+        border: @minicart-box__primary-border;
+        border-width: 1px 0;
+        background: @custom__color-gray4;
+        border-top: 1px solid @custom__color-black;
+        border-bottom: 1px solid @custom__color-black;
+        padding: 0;
+
+        .firas-donation {
+            background: none;
+            padding: 0;
+
+            .firas-donation-product {
+                .lib-css(display, flex, @_prefix: 1);
+                .lib-css(gap, 20px, @_prefix: 1);
+                .lib-css(justify-content, space-between, @_prefix: 1);
+                border: 0;
+                box-shadow: none;
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                background: @custom__color-gray4;
+            }
+
+            .donateImg {
+                width: 80px;
+            }
+
+            .donateRight {
+                width: ~'calc(100% - 95px)';
+            }
+
+            .firas-donation-title,
+            .donate-sort-info,
+            .donateTxt {
+                .lib-font-size(14);
+                .lib-line-height(16px);
+                color: @color-very-dark-gray;
+                font-family: @font-family__base;
+                font-weight: @font-weight__heavier;
+            }
+
+            .firas-donation-title {
+                margin-bottom: 15px;
+                text-align: center;
+                color: @custom__color-black;
+                font-weight: @font-weight__semibold;
+                text-transform: capitalize;
+            }
+
+            .donate-sort-info {
+                .lib-font-size(14);
+                .lib-line-height(20px);
+                margin-bottom: @indent__xs;
+                text-align: initial;
+                color: @custom__color-gray1;
+            }
+
+            .donateTxt {
+                color: @custom__color-black;
+                text-decoration: none;
+                .lib-font-size(14);
+                font-weight: @font-weight__bold;
+            }
+
+            .donateBtn {
+                &:extend(.abs-visually-hidden all);
+            }
+        }
+    }
+
+    .customer-account-index {
+        .block-content {
+            gap: 0;
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__s) {
+    .page-wrapper {
+        .page-header {
+            .header {
+                .minicart-wrapper {
+                    .block-minicart {
+                        right: -125px;
+
+                        &:before {
+                            right: 125px;
+                        }
+
+                        &:after {
+                            right: 124px;
+                        }
+                    }
+                }
+            }
+        }
+
+        .minicart-items {
+            .product-item-details {
+                padding: 0 36px;
+            }
+        }
+    }
+}

@@ -1,0 +1,141 @@
+<?php
+/** @var \LuxuryUnlimited\sizeId\ViewModel\AttributeViewModel $viewModel */
+$viewModel = $block->getViewModel();
+$sizeId = $viewModel->getSizeAttribute();
+$_product = $block->getProduct();
+$viewModelPriceMatch = $block->getData('luxdb_price_match_view_model_pdp');
+$continueshoppingHelper = $viewModelPriceMatch->getShoppingDataHelper();
+$ddHelper = $viewModelPriceMatch->getHomepageHelper();
+
+$dynamicHelper = $viewModelPriceMatch->getDynamicProductHelper();
+
+$userContext = $dynamicHelper->getHttpManager();
+$isLoggedIn = $userContext->getValue(\Magento\Customer\Model\Context::CONTEXT_AUTH);
+
+?>
+<!-- Notify Me Request -->
+<div class="clsnotifymereqpop">
+    <div id="stock-notifyme-success" data-bind="mageInit: {
+                'Magento_Ui/js/modal/modal':{
+                    'type': 'popup',
+                    'id': 'stock-notifyme-success',
+                    'title': '<?= $block->escapeHtml(__('Thank you!')) ?>',
+                    'trigger': '[data-trigger=stock-notifyme-success]',
+                    'modalClass': 'stock-notifyme-request-sucess',
+                    'responsive': true,
+                    'buttons': []
+                }}">
+    <div class="content">
+    <p id="stock-notifyme-result"></p>
+    </div>
+</div>
+
+
+    <div id="stock-notifyme" data-bind="mageInit: {
+            'Magento_Ui/js/modal/modal':{
+                'type': 'popup',
+                'id': 'stock-notifyme',
+                'title': '<?= $block->escapeHtml(__('Notify Me When Available')) ?>',
+                'trigger': '[data-trigger=stock-notifyme]',
+                'modalClass': 'stock-notifyme-request',
+                'responsive': true,
+                'buttons': []
+            }}">
+        <div class="content">
+        <p id="stock-notifyme-loader"><?= $block->escapeHtml(__('Loading..'))?></p>
+        <p id="stock-notifyme-error"></p>
+        <form class="stock-notifyme-form form contact cls_popupsizerequest_form"
+        action="#"
+        id="stock-notifyme-form"
+        method="post"
+        data-mage-init='{"validation":{}}'>
+            <?php if (!$isLoggedIn) { ?>
+            <div class="field name required cls_comm_input width-50p">
+                <div class="control flex">
+                    <select id="salutation-notifyme" name="salutation">
+                        <option value="mr">Mr</option>
+                        <option value="ms">Ms</option>
+                        <option value="miss">Miss</option>
+                    </select>
+                    <input id="name-notifyme"
+                        class="input-text"
+                        title="<?= /* @noEscape */ __('Name') ?>"
+                        name="name"
+                        type="text"
+                        value=""
+                        placeholder="<?= $block->escapeHtml(__('Name'))?>"
+                        data-validate='{"required":true}'>
+                </div>
+            </div>
+            <div class="field last_name required cls_comm_input width-50p">
+                <div class="control">
+                    <input id="last-name-notifyme"
+                        class="input-text"
+                        title="<?= /* @noEscape */ __('Last Name') ?>"
+                        name="last_name"
+                        type="text"
+                        value=""
+                        placeholder="<?= $block->escapeHtml(__('Last Name'))?>"
+                        data-validate='{}'>
+                </div>
+            </div>
+            <div class="field name required cls_comm_input  width-50p">
+                <div class="control">
+                    <input id="email-notifyme"
+                        class="input-text"
+                        title="<?= /* @noEscape */ __('Email') ?>"
+                        name="email"
+                        type="email" value=""
+                        placeholder="<?= $block->escapeHtml(__('Email Address'))?>"
+                        data-validate='{"required":true,"validate-email":true}'>
+                </div>
+            </div>
+            <div class="field telephone required cls_comm_input  width-50p">
+                <div class="control">
+                    <input id="phone-notifyme"
+                        class="input-text"
+                        title="<?= /* @noEscape */ __('Phone Number') ?>"
+                        name="telephone"
+                        type="text"
+                        value=""
+                        placeholder="<?= $block->escapeHtml(__('Phone Number'))?>"
+                        data-validate='{}'>
+                </div>
+            </div>
+            <?php } ?>
+
+            <input id="selected-notifyme" name="selectedsize" type="hidden" value="">
+            <input id="productsku" name="productsku" type="hidden"
+            value="<?= $block->escapeHtml($_product->getSku()); ?>">
+
+            <div class="field name required spBtn">
+            <div class="control">
+                <input type="hidden" name="hdn_subject" id="hdn_subject" value="" />
+                <input type="hidden" name="hdn_message" id="hdn_message" value="" />
+                <div class="mm-action"> <button type="button"
+            id="btn_notifysubmit"
+            title="<?= $block->escapeHtmlAttr(__('Submit')) ?>"
+            class="action submit primary">
+                    <span><?= $block->escapeHtml(__('Submit')) ?></span>
+                </button></div>
+            </div>
+
+            </div>
+        </form>
+        <span id="logged-in-notifyme" data-value="<?= ($isLoggedIn)?"1":0 ?>"></span>
+        </div>
+    </div>
+
+</div>
+<script type="text/x-magento-init">
+{
+    "*": {
+        "MagentoCatalogStockNotify": {
+            "sizeId": "<?=  /* @noEscape */ $sizeId; ?>",
+            "notifyUrl": "<?= /* @noEscape */ $block->escapeHtml($block->getUrl('notifyme/index/post')); ?>",
+            "soldOutText" : "<?= $block->escapeHtml(__('Sold Out'))?>"
+        }
+    }
+}
+</script>
+<!-- Notify Me Request -->

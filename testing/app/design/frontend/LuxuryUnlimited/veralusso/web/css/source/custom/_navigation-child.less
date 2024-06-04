@@ -1,0 +1,72 @@
+& when (@media-common = true) {
+    .page-wrapper {
+        .page-header {
+            .sections.nav-sections {
+                .navigation {
+                    .submenu {
+                        .subchildmenu {
+                            .ui-menu-item {
+                                .subchildmenu {
+                                    .ui-menu-item {
+                                        a {
+                                            color: @navigation-level0-item__color;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+//
+//  Desktop
+//  _____________________________________________
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__m) {
+    .page-wrapper {
+        //  Header
+        .nav-sections {
+            border-bottom: 1px solid @border-color__base;
+            border-top: 1px solid @border-color__base;
+            margin-top: 24px;
+            .navigation {
+                & > ul {
+                    .lib-vendor-prefix-display();
+                    .lib-vendor-box-align(center);
+                    .lib-css(justify-content, space-between, @_prefix: 1);
+                    background-color: transparent;
+                }
+            }
+        }
+    }
+
+    //  Navigation
+    .navigation {
+        .level0 {
+            &.parent {
+                > .level-top {
+                    .lib-icon-font(
+                        @_icon-font-content: @icon-down,
+                        @_icon-font-size: 18px,
+                        @_icon-font-line-height: 20px,
+                        @_icon-font-color: @theme__color__primary,
+                        @_icon-font-color-hover: @link__hover__color,
+                        @_icon-font-text-hide: false,
+                        @_icon-font-position: after
+                    );
+
+                    .lib-vendor-prefix-display(inline-flex);
+                    .lib-vendor-box-align(center);
+                    .lib-css(gap, 10px, @_prefix: 1);
+                }
+            }
+        }
+    }
+}

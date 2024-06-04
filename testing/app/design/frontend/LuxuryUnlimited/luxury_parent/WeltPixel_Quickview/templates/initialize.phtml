@@ -1,0 +1,18 @@
+<?php
+// @codingStandardsIgnoreFile
+
+/** @var $block \WeltPixel\Quickview\Block\Initialize */
+?>
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "WeltPixel_Quickview/js/weltpixel-init": {
+            }
+        }
+    }
+</script>
+
+<script>
+    window.weltpixel_quickview = <?= /* @escapeNotVerified */ \Laminas\Json\Json::encode($block->getConfig()); ?>
+</script>

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!-- 
+/**
+ * @category    LuxuryUnlimited
+ * @package     LuxuryUnlimited_GoogleAnalytics
+ * @copyright   2023 © Luxury Unlimited
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="head.additional">
+            <block class="Magento\Framework\View\Element\Template" name="ga.search.js" before="-"
+                   template="LuxuryUnlimited_GoogleAnalytics::js/search.phtml"/>
+            <block class="LuxuryUnlimited\GoogleAnalytics\Block\Product\AddToCart" name="ga.add.to.cart.js"
+                   after="ga.search.js"
+                   template="LuxuryUnlimited_GoogleAnalytics::js/script.phtml"/>
+            <block class="LuxuryUnlimited\GoogleAnalytics\Block\Checkout\PlaceOrderBefore" name="ga.before.place.order.js"
+                   after="ga.remove.from.cart.js"
+                   template="LuxuryUnlimited_GoogleAnalytics::js/script.phtml"/>
+            <block class="Magento\Framework\View\Element\Template" name="luxuryunlimited_ga4" as="luxuryunlimited_ga4" before="-" template="LuxuryUnlimited_GoogleAnalytics::page_view.phtml">
+                <arguments>
+                    <argument name="datalayer_view_model" xsi:type="object">LuxuryUnlimited\GoogleAnalytics\ViewModel\DataLayer</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+    </body>
+</page>

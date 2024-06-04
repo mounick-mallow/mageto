@@ -1,0 +1,32 @@
+& when (@media-common =true) {
+    .page-wrapper {
+        .breadcrumbs {
+            .items {
+                .item {
+                    a {
+                        &:after {
+                            content: '/';
+                            .lib-line-height(15);
+                            padding-left: 3px;
+                        }
+                    }
+
+                    &:last-child {
+                        a {
+                            &:after {
+                                content: '';
+                                margin: 0;
+                                display: none;
+                            }
+                        }
+                    }
+
+                    &:after {
+                        content: '';
+                        margin: 0 @indent__xxs;
+                    }
+                }
+            }
+        }
+    }
+}

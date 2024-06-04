@@ -1,0 +1,11 @@
+<?php $productType = $block->getproductType();
+if ($productType == 'giftcard'): ?>
+    <script type="text/x-magento-init">
+        {
+            "*": {
+                "Magetop_GiftCard/js/gift-product": {
+                }
+            }
+        }
+    </script>
+<?php endif; ?>

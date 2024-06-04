@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="head.additional">
+            <block class="Smartwave\Porto\Block\Template" name="porto_custom_head" template="Smartwave_Porto::html/head.phtml" before="-"/>
+        </referenceContainer>
+        <referenceContainer name="after.body.start">
+            <block class="Magento\Newsletter\Block\Subscribe" name="porto_newsletter_popup" template="subscribe_popup.phtml" before="-"/>
+            <block class="Smartwave\Porto\Block\Template" name="porto_custom_notice" template="Smartwave_Porto::html/custom_notice.phtml" after="-"/>
+            <block class="Smartwave\Porto\Block\Template" name="porto_sidebar_sticky" template="Smartwave_Porto::html/sidebar_sticky.phtml" after="-"/>
+        </referenceContainer>
+        <referenceContainer name="footer-container">
+            <block class="Smartwave\Porto\Block\Template" name="footer_block" template="Smartwave_Porto::html/footer.phtml">
+                <block class="Magento\Store\Block\Switcher" name="footer.store_switcher" template="switch/stores.phtml"/>
+                <block class="Magento\Newsletter\Block\Subscribe" name="footer.newsletter" template="subscribe_footer.phtml"/>
+            </block>
+        </referenceContainer>
+
+        <referenceBlock name="header.links">
+            <block class="Smartwave\Porto\Block\Template" name="custom_link" before="-" template="Smartwave_Porto::html/custom_link.phtml" >
+                <arguments>
+                    <argument name="data_view_model" xsi:type="object">Smartwave\Porto\ViewModel\Data</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+        <referenceContainer name="top_blog_link" remove="1"/>
+      </body>
+</page>

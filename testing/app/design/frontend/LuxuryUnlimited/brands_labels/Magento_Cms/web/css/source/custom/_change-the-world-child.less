@@ -1,0 +1,33 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .cms-page-view {
+        .page-title-wrapper {
+            text-align: center;
+        }
+
+        .changetheworld {
+            .container {
+                h4 {
+                    text-align: center;
+                    .lib-font-size(@hope-subtitle__font-size);
+                    font-weight: @font-weight__heavier;
+                    color: @theme__primary--color-26;
+                }
+
+                .topimgs {
+                    ul {
+                        li {
+                            .lib-font-size(@font-size__base);
+                            .lib-line-height(@hope-text__line-height);
+                            font-weight: @font-weight__heavier;
+                            color: @theme__primary--color-26;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,20 @@
+<?php
+$ddHelper = $this->helper("\Dynamic\HomepageApi\Helper\Data");
+$product = $ddHelper->getRegistryManager()->registry('current_product');//get current product
+$sizeValue = $product->getResource()->getAttribute('size_chart_url')->getFrontend()->getValue($product);
+?>
+
+<div class="size_chart">
+    <a href="#" id="click-me"><?= /* @noEscape */ __('Size Chart') ?></a>
+</div>
+<div id="popup-mpdal">
+
+    <div class="size-modal-content">
+        <div class="size-container">
+            <span id="close-size-modal">&times;</span>
+            <?php if(!empty($sizeValue)): ?>
+                <img alt="<?= /* @noEscape */ __('Size Chart') ?>" src="<?= $block->escapeUrl($sizeValue) ?>"/>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>

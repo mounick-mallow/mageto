@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="sales_order_item">
+        <column xsi:type="boolean" name="is_return_eligible" nullable="true" default="false" comment="Order Item eligible for return"/>
+        <column xsi:type="int" name="return_duration" nullable="true" comment="Return Duration Via API"/>
+    </table>
+</schema>

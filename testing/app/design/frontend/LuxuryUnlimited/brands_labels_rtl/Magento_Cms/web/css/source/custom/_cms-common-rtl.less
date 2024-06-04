@@ -1,0 +1,60 @@
+& when (@media-common = true) {
+    .tow-col-row {
+        .affiliate-col {
+            .formBlock {
+                .fields {
+                    .lib-vendor-prefix-display(flex);
+                    justify-content: space-between;
+
+                    &.fields-col-3 {
+                        .field {
+                            width: ~'calc(33.33% - 12px)';
+                        }
+                    }
+
+                    .field {
+                        width: ~'calc(50% - 12px)';
+                        position: relative;
+
+                        &.spBtn {
+                            margin-bottom: 0;
+                        }
+
+                        &.name,
+                        &.phone {
+                            .input-text {
+                                padding-left: 0;
+                                padding-right: 75px;
+                            }
+                        }
+
+                        .specialgenderbox {
+                            right: 0;
+                            background-position: 13px center;
+
+                            &::after {
+                                content: '';
+                                right: inherit;
+                                left: 5px;
+                            }
+                        }
+                        .special-number-dropdown {
+                            right: 0;
+                            background-position: 4px center;
+
+                            &::after {
+                                content: '';
+                                right: inherit;
+                                left: 5px;
+                            }
+
+                            .selected-flag {
+                                right: 9px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

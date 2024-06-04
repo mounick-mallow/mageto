@@ -1,0 +1,118 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .modal-popup.priceMatchModal {
+        .modal-header .modal-title {
+            text-align: start;
+            color: @price-match-popup__title-color;
+        }
+
+        .field.name.required.cls_comm_input .control,
+        .field.contacts.required.cls_comm_input .control,
+        .field.brand.required.cls_comm_input .control,
+        .field.media.cls_comm_input .control,
+        .field.links.cls_comm_input .control {
+            .lib-vendor-prefix-display(flex);
+            width: 100%;
+            .lib-css(justify-content, space-between, @_prefix: 1);
+        }
+
+        .field.name.required.cls_comm_input {
+            .price-match-prefix {
+                width: 30%;
+            }
+
+            #priceMatchName {
+                width: 70%;
+            }
+        }
+
+        .field.name.required.cls_comm_input .flex,
+        .field.contacts.required.cls_comm_input .input-field,
+        .field.brand.required.cls_comm_input .input-text,
+        .field.media.cls_comm_input .input-text,
+        .field.links.cls_comm_input .input-text {
+            width: 49%;
+            .lib-css(flex-wrap, wrap, @_prefix: 1);
+            color: @price-match-popup__content-color;
+        }
+
+        .input-text::placeholder {
+            color: @price-match-popup__content-color;
+        }
+
+        .flex.prefix-name {
+            .lib-vendor-prefix-display(flex);
+        }
+
+        .field.availability.required.cls_comm_input {
+            .price-is-available {
+                width: 20%;
+            }
+
+            .control {
+                .lib-vendor-prefix-display(flex);
+                .lib-css(flex-direction, column, @_prefix: 1);
+                text-align: start;
+            }
+        }
+
+        .field.country.required.cls_comm_input {
+            text-align: start;
+        }
+
+        label {
+            color: @price-match-popup__label-color;
+        }
+
+        .modal-header {
+            background: @price-match-popup__title-backgournd-color;
+        }
+
+        .modal-content {
+            background: @price-match-popup__content-backgournd-color;
+        }
+
+        input[type='text'],
+        input[type='email'],
+        textarea,
+        select {
+            border: 1px solid @price-match-popup__border-color;
+        }
+
+        div.mage-error {
+            text-align: start;
+        }
+    }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    .modal-popup.priceMatchModal._show {
+        .field.name.required.cls_comm_input .control,
+        .field.contacts.required.cls_comm_input .control,
+        .field.brand.required.cls_comm_input .control,
+        .field.media.cls_comm_input .control,
+        .field.links.cls_comm_input .control {
+            .lib-css(flex-direction, column, @_prefix: 1);
+        }
+
+        .field.name.required.cls_comm_input .flex,
+        .field.contacts.required.cls_comm_input .input-field,
+        .field.brand.required.cls_comm_input .input-text,
+        .field.media.cls_comm_input .input-text,
+        .field.links.cls_comm_input .input-text {
+            width: 100%;
+            margin: 0 0 @indent__xxs;
+        }
+    }
+}

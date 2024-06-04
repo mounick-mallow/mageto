@@ -1,0 +1,262 @@
+<?php
+use Magento\Framework\App\Action\Action;
+
+$ddHelper = $this->helper("\Dynamic\HomepageApi\Helper\Data");
+$storeManager  = $ddHelper->getStoreManager();
+$storeCode = $storeManager->getStore()->getCode();
+$siteUrl = $ddHelper->getScopeConfigManager()->getValue("web/secure/base_url");
+
+?>
+
+
+
+<div class="custtabs">
+	<ul>
+        <li class="active" rel="tab1"><?= /* @noEscape */ __('Recommended Products') ?></li>
+        <li rel="tab2"><?= /* @noEscape */ __('Recently Viewed') ?></li>
+    </ul>
+    <div class="all_tab">
+    	<div id="tab1" class="tab_content">
+    		<?php
+			$categoryFactory = $ddHelper->getCategoryFactoryManager();
+			$categoryHelper = $this->helper('\Magento\Catalog\Helper\Category');
+			$categoryRepository = $ddHelper->getCategoryRepositoryManager();
+			$categoryCollection = $ddHelper->getCategoryCollectionFactoryManager();
+			$productRepository = $ddHelper->getProductRepositoryManager();
+			$helperImport = $this->helper('\Magento\Catalog\Helper\Image');
+			$priceHelper = $this->helper('Magento\Framework\Pricing\Helper\Data');
+
+			$_product = $ddHelper->getRegistryManager()->registry('current_product');
+			$currentNameID =  $_product->getId();
+
+			$percentage = $_product->getFinalPrice() * 80 / 100;
+			$min_price = $_product->getFinalPrice() - $percentage;
+			$max_price = $_product->getFinalPrice() + $percentage;
+
+			$categories = $_product->getCategoryIds();
+			$cat = $ddHelper->getCategoryManager()->load(end($categories));
+			$categoryProducts = $cat->getProductCollection()->addAttributeToSelect('*')->setPageSize(25);
+			$categoryProducts->addAttributeToFilter('price', array('gteq' => $min_price));
+			$categoryProducts->addAttributeToFilter('price', array('lteq' => $max_price));
+			$categoryProducts->addAttributeToFilter('entity_id', array('nin' => array($currentNameID)));
+
+
+
+    		?>
+    		<div class="productcount">
+    			<?= $block->escapeHtml("c p id :" . $_product->getId()) ?><br/>
+			        <?= $block->escapeHtml("c name :" . $_product->getName()) ?><br/>
+			        <?= $block->escapeHtml("c color :" . $_product->getColor()) ?><br/>
+			        <?= $block->escapeHtml("c brand :" . $_product->getBrands()) ?><br/>
+			        <?= $block->escapeHtml("c finalprice :" . $_product->getFinalPrice()) ?><br/>
+			        <?= $block->escapeHtml("c percentage :" . $percentage = $_product->getFinalPrice() * 20 / 100) ?><br/>
+			        <br/>
+			    	<?= $block->escapeHtml("Category ID :" .end($categories)) ?>
+			    	<?= $block->escapeHtml("Found Count : ".count($categoryProducts)) ?><br/>
+
+    		</div>
+    		<?php if(count($categoryProducts)>0): ?>
+    		<div class="product info detailed cls_recommendation">
+				<div class="product data items">
+					<div class="block upsell">
+						<div class="block-content content">
+							<div class="products wrapper grid products-grid products-recommandation">
+								<div class="products list items product-items owl-carousel">
+									<!-- START CODE FOR FIRST BLOCK -->
+									<?php foreach ($categoryProducts as $product): ?>
+										<?php
+										$imageUrl = $helperImport->init($product, 'product_page_image_medium')
+											->setImageFile($product->getImage()) // image,small_image,thumbnail
+											->resize(262)
+											->getUrl();
+										?>
+
+										<div class="item product product-item">
+											<div class="product-item-info type1" data-container="product-grid">
+                                                <a class="belvg-quick-view-link" data-id="<?php echo $_product->getId(); ?>" role="button">
+                                                    <?php echo __('Quick View'); ?>
+                                                </a>
+												<div class="product photo product-item-photo">
+													<a href="<?= $block->escapeUrl($product->getProductUrl()) ?>">
+														<img class="product-image-photo default_image" src="<?= $block->escapeUrl($imageUrl) ?>" alt="<?= $block->escapeHtmlAttr($product->getName()) ?>" width="262" height="262">
+													</a>
+												</div>
+												<div class="product details product-item-details">
+													<strong class="product-brand-name">
+														<a class="product-item-link" href="<?= $block->escapeUrl($product->getProductUrl()) ?>"><?= $block->escapeHtml($product->getResource()->getAttribute('brands')->getFrontend()->getValue($product)) ?></a>
+													</strong>
+													<strong class="product name product-item-name">
+														<a class="product-item-link" href="<?= $block->escapeUrl($product->getProductUrl()) ?>"><?= $block->escapeHtml($product->getName()) ?></a>
+													</strong>
+													<div class="price-box price-final_price">
+														<span class="normal-price">
+															<span class="price-container price-final_price tax weee">
+																<span class="price-wrapper"><span class="price"><?= /* @noEscape */ $priceHelper->currency($product->getFinalPrice(), true, false); ?></span></span>
+															</span>
+														</span>
+													</div>
+													<div class="product-item-inner">
+														<div class="okaydone actions-primary">
+														<?php //$postDataHelper = $this->helper('Magento\Framework\Data\Helper\PostHelper');
+														//$postParams = $postDataHelper->getPostData($block->getAddToCartUrl($product), ['product' => $product->getEntityId()])
+														?>
+														<?php $productBlock = $this->getLayout()->createBlock("\Magento\Catalog\Block\Product\ListProduct");?>
+														<?php $postParams = $productBlock->getAddToCartPostParams($product); ?>
+
+
+														<?php if ($product->isSaleable()):?>
+															<form data-role="tocart-form"
+																  data-product-sku="<?= $block->escapeHtml($product->getSku()) ?>"
+																  action="<?= $postParams['action'] ?>"
+																  method="post">
+																<input type="hidden"
+																	   name="product"
+																	   value="<?= /* @noEscape */ $postParams['data']['product'] ?>">
+																<input type="hidden"
+																	   name="<?= /* @noEscape */ Action::PARAM_NAME_URL_ENCODED ?>"
+																	   value="<?=
+																	   /* @noEscape */ $postParams['data'][Action::PARAM_NAME_URL_ENCODED]
+																	   ?>">
+																<?= $block->getBlockHtml('formkey') ?>
+																<button type="submit"
+																		title="<?= $block->escapeHtmlAttr(__('Add to Cart')) ?>"
+																		class="action tocart primary"
+																		>
+																	<span><?= $block->escapeHtml(__('Add to Cart')) ?></span>
+																</button>
+															</form>
+														<?php endif; ?>
+                                                        <div class="product-addto-links" data-role="add-to-links">
+                                                                <a href="#"
+                                                                   data-product='<?= $block->escapeHtmlAttr($this->helper('Magento\Wishlist\Helper\Data')->getAddParams($product)) ?>'
+                                                                   class="action towishlist wishlist-add-request-btn wishlist-listing-<?= /* @noEscape */ $product->getId()?>"
+                                                                   data-url="<?= /* @noEscape */ $this->getUrl('ajaxwishlist/index/add/'); ?>"
+                                                                   data-action="add-to-wishlist" >
+                                                                    <span class="icon-icon-whishlist"></span>
+                                                                </a>
+                                                            </div>
+														</div>
+													</div>
+												</div>
+											 </div>
+										 </div>
+										<script type="text/x-magento-init">
+										{
+											"[data-role=tocart-form], .form.map.checkout": {
+												"catalogAddToCart": {
+													"product_sku": "<?= $block->escapeJs($product->getSku()) ?>"
+												}
+											}
+										}
+										</script>
+									<?php endforeach; ?>
+									<!-- END CODE FOR FIRST BLOCK -->
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<?php else: ?>
+			<div class="product info detailed cls_recommendation noproductrecome">
+				<?php
+				$storeManager = $ddHelper->getStoreManager();
+				$currentStore = $storeManager->getStore();
+				$mediaUrl = $currentStore->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+				?>
+				<div class="clsspecialreqpop">
+					<div class="message info empty">
+                        <div><?= /* @noEscape */ __('Cant find what you looking here - ') ?><br>&nbsp;<?= /* @noEscape */ __('to submit a special request and we will get back to you at the earliest') ?> </div>
+                    </div>
+
+					<div id="myModalspec" class="modal">
+					  	<div class="modal-content">
+					    	<form class="form contact cls_popupspecialrequest_form"
+				              action="<?= $block->escapeUrl($this->getUrl('mytickets/index/post')) ?>"
+				              id="recommendations-contact-form"
+				              method="post"
+				              data-hasrequired="<?= /* @noEscape */ __('* Required Fields') ?>"
+				              data-mage-init='{"validation":{}}'>
+								<div class="field name required cls_comm_input">
+									<div class="control"><input id="name" class="input-text" title="Name" name="name" required="" type="text" value="" placeholder="<?= /* @noEscape */ __('Enter Your Name') ?>"></div>
+								</div>
+				        		<div class="field name required cls_comm_input">
+									<div class="control"><input id="last_name" class="input-text" title="Last Name" name="last_name" required="" type="text" value="" placeholder="<?= /* @noEscape */ __('Enter Your Last Name')?>"></div>
+								</div>
+								<div class="field name required cls_comm_input">
+									<div class="control"><input id="email" class="input-text" title="Email" name="email" type="email" required="" value="" placeholder="<?= /* @noEscape */ __('Enter email')?>"></div>
+								</div>
+								<div class="field name required cls_comm_input">
+									<div class="control"><input id="phone" class="input-text" title="Phone" name="phone" type="text" required="" value="" placeholder="<?= /* @noEscape */ __('Enter Phone Number')?>"></div>
+								</div>
+								<div class="field name required cls_comm_input">
+									<div class="control"><input id="brand" class="input-text" title="Brand" name="brand" type="text" required="" value="" placeholder="<?= /* @noEscape */ __('Enter Brand Name')?>"></div>
+								</div>
+								<div class="field name required cls_comm_input">
+									<div class="control"><input id="style" class="input-text" title="Style" name="style" type="text" required="" value="" placeholder="<?= /* @noEscape */ __('Enter Style')?>"></div>
+								</div>
+								<div class="field name required cls_comm_input test">
+									<div class="control"><input id="keyword" class="input-text" title="Keyword" name="keyword" type="text" required="" value="" placeholder="<?= /* @noEscape */ __('Enter Keyword')?>"></div>
+								</div>
+								<div class="field name required cls_comm_input">
+									<div class="control"><input id="remarks" class="input-text" title="Remarks" name="remarks" type="text" required="" value="" placeholder="<?= /* @noEscape */ __('Enter Remarks')?>"></div>
+								</div>
+								<div class="field name required">
+									<div class="control">
+										<input type="hidden" name="lang_code" id="lang_code" value="<?= $block->escapeHtmlAttr($storeCode) ?>" />
+										<input type="hidden" name="hdn_subject" id="hdn_subject" value="" />
+										<input type="hidden" name="hdn_message" id="hdn_message" value="" />
+										<div class="mm-action">
+											<button id="recommendations-request" class="btn btn-custom" name="btn_ticket" type="button">
+                                                <?= /* @noEscape */ __('Submit') ?>
+                                            </button>
+										</div>
+									</div>
+								</div>
+							</form>
+					  	</div>
+					</div>
+				</div>
+				<div class='clsmsgsuccessbox' >
+					<div id="myModalPriceSuccess" class="modal" style="display: none;">
+					  	<div class="modal-content">
+					    	<span id="pricesucessClose" class="close">&times;</span>
+				        <p id="loader-message"><?= /* @noEscape */ __('loading') ?></p>
+				        <p id="recommendations-result-message"></p>
+					  	</div>
+					</div>
+				</div>
+			</div>
+            <script type="text/x-magento-init">
+                {
+                    "*": {
+                        "Magento_Catalog/js/recommendation-recent": {
+                        }
+                    }
+                }
+            </script>
+
+
+			<?php endif; ?>
+		</div>
+    	<div id="tab2" class="tab_content clsrecentlyviewed recently-items-carousel">
+    		<div class="products list items product-items">
+    		<!-- START CODE FOR Recently viewed -->
+    		<?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('recently_view_product')->toHtml();?></div>
+    		<!-- END CODE FOR Recently viewed -->
+    	</div>
+    </div>
+</div>
+<script type="text/x-magento-init">
+{
+    "*": {
+        "Magento_Ui/js/core/app": {
+            "components": {
+                "wishlist": {
+                    "component": "BelVG_GuestWishlist/js/view/wishlist"
+                }
+            }
+        }
+    }
+}
+</script>

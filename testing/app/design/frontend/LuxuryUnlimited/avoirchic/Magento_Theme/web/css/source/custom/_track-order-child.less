@@ -1,0 +1,39 @@
+//
+//  Common
+//  ---------------------------------------------
+
+& when (@media-common = true) {
+    .modal-track-help {
+        .field.create-ticket {
+            text-align: center;
+        }
+
+        #create-ticket {
+            background: @theme__primary--color-800;
+            color: @custom__color-white;
+        }
+    }
+}
+
+//
+//  Mobile
+//  ---------------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum ='max')
+    and
+    (@break = @screen__m) {
+    .modal-popup.modal-slide.modal-track-help,
+    .modal-popup.modal-slide.modal-track-reference {
+        .modal-inner-wrap {
+            background: transparent;
+            padding: @indent__s;
+
+            .modal-header,
+            .modal-content {
+                background: @custom-color-3;
+            }
+        }
+    }
+}

@@ -1,0 +1,13 @@
+.belvg-quick-view-link {
+    position: relative;
+    cursor: pointer;
+    top: -18px;
+}
+
+#belvg-quick-view .owl-controls {
+    opacity: 0;
+}
+
+#belvg-quick-view .slick-slide {
+    margin: 0 10px;
+}

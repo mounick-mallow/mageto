@@ -1,0 +1,79 @@
+& when (@media-common =true) {
+    .my-account-coupons {
+        table {
+            tr {
+                th {
+                    border-top: @my-coupon-border-table;
+                    text-transform: @my-coupon-table-th-text-transform;
+                }
+            }
+            tr {
+                td {
+                    border-bottom: @my-coupon-border-table;
+
+                    &.col {
+                        &.status {
+                            .badge {
+                                &.active {
+                                    border: @my-coupon-button-border-width solid
+                                        @my-coupon-table-th-color;
+                                }
+                            }
+                        }
+                    }
+
+                    &.col {
+                        &.actions {
+                            a.action.primary {
+                                .lib-button();
+                                background: none;
+                                border: none;
+                                color: @my-coupon-table-th-color;
+                                padding: @indent__xs @indent__s;
+                                font-weight: @my-coupon-table-th-font-weight;
+                                .lib-font-size(12);
+                                text-decoration: underline;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    .coupon-list-container.my-account-coupons.table-wrapper {
+        .data.table.table-coupon-items {
+            tbody {
+                > tr {
+                    > td {
+                        font-weight: @my-coupon-table-td-font-weight;
+                        text-align: right;
+                        color: @my-coupon-table-th-color;
+                        padding-left: @indent__base;
+
+                        &::before {
+                            font-weight: @my-coupon-table-th-font-weight;
+                            color: @my-coupon-table-th-color;
+                            text-transform: @my-coupon-table-td-text-transform;
+                        }
+
+                        &:last-child {
+                            text-align: right;
+
+                            a.action.primary {
+                                margin: 0px;
+                                padding: 0px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

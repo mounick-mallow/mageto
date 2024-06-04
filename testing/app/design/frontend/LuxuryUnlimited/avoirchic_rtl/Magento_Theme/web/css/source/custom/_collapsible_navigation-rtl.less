@@ -1,0 +1,58 @@
+//
+//  Common
+//  ---------------------------------------------
+
+& when (@media-common = true) {
+    .block-collapsible-nav {
+        .nav.items {
+            .item {
+                a,
+                > strong {
+                    padding-right: 56px;
+                    padding-left: 20px;
+
+                    &:before {
+                        right: 20px;
+                        left: auto;
+                    }
+                }
+            }
+        }
+    }
+
+    .page-layout-2columns-left {
+        .sidebar-main {
+            .lib-css(float, right);
+        }
+        .column.main {
+            .lib-css(float, left);
+        }
+    }
+}
+
+//
+//  Mobile
+//  ---------------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    .block-collapsible-nav {
+        .title {
+            padding-right: 56px;
+            padding-left: 40px;
+
+            &:before {
+                right: 20px;
+                left: auto;
+            }
+
+            &:after {
+                right: auto;
+                left: 20px;
+            }
+        }
+    }
+}

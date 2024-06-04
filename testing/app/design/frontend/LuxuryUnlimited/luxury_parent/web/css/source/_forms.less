@@ -1,0 +1,331 @@
+// /**
+//  * Copyright © 2015 Magento. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+@legend-border-bottom: 1px solid @color-gray-light6;
+@form-field__vertical-indent__desktop: 29px;
+@form-calendar-icon__color: @primary__color;
+
+//
+//    Common
+//--------------------------------------
+
+& when (@media-common =true) {
+    .fieldset {
+        .lib-form-fieldset();
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        > .fields {
+            clear: both;
+        }
+
+        > .field,
+        > .fields > .field {
+            .lib-form-field();
+
+            &.no-label {
+                > .label {
+                    .lib-visually-hidden();
+                }
+            }
+
+            &.choice {
+                .label {
+                    font-weight: normal;
+                    margin: 0;
+                    display: inline;
+                }
+            }
+
+            .label {
+                .column:not(.main) & {
+                    font-weight: normal;
+                }
+            }
+
+            .field.choice {
+                margin-bottom: @indent__s;
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+
+        .prifix-input-with-option,
+        .intl-tel-input {
+            background-color: @form-element-input__background;
+            border: @form-element-input__border;
+            border-radius: @form-element-input__border-radius;
+            .lib-vendor-prefix-display();
+            .lib-vendor-box-align(center);
+            .lib-css(gap, 15px, @_prefix: 1);
+            padding: @form-element-input__padding;
+            height: @form-element-input__height;
+            position: relative;
+
+            &:before {
+                content: '';
+                border-right: 1px solid @form-element-input__border-color;
+                position: absolute;
+                left: @form-element-prifix-seprater__left;
+                top: 50%;
+                height: @form-element-prifix-seprater__height;
+                width: 1px;
+                margin-top: -(@form-element-prifix-seprater__height / 2);
+            }
+
+            &:focus {
+                box-shadow: @focus__box-shadow;
+            }
+
+            .input-prefix,
+            #specialcountry,
+            .flag-container {
+                border: none;
+                border-radius: 0;
+                width: 66px;
+                padding: 0 @indent__xxs;
+                height: @form-element-prifix-select__height;
+                flex: none;
+                position: static;
+                box-shadow: none;
+            }
+
+            .input-text {
+                background-color: transparent;
+                border: none;
+                border-radius: 0;
+                flex: 1;
+                padding: 0;
+                height: auto;
+                box-shadow: none;
+            }
+
+            .mage-error ~ .mage-error {
+                position: absolute;
+                bottom: -18px;
+                left: 0;
+            }
+        }
+
+        .intl-tel-input {
+            .flag-container {
+                width: 50px;
+            }
+
+            .selected-flag {
+                padding: 0;
+                margin: 0;
+                width: 100%;
+                .lib-vendor-prefix-display(flex);
+                .lib-vendor-box-align (center);
+                .lib-css(justify-content, space-between, @_prefix: 1);
+
+                .iti-flag {
+                    position: static;
+                    margin: 0;
+                }
+
+                .iti-arrow {
+                    .lib-icon-font(
+                        @_icon-font-content: @icon-down,
+                        @_icon-font: @icon-font-family,
+                        @_icon-font-size: 16px,
+                        @_icon-font-line-height: 11px,
+                        @_icon-font-text-hide: false,
+                        @_icon-font-position: before,
+                        @_icon-font-display: block
+                    );
+
+                    position: static;
+                    border: none;
+                    margin-right: @indent__xxs;
+                    width: auto;
+                    height: auto;
+                    line-height: @form-element-input__line-height;
+                }
+            }
+        }
+    }
+
+    .legend + .fieldset,
+    .legend + div {
+        clear: both;
+    }
+
+    .legend {
+        span {
+            margin-right: @indent__xs;
+        }
+    }
+
+    fieldset.field {
+        border: 0;
+        padding: 0;
+    }
+
+    .field.date {
+        .time-picker {
+            white-space: nowrap;
+            margin-top: @indent__s;
+            display: inline-block;
+        }
+    }
+
+    select {
+        .lib-vendor-prefix-appearance(none);
+        background: rgba(0, 0, 0, 0) url('@{baseDir}images/General.svg') right
+            13px center no-repeat;
+        background-size: auto 23px;
+    }
+
+    div.mage-error[generated] {
+        margin-top: 7px;
+    }
+
+    // TEMP
+
+    .field .tooltip {
+        .lib-tooltip(right);
+
+        .tooltip-content {
+            min-width: 200px;
+            white-space: normal;
+        }
+    }
+
+    input,
+    select {
+        &:focus {
+            ~ .tooltip {
+                .tooltip-content {
+                    display: block;
+                }
+            }
+        }
+    }
+
+    .hasDatepicker {
+        + .ui-datepicker-trigger {
+            .lib-button-reset();
+            .lib-icon-font(@_icon-font-content: @icon-calendar,
+                @_icon-font-color: @primary__color__lighter,
+                @_icon-font-size: @icon-calendar__font-size,
+                @_icon-font-line-height: @icon-calendar__font-size,
+                @_icon-font-display: block,
+                @_icon-font-text-hide: true);
+            display: inline-block;
+            vertical-align: middle;
+
+            &:focus {
+                box-shadow: none;
+                outline: 0;
+            }
+        }
+    }
+
+    //
+    //    Sidebar forms
+    //--------------------------------------
+
+    .sidebar {
+        .fieldset {
+            margin: 0;
+
+            > .field:not(.choice) >,
+            .fields > .field {
+                &:not(:last-child) {
+                    margin: 0 0 @form-field__vertical-indent;
+                }
+
+                .label {
+                    margin: 0 0 4px;
+                    padding: 0 0 @indent__xs;
+                    text-align: left;
+                    width: 100%;
+                }
+
+                .control {
+                    width: 100%;
+                }
+            }
+        }
+    }
+
+    //
+    //  Form Control
+    //  ---------------------------------------------
+    .form-control {
+        .fieldset {
+            .lib-vendor-prefix-display();
+            .lib-vendor-prefix-flex-wrap();
+            .lib-vendor-prefix-flex-direction();
+            .lib-css(gap, @form-fieldset-prefix-flex-gap, @_prefix: 1);
+
+            .fields {
+                .lib-vendor-prefix-display(grid);
+                .lib-css(grid-template-columns, 1fr, @_prefix: 1);
+                .lib-css(gap, @form-fields-prefix-flex-gap, @_prefix: 1);
+
+                &.street {
+                    .lib-css(grid-template-columns, 1fr, @_prefix: 1);
+                }
+            }
+
+            .field {
+                margin: 0;
+            }
+        }
+    }
+}
+
+//
+//  Desktop
+//  ---------------------------------------------
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__s) {
+    .form-control {
+        .fieldset {
+            .fields {
+                .lib-css(grid-template-columns, repeat(2, 1fr), @_prefix: 1);
+            }
+        }
+    }
+}
+.media-width(@extremum, @break)
+    when
+    (@extremum ='min')
+    and
+    (@break =@screen__m) {
+    .legend {
+        .lib-css(border-bottom, @legend-border-bottom);
+    }
+}
+
+//
+//    Desktop
+//--------------------------------------
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__l) {
+    .fieldset {
+        > .fields {
+            .lib-vendor-prefix-display(flex);
+            justify-content: space-between;
+
+            > .field {
+                width: calc(~'50% - 8px');
+            }
+        }
+    }
+}

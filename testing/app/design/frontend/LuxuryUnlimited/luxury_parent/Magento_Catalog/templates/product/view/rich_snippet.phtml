@@ -1,0 +1,46 @@
+<?php
+
+use Magento\Framework\Escaper;
+use Smartwave\Porto\Block\RichSnippet;
+use Smartwave\Porto\ViewModel\Data;
+
+/**
+ * @var $dataViewModel Data
+ * @var $block RichSnippet
+ * @var $escaper Escaper
+ */
+
+$dataViewModel = $block->getData('data_view_model');
+$richSnippet = $dataViewModel->getConfig('porto_settings/richsnippets');
+    $product = $block->getProduct();
+    $summaryModel = $block->getReviewSummary();
+    $reviewCount = $summaryModel->getReviewsCount();
+if (!$reviewCount) {
+    $reviewCount = 0;
+}
+    $ratingSummary = ($summaryModel->getRatingSummary()) ? $summaryModel->getRatingSummary() : 20;
+    $brandName = $product->getResource()->getAttribute('brands')->getFrontend()->getValue($product);
+?>
+    <div itemscope itemtype="http://schema.org/Product">
+        <meta itemprop="name" content="<?= /* @escapeNotVerified */ $escaper->escapeQuote($block->stripTags($product->getName())); ?>" />
+        <meta itemprop="image" content="<?= $escaper->escapeUrl($block->stripTags($block->getImage($product, 'product_base_image')->getImageUrl())) ?>" />
+        <meta itemprop="description" content="<?= $escaper->escapeHtmlAttr($block->stripTags($product->getDescription())) ?>" />
+        <meta itemprop="url" content="<?= $escaper->escapeUrl($block->stripTags($product->getProductUrl())) ?>" />
+        <meta itemprop="sku" content="<?= $escaper->escapeHtmlAttr($block->stripTags($product->getSku())) ?>" />
+       <meta itemprop="brand" content="<?= $escaper->escapeHtmlAttr($block->stripTags($brandName)) ?>" />
+        <div itemtype="http://schema.org/AggregateRating" itemscope itemprop="aggregateRating">
+            <meta itemprop="worstRating" content="1" />
+            <meta itemprop="bestRating" content="5" />
+            <meta itemprop="ratingValue" content="<?= $escaper->escapeHtmlAttr($ratingSummary / 20) ; ?>" />
+            <meta itemprop="reviewCount" content="<?= $escaper->escapeHtmlAttr($reviewCount) ?>" />
+        </div>
+        <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+            <meta itemprop="priceCurrency" content="<?= $escaper->escapeHtmlAttr($dataViewModel->getCurrencyCode()) ?>" />
+            <meta itemprop="price" content="<?= $escaper->escapeHtmlAttr($product->getFinalPrice()) ?>" />
+            <?php if ($product->isAvailable()): ?>
+                <link itemprop="availability" href="http://schema.org/InStock" />
+            <?php else: ?>
+                <link  itemprop="availability" href="http://schema.org/OutOfStock" />
+            <?php endif ?>
+        </div>
+    </div>

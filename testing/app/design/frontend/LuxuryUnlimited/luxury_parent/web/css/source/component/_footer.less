@@ -1,0 +1,344 @@
+// /**
+//  * Copyright © Magento, Inc. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .footer-banner-block {
+        margin: 100px auto;
+    }
+
+    .page-footer {
+        background-color: @footer-bg-color;
+        padding: 56px 0 20px;
+
+        .block.newsletter {
+            .newslatter-content {
+                .lib-vendor-prefix-display();
+                .lib-css(justify-content, space-between, @_prefix: 1);
+            }
+
+            .block-content {
+                margin-bottom: 56px;
+            }
+
+            .newslater-message {
+                .newslatter-title {
+                    .lib-font-size(24);
+                    .lib-line-height(24);
+                    font-family: @custom-primary-font-family;
+                    color: @color-white;
+                    font-weight: @font-weight__bold;
+                    margin-bottom: 6px;
+                }
+
+                .newslatter-text {
+                    .lib-font-size(16);
+                    .lib-line-height(22);
+                    font-family: @custom-primary-font-family;
+                    color: @color-gray90;
+                    font-weight: @font-weight__heavier;
+                    margin: 0;
+                }
+            }
+
+            .label {
+                &:extend(.abs-visually-hidden all);
+            }
+
+            .form {
+                &.subscribe {
+                    max-width: 420px;
+                    width: 100%;
+                    position: relative;
+                    .lib-vendor-prefix-display();
+                    .lib-vendor-box-align (center);
+
+                    .newsletter {
+                        flex: 1;
+                    }
+
+                    .control {
+                        input {
+                            width: 100%;
+                            border-radius: 10px;
+                            margin: 0;
+                            background-color: @color-white;
+                            .lib-line-height(40);
+                            .lib-font-size(18);
+                            font-family: @custom-primary-font-family;
+                            font-weight: @font-weight__regular;
+                            padding: 0 19px;
+                            height: 46px;
+                            color: @footer-newsletter-text-color;
+                        }
+                    }
+
+                    .actions {
+                        .action.subscribe.primary {
+                            background-color: @footer-newsletter-button-bg;
+                            border: none;
+                            border-radius: 0 10px 10px 0;
+                            font-weight: @font-weight__heavier;
+                            .lib-font-size(18);
+                            .lib-line-height(40);
+                            font-family: @custom-primary-font-family;
+                            padding: 19px 18.5px;
+                            text-transform: capitalize;
+                            color: @color-gray90;
+                            vertical-align: text-bottom;
+                            .lib-vendor-prefix-display();
+                            .lib-css(justify-content, center, @_prefix: 1);
+                            .lib-vendor-box-align (center);
+                            .lib-css(height, 46px);
+                        }
+                    }
+                }
+            }
+        }
+
+        .custom-footer-section {
+            .lib-vendor-prefix-display();
+            padding-top: 56px;
+            padding-bottom: 56px;
+            border-style: solid;
+            border-width: 1px 0;
+            border: none;
+
+            ul,
+            li {
+                margin: 0;
+            }
+
+            .custom-footer-left-section {
+                width: 30%;
+
+                img {
+                    width: auto;
+                    height: auto;
+                }
+
+                .brands-logo {
+                    margin-bottom: 24px;
+                }
+
+                .social-links-icons {
+                    .lib-vendor-prefix-display();
+                    .lib-css(gap, 16px, @_prefix: 1);
+                }
+            }
+
+            .custom-row {
+                .lib-vendor-prefix-display();
+                .lib-css(justify-content, space-between, @_prefix: 1);
+                .lib-vendor-box-align (flex-start);
+                .lib-css(gap, 30px 20px, @_prefix: 1);
+
+                .custom-col {
+                    .lib-vendor-prefix-display();
+                    .lib-vendor-prefix-flex-wrap();
+                    width: 25%;
+                }
+
+                .links-title,
+                .footer-links {
+                    .lib-font-size(18);
+                    .lib-line-height(40);
+                    font-family: @custom-primary-font-family;
+                    color: @footer-txt-color;
+                    padding: 0 0;
+                    list-style: none;
+                }
+
+                .links-title {
+                    font-weight: @font-weight__semibold;
+                    position: relative;
+                    display: inline-block;
+                    margin-bottom: @indent__s;
+                }
+
+                .footer-links {
+                    .lib-vendor-prefix-display();
+                    .lib-vendor-prefix-flex-direction ();
+                    .lib-css(gap, 10px, @_prefix: 1);
+                    width: 100%;
+
+                    li {
+                        font-weight: @font-weight__regular;
+                        margin-bottom: 0;
+
+                        a {
+                            color: @footer-link-color;
+                            position: relative;
+                            .lib-css(transition, all 0.5s ease, @_prefix: 1);
+                        }
+
+                        &:last-child {
+                            margin-bottom: 0;
+                        }
+                    }
+                }
+            }
+        }
+
+        .copyright {
+            text-align: center;
+            display: block;
+            margin-top: 56px;
+            .lib-font-size(18);
+            .lib-line-height(40);
+            font-family: @custom-primary-font-family;
+            color: @footer-copyright-text-color;
+            font-weight: @font-weight__regular;
+        }
+
+        i {
+            &.icon- {
+                &instagram {
+                    .lib-icon-font-symbol(
+                        @_icon-font-content: @icon-instagram,
+                        @_icon-font-position: after
+                    );
+                }
+
+                &twitter {
+                    .lib-icon-font-symbol(
+                        @_icon-font-content: @icon-twitter,
+                        @_icon-font-position: after
+                    );
+                }
+
+                &facebook {
+                    .lib-icon-font-symbol(
+                        @_icon-font-content: @icon-facebook,
+                        @_icon-font-position: after
+                    );
+                }
+
+                &facebook-f {
+                    .lib-icon-font-symbol(
+                        @_icon-font-content: @icon-facebook-f,
+                        @_icon-font-position: after
+                    );
+                }
+
+                &linkdin {
+                    .lib-icon-font-symbol(
+                        @_icon-font-content: @icon-linkdin,
+                        @_icon-font-position: after
+                    );
+                }
+
+                &youtube {
+                    .lib-icon-font-symbol(
+                        @_icon-font-content: @icon-youtube,
+                        @_icon-font-position: after
+                    );
+                }
+            }
+        }
+    }
+}
+
+//
+//    Mobile
+//--------------------------------------
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__s) {
+    .footer-banner-block {
+        margin: 50px auto;
+    }
+
+    .page-footer {
+        .custom-footer-section {
+            .lib-vendor-prefix-flex-direction (column-reverse);
+
+            .custom-footer-left-section {
+                width: 100%;
+                .lib-vendor-prefix-display();
+                .lib-css(justify-content, center, @_prefix: 1);
+                .lib-vendor-prefix-flex-direction (column);
+                margin-bottom: 0;
+                .lib-vendor-box-align (center);
+            }
+
+            .custom-row {
+                .lib-vendor-prefix-flex-wrap (wrap);
+
+                .custom-col {
+                    width: 50%;
+                }
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    .footer-banner-block {
+        margin: 50px auto;
+    }
+
+    .page-footer {
+        .block.newsletter {
+            .newslatter-content {
+                .lib-vendor-prefix-flex-direction (column);
+                .lib-vendor-box-align (center);
+
+                .newslater-message {
+                    margin-bottom: 20px;
+
+                    .newslatter-title,
+                    .newslatter-text {
+                        text-align: center;
+                    }
+                }
+            }
+        }
+
+        .custom-footer-section {
+            .lib-vendor-prefix-flex-direction (column);
+
+            .custom-footer-left-section {
+                width: 100%;
+                .lib-vendor-prefix-display();
+                .lib-css(justify-content, space-between, @_prefix: 1);
+                .lib-vendor-box-align (center);
+                margin-bottom: @indent__xl;
+            }
+        }
+    }
+}
+
+//
+//    Desktop
+//--------------------------------------
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__l) {
+    .page-footer {
+        .custom-footer-section {
+            .custom-col {
+                .links-title {
+                    margin-bottom: @indent__l;
+                }
+
+                .footer-links {
+                    .lib-css(gap, 20px, @_prefix: 1);
+                }
+            }
+        }
+    }
+}

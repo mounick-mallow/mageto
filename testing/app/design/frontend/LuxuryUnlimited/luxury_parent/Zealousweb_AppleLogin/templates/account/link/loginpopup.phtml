@@ -1,0 +1,142 @@
+<?php
+$helper = $block->helper(\Zealousweb\AppleLogin\Helper\Data::class);
+$buttonLabel = $helper->getButtonLabel();
+$displayType = $helper->getDisplayType();
+$defaultImage = $helper->getDefaultImage();
+$buttonLayout = $helper->getButtonLayout();
+?>
+
+<?php if ($helper->isEnabled()):?>
+    <div id="apple-popup-modal">
+        <div class="block block-customer-login">
+            <div class="popup-logo">
+                <img src="<?= $block->escapeUrl($helper->getLogoUrl());?>"
+                     alt="<?= /* @noEscape */ $helper->getLogoAlt();?>">
+            </div>
+            <div class="block-content" aria-labelledby="block-customer-login-heading">
+                <form class="form form-login"
+                      action="<?= $block->escapeUrl($block->getPostActionUrl()) ?>"
+                      method="post"
+                      id="login-form"
+                      data-mage-init='{"validation":{}}'>
+                    <?= $block->getBlockHtml('formkey') ?>
+                    <fieldset class="fieldset login"
+                              data-hasrequired="<?= $block->escapeHtmlAttr(__('* Required Fields')) ?>">
+                        <legend><?= $block->escapeHtml(__('Login Form')) ?></legend>
+                        <div class="field email required">
+                            <div class="control">
+                                <input name="login[username]"
+                                       value="<?= $block->escapeHtmlAttr($block->getUsername()) ?>"
+                                    <?php if ($block->isAutocompleteDisabled()): ?>
+                                        autocomplete="off"<?php endif; ?> id="email"
+                                       type="email" class="input-text" title="<?= $block->escapeHtmlAttr(__('Email')) ?>"
+                                       data-mage-init='{"mage/trim-input":{}}'
+                                       data-validate="{required:true, 'validate-email':true}"
+                                       placeholder="<?= /* @noEscape */ __('Email Address');?>">
+                            </div>
+                        </div>
+                        <div class="field password required">
+                            <div class="control">
+                                <input name="login[password]" type="password"
+                                    <?php if ($block->isAutocompleteDisabled()): ?> autocomplete="off"<?php endif; ?>
+                                       class="input-text" id="pass"
+                                       title="<?= $block->escapeHtmlAttr(__('Password')) ?>" data-validate="{required:true}"
+                                       placeholder="<?= /* @noEscape */ __('Password');?>">
+                            </div>
+                        </div>
+                        <?= $block->getChildHtml('form_additional_info') ?>
+                        <?= $block->getChildHtml('zealousweb.gdpr.checkbox') ?>
+                        <div class="actions-toolbar">
+                            <div class="primary">
+                                <button type="submit" class="action login primary" name="send" id="send2">
+                                    <span><?= $block->escapeHtml(__('Sign In')) ?></span>
+                                </button>
+                            </div>
+                            <div class="secondary">
+                                <a class="action remind"
+                                   href="<?= $block->escapeUrl($block->getForgotPasswordUrl()) ?>">
+                                    <span><?= $block->escapeHtml(__('Forgot Your Password?')) ?></span>
+                                </a>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+
+        <div class="block block-customer-login apple-signup <?= /* @noEscape */
+        (!empty($buttonLayout)) ? 'apple-btn-'.$buttonLayout: 'apple-btn-right'?>">
+            <div class="space-container <?= /* @noEscape */
+            (!empty($buttonLayout)) ? 'apple-icon-'.$buttonLayout: 'apple-icon-left'?>">
+                <span class="space-container-inner"><span><?= $block->escapeHtml(__('Or')) ?></span></span>
+            </div>
+            <a href="javascript:void(0)" id="signinwithapple"
+               class="action create primary signinwithapple  <?= /* @noEscape */
+               (!empty($displayType) && $displayType ==
+                   \Zealousweb\AppleLogin\Model\Config\Source\DisplayType::DISPLAY_TYPE_BUTTON) ? '': 'login-icon';?>">
+                <?php if (!empty($displayType) && $displayType ==
+                    \Zealousweb\AppleLogin\Model\Config\Source\DisplayType::DISPLAY_TYPE_BUTTON):?>
+                    <span class="apple-icon">
+                        <?php if (!empty($helper->getButtonImage())):?>
+                            <?php
+                            $buttonImage = 'apple/'.$helper->getButtonImage();
+                            $resizeImage = $helper->getResizeImage($buttonImage, 22, 27);
+                            ?>
+                            <img alt="<?= $block->escapeHtml(__('Login Icon')) ?>"
+                                 src="<?= $block->escapeUrl($resizeImage); ?>">
+                        <?php else:?>
+                            <img alt="<?= $block->escapeHtml(__('Login Icon')) ?>"
+                                 src="<?= $block->escapeUrl($defaultImage);?>">
+                        <?php endif;?>
+                    </span>
+                    <span class="apple-btn-text">
+                        <?= /* @noEscape */ $buttonLabel; ?>
+                    </span>
+                <?php else:?>
+                    <div class="apple-icon-inner">
+                        <?php if (!empty($helper->getAppleIcon())):?>
+                            <?php
+                            $appleIcon = 'apple/'.$helper->getAppleIcon();
+                            $resizeIcon = $helper->getResizeImage($appleIcon, 90, 90);
+                            ?>
+                            <img alt="<?= $block->escapeHtml(__('Login Icon')) ?>"
+                                 src="<?= $block->escapeUrl($resizeIcon); ?>">
+                        <?php else:?>
+                            <img alt="<?= $block->escapeHtml(__('Login Icon')) ?>"
+                                 src="<?= $block->escapeUrl($defaultImage);?>">
+                        <?php endif;?>
+                    </div>
+                <?php endif;?>
+            </a>
+        </div>
+
+        <div id="zealous-login-info-block" data-login-url="<?= $block->escapeUrl($helper->getAuthorizationUrl());?>"></div>
+        <script type="text/x-magento-init">
+            {
+                "*": {
+                    "Zealousweb_AppleLogin/js/redirect": {
+                    }
+                }
+            }
+        </script>
+
+        <div class="register-link-container">
+            <span class="register-link-inner">
+                <?= /* @noEscape */ __('Don\'t have an account?');?>
+                <a href="<?= $block->escapeUrl($block->getUrl('customer/account/create'));?>">
+                    <i class="fa fa-user" aria-hidden="true"></i><?= /* @noEscape */ __('Sign Up Now');?>
+                </a>
+            </span>
+        </div>
+
+    </div>
+
+    <script type="text/x-magento-init">
+        {
+            "*": {
+                "Zealousweb_AppleLogin/js/modal": {
+                }
+            }
+        }
+    </script>
+<?php endif;?>

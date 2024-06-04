@@ -1,0 +1,26 @@
+<div class="field skype">
+    <div class="control">
+       <input type="text" name="skypem" id="skypem" value="" placeholder="<?= $block->escapeHtmlAttr(__('Marriage Anniversary')) ?>" title="<?= $block->escapeHtmlAttr(__('Marriage Anniversary')) ?>" class="input-text">
+       <input type="text" name="skype" id="skype" value="0000/00/00" class="input-text" style="display: none;">
+       <span class="datepicker-symbol" style="cursor: pointer"></span>
+    </div>
+</div>
+
+<script>
+    require([
+        'jquery',
+        'mage/mage'
+    ], function($){
+        $(document).ready(function() {
+            $( "#skypem" ).datepicker({
+                changeMonth: true,
+                changeYear: true,
+                onSelect: function(selectedDate) {
+                   var marriage_date = $(this).val();
+                   var hidden_date = $("#skype").val(marriage_date);
+               }
+           }); 
+        });
+    });
+</script>
+

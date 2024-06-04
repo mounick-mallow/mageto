@@ -1,0 +1,17 @@
+<?php
+/** @var $viewModel LuxuryUnlimited\GoogleAnalytics\ViewModel\DataLayer **/
+$viewModel = $block->getData('datalayer_view_model');
+$listEvents = $viewModel->getListEvents();
+?>
+
+<?php if ($viewModel->isModuleEnabled()) : ?>
+    <script type="text/x-magento-init">
+        {
+            "*": {
+                "luxuryUnlimitedGtmDatalayer": {
+                    "listEvent": <?= /* @noEscape */ json_encode($listEvents) ?>
+                }
+            }
+        }
+    </script>
+<?php endif; ?>

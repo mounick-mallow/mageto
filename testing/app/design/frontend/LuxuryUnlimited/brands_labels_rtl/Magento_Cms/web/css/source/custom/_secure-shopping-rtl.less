@@ -1,0 +1,32 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common =true) {
+    .secureshippingcont {
+        .paymenticons {
+            .icon-wrap {
+                &:last-child {
+                    margin-left: 0;
+                }
+            }
+        }
+
+        .innerpart {
+            .textpart {
+                padding-right: @indent__l;
+                padding-left: 0;
+            }
+        }
+
+        .paymenticons {
+            .lib-vendor-prefix-display(flex);
+            justify-content: center;
+
+            .icon-wrap {
+                margin-left: @indent__l;
+                margin-right: 0;
+            }
+        }
+    }
+}

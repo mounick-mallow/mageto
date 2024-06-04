@@ -1,0 +1,30 @@
+//
+//  Common
+//  _____________________________________________
+& when (@media-common =true) {
+    .sociallogin-account-socialaccounts {
+        .social_empty {
+            .empty_icon {
+                &:before {
+                    display: block;
+                    margin: 0 auto 22px;
+                    .lib-font-size(84);
+                    .lib-line-height(84);
+                    height: 84px;
+                    width: 84px;
+                }
+
+                .lib-icon-font(
+                    @_icon-font-content: @icon-user2,
+                    @_icon-font: @icon-font-family,
+                    @_icon-font-size: 84px,
+                    @_icon-font-line-height: 84px,
+                    @_icon-font-color: @social-empty-icon__font-color,
+                    @_icon-font-text-hide: false,
+                    @_icon-font-position: before,
+                    @_icon-font-display: block
+                );
+            }
+        }
+    }
+}

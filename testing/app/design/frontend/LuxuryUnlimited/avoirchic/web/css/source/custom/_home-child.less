@@ -1,0 +1,364 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .brand_labels_hero_banner.suv_banner {
+        margin: 0 0 @indent__xs 0;
+
+        .slick-dots {
+            bottom: 20px;
+            right: 20px;
+            text-align: right;
+
+            li {
+                button::before {
+                    border: 2px solid @theme__primary--color-500;
+                    background: @theme__primary--color-500;
+                }
+
+                &.slick-active {
+                    button {
+                        &::before {
+                            background: @custom__color-white;
+                            border: 2px solid @custom__color-white;
+                        }
+                    }
+                }
+            }
+
+            li.slick-active {
+                button {
+                    &::before {
+                        width: 12px;
+                        height: 12px;
+                    }
+                }
+            }
+        }
+    }
+
+    .home_static_banner_avoir {
+        float: left;
+        width: 100%;
+        margin: @indent__l 0;
+        .lib-vendor-prefix-display(flex);
+        gap: 45px;
+
+        .home_products_banner {
+            width: 66%;
+        }
+
+        .home_best_price {
+            width: 35%;
+        }
+
+        img {
+            width: 100%;
+            display: block;
+        }
+    }
+
+    .brands_logos {
+        .brand-slide {
+            .brand {
+                .brand-title {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    .avoir_static_banners2_avoir {
+        float: left;
+        width: 100%;
+        margin: @indent__l 0 0;
+        .lib-vendor-prefix-display(flex);
+        gap: 45px;
+
+        .avoir_home_banner_left {
+            width: 60%;
+            padding-right: @indent__xxs;
+
+            img {
+                height: calc(100% - 1px);
+                width: 100%;
+                display: block;
+                object-fit: cover;
+            }
+        }
+
+        .avoir_home_banner_right {
+            width: 37%;
+            padding-left: 0;
+
+            .avoir_home_static_banners2 {
+                padding-bottom: @indent__l;
+            }
+
+            .avoir_home_banner_right {
+                width: 40%;
+                padding-left: @indent__xxs;
+
+                .avoir_home_static_banners2 {
+                    margin-bottom: 20px;
+                }
+
+                .avoir_home_static_banners3 {
+                    img {
+                        height: 100%;
+                        object-fit: cover;
+                    }
+                }
+            }
+        }
+    }
+
+    .most_popular {
+        .tile-caption {
+            .category-name {
+                margin: 12px 0;
+                color: @theme__primary--color-800;
+                font-weight: @font-weight__heavier;
+                .lib-font-size(24);
+            }
+
+            .view-more {
+                color: @theme__territory--nero--color-100;
+                .lib-font-size(18);
+                .lib-css(font-weight, @font-weight__regular);
+            }
+        }
+
+        .product-item-link {
+            color: @theme__primary--color-500;
+            font-weight: @font-weight__heavier;
+        }
+
+        .price-box {
+            .price {
+                color: @theme__primary--color-400;
+            }
+        }
+    }
+
+    .brand-slide {
+        .lib-vendor-prefix-display(flex);
+    }
+
+    .orders-recent {
+        .orders-recent-items {
+            .action {
+                &.view {
+                    border: 1px solid @theme__primary--color-800;
+                    vertical-align: middle;
+                    text-align: center;
+                    font-weight: @font-weight__heavier;
+                    .lib-font-size(16);
+                    .lib-line-height(22);
+
+                    color: @theme__primary--color-800;
+                    background-color: @theme__primary--color-300;
+                    padding: @indent__xs 25px;
+                    border-radius: @indent__xs;
+
+                    &:hover {
+                        background: @theme__primary--color-800;
+                        border: 1px solid @theme__primary--color-800;
+                        color: @custom__color-loader-overlay;
+                    }
+                }
+            }
+        }
+    }
+
+    .account {
+        .page-main {
+            .page-title-wrapper {
+                .order-date {
+                    margin: 0;
+                    .lib-line-height(40);
+                }
+
+                .order-status {
+                    .lib-line-height(40);
+                    margin: 0 @indent__xs;
+                    .lib-font-size(16);
+                }
+            }
+        }
+    }
+
+    .order-details-items {
+        .table-order-items {
+            tbody {
+                .col.options {
+                    padding: @indent__base @indent__l;
+                }
+            }
+
+            .product-item-name {
+                .lib-font-size(14);
+            }
+        }
+
+        .col.name {
+            padding: @indent__base @indent__xxs;
+        }
+    }
+
+    .col.subtotal.status,
+    .order-status-modal.modal,
+    .items.order-links,
+    .order-details-items .order-title,
+    .porto-icon-action-undo:before {
+        display: none;
+    }
+
+    .col.return.order-cancel span {
+        cursor: pointer;
+    }
+
+    #my-orders-table {
+        .lib-font-size(14);
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__l) {
+    .cms-index-index {
+        [data-content-type='row'][data-appearance='contained'] {
+            max-width: 1320px;
+        }
+    }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__s) {
+    .block-content {
+        .orders-recent {
+            .orders-recent-items {
+                .action {
+                    &.cancel,
+                    &.return,
+                    &.view {
+                        .lib-button(
+                            @_button-padding: 6px 8px @indent__xxs,
+                            @_button-margin: 0,
+                            @_button-background: @theme__primary--color-300,
+                            @_button-color: @theme__primary--color-800
+                        );
+                    }
+                }
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__l) {
+    .avoir_home_banner_left {
+        .avoir_home_banner_left {
+            img {
+                height: calc(100% - 1px);
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    .cms-index-index {
+        .products-grid .product-item {
+            width: 33%;
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__xs) {
+    .cms-index-index {
+        .home_static_banner_avoir {
+            display: block;
+            margin: 0;
+            .lib-css(flex-direction, column, @_prefix: 1);
+
+            .home_products_banner {
+                width: 100%;
+            }
+
+            .home_best_price {
+                width: 100%;
+                height: 160px;
+
+                img {
+                    height: 100%;
+                    width: 100%;
+                }
+            }
+        }
+
+        .pagebuilder-slider.brand_labels_hero_banner {
+            .pagebuilder-slide-wrapper {
+                background-size: cover !important; // important is needed to change the style from core which uses important too
+            }
+        }
+    }
+
+    .avoir_static_banners2_avoir {
+        display: block;
+
+        .avoir_home_banner_left {
+            width: 100%;
+            margin-bottom: @indent__base;
+            padding: 0;
+        }
+        .avoir_home_banner_right {
+            width: 100%;
+            padding: 0;
+        }
+    }
+
+    .products-grid .product-item {
+        width: 50%;
+    }
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__m) {
+    .cms-index-index {
+        .products-grid .product-item {
+            width: 25%;
+        }
+
+        .order-details-items {
+            width: fit-content;
+        }
+    }
+}

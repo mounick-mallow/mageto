@@ -1,0 +1,63 @@
+<?php
+// @codingStandardsIgnoreFile
+?>
+<?php $_helper = $this->helper('WeltPixel\Multistore\Helper\Data'); ?>
+<?php $_utilityHelper = $this->helper('WeltPixel\Backend\Helper\Utility'); ?>
+<?php
+$bgColorStyle = $_helper->getBarBgColor() ? $_helper->getBarBgColor() : '';
+$imgHeight = $_helper->getImageHeight();
+$imgWidth = $_helper->getImageWidth();
+$barWidth = $_helper->getBarWidth();
+$isPearlThemeUsed = (!$_utilityHelper->isPearlThemeUsed() && $barWidth) ? true : false;
+?>
+<?php if (count($block->getStores())>1): ?>
+<div id="multistore-mobile-switcher-language" 
+    <?php if ($_helper->displayInOneRow()) : ?>
+        class="multistore-mobile-switcher-language multistore-desktop"
+    <?php else : ?>
+        class="multistore-mobile-switcher-language"
+    <?php endif; ?>
+>
+    <div class="store-options">
+        <ul class="weltpixel_multistore">
+            <?php foreach ($block->getStores() as $_lang): ?>
+                <?php if (!$_helper->canStoreBeDisplayed($_lang->getCode(), $_lang->getId())) continue; ?>
+                <?php $image = $_helper->getImageUrl($_lang->getId());  ?>
+                <?php $inactiveImage = $_helper->getInactiveImageUrl($_lang->getId()); ?>
+
+                <li class="view-<?php echo $block->escapeHtml($_lang->getCode()); ?> <?php if ($_lang->getId() == $block->getCurrentStoreId()): echo 'active'; endif; ?>  switcher-option">
+                    <?php if ($_lang->getId() == $block->getCurrentStoreId()): ?>
+                        <img src="<?php echo $image ?>" alt="<?php echo $block->escapeHtml($_lang->getName()) ?>" />
+                    <?php else: ?>
+                        <a href="#" data-post='<?php /* @escapeNotVerified */ echo $block->getTargetStorePostData($_lang); ?>'>
+                            <img src="<?php echo $inactiveImage ?>" alt="<?php echo $block->escapeHtml($_lang->getName()) ?>" />
+                        </a>
+                    <?php endif; ?>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+</div>
+<script type="text/x-magento-init">
+{
+    "*": {
+        "templateStyle": {
+            "multistore_mobile_switcher_language": "<?php echo $bgColorStyle ?>",
+            "multistore_img_height" : "<?php /* @escapeNotVerified */ echo $imgHeight ?>",
+            "multistore_img_width" : "<?php /* @escapeNotVerified */ echo $imgWidth ?>",
+            "multistore_max_width" : "<?php /* @escapeNotVerified */ echo $barWidth ?>",
+            "is_pearltheme_used" : "<?php /* @escapeNotVerified */ echo $isPearlThemeUsed ?>"
+        }
+    }
+}
+</script>
+<?php endif; ?>
+
+
+
+
+
+
+
+
+

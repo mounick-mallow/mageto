@@ -1,0 +1,49 @@
+& when (@media-common = true) {
+    html[lang='ar'] {
+        direction: rtl;
+
+        .most_popular {
+            .tile-caption {
+                .category-name {
+                    float: right;
+                }
+
+                .view-more {
+                    float: left;
+                }
+            }
+        }
+
+        .home_categories {
+            .tile-caption {
+                .category-name {
+                    float: right;
+                }
+
+                .view-more {
+                    float: left;
+                }
+            }
+        }
+
+        .brands_logos {
+            .brand {
+                float: left;
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__xs) {
+    html[lang='ar'] {
+        .brands_logos {
+            .brand {
+                float: right;
+            }
+        }
+    }
+}

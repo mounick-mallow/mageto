@@ -1,0 +1,35 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common =true) {
+    .empty-return-list {
+        &:before {
+            .lib-font-size(84);
+            .lib-line-height(84);
+        }
+
+        .lib-icon-font(
+            @_icon-font-content: @order-return-list-icon-font,
+            @_icon-font: @icon-font-family,
+            @_icon-font-size: @order-return-list-icon-size,
+            @_icon-font-line-height: @order-return-list-icon-lineheight,
+            @_icon-font-color: @theme__primary--color-500
+        );
+    }
+
+    .orderreturn-customer-tickets {
+        .orders-history {
+            .table-order-items {
+                .myreturns-table-header {
+                    border-radius: @table-custom__border-radius
+                        @table-custom__border-radius 0 0;
+                }
+
+                .myreturns-table-body {
+                    background: @table-custom__td-background;
+                }
+            }
+        }
+    }
+}

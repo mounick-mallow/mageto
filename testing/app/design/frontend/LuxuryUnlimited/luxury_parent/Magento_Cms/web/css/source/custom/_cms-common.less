@@ -1,0 +1,264 @@
+// /**
+//  * Copyright © Magento, Inc. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .cls_maincmscontent {
+        margin: @indent__s 0 0;
+
+        .cls_cmscontent {
+            h4 {
+                margin: @indent__s 0;
+            }
+
+            p {
+                .lib-line-height(24);
+            }
+        }
+    }
+
+    .tow-col-row {
+        .lib-vendor-prefix-display(flex);
+        justify-content: space-between;
+        padding: 60px 0 0 0;
+
+        .affiliate-col {
+            width: ~'calc(50% - 12px)';
+            position: relative;
+            padding: 0 15px;
+
+            h3 {
+                margin: @indent__s 0;
+            }
+
+            p {
+                .lib-line-height(24);
+            }
+
+            .formBlock {
+                border-radius: 12px;
+                border: 1px solid @color-gray_light;
+
+                .tittle {
+                    background: @color-white-fog;
+                    border-radius: 12px 12px 0px 0px;
+                    padding: 20px;
+                    text-align: center;
+                    border-bottom: 1px solid @color-gray_light;
+                    margin: 0;
+                }
+
+                .fieldset {
+                    padding: 20px;
+
+                    label {
+                        margin: 0 0 8px;
+                        display: inline-block;
+                    }
+
+                    .field {
+                        margin-bottom: 20px;
+                    }
+
+                    .return-submit {
+                        width: 100%;
+                        border-radius: 10px;
+                    }
+                }
+
+                .fields {
+                    .lib-vendor-prefix-display(flex);
+                    justify-content: space-between;
+
+                    &.fields-col-3 {
+                        .field {
+                            width: ~'calc(33.33% - 12px)';
+                        }
+                    }
+
+                    .field {
+                        width: ~'calc(50% - 12px)';
+                        position: relative;
+
+                        &.spBtn {
+                            margin-bottom: 0;
+                        }
+
+                        &.name,
+                        &.phone {
+                            .input-text {
+                                padding-left: 75px;
+                            }
+                        }
+
+                        .specialgenderbox {
+                            position: absolute;
+                            width: 80px;
+
+                            .specialgender {
+                                width: 80px;
+                                padding: 0 @indent__xs 0 16px;
+                                border: 0;
+                                border-radius: 0;
+                                box-shadow: none;
+                                background: transparent;
+
+                                option {
+                                    color: @color-black;
+                                }
+                            }
+
+                            &:after {
+                                content: '';
+                                background: @color-gray_light;
+                                height: 22px;
+                                width: 1px;
+                                display: inline-block;
+                                position: absolute;
+                                right: 10px;
+                                top: ~'calc(50% - 11px)';
+                            }
+                        }
+                        .special-number-dropdown {
+                            position: absolute;
+                            width: 74px;
+                            padding-left: 17px;
+
+                            &::after {
+                                content: '';
+                                background: @color-gray_light;
+                                height: 22px;
+                                width: 1px;
+                                display: inline-block;
+                                position: absolute;
+                                right: 5px;
+                                top: 50%;
+                                top: ~'calc(50% - 11px)';
+                            }
+
+                            select {
+                                padding: 0 @indent__xs 0 16px;
+                                border-left: 0;
+                                border-right: 0;
+                                text-indent: -9999px;
+                                border-radius: 0;
+                                overflow: hidden;
+                                margin-top: 0;
+                                box-shadow: none;
+
+                                option {
+                                    color: @color-black;
+                                }
+                            }
+
+                            .selected-flag {
+                                position: absolute;
+                                top: ~'calc(50% - 9px)';
+                                pointer-events: none;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__xs) {
+    .main .tow-col-row {
+        display: block;
+        .affiliate-col {
+            width: 100%;
+
+            .formBlock {
+                .fields {
+                    display: block;
+
+                    &.fields-col-3 {
+                        .lib-vendor-prefix-display(flex);
+                        flex-wrap: wrap;
+
+                        .field {
+                            width: ~'calc(50% - 12px)';
+                        }
+
+                        .field.postcode {
+                            flex: 1 0 100%;
+                        }
+                    }
+
+                    .field {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    .main .tow-col-row {
+        padding-left: 0;
+        padding-right: 0;
+        display: block;
+
+        .affiliate-col {
+            width: 100%;
+
+            .formBlock {
+                margin-top: @indent__xl;
+
+                .fields {
+                    &.fields-col-3 {
+                        .field {
+                            width: ~'calc(33.33% - 12px)';
+                        }
+                    }
+
+                    .field {
+                        width: ~'calc(50% - 12px)';
+                    }
+                }
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__xl) {
+    .main .tow-col-row {
+        .affiliate-col {
+            width: ~'calc(50% - 12px)';
+
+            .formBlock {
+                .fields {
+                    &.fields-col-3 {
+                        .field {
+                            width: ~'calc(33.33% - 12px)';
+                        }
+                    }
+
+                    .field {
+                        width: ~'calc(50% - 12px)';
+                    }
+                }
+            }
+        }
+    }
+}

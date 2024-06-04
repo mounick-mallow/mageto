@@ -1,0 +1,5 @@
+"Create an Account","Sign Up",module,Magento_Customer
+"General & Order Enquiries","Contact Us",module,Magento_Contact
+"Contact Us","General & Order Enquiries",module,Magento_Contact
+"Designer Brands","Designers"
+"Back to My Orders","View all orders"

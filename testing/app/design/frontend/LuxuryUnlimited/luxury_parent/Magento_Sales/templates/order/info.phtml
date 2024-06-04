@@ -1,0 +1,85 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php
+/** @var $block \Magento\Sales\Block\Order\Info */
+?>
+<?php
+$_order = $block->getOrder();
+$_helper = $this->helper(\LuxuryUnlimited\Checkout\Helper\Data::class);
+if (!$_order || !$_order->getId() || !$_helper) {
+    return "";
+}
+$isMobileDevice = $_helper->isMobileDevice();
+?>
+<table aria-describedby="block-dashboard-addresses" class="block block-dashboard-addresses">
+    <tr class="block-title">
+        <th></th>
+        <th>
+            <?= /* @noEscape */ $isMobileDevice
+                    ? substr($block->escapeHtml(__("Default Shipping")), 8)
+                    : $block->escapeHtml(__("Default Shipping")) ?>
+        </th>
+        <th>
+            <?= /* @noEscape */ $isMobileDevice
+                    ? substr($block->escapeHtml(__("Default Billing")), 8)
+                    : $block->escapeHtml(__("Default Billing")) ?>
+        </th>
+    </tr>
+        <tr class="block-content">
+            <td class="box box-shipping-address">
+                <strong class="box-title"><span><?= $block->escapeHtml(
+                    __("Shipping Address")
+                ) ?></span></strong>
+                <div class="box-content">
+                    <address><?= /* @noEscape */ $block->getFormattedAddress(
+                            $_order->getShippingAddress()
+                        ) ?></address>
+                </div>
+            </td>
+            <td class="box-actions">
+                <a class="action edit" href="<?= $block->escapeUrl(
+                    $block->getPrimaryShippingAddressEditUrl()
+                ) ?>" data-ui-id="default-shipping-edit-link"><span><?= $block->escapeHtml(
+    __("Change")
+) ?></span></a>
+            </td>
+            <td class="box-actions defaultshipping">
+                <a class="action edit" href="<?= $block->escapeUrl(
+                    $block->getPrimaryShippingAddressEditUrl()
+                ) ?>" data-ui-id="default-shipping-edit-link"><span><?= $block->escapeHtml(
+    __("Change")
+) ?></span></a>
+            </td>
+    </tr>
+    <tr class="block-content">
+            <td class="box box-billing-address">
+            <strong class="box-title">
+                <span><?= $block->escapeHtml(__("Billing Address")) ?></span>
+            </strong>
+            <div class="box-content">
+                <address><?= /* @noEscape */ $block->getFormattedAddress(
+                        $_order->getBillingAddress()
+                    ) ?></address>
+            </div>
+            </td>
+            <td class="box-actions defaultbilling">
+                <a class="action edit" href="<?= $block->escapeUrl(
+                    $block->getPrimaryBillingAddressEditUrl()
+                ) ?>" data-ui-id="default-billing-edit-link"><span><?= $block->escapeHtml(
+    __("Change")
+) ?></span></a>
+            </td>
+            <td class="box-actions">
+                <a class="action edit" href="<?= $block->escapeUrl(
+                    $block->getPrimaryBillingAddressEditUrl()
+                ) ?>" data-ui-id="default-billing-edit-link"><span><?= $block->escapeHtml(
+    __("Change")
+) ?></span></a>
+            </td>
+
+    </tr>
+</table>

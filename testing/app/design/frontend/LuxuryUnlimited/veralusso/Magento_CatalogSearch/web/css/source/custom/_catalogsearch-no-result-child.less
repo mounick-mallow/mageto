@@ -1,0 +1,40 @@
+& when (@media-common = true) {
+    .catalogsearch-result-index.page-layout-2columns-left {
+        .column.main {
+            .no-page {
+                h3 {
+                    .lib-font-size(48);
+                    color: @custom__color-black;
+                }
+
+                .re-result-desc {
+                    .lib-font-size(18);
+                    color: @custom__color-gray1;
+                }
+            }
+
+            .result-count {
+                .lib-font-size(16);
+                color: @custom__color-gray1;
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__xs) {
+    .catalogsearch-result-index.page-layout-2columns-left {
+        .column.main {
+            .no-page {
+                div.re-result-btns {
+                    .action {
+                        width: 60%;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,168 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+$helperProductPage = $this->helper('WeltPixel\ProductPage\Helper\Data');
+$accordionVersion = $helperProductPage->getAccordionVersion($helperProductPage->getStoreId());
+$accordionCollapsible = $helperProductPage->isAccordionCollapsible($helperProductPage->getStoreId());
+$noBorder = '';
+$noBorderAccordion = '';
+$tabsLayout = $helperProductPage->getTabsLayout();
+$reviewUrl = $block->getBaseUrl() . 'review/product/listAjax/id/' . $helperProductPage->getProductId();
+
+?>
+<?php
+    $dynamicHelper = $this->helper("Dynamic\Customization\Helper\Data");
+    $product = $dynamicHelper->getRegistry()->registry('current_product');//get current product
+    if ($product->getResource()->getAttribute('composition')) {
+        $composition = $product->getResource()->getAttribute('composition')->getFrontend()->getValue($product);
+    }
+    if ($product->getResource()->getAttribute('dimensions')) {
+        $dimensions = $product->getResource()->getAttribute('dimensions')->getFrontend()->getValue($product);
+    }
+    if ($color_str = $product->getResource()->getAttribute('color')) {
+        $color_str = $product->getResource()->getAttribute('color')->getFrontend()->getValue($product);
+    }
+    if ($product->getResource()->getAttribute('material')) {
+        $material_str = $product->getResource()->getAttribute('material')->getFrontend()->getValue($product);
+    }
+    ?>
+<?php if ($detailedInfoGroup = $block->getGroupChildNames('detailed_info', 'getChildHtml')) : ?>
+<?php if($tabsLayout == 'accordion')  :  ?>
+    <?php
+    // Check if accordion version is Version 2
+    if($accordionVersion == '1'): ?>
+        <div class="product info detailed">
+            <?php $layout = $block->getLayout(); ?>
+            <div class="product data items acc-v2-noborder" data-mage-init='{"tabs":{"openedState": "active", "collapsible": true, "active": false, "multipleCollapsible": true, "animate": 300}}'>
+                <?php foreach ($detailedInfoGroup as $name):?>
+                    <?php $html = $layout->renderElement($name); ?>
+                    <?php if (!trim($html)) continue; ?>
+                    <?php $alias = $layout->getElementAlias($name); ?>
+                    <?php $label = $block->getChildData($alias, 'title'); ?>
+                    <div class="bg-accordion"
+                         aria-labeledby="tab-label-<?= /* @escapeNotVerified */ $alias ?>-title"
+                         data-role="collapsible" id="tab-label-<?= /* @escapeNotVerified */ $alias ?>">
+                        <a class="bg-link"
+                           tabindex="-1"
+                           data-toggle="switch"
+                           href="#<?= /* @escapeNotVerified */ $alias ?>"
+                           id="tab-label-<?= /* @escapeNotVerified */ $alias ?>-title" data-role="trigger">
+                            <?= /* @escapzeNotVerified */ $label ?>
+                        </a>
+                    </div>
+                    <div class="cnt-acc" id="<?= /* @escapeNotVerified */ $alias ?>" data-role="content">
+                        <div class="content-acc">
+                            <?= /* @escapeNotVerified */ $html ?>
+                        </div>
+                    </div>
+                <?php endforeach;?>
+            </div>
+        </div>
+    <?php else: ?>
+        <?php $noBorderAccordion = $helperProductPage->getAccordionVersion() == '0' ? 'no-border-accordion' : '' ?>
+        <div class="product-info-main-extend">
+            <div class="accordion-1 product info detailed <?php echo  $noBorder; ?>">
+                <?php $layout = $block->getLayout(); ?>
+                <div class="product data items" data-mage-init='{"tabs":{"openedState":"active" <?php echo $accordionCollapsible ? ', "collapsible": "true"' : ''; ?>  }}'>
+                    <?php foreach ($detailedInfoGroup as $name):?>
+                        <?php $html = $layout->renderElement($name); ?>
+                        <?php if (!trim($html)) continue; ?>
+                        <?php $alias = $layout->getElementAlias($name) ?>
+                        <?php $label = $block->getChildData($alias, 'title'); ?>
+                        <div class="data item title <?php echo $noBorderAccordion; ?>"
+                             aria-labeledby="tab-label-<?= /* @escapeNotVerified */ $alias ?>-title"
+                             data-role="collapsible" id="tab-label-<?= /* @escapeNotVerified */ $alias ?>">
+                            <a class="data switch <?php echo $noBorderAccordion; ?>"
+                               tabindex="-1"
+                               data-toggle="switch"
+                               href="#<?= /* @escapeNotVerified */ $alias ?>"
+                               id="tab-label-<?= /* @escapeNotVerified */ $alias ?>-title">
+                                <?= /* @escapeNotVerified */ $label ?>
+                            </a>
+                        </div>
+                        <div class="data item content <?php echo $noBorderAccordion; ?>" id="<?= /* @escapeNotVerified */ $alias ?>" data-role="content">
+                            <?= /* @escapeNotVerified */ $html ?>
+                        </div>
+                    <?php endforeach;?>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
+
+<?php else: ?>
+<?php $noBorder = $tabsLayout == 'tab' && $helperProductPage->getTabsVersion() == '1' ? 'no-border' : '' ?>
+<div class="tabs-1 product info detailed <?php echo  $noBorder; ?>">
+    <?php $layout = $block->getLayout(); ?>
+    <div class="product data items" data-mage-init='{"tabs":{"openedState":"active"}}'>
+        <div class="cls_heading"><?php echo __('Details') ?></div>
+        <?php foreach ($detailedInfoGroup as $name):?>
+            <?php $html = $layout->renderElement($name) ?>
+
+            <?php if (!trim($html)) continue ?> 
+
+            <?php $alias = $layout->getElementAlias($name); ?>
+            <?php $label = $block->getChildData($alias, 'title'); ?>
+            <div class="cls_holecontent" style="display: none">
+                <div class="item_product_detail cls_details">
+                    <div class="scroll_scn">
+                        <p><?= $html; ?></p>
+                    </div>
+                </div>
+                <div class="clsextrainfoattr">
+                    <table aria-describedby="additional-attributes" class="data table additional-attributes">
+                        <tbody>
+                            <tr>
+                                <?php if(!empty($composition)) : ?>
+                                        <td class="col label" scope="row"><?= __('Composition') ?></td>
+                                        <td class="col data" data-th="Brands">
+                                            <?php
+                                            $composition = strtolower($composition);
+                                            $composition = ucwords($composition); 
+                                            ?>
+                                            <?= $composition; ?>
+
+                                        </td>
+                                <?php endif; ?>
+                            </tr>
+                            <tr>
+                                <?php if(!empty($dimensions)) : ?>
+                                        <td class="col label" scope="row"><?= __('Dimensions') ?></td>
+                                        <td class="col data" data-th="Brands"> <?= $dimensions;?></td>
+                                <?php endif; ?>
+                            </tr>
+                            <tr>
+                                <?php if(!empty($color_str)) : ?>
+                                        <td class="col label" scope="row"><?= __('Color') ?></td>
+                                        <td class="col data" data-th="Brands"> <?= $color_str;?></td>
+                                <?php endif ?>
+                            </tr>
+                            <tr>
+                                <?php if(!empty($material_str)) : ?>
+                                        <td class="col label" scope="row"><?= __('Material') ?></td>
+                                        <td class="col data" data-th="Brands"> <?= $material_str;?></td>
+                                <?php endif; ?>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <?php break; ?> 
+        <?php endforeach;?>
+    </div>
+
+    <?php endif; ?>
+<?php endif; ?>
+<script type="text/x-magento-init">
+{
+    "*": {
+        "WeltPixelProductDetails": {
+            "reviewUrl" : "<?= /* @escapeNotVerified */ $reviewUrl ?>",
+            "tabsLayout" :  "<?= /* @escapeNotVerified */ $tabsLayout; ?>"
+        }
+    }
+}
+</script>

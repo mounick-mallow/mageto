@@ -1,0 +1,29 @@
+<div class="utilities ticket-area"
+     data-block="tickets-icon"
+     data-bind="scope:'ticketsIcon'">
+    <?php if(is_object($block->gettMyTicketsCollection()) && count($block->gettMyTicketsCollection()) > 0): ?>
+        <a href="javascript:void(0)"
+           class="action ticket my-ticket"
+           data-bind="click: toggleMessagesPopup">
+            <i class="icon-ticket"></i>
+        </a>
+        <div class="tickets-icon-content-wrapper">
+            <!-- ko template: getTemplate() --><!-- /ko -->
+        </div>
+    <?php endif; ?>
+    <script type="text/x-magento-init">
+        {
+            "[data-block='tickets-icon']": {
+                "Magento_Ui/js/core/app": {
+                   "components": {
+                        "ticketsIcon": {
+                            "component": "Dynamic_Mytickets/js/tickets-icon/ticketsIcon",
+                            "template" : "Dynamic_Mytickets/ticket-icon/ticket-icon-popup",
+                            "tickets": "<?= $block->escapeJs(\Laminas\Json\Json::encode($block->gettMyTicketsCollection() ?? [])) ?>"
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</div>

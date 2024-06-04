@@ -1,0 +1,17 @@
+{
+  "name": "belvg/module-tickets-list",
+  "version": "1.0.0",
+  "description": "TicketsList",
+  "type": "magento2-module",
+  "require": {
+    "magento/framework": "*"
+  },
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "Belvg\\TicketsList\\": ""
+    }
+  }
+}

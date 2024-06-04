@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Dynamic_CronTime
+ *
+ * @copyright   Copyright (c) 2023 IdeaInYou
+ * @author      RuslanP <ruslan.p@ideainyou.com>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="cron_timetab" translate="label" sortOrder="100">
+            <label>Cron Time</label>
+        </tab>
+        <section id="setting" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1"
+                 showInStore="1">
+            <class>separator-top</class>
+            <label>Settings</label>
+            <tab>cron_timetab</tab>
+            <resource>Dynamic_Crontime::config_extension</resource>
+            <group id="general_cron_time_amasty" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <label>Amasty Base Cron time settings</label>
+                <field id="frequency_cron_time_amasty" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0"
+                       showInStore="0">
+                    <label>Cron Schedule</label>
+                    <comment>You can look how to set schedule on the site https://crontab.guru/</comment>
+                    <validate>validate-cron</validate>
+                </field>
+            </group>
+            <group id="general_cron_time_amasty_cronschedule" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <label>Amasty Cronschedule Cron time settings</label>
+                <field id="frequency_cron_time_amasty_cronschedule" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0"
+                       showInStore="0">
+                    <label>Cron Schedule</label>
+                    <comment>You can look how to set schedule on the site https://crontab.guru/</comment>
+                    <validate>validate-cron</validate>
+                </field>
+            </group>
+            <group id="general_cron_time_amasty_sorting" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <label>Amasty Sorting Cron time settings</label>
+                <field id="frequency_cron_time_amasty_sorting" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0"
+                       showInStore="0">
+                    <label>Cron Schedule</label>
+                    <comment>You can look how to set schedule on the site https://crontab.guru/</comment>
+                    <validate>validate-cron</validate>
+                </field>
+            </group>
+            <group id="general_cron_time_bss" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <label>BSS GeoIPAutoSwitchStore Cron time settings</label>
+                <field id="frequency_cron_time_bss" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0"
+                       showInStore="0">
+                    <label>Cron Schedule</label>
+                    <comment>You can look how to set schedule on the site https://crontab.guru/</comment>
+                    <validate>validate-cron</validate>
+                </field>
+            </group>
+            <group id="general_cron_time_firasbrands" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <label>Firas Cronbrands Cron time settings</label>
+                <field id="frequency_cron_time_firasbrands" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0"
+                       showInStore="0">
+                    <label>Cron Schedule</label>
+                    <comment>You can look how to set schedule on the site https://crontab.guru/</comment>
+                    <validate>validate-cron</validate>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

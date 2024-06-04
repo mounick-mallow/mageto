@@ -1,0 +1,42 @@
+name: Sonarqube
+on: 
+  push:
+    branches:
+      - stage
+  pull_request:
+    types: [opened, reopened, synchronize, ready_for_review]
+jobs:
+  sonarcloud:
+    name: SonarCloud
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: "Update to ERP"
+        run: |
+          curl --location 'https://twilio.theluxuryunlimited.com/api/github-action' \
+          --header 'Content-Type: application/json' \
+          --data '
+          {
+          "GITHUB_ACTOR": "'"$GITHUB_ACTOR"'",
+          "GITHUB_API_URL": "'"$GITHUB_API_URL"'",
+          "GITHUB_BASE_REF": "'"$GITHUB_BASE_REF"'",
+          "GITHUB_EVENT_NAME": "'"$GITHUB_EVENT_NAME"'",
+          "GITHUB_JOB": "'"$GITHUB_JOB"'",
+          "GITHUB_REF": "'"$GITHUB_REF"'",
+          "GITHUB_REF_NAME": "'"$GITHUB_REF_NAME"'",
+          "GITHUB_REF_TYPE": "'"$GITHUB_REF_TYPE"'",
+          "GITHUB_REPOSITORY": "'"$GITHUB_REPOSITORY"'",
+          "GITHUB_REPOSITORY_ID": "'"$GITHUB_REPOSITORY_ID"'",
+          "GITHUB_RUN_ATTEMPT": "'"$GITHUB_RUN_ATTEMPT"'",
+          "GITHUB_RUN_ID": "'"$GITHUB_RUN_ID"'",
+          "GITHUB_WORKFLOW": "'"$GITHUB_WORKFLOW"'",
+          "RUNNER_NAME": "'"$RUNNER_NAME"'"
+          }
+          '

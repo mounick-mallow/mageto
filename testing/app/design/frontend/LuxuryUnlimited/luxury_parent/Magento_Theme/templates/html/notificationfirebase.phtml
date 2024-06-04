@@ -1,0 +1,177 @@
+<?php
+$ddHelper = $this->helper("\Dynamic\HomepageApi\Helper\Data");
+$siteUrl = $ddHelper->getScopeConfigManager()->getValue("web/secure/base_url");
+?>
+<!-- START CODE FOR POPUP -->
+<script src="<?= $block->escapeUrl($siteUrl) ?>pushnotik/firebase.js"></script>
+<script>
+    var jsUrl = '<?= $block->escapeUrl($siteUrl) ?>pushnotik/firebase-messaging-sw.js';
+    const firebaseConfig = {
+        apiKey: "AIzaSyAmx-3alUibcmZZ_HQ6sCCrCqfBejgq97I",
+        authDomain: "brandsandlabels.firebaseapp.com",
+        projectId: "brandsandlabels",
+        storageBucket: "brandsandlabels.appspot.com",
+        messagingSenderId: "759385817839",
+        appId: "1:759385817839:web:3ef3e63760b4c6abd5911a",
+        measurementId: "G-80Z8YN2YKE"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const messaging = firebase.messaging();
+
+    messaging.usePublicVapidKey('BGKF1JWFgXQJk9Lp9lfl_EkgG70DOHG8tWvBOiVC1XlXQP56UiW66xcwKq1lXhHqy-xyhJjvE7No6H6793vno54');
+
+    if ('serviceWorker' in navigator){
+        navigator.serviceWorker.register('<?= $block->escapeUrl($siteUrl) ?>pushnotik/firebase-messaging-sw.js').then().catch(function(err) {});
+    }
+
+    function requestPermission(val = 'Yes')
+    {
+        var expire = "<?= $block->escapeHtml(date('D, d M Y H:i:s', strtotime("+30 days"))) ?>";
+        document.cookie = "popupShowbl=disable; expires="+expire+" UTC; path=/";
+        document.getElementsByClassName('clsnotification')[0].style.display = "none";
+        if(val == 'Yes')
+        {
+            messaging.requestPermission()
+                .then(function(){
+                    getToken();
+                })
+                .catch(function(err){
+                })
+        }
+    }
+
+    messaging.onMessage(function(payload) {
+        // Customize notification here
+        const notificationTitle = payload.data.title;
+        const notificationOptions = {
+            body: payload.data.body,
+            icon: payload.data.icon,
+            data: {url: payload.data.url}
+        };
+        navigator.serviceWorker.ready.then(function(registration){
+            return registration.showNotification(notificationTitle, notificationOptions);
+        })
+            .catch(function(err){
+            });
+    });
+
+    navigator.serviceWorker.ready.then(function(registration){
+        registration.addEventListener('notificationclick', function(event) {
+            const clickedNotification = event.notification;
+            window.location.href = clickedNotification.data.url;
+            clickedNotification.close();
+        });
+        registration.addEventListener('pushsubscriptionchange', deleteToken);
+    });
+
+    function deleteToken(){
+        messaging.getToken()
+            .then(function(currentToken) {
+                messaging.deleteToken(currentToken)
+                    .then(function() {
+                        getToken();
+                    })
+                    .catch(function(err) {
+                        getToken();
+                    });
+                // [END delete_token]
+            })
+            .catch(function(err) {
+            });
+    }
+
+    function getToken(){
+        messaging.getToken()
+            .then(function(token){
+                jQuery.ajax({
+                    url: '<?= $block->escapeUrl($siteUrl) ?>pushnotik/regtoken.php',
+                    type: 'POST',
+                    data:{
+                        token:token,
+                        website:"Suv&Nat"
+                    },
+                    success: function(data) {
+                        if(data == "1"){}
+                        else{}
+                    }
+                });
+            })
+            .catch(function(err){
+            });
+    }
+</script>
+<!-- (isset($_COOKIE['popupShown']) && $_COOKIE['popupShown'] =="1")?"none":"block" -->
+
+<div class="clsnotification" style="display: <?= (isset($_COOKIE['popupShowbl']) && $_COOKIE['popupShowbl']=="disable")?"none":"block"; ?>">
+    <div class="clsnotification" >
+        <div class="clsnotwrapper">
+
+            <div class="mobile-cookie-section">
+                <div id="cookie-accordion">
+                    <h3><?= /* @noEscape */ __('COOKIE POLICY');?></h3>
+                    <div>
+                        <p>
+                            <?= /* @noEscape */ __('To make our website even better, we use functional and analytical cookies. Information from the website and your preferences are stored in these cookies by your browser.');?>
+                        </p>
+                    </div>
+                    <h3><?= /* @noEscape */ __('ESSENTIAL');?></h3>
+                    <div>
+                        <p>
+                            <?= /* @noEscape */ __('Essential cookies are strictly necessary to guarantee the proper functioning of the website.');?>
+                        </p>
+                    </div>
+                    <h3><?= /* @noEscape */ __('ANALYTICAL');?></h3>
+                    <div>
+                        <p>
+                            <?= /* @noEscape */ __('With this you allow us to collect anonymous data about the use of the website with third party cookies, such as the number of clicks and the behavior of visitors on the website. In addition, we can also perform marketing-related actions via this option. By activating this cookie, you help us to further imporve your experience.');?>
+                        </p>
+                    </div>
+                    <h3><?= /* @noEscape */ __('MARKETING');?></h3>
+                    <div>
+                        <p>
+                            <?= /* @noEscape */ __('With this you allow us to collect marketing-related data via third party cookies. By activating this cookie, you help us to further imporve your experience.');?>
+                        </p>
+                    </div>
+                    <h3><?= /* @noEscape */ __('PRIVACY POLICY');?></h3>
+                    <div>
+                        <p>
+                            <?= /* @noEscape */ __('Read more about the use of cookies on this website in our privacy policy.');?>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tabs">
+                <ul>
+                    <li><a href="#tabs-1"><?= /* @noEscape */ __('COOKIE POLICY');?></a></li>
+                    <li><a href="#tabs-2"><?= /* @noEscape */ __('ESSENTIAL');?></a></li>
+                    <li><a href="#tabs-3"><?= /* @noEscape */ __('ANALYTICAL');?></a></li>
+                    <li><a href="#tabs-4"><?= /* @noEscape */ __('MARKETING');?></a></li>
+                    <li><a href="#tabs-5"><?= /* @noEscape */ __('PRIVACY POLICY');?></a></li>
+                </ul>
+                <div id="tabs-1">
+                    <p><?= /* @noEscape */ __('To make our website even better, we use functional and analytical cookies. Information from the website and your preferences are stored in these cookies by your browser.');?></p>
+                </div>
+                <div id="tabs-2">
+                    <p><?= /* @noEscape */ __('Essential cookies are strictly necessary to guarantee the proper functioning of the website.');?></p>
+                </div>
+                <div id="tabs-3">
+                    <p><?= /* @noEscape */ __('With this you allow us to collect anonymous data about the use of the website with third party cookies, such as the number of clicks and the behavior of visitors on the website. In addition, we can also perform marketing-related actions via this option. By activating this cookie, you help us to further imporve your experience.');?></p>
+                </div>
+                <div id="tabs-4">
+                    <p><?= /* @noEscape */ __('With this you allow us to collect marketing-related data via third party cookies. By activating this cookie, you help us to further imporve your experience.');?></p>
+                </div>
+                <div id="tabs-5">
+                    <p><?= /* @noEscape */ __('Read more about the use of cookies on this website in our privacy policy.');?></p>
+                </div>
+            </div>
+            <div class="clsbuttonwrapper">
+                <a class="clsbtnyes" href="javascript:requestPermission('Yes');"><?= /* @noEscape */ __('YES') ?></a>
+                <a class="clsbtnno" href="javascript:requestPermission('No');"><?= /* @noEscape */ __('NO') ?></a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END CODE FOR POPUP -->
+
+

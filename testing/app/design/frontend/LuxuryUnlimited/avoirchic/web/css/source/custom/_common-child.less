@@ -1,0 +1,63 @@
+// /**
+//  * Copyright © 2015 Magento. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//  Common
+//  ---------------------------------------------
+
+& when (@media-common = true) {
+    .page-title-wrapper {
+        background: @theme__territory--nero--color-15;
+        padding: 35px 15px;
+
+        h1 {
+            color: @theme__primary--color-800;
+        }
+
+        .page-title {
+            .lib-font-size(26);
+            .lib-line-height(39);
+            color: @theme__primary--color-800;
+            width: 100%;
+            text-align: center;
+            font-weight: @font-weight__semibold;
+            margin: 0;
+        }
+    }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__s) {
+    .page-title-wrapper {
+        padding-top: @indent__l;
+        padding-bottom: @indent__l;
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__m) {
+    .account .page-title-wrapper {
+        padding-top: @indent__l;
+        padding-bottom: @indent__l;
+        padding-left: 15px;
+    }
+
+    .page-title-wrapper {
+        h1 {
+            .lib-font-size(@page-title__font-size);
+            font-weight: @font-weight__semibold;
+        }
+    }
+}

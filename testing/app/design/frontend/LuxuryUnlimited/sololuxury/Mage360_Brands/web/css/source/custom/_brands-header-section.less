@@ -1,0 +1,124 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .lx-brands__header {
+        margin: 35px auto 0;
+
+        .lx-brands__page-title {
+            .lib-font-size(20);
+            .lib-font-size(22);
+            color: @theme-color-gray_dark;
+            font-weight: @font-weight__semibold;
+            margin: 0 auto 20px;
+        }
+
+        .lx-brands__search {
+            margin: 0 0 @indent__l;
+            .lib-icon-font(
+                @_icon-font-content: @icon-search,
+                @_icon-font: @icon-font-family,
+                @_icon-font-color: @theme__secondary--color-800,
+                @_icon-font-size: 20px,
+                @_icon-font-line-height: 1,
+                @_icon-font-position: before,
+                @_icon-font-display: block
+            );
+
+            &:before {
+                color: @theme__secondary--color-800;
+                right: 15px;
+            }
+
+            &.active {
+                .lx-brands__clear-search {
+                    color: @theme__secondary--color-800;
+                    right: 15px;
+                    .lib-icon-font(
+                        @_icon-font-content: @icon-close,
+                        @_icon-font: @icon-font-family,
+                        @_icon-font-color: @theme__secondary--color-800,
+                        @_icon-font-size: 20px,
+                        @_icon-font-line-height: 1,
+                        @_icon-font-position: before,
+                        @_icon-font-display: block
+                    );
+                }
+
+                &:before {
+                    display: none;
+                }
+            }
+
+            .lx-brands__search-field {
+                padding: @indent__xs 50px @indent__xs 15px;
+                border: 1px solid @theme__primary--200;
+
+                &::placeholder {
+                    color: @theme__secondary--color-400;
+                }
+            }
+
+            .lx-brands__clear-search {
+                display: none;
+            }
+        }
+    }
+
+    .lx-brands__alphabet {
+        .lx-brands__letters,
+        .lx-brands__numbers {
+            .lx-brands__alphabet-item {
+                .lib-font-size(16);
+                text-align: center;
+                color: @theme__primary--500;
+                font-weight: @font-weight__heavier;
+            }
+        }
+
+        .lx-brands__letters {
+            .lib-line-height(30);
+        }
+    }
+}
+
+//
+//  Tablet
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__m) {
+    .lx-brands__header {
+        .lx-brands__search {
+            max-width: 580px;
+        }
+    }
+
+    .lx-brands__alphabet {
+        margin: 0 auto 70px;
+    }
+}
+
+//
+//  Tablet large
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__l) {
+    .lx-brands__header {
+        .lx-brands__search {
+            max-width: 640px;
+        }
+    }
+
+    .lx-brands__alphabet {
+        margin: 0 auto 110px;
+    }
+}

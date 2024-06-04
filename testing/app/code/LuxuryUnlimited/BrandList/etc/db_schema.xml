@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="mage360_brands" resource="default" engine="innodb" comment="Mage 360">
+        <column xsi:type="int" name="section_one_display" nullable="true" comment="section one display" default="0" />
+        <column xsi:type="int" name="section_two_display" nullable="true" comment="section two display" default="0" />
+    </table>
+</schema>

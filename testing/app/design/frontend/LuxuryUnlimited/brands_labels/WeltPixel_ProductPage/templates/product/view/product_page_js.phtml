@@ -1,0 +1,15 @@
+<?php $_helper = $this->helper(\WeltPixel\ProductPage\Helper\Data::class); ?>
+<?php $_mobileHelper = $this->helper(\WeltPixel\MobileDetect\Helper\Data::class); ?>
+<?php $positionProductInfo = $_helper->getPositionProductInfo($_helper->getStoreId()) ?>
+<?php $isMobile = $_mobileHelper->isMobile() ?>
+<div id="swipeOff"></div>
+<script type="text/x-magento-init">
+{
+    "*": {
+        "WeltPixelProductPage": {
+            "positionProductInfo" : "<?= /* @noEscape */ $positionProductInfo ?>",
+            "isMobile" :  "<?= /* @noEscape */ $isMobile ?>"
+        }
+    }
+}
+</script>

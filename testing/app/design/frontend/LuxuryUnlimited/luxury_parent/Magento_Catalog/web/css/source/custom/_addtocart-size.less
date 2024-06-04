@@ -1,0 +1,266 @@
+& when (@media-common = true) {
+    .modals-wrapper {
+        aside.modal-popup.modals-ajaxcart.modal-slide._inner-scroll._show {
+            .modal-inner-wrap {
+                overflow-y: auto;
+
+                .modal-content {
+                    .content-ajaxcart {
+                        .product-message {
+                            width: 80%;
+                            margin: @indent__s auto;
+                        }
+
+                        .ajaxcart-wrapper-main {
+                            .main-section {
+                                .right-main-section {
+                                    .wp-product-container {
+                                        .fieldset {
+                                            .field.configurable.required {
+                                                .label {
+                                                    display: none;
+                                                }
+                                            }
+                                        }
+
+                                        .product-options-wrapper {
+                                            padding-bottom: 0;
+                                            border-bottom: none;
+
+                                            .product-add-form {
+                                                .product-options-wrapper {
+                                                    .fieldset {
+                                                        .lib-vendor-prefix-display(flex);
+                                                        vertical-align: middle;
+                                                        align-items: center;
+                                                        width: 100%;
+                                                        position: relative;
+
+                                                        .field.qty {
+                                                            .label {
+                                                                display: none;
+                                                            }
+                                                        }
+
+                                                        .field.configurable.required {
+                                                            width: 100%;
+
+                                                            .label {
+                                                                display: block;
+                                                                margin: 0 0
+                                                                    @indent__xxs;
+                                                                position: relative;
+                                                                height: auto;
+                                                                width: 100%;
+                                                            }
+
+                                                            .control {
+                                                                padding-top: @indent__xl;
+
+                                                                .list-unstyled.border-style-none {
+                                                                    border: none;
+                                                                }
+
+                                                                .list-unstyled {
+                                                                    padding-left: 0;
+                                                                    position: relative;
+                                                                    border-width: 1px;
+                                                                    border-style: solid;
+                                                                    border-radius: 5px;
+                                                                    margin-bottom: 0;
+
+                                                                    li {
+                                                                        list-style: none;
+                                                                        padding: 6px
+                                                                            24px;
+                                                                        .lib-font-size(16);
+                                                                        .lib-line-height(22);
+                                                                        cursor: pointer;
+                                                                        margin-bottom: 0;
+
+                                                                        &:first-child {
+                                                                            border-width: 1px;
+                                                                            border-style: solid;
+                                                                            padding: @indent__xs;
+                                                                            background-color: transparent;
+                                                                            .lib-font-size(14);
+                                                                            .lib-line-height(14);
+                                                                            border-radius: 5px;
+                                                                            cursor: pointer;
+                                                                            margin-bottom: 0;
+                                                                            position: absolute;
+                                                                            left: 0;
+                                                                            top: -40px;
+                                                                            width: 100%;
+
+                                                                            &:hover,
+                                                                            &:focus,
+                                                                            &:active {
+                                                                                background-color: transparent;
+                                                                            }
+
+                                                                            &:before {
+                                                                                content: @icon-down;
+                                                                                font-family: @icon-font-family;
+                                                                                float: right;
+                                                                            }
+                                                                        }
+                                                                    }
+
+                                                                    li.flex-inline {
+                                                                        .lib-vendor-prefix-display(flex);
+                                                                        vertical-align: middle;
+                                                                        align-items: center;
+                                                                        justify-content: space-between;
+                                                                    }
+
+                                                                    li.missing-size-link {
+                                                                        font-weight: @font-weight__bold;
+                                                                        .lib-font-size(14);
+                                                                        .lib-line-height(23);
+                                                                        padding: 6px
+                                                                            24px;
+                                                                    }
+                                                                }
+
+                                                                select {
+                                                                    height: 0;
+                                                                    padding: 0;
+                                                                    line-height: 0;
+                                                                    border: none;
+                                                                    width: 0;
+                                                                    display: block !important;
+                                                                }
+                                                            }
+                                                        }
+
+                                                        .size_chart {
+                                                            top: 5px;
+                                                            position: absolute;
+                                                            right: 0;
+                                                            .lib-font-size(14);
+                                                            font-weight: @font-weight__heavier;
+                                                        }
+                                                    }
+
+                                                    .box-tocart {
+                                                        .fieldset {
+                                                            .field.qty {
+                                                                .label {
+                                                                    display: none;
+                                                                }
+
+                                                                .control {
+                                                                    a {
+                                                                        .icon-icon-minus {
+                                                                            &::before {
+                                                                                content: @icon-minus;
+                                                                            }
+                                                                        }
+                                                                    }
+
+                                                                    a {
+                                                                        .icon-icon-plus {
+                                                                            &::before {
+                                                                                content: @icon-plus;
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                        + .actions {
+                                            display: none;
+                                        }
+                                    }
+
+                                    .actions {
+                                        margin: 15px 0 0;
+                                        .lib-vendor-prefix-display(flex);
+
+                                        .clsspecialreqpop.custom-success,
+                                        #instant-purchase {
+                                            margin: 0;
+                                        }
+
+                                        .action.primary {
+                                            margin-left: 0;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: @screen__s) {
+    body._has-modal {
+        .modals-wrapper {
+            aside.modal-popup.modals-ajaxcart.modal-slide._inner-scroll._show
+                .modal-inner-wrap {
+                .modal-content {
+                    .content-ajaxcart {
+                        .ajaxcart-wrapper-main {
+                            display: block;
+
+                            .main-section {
+                                .right-main-section {
+                                    .wp-product-container {
+                                        .fieldset {
+                                            .field.configurable.required {
+                                                .label {
+                                                    span {
+                                                        display: none;
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                        .product-options-wrapper {
+                                            .product-add-form {
+                                                .product-options-bottom {
+                                                    .box-tocart {
+                                                        .fieldset {
+                                                            .actions {
+                                                                display: block;
+
+                                                                button.action.primary.tocart,
+                                                                a.action.towishlist.primary.cls_wishlist,
+                                                                .buynow-button {
+                                                                    width: 100%;
+                                                                    margin: 20px
+                                                                        auto;
+                                                                    text-align: center;
+
+                                                                    button {
+                                                                        width: 100%;
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    .actions {
+                                        display: none;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

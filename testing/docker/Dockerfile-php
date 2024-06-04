@@ -1,0 +1,125 @@
+FROM --platform=linux/amd64 php:8.1-fpm-bullseye
+
+ARG APP_URL
+ARG S3_ENV_FILE_PATH
+ARG S3_CONFIG_FILE_PATH
+ARG REACT_PROJECT_NAME
+ARG REACT_APP_BASE_URL
+ARG ADMIN_PAGE_URL
+ARG REDIS_HOST_URL
+ARG REDIS_DB_SESSION_INDEX
+ARG REDIS_FE_SESSION_INDEX
+ARG RDS_DB_HOST
+ARG RDS_DB_NAME
+ARG RDS_DB_PASS
+ARG ES_HOST
+ARG ES_HOST_WITH_PORT
+ARG ES_HOST_PREFIX
+ARG S3_ENV_FILE_REGION
+ARG MEDIA_FOLDER_NAME
+ARG RDS_DB_USERNAME
+
+ENV S3_ENV_FILE_PATH=$S3_ENV_FILE_PATH
+ENV APP_URL=$APP_URL
+ENV S3_CONFIG_FILE_PATH=$S3_CONFIG_FILE_PATH
+ENV REACT_PROJECT_NAME=$REACT_PROJECT_NAME
+ENV REACT_APP_BASE_URL=$REACT_APP_BASE_URL
+ENV ADMIN_PAGE_URL=$ADMIN_PAGE_URL
+ENV REDIS_HOST_URL=$REDIS_HOST_URL
+ENV REDIS_DB_SESSION_INDEX=$REDIS_DB_SESSION_INDEX
+ENV REDIS_FE_SESSION_INDEX=$REDIS_FE_SESSION_INDEX
+ENV RDS_DB_HOST=$RDS_DB_HOST
+ENV RDS_DB_NAME=$RDS_DB_NAME
+ENV RDS_DB_PASS=$RDS_DB_PASS
+ENV ES_HOST=$ES_HOST
+ENV ES_HOST_WITH_PORT=$ES_HOST_WITH_PORT
+ENV ES_HOST_PREFIX=$ES_HOST_PREFIX
+ENV S3_ENV_FILE_REGION=$S3_ENV_FILE_REGION
+ENV MEDIA_FOLDER_NAME=$MEDIA_FOLDER_NAME
+ENV RDS_DB_USERNAME=$RDS_DB_USERNAME
+
+RUN ls
+#installing the dependencies
+RUN apt update && apt full-upgrade -y && \
+    apt install -y --no-install-recommends --no-install-suggests \
+    autoconf dpkg-dev g++ gcc git libc6-dev make pkg-config vim procps \
+    libcurl4-openssl-dev libsqlite3-dev libssl-dev libonig-dev supervisor libsodium-dev \
+    libxml2-dev zlib1g-dev libzip-dev libjpeg-dev libpng-dev python pip \
+    libfreetype6-dev libxslt1-dev libxpm-dev libjpeg62-turbo-dev \
+    dpkg libc6 ca-certificates curl xz-utils libcurl4 libsqlite3-0 libssl1.1 \
+    libxml2 zlib1g libzip4 libpng16-16 libonig5 libsodium23 \
+    libfreetype6 libxslt1.1 libxpm4 libxslt-dev libx11-6 libjpeg62-turbo unzip wget && \
+    pip install awscli && \
+    docker-php-ext-configure gd --with-freetype --with-jpeg &&\
+    docker-php-ext-install -j$(nproc) gd intl bcmath soap sockets  \
+    zip  mbstring simplexml pdo pdo_mysql xsl opcache &&\
+    docker-php-ext-enable gd intl bcmath soap sockets  \
+    zip  mbstring simplexml pdo pdo_mysql xsl opcache
+
+WORKDIR /var/www/magento
+
+# Installing composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer --version=2.5.5 && \
+    echo "zend_extension=opcache.so\nopcache.enable_cli=1\nopcache.enable=1" >> /usr/local/etc/php/conf.d/opcache.ini
+
+# Php custom configurations
+ADD docker/php-fpm-testing.conf /etc/php-fpm.conf
+ADD docker/php-fpm-worker.conf /etc/php-fpm.d/www.conf
+
+ADD . .
+
+RUN composer install
+
+
+RUN cd vendor/ludxb/magento-meta-package/src/module-shellpea-reactcheckout/themes/${REACT_PROJECT_NAME}/reactapp && \
+ curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
+ apt install -y nodejs && \
+ npm install && REACT_APP_BASE_URL=${REACT_APP_BASE_URL} DISABLE_ESLINT_PLUGIN=true && \
+ npm run build
+
+# RUN aws s3 cp $S3_ENV_FILE_PATH ./env.zip --region $S3_ENV_FILE_REGION
+
+RUN unzip -o env.zip
+RUN mv env.php /var/www/magento/app/etc 
+RUN mv config.php /var/www/magento/app/etc  
+RUN sed -i "s|http://localhost|$APP_URL|" app/etc/env.php 
+RUN sed -i "s|'{ADMIN_PAGE_URL}'|$ADMIN_PAGE_URL|" app/etc/env.php
+RUN sed -i "s|'{REDIS_HOST_URL}'|$REDIS_HOST_URL|" app/etc/env.php
+RUN sed -i "s|'{REDIS_DB_SESSION_INDEX}'|$REDIS_DB_SESSION_INDEX|" app/etc/env.php
+RUN sed -i "s|'{REDIS_FE_SESSION_INDEX}'|$REDIS_FE_SESSION_INDEX|" app/etc/env.php
+RUN sed -i "s|'{RDS_DB_HOST}'|$RDS_DB_HOST|" app/etc/env.php
+RUN sed -i "s|'{RDS_DB_NAME}'|$RDS_DB_NAME|" app/etc/env.php
+RUN sed -i "s|'{RDS_DB_USERNAME}'|$RDS_DB_USERNAME|" app/etc/env.php
+RUN sed -i "s|'{RDS_DB_PASS}'|$RDS_DB_PASS|" app/etc/env.php
+RUN sed -i "s|'{ES_HOST}'|$ES_HOST|" app/etc/env.php
+RUN sed -i "s|'{ES_HOST_WITH_PORT}'|$ES_HOST_WITH_PORT|" app/etc/env.php
+RUN sed -i "s|'{ES_HOST_PREFIX}'|$ES_HOST_PREFIX|" app/etc/env.php
+
+RUN chmod 777 ./app/etc/config.php 
+RUN chmod 777 ./app/etc/config.php 
+RUN chmod 777 -R /var/www/magento/pub/static/ 
+RUN chmod -R 777 /var/www/magento /var 
+
+RUN php -dmemory_limit=-1 bin/magento cache:flush || true
+RUN php -dmemory_limit=-1 bin/magento setup:di:compile || true
+RUN php -dmemory_limit=-1 bin/magento setup:static-content:deploy -f || true
+
+RUN chmod -R 777 /var/www/magento/var/
+RUN chmod 777 -R /var/www/magento/pub/static/
+
+RUN sed -i '/$this->convertToWebpViaCwebp/d' /var/www/magento/vendor/ludxb/magento-meta-package/src/module-jajuma-webpimages/Helper/Data.php
+
+# RUN aws s3 cp $S3_MEDIA_FILE_PATH media.zip --region $S3_ENV_FILE_REGION 
+RUN unzip media.zip 
+RUN rm media.zip 
+RUN cp -rf $MEDIA_FOLDER_NAME/media/* pub/media/
+
+#Removed here, we can run this through SSM. 
+#RUN php -dmemory_limit=-1 bin/magento indexer:reindex
+
+COPY docker/entrypoint.sh /usr/bin/
+RUN chmod +x /usr/bin/entrypoint.sh
+ENTRYPOINT ["entrypoint.sh"]
+COPY docker/supervisor.conf /etc/supervisor/supervisord.conf
+
+CMD [ "php-fpm", "-R" ]

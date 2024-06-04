@@ -1,0 +1,36 @@
+//
+//  Common
+//  ---------------------------------------------
+
+& when (@media-common = true) {
+    .page-wrapper {
+        .page-header.sticky.active {
+            padding-bottom: 0;
+
+            .panel.wrapper {
+                display: none;
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    body {
+        .page-wrapper {
+            .page-header.sticky.active {
+                padding-bottom: 21px;
+
+                .panel.wrapper {
+                    display: block;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,71 @@
+//
+//  Common
+//  ---------------------------------------------
+
+& when (@media-common = true) {
+    #order-track-help {
+        padding: @indent__base;
+        text-align: @storecredit-align-center;
+    }
+}
+
+//
+//  Mobile
+//  ---------------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__s) {
+    body.account.swarming_credits-index-index {
+        .page-wrapper {
+            .columns {
+                .main {
+                    .store-credit-table-section {
+                        #my-swarming-credits-transaction-table.credit-table-data {
+                            tbody {
+                                tr {
+                                    border-radius: 10px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+//
+//  Desktop
+//  ---------------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__m) {
+    body.swarming_credits-index-index {
+        .page-wrapper {
+            .columns {
+                .main {
+                    .store-credit-table-section {
+                        border: 1px solid @theme__primary--color-200;
+                        border-radius: 10px;
+                        min-width: fit-content;
+
+                        .credit-table-data {
+                            thead {
+                                tr,
+                                tr th {
+                                    background: transparent;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

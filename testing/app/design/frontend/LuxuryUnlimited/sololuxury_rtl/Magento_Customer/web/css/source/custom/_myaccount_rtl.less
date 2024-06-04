@@ -1,0 +1,130 @@
+//
+//  Common
+//  ---------------------------------------------
+
+& when (@media-common = true) {
+    body.layout-fullwidth.page-layout-2columns-left.account {
+        .columns {
+            .lib-vendor-prefix-display(flex);
+            flex-wrap: wrap;
+            flex-direction: row-reverse;
+
+            .column.main {
+                padding: 0 33px 0 0;
+                float: none;
+                order: unset;
+                flex-basis: unset;
+            }
+
+            .sidebar-main {
+                max-width: 320px;
+                float: none;
+                order: unset;
+                flex-basis: unset;
+            }
+        }
+    }
+
+    .block {
+        .title {
+            strong {
+                color: @theme__primary--500;
+            }
+        }
+    }
+
+    .customer-account-index {
+        .block {
+            .block-title {
+                color: @color-gray20;
+
+                strong {
+                    .lib-font-size(16);
+                    .lib-line-height(20);
+                    font-weight: @font-weight__semibold;
+                    color: @theme__secondary--color-800;
+                }
+
+                a.action.edit {
+                    font-size: @font-size__s;
+                    .lib-line-height(19);
+                    text-transform: capitalize;
+                    text-decoration: underline;
+                    font-weight: @font-weight__heavier;
+                    color: @theme__primary--500;
+                    padding: 0;
+                    border-radius: unset;
+                }
+            }
+        }
+    }
+
+    .block {
+        .title {
+            strong {
+                font-size: @font-size__base;
+                margin: 0;
+                .lib-line-height(23);
+                font-weight: @font-weight__heavier;
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  ---------------------------------------------
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    .account {
+        &.layout-fullwidth.page-layout-2columns-left.pl-thm-luxuryunlimited-brands_labels_rtl {
+            .page-main {
+                .columns {
+                    .column.main {
+                        padding: 0;
+                        padding-bottom: 30px;
+                    }
+                }
+            }
+        }
+    }
+
+    body.layout-fullwidth.page-layout-2columns-left.account {
+        .page-wrapper {
+            .columns {
+                .column.main {
+                    padding: 0;
+                }
+
+                .sidebar-main {
+                    max-width: 100%;
+                }
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__xs) {
+    .customer-account-index {
+        .page-main {
+            .page-title-wrapper {
+                margin: 30px 20px 30px 20px;
+
+                .page-title {
+                    span {
+                        .lib-font-size(20);
+                        .lib-line-height(30);
+                        font-weight: @font-weight__semibold;
+                    }
+                }
+            }
+        }
+    }
+}

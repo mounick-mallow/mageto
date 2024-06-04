@@ -1,0 +1,273 @@
+<?php
+$postData = $block->getPostData();
+$initials = $postData['name_with_initials'];
+$country = $postData['country'];
+?>
+
+<div class="returns-container affiliate-container">
+    <div class="returns-left">
+        <div class="returns-content-left">
+            <div class="formBlock">
+                <form method="post" action="<?= /* @noEscape */ $block->getUrl('influencer/registration/save'); ?>">
+                    <input type="hidden" name="form_key" value="<?= /* @noEscape */ $block->getFormKey() ?>" />
+                    <fieldset class="fieldset specialrequest">
+                        <legend class="legend"><span><?= /* @noEscape */ __('Profile')?></span></legend>
+                        <div class="fields">
+                            <div class="field name prifix-field">
+                                <label class="label"><span><?= /* @noEscape */ __('First Name')?></span></label>
+                                <div class="control prifix-input-with-option">
+                                    <select name="name_with_initials" id="name_with_initials" class="input-prefix  prefix-select">
+                                        <option selected="selected" value="mr."><?= /* @noEscape */ __('Mr.'); ?></option>
+                                        <option value="mrs." <?= ($initials == "mrs.") ?
+                                            'selected' : '' ?>><?= /* @noEscape */ __('Mrs.'); ?></option>
+                                        <option value="miss." <?= ($initials == "miss.") ?
+                                            'selected' : '' ?>><?= /* @noEscape */ __('Miss.'); ?></option>
+                                    </select>
+                                    <input type="text" class="input-text prefix-text"
+                                           name="firstname" placeholder="<?= /* @noEscape */ __('First Name')?>"
+                                           value="<?= /* @noEscape */ __($postData['firstname']); ?>" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label"><span><?= /* @noEscape */ __('Last Name')?></span></label>
+                                <div class="control">
+                                    <input type="text" class="input-text"
+                                           placeholder="<?= /* @noEscape */ __('Last Name')?>"
+                                           name="lastname"
+                                           value="<?= /* @noEscape */ __($postData['lastname']); ?>" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="fields">
+                            <div class="field">
+                                <label class="label"><span><?= /* @noEscape */ __('Email Address')?></span></label>
+                                <div class="control">
+                                    <input type="email" class="input-text"
+                                           name="email"
+                                           placeholder="<?= /* @noEscape */ __('Email')?>"
+                                           value="<?= /* @noEscape */ __($postData['email']); ?>" required>
+                                </div>
+                            </div>
+                            <div class="field name prifix-field">
+                                <label class="label"><span><?= /* @noEscape */ __('Phone Number')?></span></label>
+                                <div class="control prifix-input-with-option">
+                                    <div class="special-number-dropdown prefix-select">
+                                        <div class="selected-flag">
+                                            <i class="fi fi-in"></i>
+                                        </div>
+                                        <?php   $countryBlock = $block->getLayout()->createBlock('Magento\Directory\Block\Data');
+                                                $defaultValue = 'IN'; // Use the country code for India as the default value ?>
+                                        <?= $countryBlock->getCountryHtmlSelect($defaultValue, 'country_id', 'specialcountry', 'Country', 'class="specialcountry"'); ?>
+                                    </div>
+                                    <input type="number" class="input-text prefix-text"
+                                           name="contactno"
+                                           placeholder="<?= /* @noEscape */ __('Contact No')?>"
+                                           value="<?= /* @noEscape */ __($postData['contactno']); ?>" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="fields">
+                            <div class="field">
+                                <label class="label"><span><?= /* @noEscape */ __('Website URL')?></span></label>
+                                <div class="control">
+                                    <input type="url" class="input-text"
+                                           name="url"
+                                           placeholder="<?= /* @noEscape */ __('Website URL')?>"
+                                           value="<?= /* @noEscape */ __($postData['url']); ?>">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label"><span><?= /* @noEscape */ __('City ')?></span></label>
+                                <div class="control">
+                                    <input type="text" class="input-text"
+                                           name="city"
+                                           placeholder="<?= /* @noEscape */ __('City')?>"
+                                           value="<?= /* @noEscape */ __($postData['city']); ?>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="fields">
+                            <div class="form-control  field col-sm-6 col-lg-4" >
+                                <label class="label"><span><?= /* @noEscape */ __('Country')?></span></label>
+                                <div class="control">
+                                    <select name="country">
+                                        <option><?= /* @noEscape */ __('Select Country')?></option>
+                                        <option value="US"
+                                            <?= ($country == "US") ? 'selected' : '' ?>>
+                                            <?= /* @noEscape */ __('United States')?>
+                                        </option>
+                                        <option value="AU"
+                                            <?= ($country == "AU") ? 'selected' : '' ?>>
+                                            <?= /* @noEscape */ __('Australia')?>
+                                        </option>
+                                        <option value="CA"
+                                            <?= ($country == "CA") ? 'selected' : '' ?>>
+                                            <?= /* @noEscape */ __('Canada')?>
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-control  field col-sm-6 col-lg-4">
+                                <label class="label"><span><?= /* @noEscape */ __('Post Code')?></span></label>
+                                <div class="control">
+                                    <input type="text" class="input-text"
+                                           id="postcode" name="postcode"
+                                           placeholder="<?= /* @noEscape */ __('Post Code')?>"
+                                           value="<?= /* @noEscape */ __($postData['postcode']); ?>">
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="fieldset specialrequest">
+                        <legend class="legend"><span><?= /* @noEscape */ __('Social links')?></span></legend>
+                        <div class="fields">
+                            <div class="field">
+                                <label class="label"><span><?= /* @noEscape */ __('Facebook')?></span></label>
+                                <div class="control">
+                                    <input type="text" class="input-text"
+                                       name="facebookhandle"
+                                       placeholder="<?= /* @noEscape */ __('Facebook')?>"
+                                       value="<?= /* @noEscape */ __($postData['facebookhandle']); ?>">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label"><span><?= /* @noEscape */ __('Instagram')?></span></label>
+                                <div class="control">
+                                    <input type="text" class="input-text"
+                                       name="instagramhandle"
+                                       placeholder="<?= /* @noEscape */ __('Instagram')?>"
+                                       value="<?= /* @noEscape */ __($postData['instagramhandle']); ?>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="fields">
+                            <div class="field">
+                                <label class="label"><span><?= /* @noEscape */ __('Twitter')?></span></label>
+                                <div class="control">
+                                    <input type="text"
+                                       class="input-text" name="twitterhandle"
+                                       placeholder="<?= /* @noEscape */ __('Twitter')?>"
+                                       value="<?= /* @noEscape */ __($postData['twitterhandle']); ?>">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label"><span><?= /* @noEscape */ __('Youtube')?></span></label>
+                                <div class="control">
+                                    <input type="text" class="input-text"
+                                       name="ythandle"
+                                       placeholder="<?= /* @noEscape */ __('Youtube')?>"
+                                       value="<?= /* @noEscape */ __($postData['ythandle']); ?>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="fields">
+                            <div class="field">
+                                <label class="label"><span><?= /* @noEscape */ __('LinkedIn')?></span></label>
+                                <div class="control">
+                                    <input type="text" class="input-text"
+                                           name="linkedinhandle"
+                                           placeholder="<?= /* @noEscape */ __('LinkedIn')?>"
+                                           value="<?= /* @noEscape */ __($postData['linkedinhandle']); ?>">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label"><span><?= /* @noEscape */ __('Pinterest')?></span></label>
+                                <div class="control">
+                                    <input type="text" class="input-text"
+                                           name="pihandle"
+                                           placeholder="<?= /* @noEscape */ __('Pinterest')?>"
+                                           value="<?= /* @noEscape */ __($postData['pihandle']); ?>">
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="fieldset specialrequest">
+                        <legend class="legend"><span><?= /* @noEscape */ __('Followers')?></span></legend>
+                        <div class="fields">
+                            <div class="field">
+                                <label class="label"><span><?= /* @noEscape */ __('Facebook')?></span></label>
+                                <div class="control">
+                                    <input type="text" class="input-text"
+                                           name="fbfollowers"
+                                           placeholder="<?= /* @noEscape */ __('Facebook')?>"
+                                           value="<?= /* @noEscape */ __($postData['fbfollowers']); ?>">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label"><span><?= /* @noEscape */ __('Instagram')?></span></label>
+                                <div class="control">
+                                    <input type="text" class="input-text"
+                                           name="instafollowers"
+                                           placeholder="<?= /* @noEscape */ __('Instagram')?>"
+                                           value="<?= /* @noEscape */ __($postData['instafollowers']); ?>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="fields">
+                            <div class="field">
+                                <label class="label"><span><?= /* @noEscape */ __('Twitter')?></span></label>
+                                <div class="control">
+                                    <input type="text" class="input-text"
+                                           name="twitterfollowers"
+                                           placeholder="<?= /* @noEscape */ __('Twitter')?>"
+                                           value="<?= /* @noEscape */ __($postData['twitterfollowers']); ?>">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label"><span><?= /* @noEscape */ __('Youtube')?></span></label>
+                                <div class="control">
+                                    <input type="text" class="input-text"
+                                           name="ytsubscribers"
+                                           placeholder="<?= /* @noEscape */ __('Youtube')?>"
+                                           value="<?= /* @noEscape */ __($postData['ytsubscribers']); ?>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="fields">
+                            <div class="field">
+                                <label class="label"><span><?= /* @noEscape */ __('LinkedIn')?></span></label>
+                                <div class="control">
+                                    <input type="text" class="input-text"
+                                           name="linkedfollowers"
+                                           placeholder="<?= /* @noEscape */ __('LinkedIn')?>"
+                                           value="<?= /* @noEscape */ __($postData['linkedfollowers']); ?>">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label"><span><?= /* @noEscape */ __('Pintrest')?></span></label>
+                                <div class="control">
+                                    <input type="text" class="input-text"
+                                           name="pifollowers"
+                                           placeholder="<?= /* @noEscape */ __('Pintrest')?>"
+                                           value="<?= /* @noEscape */ __($postData['pifollowers']); ?>">
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="fieldset specialrequest">
+                        <legend class="legend"><span><?= /* @noEscape */ __('Describe Projects')?></span></legend>
+                        <div class="field">
+                            <label class="label"><span><?= /* @noEscape */ __('Pintrest')?></span></label>
+                            <div class="control">
+                                <textarea class="finput-text" name="projects"
+                                          placeholder="<?= /* @noEscape */ __('Projects worked on')?>">
+                                <?= /* @noEscape */ __($postData['projects']); ?>
+                                </textarea>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <input type="hidden" name="hidden">
+                    <div class="actions-toolbar">
+                        <div class="primary">
+                            <button type="submit" class="send-request return-submit action submit primary">
+                                <span><?= /* @noEscape */ __('Submit')?></span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+

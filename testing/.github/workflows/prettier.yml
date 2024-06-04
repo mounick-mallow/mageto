@@ -1,0 +1,54 @@
+name: Code Format
+
+on: 
+  pull_request:
+    types: [opened, reopened, synchronize, ready_for_review]
+
+jobs:
+  prettier:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          # Make sure the actual branch is checked out when running on pull requests
+          ref: ${{ github.head_ref }}
+          # This is important to fetch the changes to the previous commit
+          fetch-depth: 0
+
+      - name: Prettify code
+        uses: creyD/prettier_action@v4.3
+        with:
+          # This part is also where you can pass other options, for example:
+          prettier_options: --write **/*.{md,less} --tab-width 4 --single-quote
+
+          only_changed: True
+      - name: "Push the changes to Git"
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Apply prettier changes
+        env:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: "Update to ERP"
+        run: |
+          curl --location 'https://twilio.theluxuryunlimited.com/api/github-action' \
+          --header 'Content-Type: application/json' \
+          --data '
+          {
+          "GITHUB_ACTOR": "'"$GITHUB_ACTOR"'",
+          "GITHUB_API_URL": "'"$GITHUB_API_URL"'",
+          "GITHUB_BASE_REF": "'"$GITHUB_BASE_REF"'",
+          "GITHUB_EVENT_NAME": "'"$GITHUB_EVENT_NAME"'",
+          "GITHUB_JOB": "'"$GITHUB_JOB"'",
+          "GITHUB_REF": "'"$GITHUB_REF"'",
+          "GITHUB_REF_NAME": "'"$GITHUB_REF_NAME"'",
+          "GITHUB_REF_TYPE": "'"$GITHUB_REF_TYPE"'",
+          "GITHUB_REPOSITORY": "'"$GITHUB_REPOSITORY"'",
+          "GITHUB_REPOSITORY_ID": "'"$GITHUB_REPOSITORY_ID"'",
+          "GITHUB_RUN_ATTEMPT": "'"$GITHUB_RUN_ATTEMPT"'",
+          "GITHUB_RUN_ID": "'"$GITHUB_RUN_ID"'",
+          "GITHUB_WORKFLOW": "'"$GITHUB_WORKFLOW"'",
+          "RUNNER_NAME": "'"$RUNNER_NAME"'"
+          }
+          '

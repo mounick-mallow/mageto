@@ -1,0 +1,38 @@
+& when (@media-common = true) {
+    .owl-theme {
+        .owl-controls {
+            .owl-nav {
+                [class*='owl-'] {
+                    width: 40px;
+                    height: 40px;
+                    .lib-line-height(40);
+                    border-radius: 4px;
+
+                    .icon-icon-right,
+                    .icon-icon-left {
+                        .lib-line-height(24);
+                        .lib-font-size(24);
+                    }
+                }
+                .owl-prev {
+                    margin: @indent__xs;
+
+                    .icon-icon-left {
+                        &:before {
+                            content: @icon-left;
+                        }
+                    }
+                }
+                .owl-next {
+                    margin: 0;
+
+                    .icon-icon-right {
+                        &:before {
+                            content: @icon-right;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,122 @@
+// /**
+//  * Copyright © 2015 Magento. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//  Common
+//  ---------------------------------------------
+
+& when (@media-common = true) {
+    .track-order-login {
+        .track-order-widget {
+            max-width: 960px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .fieldset {
+            .field {
+                &.note {
+                    border-bottom: 1px solid @form-element-input__border-color;
+                    padding-bottom: 15px;
+                    max-width: 100%;
+                }
+            }
+
+            .field,
+            .actions-toolbar {
+                max-width: 338px;
+                margin: 0 auto;
+                width: 100%;
+            }
+
+            .actions-toolbar {
+                .secondary {
+                    .lib-css(justify-content, center, @_prefix: 1);
+
+                    a {
+                        text-decoration: underline;
+                    }
+                }
+
+                .primary {
+                    .action {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+
+    // Track Order Modal (popup)
+    .modal-track-order {
+        .track-order-items {
+            .product-item-details {
+                &.date {
+                    margin-bottom: @indent__xxs;
+                }
+
+                &.price {
+                    margin-top: @indent__xxs;
+                }
+            }
+        }
+    }
+
+    .modal-track-help {
+        .field.create-ticket {
+            text-align: center;
+        }
+
+        #create-ticket {
+            background: @theme__primary--500;
+            color: @custom__color-white;
+        }
+    }
+}
+
+//
+//  Desktop
+//  ---------------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__s) {
+    .track-order-login {
+        .track-order-widget {
+            .fieldset {
+                .field {
+                    &.note {
+                        margin-bottom: 26px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  ---------------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum ='max')
+    and
+    (@break = @screen__m) {
+    .modal-popup.modal-slide.modal-track-help,
+    .modal-popup.modal-slide.modal-track-reference {
+        .modal-inner-wrap {
+            background: transparent;
+            padding: @indent__s;
+
+            .modal-header,
+            .modal-content {
+                background: @theme__primary--color-bg;
+            }
+        }
+    }
+}

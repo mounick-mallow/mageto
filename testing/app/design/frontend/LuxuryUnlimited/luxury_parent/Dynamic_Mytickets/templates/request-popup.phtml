@@ -1,0 +1,194 @@
+<?php
+/** @var $block Dynamic\Mytickets\Block\View*/
+
+$storeManager  = $block->getStoreManager();
+$storeCode = $storeManager->getStore()->getCode();
+$storeId = $storeManager->getStore()->getId();
+$dynamicHelper = $this->helper(Dynamic\Customization\Helper\Data::class);
+$countryHelper = $dynamicHelper->getCountry();
+$countryCollection = $countryHelper->toOptionArray();
+
+$fname= '';
+$lname = '';
+$email= '';
+$telephone = '';
+if ($block->isLoggedIn()) {
+    $customer = $block->getCustomerById($block->getCustomerId());
+    $fname = $customer->getFirstname();
+    $lname = $customer->getLastname();
+    $email = $customer->getEmail();
+    if ($block->getTelephone($customer->getAddresses())) {
+        $telephone = $block->getTelephone($customer->getAddresses());
+    }
+}
+?>
+<!-- Special Request -->
+<div class="clsspecialrequestpop">
+    <div class="clsspecialrequest">
+        <button id="clsspecialrequest-btn" class="primary action clsspecialrequest-btn"><?= /* @noEscape */ __('Special Request  ✍🏻') ?></button>
+    </div>
+    <div class="clsspecialreqpop_box" id="special-requests-modal" style="display: none;">
+        <div class="modal-inner-content modal-content">
+            <form class="form contact cls_popupspecialrequest_form"
+                action="<?= $block->escapeUrl($block->getUrl('mytickets/index/post')) ?>"
+                id="contact-form"
+                method="post"
+                data-hasrequired="<?= /* @noEscape */ __('* Required Fields') ?>"
+                data-mage-init='{"validation":{}}'>
+                    <fieldset class="fieldset specialrequest" data-hasrequired="* Required Fields">
+                        <legend class="fieldset-legend">
+                            <span><?= $block->escapeHtml(__('Create Ticket')) ?></span>
+                        </legend>
+                        <div class="fields">
+                            <div class="field name required cls_comm_input">
+                                <label for="name" class="label">
+                                    <span><?= /* @noEscape */ __('First Name') ?></span>
+                                </label>
+                                <div class="control">
+                                    <div class="specialgenderbox">
+                                        <select id="specialgender" class="specialgender" name="specialgender" required>
+                                            <option value="Mr"><?= /* @noEscape */ __('Mr.') ?></option>
+                                            <option value="Mr"><?= /* @noEscape */ __('Mrs.') ?></option>
+                                        </select>
+                                    </div>
+                                    <input id="name" class="input-text" title="Name"
+                                    name="name" required="" type="text"
+                                    value="<?= $block->escapeHtmlAttr($fname) ?>"
+                                    placeholder="<?= /* @noEscape */ __('Enter Your Name') ?>">
+                                </div>
+                            </div>
+                            <div class="field last_name required cls_comm_input">
+                                <label for="last_name" class="label">
+                                    <span><?= /* @noEscape */ __('Last Name') ?></span>
+                                </label>
+                                <div class="control"><input id="last_name"
+                                    class="input-text" title="Last Name" required=""
+                                    name="last_name" type="text"
+                                    value="<?= $block->escapeHtmlAttr($lname) ?>"
+                                    placeholder="<?= /* @noEscape */ __('Enter Your Last Name') ?>"></div>
+                            </div>
+                        </div>
+                        <div class="fields">
+                            <div class="field specialemail required cls_comm_input">
+                                <label for="email" class="label">
+                                    <span><?= /* @noEscape */ __('Email Address') ?></span>
+                                </label>
+                                <div class="control"><input id="specialemail"
+                                    class="input-text validate-email" required=""
+                                    title="Email" name="email"
+                                    type="email" <?php if ($email != "") {?> readonly="readonly" <?php } ?>
+                                    value="<?= $block->escapeHtmlAttr($email) ?>"
+                                    placeholder="<?= /* @noEscape */ __('Enter email') ?>"></div>
+                            </div>
+                            <div class="field phone required cls_comm_input">
+                                <label for="phone" class="label">
+                                    <span><?= /* @noEscape */ __('Phone Number') ?></span>
+                                </label>
+                                <div class="control">
+                                    <div class="special-number-dropdown" data-bind="scope: 'countryDropdown'">
+                                        <div class="selected-flag">
+                                            <i class="fi"></i>
+                                        </div>
+                                        <select name="country_id" id="specialcountry" class title="Country" data-validate="{'validate-select':true}" aria-required="true" 
+                                        data-bind="options: availableCountries,
+                                        optionsText: 'label',
+                                        optionsValue: 'value', 
+                                        selectedOptions: chosenCountries"
+                                        >
+                                        </select>                                       
+                                    </div>
+                                    <input id="phone"
+                                    class="input-text" required="" title="Phone"
+                                    name="phone" type="text"
+                                    value="<?= $block->escapeHtmlAttr($telephone) ?>" data-validate="{'maxlength':15}"
+                                    placeholder="<?= /* @noEscape */ __('Enter Phone Number') ?>"></div>
+                            </div>
+                        </div>
+                        <div class="fields">
+                            <div class="field brand cls_comm_input brand-input">
+                                <label for="brand" class="label">
+                                    <span><?= /* @noEscape */ __('Brand Name') ?></span>
+                                </label>
+                                <div class="control"><input id="brand" class="input-text"
+                                    title="Brand" name="brand" type="text" value=""
+                                    placeholder="<?= /* @noEscape */ __('Enter Brand Name') ?>"></div>
+                            </div>
+                            <div class="field style cls_comm_input style-input">
+                                <label for="style" class="label">
+                                    <span><?= /* @noEscape */ __('Style') ?></span>
+                                </label>
+                                <div class="control"><input id="style" class="input-text"
+                                    title="Style"  name="style" type="text" value=""
+                                    placeholder="<?= /* @noEscape */ __('Enter Style') ?>"></div>
+                            </div>
+                        </div>
+                        <div class="field keyword cls_comm_input keword-input">
+                            <label for="keyword" class="label">
+                                <span><?= /* @noEscape */ __('Keyword') ?></span>
+                            </label>
+                            <div class="control"><input id="keyword"
+                                class="input-text" title="Keyword" name="keyword"
+                                type="text" value=""
+                                placeholder="<?= /* @noEscape */ __('Enter Keyword') ?>"></div>
+                        </div>
+
+                        <div class="field remarks cls_comm_input">
+                            <label for="remarks" class="label">
+                                <span><?= /* @noEscape */ __('Remarks') ?></span>
+                            </label>
+                            <div class="control"><textarea id="remarks"
+                                class="input-text" title="Remarks" name="remarks"
+                                type="text" value=""
+                                placeholder="<?= /* @noEscape */ __('Enter Remarks') ?>"></textarea></div>
+                        </div>
+                        <div class="field name required spBtn">
+                            <div class="control">
+                                <input type="hidden" name="lang_code" id="lang_code"
+                                value="<?= $block->escapeHtmlAttr($storeCode) ?>" />
+                                <input type="hidden" name="hdn_subject" id="hdn_subject" value="" />
+                                <input type="hidden" name="hdn_message" id="hdn_message" value="" />
+                                <div class="mm-action">
+                                    <button id="btn_ticket" class="btn btn-custom primary action"
+                                    name="btn_ticket" type="submit">
+                                    <?= /* @noEscape */ __('Submit') ?></button>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+            </form>
+            <div class='clsmsgsuccessbox'>
+                <div class="success-content">
+                    <p id="result-message"></p>
+                    <div class="actions-toolbar">
+                        <div class="primary">
+                            <a href="#" class="action create btn btn-custom primary"><?= __('Continue Shopping') ?></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Dynamic_Mytickets/js/popup/request-popup": {}
+        }
+    }
+</script>
+<script type="text/x-magento-init">
+{
+    "#specialcountry": {
+        "Magento_Ui/js/core/app": {
+           "components": {
+                "countryDropdown": {
+                    "component": "Dynamic_Mytickets/js/popup/country-dropdown",
+                    "config": <?= json_encode($countryCollection) ?>
+                }
+            }
+        }
+    }
+}
+</script>

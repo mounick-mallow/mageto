@@ -1,0 +1,30 @@
+<?php
+/**
+ * Product list template
+ *
+ * @var $block \Magento\Framework\View\Element\Template
+ */
+
+$wishlistUrl = $block->getBaseUrl() . 'guestwishlist/index/redirect/';
+?>
+
+<div class="wishlist-header-link" data-bind="scope: 'wishlist'">
+    <a class="wishlist-header-icon" href="<?= $block->escapeUrl($wishlistUrl) ?>">
+        <span class="text"><?= /* @noEscape */ __('My Wishlist'); ?></span>
+    </a>
+    <!-- ko if: wishlist().counter --><span data-bind="text: wishlist().productIds.length" class="counter qty"></span><!-- /ko -->
+</div>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "wishlist": {
+                        "component": "Magento_Wishlist/js/view/wishlist"
+                    }
+                }
+            }
+        }
+    }
+
+</script>

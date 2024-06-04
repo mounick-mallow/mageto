@@ -1,0 +1,20 @@
+<!--
+
+-->
+<?php $productType = $block->getproductType()?>
+<script>
+    require([
+        'jquery'
+    ], function($){
+        $(document).ready(function(){
+            if ('<?= /* @noEscape */ $productType; ?>' == 'giftcard') {
+                $("span:contains('Email To')").each(function(index){
+                    $(this).parent().next('div').
+                    find('input').attr(
+                        'data-validate',"{required:true, 'validate-email':true}"
+                        );
+                });
+            }
+        });
+    });
+</script>

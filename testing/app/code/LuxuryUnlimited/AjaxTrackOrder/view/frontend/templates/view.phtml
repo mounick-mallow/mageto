@@ -1,0 +1,106 @@
+<?php
+$orderData = $block->getData();
+$loginUrl = $block->getBaseUrl() . 'customer/account/loginPost/';
+?>
+<?php if (isset($orderData['data']['orderId'])):
+    $orderIncrementId = $orderData['data']['orderId'];
+    $websiteName = $orderData['data']['website'];
+    $dynamicHelper = $block->helper(\Dynamic\Customization\Helper\Data::class);
+    $storeManager  = $dynamicHelper->getStoreManager();
+    $storeCode = $storeManager->getStore()->getCode();
+    $siteUrl = $dynamicHelper->getScopeConfig()->getValue("web/secure/base_url");
+    $orderInfo = $dynamicHelper->getOrderManager()->loadByIncrementId($orderIncrementId);
+    if (!empty($orderInfo->getData())):
+        $customerEmail = $orderInfo->getCustomerEmail();
+        $shipTo = ucwords($orderInfo->getCustomerFirstname()).' '.ucwords($orderInfo->getCustomerLastname());
+        $orderPlaced = "active";
+        $orderProcessing = "";
+        $orderDelivered = "";
+        $orderReceived = "";
+        if ($orderInfo->getStatus()=="processing"):
+            $orderProcessing = "active";
+        elseif ($orderInfo->getStatus()=="complete"):
+            $orderProcessing = "active";
+            $orderDelivered = "active";
+        elseif ($orderInfo->getStatus()=="received"):
+            $orderProcessing = "active";
+            $orderDelivered = "active";
+            $orderReceived ="active";
+        endif;
+        ?>
+        <div class="track-order-details">
+            <div class="main-information track-order-info">
+                <div style="display:none">
+                    <span class="order-inc-no"><?= /* @noEscape */ $orderInfo->getIncrementId()?></span>
+                    <span class="order-customer-email"><?= /* @noEscape */ $orderInfo->getCustomerEmail()?></span>
+                    <span class="order-customer-id"><?= /* @noEscape */ $orderInfo->getCustomerId()?></span>
+                </div>
+                <ul class="track-order-items">
+                    <?php foreach ($orderInfo->getAllVisibleItems() as $_item): ?>
+                        <?php
+                        $product = $dynamicHelper->getProductManager()->load($_item->getProductId());
+                        $imageHelper  = $dynamicHelper->getImageHelperManager();
+                        $image_url = $imageHelper->init($product, 'product_page_image_small')
+                            ->setImageFile($product->getFile())->resize(80, 200)->getUrl();
+                        ?>
+                        <li class="order-item">
+                            <div class="order-item-img">
+                                <img width="90px" height="90px"
+                                     alt="<?= $block->escapeHtml($_item->getName()) ?>"
+                                     src="<?= $block->escapeUrl($image_url) ?>">
+                            </div>
+
+                            <div class="product-item-details">
+                                <div class="order-detail-item date">
+                                    <?= /* @noEscape */ __('Order Date') ?>: <span>
+                                        <?= $block->escapeHtml($orderInfo->getCreatedAt()) ?>
+                                    </span>
+                                </div>
+                                <h3 class="order-detail-item name"><?= $block->escapeHtml($_item->getName()) ?></h3>
+                                <div class="order-detail-item sku">
+                                    <?= /* @noEscape */ __('sku')?>: <span>
+                                        <?= $block->escapeHtml($_item->getSku()) ?>
+                                    </span>
+                                </div>
+                                <div class="order-detail-item price">
+                                    <?= $block->escapeHtml($orderInfo->formatPrice($_item->getPrice())) ?>
+                                </div>
+                            </div>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+
+            <div class="main-information track-order-progress">
+                <ul class="order-progress-steps">
+                    <li class="order-item-status-ordered <?= /* @noEscape */ $orderPlaced;?>">
+                        <i class="step-action"></i>
+                        <p>
+                            <?= /* @noEscape */ __('Order Placed')?>
+                            <span><?= /* @noEscape */ $orderInfo->getCreatedAt()?></span>
+                        </p>
+                    </li>
+                    <li class="order-item-status-processing <?= /* @noEscape */ $orderProcessing;?>">
+                        <i class="step-action"></i>
+                        <p><?= /* @noEscape */ __('Order Processing')?></p>
+                    </li>
+                    <li class="order-item-status-delivered <?= /* @noEscape */ $orderDelivered;?>">
+                        <i class="step-action"></i>
+                        <p><?= /* @noEscape */ __('Order Delivered')?></p>
+                    </li>
+                    <li class="order-item-status-received <?= /* @noEscape */ $orderReceived;?>">
+                        <i class="step-action"></i>
+                        <p><?= /* @noEscape */ __('Order Received')?></p>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="main-information track-order-help">
+                <?= /* @noEscape */ __('Have you any query?')?>
+                <a class="need-help" rel="<?= /* @noEscape */ $orderIncrementId; ?>" href="javascript:void(0)">
+                    <?= /* @noEscape */ __('Need help.')?>
+                </a>
+            </div>
+        </div>
+    <?php endif;?>
+<?php endif; ?>

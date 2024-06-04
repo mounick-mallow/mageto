@@ -1,0 +1,56 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \Magento\Wishlist\Block\Customer\Wishlist\Item\Column\Cart $block */
+$item = $block->getItem();
+$product = $item->getProduct();
+?>
+
+<?php if ($product->isSaleable()) : ?>
+        <?php if($product->getTypeId() == 'configurable'){ ?>
+                <div class='products-options-list'>
+                 <?php
+                    $dynamicHelper = $this->helper('\Dynamic\Customization\Helper\Data');
+                    $product = $dynamicHelper->getProductManager()->load($product->getId());
+                    $productTypeInstance  = $dynamicHelper->getProductTypeInstanceManager();
+
+                    // problems during adding conf product to cart. Only fist product works correctly
+                    // temporary disabled
+                    // $productAttributeOptions = $productTypeInstance->getConfigurableAttributesAsArray($product);
+
+                    $productAttributeOptions = [];
+                    ?><?php foreach ($productAttributeOptions as $key => $value): ?>
+                        <?php if(trim(strtolower($value['label'])) != 'brand'): ?>
+                            <?php $tmp_option = $value['values'];?>
+                            <?php if(count($tmp_option) > 0): ?>
+                                <label><?= $block->escapeHtml($value['label']) ?></label>
+                                <select class='product-options <?php echo $key ?>' name='super_attribute[<?= $block->escapeHtmlAttr($key) ?>]' id='super_attribute_<?= $block->escapeHtmlAttr($key) ?>'>
+                                    <?php foreach ($tmp_option as $tmp): ?>
+                                        <option value='<?= $block->escapeHtmlAttr($tmp['value_index']) ?>'><?= $block->escapeHtml($tmp['label']) ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                    <?php endforeach;?>
+           </div>
+<?php } ?>
+    <?php else : ?>
+        <?php if ($product->getIsSalable()) : ?>
+            <p class="available stock" title="<?= $block->escapeHtmlAttr(__('Availability')) ?>">
+                <span><?= $block->escapeHtml(__('In stock')) ?></span>
+            </p>
+        <?php else : ?>
+            <p class="unavailable stock" title="<?= $block->escapeHtmlAttr(__('Availability')) ?>">
+                <span><?= $block->escapeHtml(__('Out of stock')) ?></span>
+            </p>
+        <?php endif; ?>
+    <?php endif; ?>
+
+<div class="prodPrice">
+    <?php foreach ($block->getChildNames() as $childName) : ?>
+        <?= /* @noEscape */ $block->getLayout()->renderElement($childName, false) ?>
+    <?php endforeach;?>
+</div>

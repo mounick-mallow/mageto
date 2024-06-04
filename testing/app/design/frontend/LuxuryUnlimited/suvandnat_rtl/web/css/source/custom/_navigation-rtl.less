@@ -1,0 +1,49 @@
+& when (@media-common = true) {
+    html[lang='ar'] {
+        direction: rtl;
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    html[lang='ar'] {
+        direction: rtl;
+        .nav-open {
+            .page-header {
+                .sections.nav-sections {
+                    left: 0;
+
+                    .menu-sub-section {
+                        .close-menu-btn {
+                            right: 0;
+                        }
+
+                        .section-item-title {
+                            right: auto;
+                        }
+                    }
+
+                    .nav-sections-item-content {
+                        .navigation {
+                            ul {
+                                .ui-menu-item {
+                                    a {
+                                        text-align: right;
+
+                                        &::after {
+                                            right: auto;
+                                            left: 0;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

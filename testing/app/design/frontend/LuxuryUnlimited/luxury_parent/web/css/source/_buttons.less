@@ -1,0 +1,30 @@
+// /**
+//  * Copyright © 2015 Magento. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//    Common
+//--------------------------------------
+
+& when (@media-common = true) {
+    //  Using buttons mixins
+    button,
+    a.action {
+        .lib-css(border-radius, @button__border-radius);
+    }
+
+    a.action.primary {
+        .lib-link-as-button();
+    }
+
+    .action.primary {
+        .lib-button-primary();
+    }
+
+    a.action {
+        &:hover {
+            text-decoration: none;
+        }
+    }
+}

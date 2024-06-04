@@ -1,0 +1,118 @@
+//
+//    Common
+//--------------------------------------
+& when (@media-common =true) {
+    .search-autocomplete {
+        max-width: 320px;
+        min-width: 320px;
+        padding: 16px;
+        left: -16px;
+        margin-top: 16px;
+        border-radius: 12px;
+        border: 1px solid @header__top_link_split-color;
+        background-color: @color-white;
+        box-shadow: none;
+        z-index: 9999;
+        position: absolute;
+
+        dl {
+            margin-bottom: 0;
+        }
+
+        .title-result {
+            text-align: left;
+            border-bottom: 1px solid @custom-color-9;
+            color: @color-black;
+            margin: 0 -@indent__s;
+            padding: 0 @indent__s 13px;
+            margin-bottom: @indent__s;
+            .lib-font-size(16);
+        }
+
+        .autocomplete-list-title {
+            .lib-vendor-prefix-display(flex);
+            justify-content: space-between;
+            align-items: center;
+            margin: @indent__s 0;
+
+            p {
+                margin-bottom: 0;
+                .lib-font-size(16);
+                .lib-line-height(24);
+            }
+
+            .link {
+                .lib-font-size(16);
+                border: unset;
+                color: @color-gray-darken3;
+                padding: 0;
+                position: absolute;
+                top: 18px;
+                right: 4px;
+
+                &:hover {
+                    background-color: unset;
+                }
+            }
+        }
+
+        .autocomplete-list {
+            .es-title-div {
+                padding-bottom: 11px;
+
+                span {
+                    .lib-font-size(16);
+                }
+            }
+
+            .product-details {
+                .es-brand-div {
+                    padding-bottom: 6px;
+                }
+
+                .es-title-div {
+                    padding-bottom: 0;
+                }
+
+                .es-title a {
+                    .lib-font-size(14);
+                }
+
+                .price-box {
+                    .price-label {
+                        display: none;
+                    }
+
+                    .price {
+                        .lib-font-size(14);
+                        font-weight: @font-weight__heavier;
+                    }
+                }
+            }
+        }
+
+        .search-item {
+            .lib-vendor-prefix-display(flex);
+            gap: @indent__s;
+
+            .es-product {
+                min-width: 100px;
+            }
+
+            .es-brand {
+                font-size: @font-size__xs;
+                font-weight: @font-weight__semibold;
+                color: @qty-color;
+            }
+
+            .es-title {
+                .lib-font-size(14);
+                color: @color-gray-darken3;
+            }
+
+            .price {
+                color: @qty-color;
+            }
+        }
+    }
+}

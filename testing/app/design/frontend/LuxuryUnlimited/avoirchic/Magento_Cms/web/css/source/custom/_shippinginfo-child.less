@@ -1,0 +1,51 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common =true) {
+    .shipping-info-wrapper {
+        .group {
+            border: 2px solid @custom__color-transparent-gray7;
+            border-radius: 12px;
+            margin: 0 0 @indent__base;
+
+            button {
+                border: none;
+            }
+
+            .arrow-active {
+                &.collapsible::before {
+                    .lib-rotate(180deg);
+                }
+            }
+
+            .collapsible {
+                &::before {
+                    content: @icon-down;
+                    float: right;
+                    font-family: @icon-font-family;
+                    .lib-font-size(24);
+                    .lib-line-height(24);
+                }
+
+                border-radius: 0;
+                width: 100%;
+                text-align: left;
+                color: @theme__primary--color-500;
+                padding: @indent__l;
+                background: none;
+                margin: 0;
+            }
+
+            .group-content {
+                display: none;
+
+                &.active {
+                    display: block;
+                }
+
+                padding: 0 @indent__l @indent__l;
+            }
+        }
+    }
+}

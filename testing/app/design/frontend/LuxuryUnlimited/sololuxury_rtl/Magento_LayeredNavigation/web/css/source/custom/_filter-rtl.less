@@ -1,0 +1,65 @@
+& when (@media-common = true) {
+    .filter {
+        &-options {
+            &-title {
+                text-align: right;
+
+                &:after {
+                    float: left;
+                }
+            }
+
+            &-content {
+                .items {
+                    text-align: right;
+
+                    .item {
+                        text-align: right;
+                    }
+                }
+            }
+        }
+
+        .block-subtitle {
+            text-align: right;
+        }
+    }
+
+    .block-content.filter-content {
+        a.action.clear.filter-clear {
+            left: 5px;
+            right: auto;
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    .filter {
+        &-options {
+            &-title {
+                text-align: right;
+            }
+        }
+    }
+
+    .filter {
+        &.active {
+            .filter-options,
+            .filter-subtitle {
+                left: 0;
+                right: auto;
+            }
+        }
+
+        .filter-title {
+            strong {
+                right: auto;
+                left: 0;
+            }
+        }
+    }
+}

@@ -1,0 +1,138 @@
+<?php
+$itemCollections = $block->gettMyTicketsCollection();
+$ticketTypes = [];
+$ticketTypes[0] = __('N/A');
+$ticketTypes[1] = __('Special Request');
+$ticketTypes[2] = __('Item Return Request');
+$ticketTypes[3] = __('Order Cancel Request');
+$ticketTypes[4] = __('OUS Query');
+$ticketTypes[5] = __('Order Return Request');
+?>
+<div class="mytickets-container">
+    <div class="mytickets-title-wrapper">
+        <h2 class="mytickets-title"><?= /* @noEscape */ __('Recent Tickets') ?></h2>
+    </div>
+    <div class="mytickets-list">
+        <div class="mytickets-table-wrapper">
+            <div class="mytickets-table-header">
+                <div class="mytickets-table-row">
+                    <div class="mytickets-table-col id"><?= /* @noEscape */ __('Ticket ID') ?></div>
+                    <div class="mytickets-table-col brand-name"><?= /* @noEscape */ __('Brand Name') ?></div>
+                    <div class="mytickets-table-col style"><?= /* @noEscape */ __('Style, Keyword & Image URL') ?></div>
+                    <div class="mytickets-table-col status"><?= /* @noEscape */ __('Status') ?></div>
+                    <div class="mytickets-table-col ticket-date"><?= /* @noEscape */ __('Created Date') ?></div>
+                    <div class="mytickets-table-col ticket-view"></div>
+                </div>
+            </div>
+            <div class="mytickets-table-body">
+                <?php if ($itemCollections && $itemCollections->getSize()) { ?>
+                    <?php foreach ($itemCollections as $item) {
+                        $ticketStatus=$item->getStatus();
+                        if ($ticketStatus == 1) {
+                            $ticketStatus ='<span class="ticket-active">'.__('Active').'</span>';
+                        } else {
+                            $ticketStatus ='<span class="ticket-pending">'.__('Inactive').'</span>';
+                        }
+
+                        $ticketCode = '';
+                        $ticketCode = $item->getTicketCode(); ?>
+
+                        <div class="mytickets-table-row">
+                            <?php if ($ticketCode!='') { ?>
+                                <div class="mytickets-table-col id">
+                                    <span class="mob-title"><?= /* @noEscape */ __('Ticket ID') ?> </span>
+                                    <span><?= /* @noEscape */ $block->escapeHtml($ticketCode) ?></span>
+                                </div>
+                                <div class="mytickets-table-col brand-name">
+                                    <span class="mob-title"><?= /* @noEscape */ __('Brand Name') ?> </span>
+                                    <span> <?= /* @noEscape */ ($item->getBrand()!='') ?
+                                    $block->escapeHtml($item->getBrand()): '' ?></span>
+                                </div>
+                                <div class="mytickets-table-col style">
+                                    <span class="mob-title">
+                                        <?= /* @noEscape */ __('Style, Keyword & Image URL') ?>
+                                    </span>
+                                    <span>
+                                        <?= /* @noEscape */ ($item->getStyle()!='') ?
+                                        $block->escapeHtml($item->getStyle()): '' ?>
+                                        <br/>
+                                        <?= /* @noEscape */ ($item->getKeyword()!='') ?
+                                        $block->escapeHtml($item->getKeyword()): '' ?>
+                                        <br/>
+                                        <?= /* @noEscape */ ($item->getImage()!='') ?
+                                        $block->escapeHtml($item->getImage()): '' ?>
+                                    </span>
+                                </div>
+                                <div class="mytickets-table-col status">
+                                    <span class="mob-title"><?= /* @noEscape */ __('Status') ?> </span>
+                                    <?= /* @noEscape */  ($ticketStatus)?>
+                                </div>
+                                <div class="mytickets-table-col ticket-date">
+                                    <span class="mob-title"><?= /* @noEscape */ __('Created Date') ?> </span>
+                                    <span>
+                                        <?= /* @noEscape */ date('d M Y', strtotime($item->getCreatedAt())) ?>
+                                    </span>
+                                </div>
+                            <?php } else { ?>
+                                <div class="mytickets-table-col updated">
+                                    <span><?= /* @noEscape */  __('Ticket ID shall be updated shortly') ?></span>
+                                </div>
+                            <?php }
+                            ?>
+
+                            <div class="mytickets-table-col ticket-view">
+                                <span class="mob-title"></span>
+                                <?php if (isset($ticketCode) && $ticketCode!='') { ?>
+                                    <a class="icomoon-icon-chat showticketmessage"
+                                    data-tcode="<?= $block->escapeHtmlAttr($ticketCode) ?>"
+                                    data-tid="<?= $block->escapeHtmlAttr($item->getMyticketsId()) ?>">
+                                        <?= /* @noEscape */ __('View') ?>
+                                    </a>
+                                    <?php } else { ?>
+                                    <a class="icomoon-icon-chat showticketnomessage"
+                                    data-tcode="<?= $block->escapeHtmlAttr($ticketCode) ?>"
+                                    data-tid="<?= $block->escapeHtmlAttr($item->getMyticketsId()) ?>">
+                                        <?= /* @noEscape */ __('View') ?>
+                                    </a>
+                                <?php } ?>
+                            </div>
+                        </div>
+                    <?php } ?>
+                <?php } else { ?>
+                    <div class="no-record">
+                        <div class="record-error"><?= /* @noEscape */ __('No Records Found') ?></div>
+                    </div>
+                <?php } ?>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <?php if ($block->getPagerHtml()): ?>
+                <div class="order-products-toolbar toolbar bottom"><?= $block->getPagerHtml(); ?></div>
+            <?php endif ?>
+        </div>
+    </div>
+</div>
+<div id="ticket-chat">
+    <div class="ticket-chat-content">
+        <div class="chat-messages-wrapper"></div>
+        <div class="chat-submit-form">
+            <form action="<?= $block->escapeUrl($block->getUrl("mytickets/ajax/addMessage")) ?>"
+                  method="POST" id="ticket-chat-form">
+                <textarea id='message' name='message' rows="2" placeholder="<?= __('Type Your Message Here..') ?>"></textarea>
+                <input type='submit' value="<?= __('Submit') ?>" class='add-btn btn-submit-txt'/>
+            </form>
+        </div>
+    </div>
+</div>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Dynamic_Mytickets/js/mytickets-list": {
+            }
+        }
+    }
+</script>

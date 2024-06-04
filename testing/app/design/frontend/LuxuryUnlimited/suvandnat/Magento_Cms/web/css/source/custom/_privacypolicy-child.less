@@ -1,0 +1,64 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common =true) {
+    .pivacy-policy-wrapper {
+        .group {
+            border: none;
+            border-radius: 12px;
+            margin: 0 0 @indent__base;
+
+            button {
+                border: none;
+            }
+
+            .arrow-active {
+                &.collapsible {
+                    border: none;
+                    background-color: @theme__primary--color-500;
+                    color: @theme__territory--white;
+
+                    &::before {
+                        .lib-rotate(180deg);
+                        background: @theme__territory--white;
+                    }
+                }
+            }
+
+            .collapsible {
+                width: 100%;
+                text-align: left;
+                padding: @indent__l;
+                margin: 0;
+                background-color: transparent;
+                color: @theme__territory--color-500;
+                border: 1px solid @theme__secondary--color-100;
+                border-radius: @indent__xxs;
+
+                &::before {
+                    content: @icon-down;
+                    float: right;
+                    font-family: @icon-font-family;
+                    .lib-font-size(24);
+                    .lib-line-height(24);
+                    color: @theme__territory--color-500;
+                    background: @theme__secondary--color-50;
+                    border-radius: 500px;
+                    padding: @indent__xxs;
+                    text-align: center;
+                }
+            }
+
+            .group-content {
+                display: none;
+                padding: @indent__l;
+                color: @theme__territory--color-400;
+
+                &.active {
+                    display: block;
+                }
+            }
+        }
+    }
+}

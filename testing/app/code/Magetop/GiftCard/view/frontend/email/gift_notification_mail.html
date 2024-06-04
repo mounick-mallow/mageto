@@ -1,0 +1,38 @@
+<!--@subject Gift Card  @-->
+<!--@vars {
+"var myvar5" : "my var 5",
+"var myvar4" : "my var 4",
+"var myvar3" : "my var 3",
+"var myvar2" : "my var 2",
+"var myvar8" : "my var 8",
+"var myvar1" : "my var 1",
+"var myvar9" : "my var 9",
+"var myvar10" : "my var 10"
+} @-->
+{{template config_path="design/email/header_template"}} <!-- pathe of template header-->
+<table aria-describedby="gift_notification_mail">
+    <tr class="email-intro">
+        <td>
+            <h3>{{trans "Hi Dear,"}}<h3>
+            <h3>
+                {{trans "A Gift Card is gifted to you by %name(%email)" name=$myvar5 email=$myvar4}}
+            </h3>
+        </td>
+    </tr>
+    <tr class="email-information">
+        <td>
+            <table aria-describedby="order-details" class="order-details">
+                <tr>
+                    <td class="address-details">
+                        <h4>{{trans "Gift Card Code : %code" code=$myvar3}}</h4>
+                        <h4>{{trans "Description: %description" description=$myvar2}}</h4>
+                        <h4>{{trans "Price: %symbol%price" symbol=$myvar8 price=$myvar1}}</h4>
+                        <h4>{{trans "Message: %message" message=$myvar9}}</h4>
+                        <h4>{{trans "Expiration: %expiration" expiration=$myvar10}}</h4>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+{{template config_path="design/email/footer_template"}} <!--footer of template-->

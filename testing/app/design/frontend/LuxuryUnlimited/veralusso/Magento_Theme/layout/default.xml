@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <remove src="Amasty_Base::vendor/slick/amslick.min.css" />
+		<remove src="css/print.css" />
+		<remove src="css/print.min.css"/>
+		<remove src="js/print.js"/>
+		<remove src="js/tracking.js"/>
+		 <remove src="js/tracking.min.js"/>
+		 <remove src="fonts/opensans/light/opensans-300.woff2" />
+        <remove src="fonts/opensans/regular/opensans-400.woff2" />
+        <remove src="fonts/opensans/semibold/opensans-600.woff2" />
+        <remove src="fonts/opensans/bold/opensans-700.woff2" />
+
+    </head>
+	<body>
+        <referenceBlock name="header.panel">
+            <!--added social media links-->
+            <block class="Magento\Cms\Block\Block" name="social.media" before="store_language">
+                <arguments>
+                    <argument name="block_id" xsi:type="string">top-bar-icons</argument>
+                </arguments>
+            </block>
+        </referenceBlock><!-- end header.links -->
+        <attribute name="class" value="theme-pearl"/>
+        <referenceBlock name="form.subscribe" remove="true"/>
+        <referenceBlock name="footer_links" remove="true"/>
+       <referenceBlock name="reviews.tab" remove="true" />
+        <referenceBlock name="product.review.form" remove="true" />
+        <referenceBlock name="product.info.review" remove="true" />
+        <referenceBlock name="customer-account-navigation-product-reviews-link" remove="true" />
+        <referenceBlock name="review_view" remove="true" />
+		<referenceBlock name="catalog.compare.sidebar" remove="true" />
+		<referenceBlock name="wishlist_sidebar" remove="true" />
+		 <referenceBlock name="yotpo_widget_script" remove="true" />
+         <referenceBlock name="paypal.express-in-context.component" remove="true" />
+		 <referenceBlock name="authentication-popup" remove="true" />
+		 <referenceBlock name="msp-recaptcha-newsletter" remove="true" />
+		 <referenceBlock name="paypal.partner.right.logo" remove="true" />
+		 <referenceBlock name="report.bugs" remove="true"/>
+        <referenceBlock name="catalog.wishlist.link" remove="true" />
+        <referenceContainer name="footer-container">
+            <block name="custom.footer.new.design" class="LuxuryUnlimited\FrontendConfigs\Block\FooterLinks"   template="Magento_Theme::html/footer-links.phtml" before="-" >
+                <block class="Magento\Newsletter\Block\Subscribe" name="footer.newsletter" template="subscribe.phtml"/>
+            </block>
+        </referenceContainer>
+        <move element="footer.mb_country_switcher" destination="header.panel" after="store_language"/>
+        <referenceBlock name="head.additional">
+            <block class="Magento\Framework\View\Element\Template" name="hreftag" template="Magento_Theme::html/hreftag.phtml" before="-"/>
+        </referenceBlock>
+        <referenceBlock name="after.body.start">
+             <block class="Magento\Framework\View\Element\Template" name="tagmanager" template="Magento_Theme::html/tagmanager.phtml" before="-"/>
+         </referenceBlock>
+        <!-- Start Code For menu not displaying-->
+        <referenceBlock name="store.menu">
+            <block class="Magento\Theme\Block\Html\Topmenu" name="catalog.topnav" template="Magento_Theme::html/topmenu.phtml" before="-"/>
+        </referenceBlock>
+        <!-- End Code For menu not displaying-->
+    </body>
+</page>

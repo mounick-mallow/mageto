@@ -1,0 +1,120 @@
+& when (@media-common = true) {
+    .cart {
+        &.table-wrapper {
+            .actions-toolbar {
+                > .action-edit {
+                    left: 16px;
+                    right: auto;
+                }
+                > .action-delete {
+                    left: 20px;
+                }
+
+                > .towishlist {
+                    left: 0;
+                    right: auto;
+                }
+            }
+        }
+    }
+
+    .cart-summary {
+        .block.discount {
+            .fieldset.coupon {
+                .field {
+                    .input-text {
+                        padding-left: 100px;
+                        padding-right: 16px;
+                    }
+                }
+            }
+            .actions-toolbar {
+                left: 4px;
+                right: auto;
+            }
+        }
+    }
+
+    .cart-totals {
+        tbody {
+            .amount {
+                text-align: left;
+                padding-left: 0;
+                padding-right: 14px;
+            }
+
+            .mark {
+                text-align: right;
+            }
+        }
+
+        .grand {
+            .mark {
+                padding-left: 16px;
+                padding-right: 0;
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum ='min')
+    and
+    (@break = @screen__m) {
+    .cart-container {
+        .form-cart {
+            float: right;
+        }
+
+        .cart-summary {
+            float: left;
+        }
+    }
+
+    .cart {
+        &.table-wrapper {
+            .product-item-photo {
+                padding-right: 0;
+                padding-left: 20px;
+            }
+
+            .col {
+                &.subtotal {
+                    padding-right: 0;
+                    padding-left: 104px;
+                }
+            }
+
+            .actions-toolbar {
+                left: 0;
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum ='max')
+    and
+    (@break = @screen__m) {
+    .checkout-cart-index {
+        .cart.table-wrapper {
+            .product-item-photo {
+                padding-left: 20px;
+                padding-right: 0;
+            }
+
+            .actions-toolbar {
+                .action {
+                    &.action-delete {
+                        &::before {
+                            .lib-font-size(20);
+                            .lib-line-height(normal);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

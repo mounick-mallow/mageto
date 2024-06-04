@@ -1,0 +1,417 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// phpcs:disable Magento2.Templates.ThisInTemplate
+
+/** @var $block \Magento\Sales\Block\Order\Recent */
+
+$viewModel = $block->getData('viewModelForOrderHistory');
+$ticketViewModel = $block->getData('viewModelCancelReturn');
+
+$returnReasonData = $viewModel->getReturnReasonData();
+$storeCode = $viewModel->getStoreCode();
+?>
+<div class="block block-dashboard-orders">
+    <?php
+    $_orders = $block->getOrders();
+    $count = count($_orders);
+    ?>
+    <h2 class="block-title order">
+        <?= $block->escapeHtml(__('Recent Orders')) ?>
+    </h2>
+    <div class="block-content">
+        <?= $block->getChildHtml() ?>
+        <?php if ($count > 0) : ?>
+            <div class="orders-recent">
+                <?php foreach ($_orders as $_order) : ?>
+                    <?php $realOrderId = $_order->getIncrementId();
+                    $isCancellable = $ticketViewModel->isTicketsCancelReturnOrder($_order, 'Cancel');
+                    $isReturnable = $ticketViewModel->isTicketsCancelReturnOrder($_order, 'Return');
+                    $isBuyBackRequest = $ticketViewModel->isTicketsCancelReturnOrder($_order, 'Buy Back');
+                    ?>
+                    <div class="orders-recent-items">
+                        <p class="col id">Order ID: <?= $block->escapeHtml($_order->getRealOrderId()) ?></p>
+                        <div class="orders-recent-details">
+                            <div data-th="<?= $block->escapeHtml(__('items')) ?>" class="col items">
+                                <?php $oneItem = 0;?>
+                                <?php foreach ($_order->getItems() as $item): ?>
+                                    <?php if($oneItem ==0):?>
+                                        <div class="item">
+                                            <div class="product-img">
+                                                <img src="<?= $viewModel->getProductImage($item->getProductId()); ?>" alt="product-image">
+                                            </div>
+                                            <div class="product-info">
+                                                <p class="date"><?= $block->escapeHtml(__('Order Date')) ?>: <?= $block->escapeHtml($viewModel->formateOrderDate($_order->getCreatedAt())) ?></p>
+                                                <h3 class="product-name"><?= $item->getName(); ?></h3>
+                                                <p class="product-sku"><?= $block->escapeHtml(__('SKU')) ?>: <?= $item->getSku(); ?></p>
+                                                <p class="product-option">
+                                                    <?php foreach ($viewModel->getSelectedOptions($item) as $options): ?>
+                                                        <span class="product-value">
+                                                <?= $options['value']; ?>-
+                                            </span>
+                                                    <?php endforeach; ?>
+                                                    <span class="product-price"><?= $viewModel->formatePrice($item->getBaseRowTotal()); ?></span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <?php $oneItem++;?>
+                                    <?php endif;?>
+                                <?php endforeach; ?>
+                            </div>
+                            <div data-th="<?= $block->escapeHtml(__('Status')) ?>" class="col status">
+                                <p class="order-status">
+                                    <a href="javascript:void(0);" class="order-status-popup"
+                                       order-content-id="<?= $block->escapeHtmlAttr($_order->getId()) ?>">
+                                        <?= $block->escapeHtml(__('Status')) ?>: <?= $block->escapeHtml($_order->getStatusLabel()) ?>
+                                    </a>
+                                </p>
+                                <?php if ($_order->hasShipments()){ ?>
+                                    <p class="delivered-date"><?= $block->escapeHtml(__('Delivered on')) ?> <?= $viewModel->getShipmentDataByOrderId($_order->getId()); ?></p>
+                                <?php } ?>
+                                <?php $orderStatus = $viewModel->getOrderStatusList($_order); ?>
+                                <?php if (!empty($orderStatus) && count($orderStatus) > 0): ?>
+                                    <div class="order-status-modal"
+                                         id="order-status-model-<?= $escaper->escapeHtmlAttr($_order->getId()) ?>" style="display: none;">
+
+                                        <div class="modal-content">
+                                            <div class="modal-progress-bar">
+                                                <div class="card card-timeline">
+                                                    <div style="display:none">
+                                                        <span class="order-inc-no"><?php echo $_order->getIncrementId()?></span>
+                                                        <span class="order-customer-email"><?php echo $_order->getCustomerEmail()?></span>
+                                                        <span class="order-customer-id"><?php echo $_order->getCustomerId()?></span>
+                                                    </div>
+                                                    <ul class="order-tracking-steps">
+                                                        <?php $i = 1; ?>
+                                                        <?php foreach ($orderStatus as $statusData): ?>
+                                                            <li class="step <?= /* @noEscape */ (isset($statusData['status_date']) ? 'active' : ''); ?>">
+                                                                <div><?= $escaper->escapeHtml($i) ?></div>
+                                                                <span><?= $escaper->escapeHtml($statusData['status_title']) ?></span>
+                                                                <?php if (isset($statusData['status_date'])): ?>
+                                                                    <p><?= $escaper->escapeHtml($statusData['status_date']) ?></p>
+                                                                <?php endif; ?>
+                                                            </li>
+                                                            <?php $i++; ?>
+                                                        <?php endforeach; ?>
+                                                    </ul>
+                                                </div>
+                                                <div class="main-information track-order-help">
+                                                    <?=__('Have you any query?')?> <a class="need-help" id="order-status-help-<?=$_order->getIncrementId()?>" href="javascript:void(0)"><?=__('Need help.')?></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                            <div data-th="<?= $block->escapeHtml(__('Actions')) ?>" class="col actions">
+                                <?php $customerEmail = $_order->getCustomerEmail();
+                                $orderItems = $_order->getAllItems();
+                                $allSku = '';
+
+                                foreach ($orderItems as $orderItem) {
+                                    $allSku = $allSku.$orderItem->getSku().',';
+                                }
+                                ?>
+                                <?php if ($_order->canCancel()): ?>
+                                    <?php if($isBuyBackRequest):?>
+                                        <span id="<?= $escaper->escapeHtmlAttr($_order->getRealOrderId()) ?>"
+                                              class="order-buy-back">
+                                    <span class="buy-back-placed"><?= $escaper->escapeHtml(__('Requested for Buy Back')) ?></span>
+                                </span>
+                                    <?php else:?>
+                                        <span id="<?= $escaper->escapeHtmlAttr($_order->getRealOrderId()) ?>"
+                                              class="order-buy-back return-order-button">
+                                    <span class="action buy-back"><?= $escaper->escapeHtml(__('Buy Back')) ?></span>
+                                </span>
+                                    <?php endif;?>
+                                    <?php if ($isCancellable || $isReturnable): ?>
+                                        <span class="order-request-pending">
+                                    <?= $escaper->escapeHtml(__('Request Pending')) ?>
+                                </span>
+                                    <?php else : ?>
+                                        <a href="<?= $escaper->escapeUrl($block->getViewUrl($_order)) ?>" class="action view">
+                                            <span class="order-view"><?= $escaper->escapeHtml(__('View Order')) ?></span>
+                                        </a>
+                                        <span id="<?= $escaper->escapeHtmlAttr($_order->getRealOrderId()) ?>"
+                                              class="order-cancel return-order-button">
+                                    <span class="action return cancel"><?= $escaper->escapeHtml(__('Return')) ?></span>
+                                </span>
+                                        <div id="order-return-popup<?= $escaper->escapeHtmlAttr($_order->getRealOrderId()) ?>"
+                                             class="order-return-popup"
+                                             style="display:none">
+                                            <div class="modal-content">
+                                                <p><?= $escaper->escapeHtml(__('Return Order #%1', $_order->getRealOrderId())) ?></p>
+                                                <div id="return-result-<?= $escaper->escapeHtmlAttr($_order->getRealOrderId()) ?>"></div>
+                                                <div class="form-data">
+                                                    <?php if (!empty($returnReasonData)): ?>
+                                                        <label><?= $escaper->escapeHtml(__('Select Reason')) ?></label>
+                                                        <select name="order-return-reason"
+                                                                id="order-return-reason-<?= $escaper->escapeHtmlAttr($_order->getRealOrderId()) ?>">
+                                                            <option value=""><?= $escaper->escapeHtml(__('Reason to return')) ?></option>
+                                                            <?php foreach ($returnReasonData as $reason): ?>
+                                                                <option value="<?= $escaper->escapeHtmlAttr($reason['reason_data']) ?>">
+                                                                    <?= $escaper->escapeHtml($reason['reason_data']) ?>
+                                                                </option>
+                                                            <?php endforeach; ?>
+                                                        </select>
+                                                    <?php endif; ?>
+                                                    <div id="return-loader-<?= $escaper->escapeHtmlAttr($_order->getRealOrderId()) ?>"
+                                                         style="display:none;">
+                                                        <?= $escaper->escapeHtml(__('loading')) ?>
+                                                    </div>
+                                                    <input type="button" value="Send" name="order-return-submit"
+                                                           id="orderreturnsubmit-<?= $escaper->escapeHtmlAttr($_order->getRealOrderId()) ?>">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <span id="cancel-<?= $escaper->escapeHtmlAttr($_order->getRealOrderId()) ?>" class="order-cancel cancel-order-button">
+                                    <span class="action cancel"><?= $escaper->escapeHtml(__('Cancel')) ?></span>
+                                </span>
+                                        <div class="show-<?= $escaper->escapeHtmlAttr($_order->getRealOrderId()) ?> modal" style="display: none;">
+                                            <div class="modal-content">
+                                                <p><?= $escaper->escapeHtml(__('Cancel Order #%1', $_order->getRealOrderId())) ?></p>
+                                                <div id="result-<?= $escaper->escapeHtmlAttr($_order->getRealOrderId()) ?>"></div>
+                                                <div class="form-data">
+                                                    <?php
+                                                    $reasonData = $viewModel->getReasonData();
+                                                    ?>
+                                                    <?php if (!empty($reasonData)): ?>
+                                                        <label><?= $escaper->escapeHtml(__('Select Reason')) ?></label>
+                                                        <select name="ordercancel-reason"
+                                                                id="ordercancel-reason-<?= $escaper->escapeHtmlAttr($_order->getRealOrderId()) ?>">
+                                                            <option value="">
+                                                                <?= $escaper->escapeHtml(__('Reason to cancel')) ?></option>
+                                                            <?php foreach ($reasonData as $reason): ?>
+                                                                <option value="<?= $escaper->escapeHtmlAttr($reason['reason_data']) ?>">
+                                                                    <?= $escaper->escapeHtml($reason['reason_data']) ?></option>
+                                                            <?php endforeach; ?>
+                                                        </select>
+                                                    <?php endif; ?>
+                                                    <div id="loader-<?= $escaper->escapeHtmlAttr($_order->getRealOrderId()) ?>"
+                                                         style="display:none;"><?= $escaper->escapeHtml(__('loading')) ?></div>
+                                                    <button name="submit" class="btn btn-custom ordercancel-submit" id="ordercancelsubmit-<?= $escaper->escapeHtmlAttr($_order->getRealOrderId()) ?>"
+                                                    ><?= __('Send') ?></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php endif; ?>
+                                <?php else : ?>
+                                    <?php if ($isCancellable): ?>
+                                        <span class="order-cancelled"><?= $escaper->escapeHtml(__('Cancelled')) ?></span>
+                                    <?php elseif ($isReturnable): ?>
+                                        <span class="order-returned"><?= $escaper->escapeHtml(__('Returned')) ?></span>
+                                    <?php endif; ?>
+                                <?php endif; ?>
+                                <input type="hidden" name="recent-order-realid-<?= $escaper->escapeHtmlAttr($_order->getRealOrderId()) ?>" value="<?= $escaper->escapeHtmlAttr($_order->getRealOrderId()) ?>">
+                                <input type="hidden" name="recent-order-id-<?= $escaper->escapeHtmlAttr($_order->getRealOrderId()) ?>" value="<?= /* @noEscape */ $_order->getId() ?>">
+                                <input type="hidden" name="recent-order-incid-<?= $escaper->escapeHtmlAttr($_order->getRealOrderId()) ?>" value="<?= /* @noEscape */ $_order->getIncrementId() ?>">
+                                <input type="hidden" name="order-cancel-<?= $escaper->escapeHtmlAttr($_order->getRealOrderId()) ?>" value="<?= (!$_order->canCancel()) ? 'true' : 'false'; ?>">
+                                <input type="hidden" name="order-buyback-<?= $escaper->escapeHtmlAttr($_order->getRealOrderId()) ?>" value="<?= ($_order->canCancel()) ? 'true' : 'false'; ?>">
+                                <input type="hidden" name="order-items-<?= $escaper->escapeHtmlAttr($_order->getId()) ?>" value="<?= $allSku; ?>">
+                                <input type="hidden" name="customer-email-<?= $escaper->escapeHtmlAttr($_order->getRealOrderId()) ?>" value="<?= $customerEmail; ?>">
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+                <input type="hidden" name="order-return-url" value="<?= /* @noEscape */ $block->getUrl('orderreturn/ajax/checkOrderReturn') ?>">
+                <input type="hidden" name="order-return-sub-url" value="<?= /* @noEscape */ $block->getUrl('orderreturn/ajax/sendReturn') ?>">
+                <input type="hidden" name="order-update-order" value="<?= /* @noEscape */ $block->getUrl('orderhistory/ajax/UpdateOrder') ?>">
+            </div>
+        <?php else : ?>
+            <div class="message info empty"><span><?= $block->escapeHtml(__('You have placed no orders.')) ?></span></div>
+        <?php endif; ?>
+    </div>
+</div>
+
+
+<?php
+$subject = __('Request for Cancel of Order');
+$customerSession = $viewModel->getCustomerSessionManager();
+$fname = ''; $lname = ''; $email = '';
+if ($customerSession->isLoggedIn()) {
+    $fname = $customerSession->getCustomer()->getFirstname();
+    $lname = $customerSession->getCustomer()->getLastname();
+    $email = $customerSession->getCustomer()->getEmail();
+}
+?>
+<div id="order-return-ticket-modal">
+    <div id="order-refund-details">
+        <span id="order-refund-amount"></span>
+    </div>
+    <form class="form"
+          action="<?= $escaper->escapeUrl($this->getUrl('mytickets/ajax/create')) ?>"
+          id="ordercancel-popup-form"
+          method="post" enctype="multipart/form-data"
+          data-hasrequired="<?= $escaper->escapeHtmlAttr(__('* Required Fields')) ?>"
+          data-mage-init='{"validation":{}}' enctype="multipart/form-data">
+        <div id="ordercancelreturn_reason" class="alert alert-danger" role="alert"></div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="field name required cls_comm_input">
+                    <div class="control">
+                        <select name="orddercancel_item" id="orddercancel_item" required="true" class="input-text">
+                            <option value=""><?= $escaper->escapeHtml(__('Select Item')) ?></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="field name required cls_comm_input">
+                    <div class="control">
+                        <input id="orddercancel_name" class="input-text" title="Name" name="orddercancel_name" required=""
+                               type="text" value="<?= $escaper->escapeHtmlAttr($fname) ?>"
+                               placeholder="<?= $escaper->escapeHtmlAttr(__('Enter Your Name')) ?>">
+                    </div>
+                </div>
+                <div class="field name required cls_comm_input">
+                    <div class="control">
+                        <input id="orddercancel_last_name" class="input-text" title="Last Name" required=""
+                               name="orddercancel_last_name" type="text"
+                               value="<?= $escaper->escapeHtmlAttr($lname) ?>"
+                               placeholder="<?= $escaper->escapeHtmlAttr(__('Enter Your Last Name')) ?>">
+                    </div>
+                </div>
+                <div class="field name required cls_comm_input">
+                    <div class="control">
+                        <input id="orddercancel_email" class="input-text" required="" title="Email"
+                               name="orddercancel_email"
+                               type="email" <?php if ($email != '') { ?> readonly="readonly" <?php } ?>
+                               value="<?= $escaper->escapeHtmlAttr($email) ?>"
+                               placeholder="<?= $escaper->escapeHtmlAttr(__('Enter email')) ?>">
+                    </div>
+                </div>
+                <div class="field name required cls_comm_input">
+                    <div class="control">
+                        <input id="orddercancel_phone" class="input-text" title="Phone" required=""
+                               name="orddercancel_phone" type="text" value=""
+                               placeholder="<?= $escaper->escapeHtmlAttr((__('Enter Phone Number'))) ?>">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="field name required cls_comm_input">
+                    <div class="control">
+                        <input id="orddercancel_brand" readonly="true" class="input-text" title="Brand"
+                               required="" name="orddercancel_brand" type="text" value=""
+                               placeholder="<?= $escaper->escapeHtmlAttr(__('Enter Brand Name')) ?>">
+                    </div>
+                </div>
+                <div class="field name required cls_comm_input">
+                    <div class="control">
+                        <input id="orddercancel_style" readonly="true" class="input-text" title="Style"
+                               required="" name="orddercancel_style" type="text" value=""
+                               placeholder="<?= $escaper->escapeHtmlAttr(__('Enter Style')) ?>">
+                    </div>
+                </div>
+                <div class="field name required cls_comm_input">
+                    <div class="control">
+                        <input id="orddercancel_keyword" readonly="true" class="input-text" title="Keyword"
+                               required="" name="orddercancel_keyword" type="text"
+                               value="<?= $escaper->escapeHtmlAttr(__('Order Cancel request')) ?>"
+                               placeholder="<?= $escaper->escapeHtmlAttr(__('Enter Keyword')) ?>">
+                    </div>
+                </div>
+                <div class="field remarks required cls_comm_input">
+                    <div class="control">
+                    <textarea id="orddercancel_remarks" class="input-text" title="Remarks" required=""
+                              name="orddercancel_remarks" type="text" value=""
+                              placeholder="<?= $escaper->escapeHtmlAttr(__('Enter Remarks')) ?>"></textarea>
+                    </div>
+                </div>
+                <div class="field images required cls_comm_input image-upload">
+                    <div class="control">
+                        <button class="buy-back-upload-btn"
+                                onclick="document.getElementById('image_upload').click()">
+                            <?= __('Choose images') ?>
+                        </button>
+                        <input id="image_upload"
+                               readonly="true"
+                               class="input-file"
+                               title="Image Upload"
+                               name="image_upload[]"
+                               multiple
+                               type="file">
+                        <div id="preview-container"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="field name required spBtn">
+                <div class="control">
+                    <input type="hidden" name="orddercancel_tickettype" id="orddercancel_tickettype" value="0"/>
+                    <input type="hidden" name="orddercancel_itemskus" id="orddercancel_itemskus" value=""/>
+                    <input type="hidden" name="orddercancel_order_id" id="orddercancel_order_id" value=""/>
+                    <input type="hidden" name="orddercancel_lang_code" id="orddercancel_lang_code"
+                           value="<?= $escaper->escapeHtmlAttr($storeCode) ?>"/>
+                    <input type="hidden" name="orddercancel_hdn_subject" id="orddercancel_hdn_subject" value=""/>
+                    <input type="hidden" name="orddercancel_hdn_message" id="orddercancel_hdn_message" value=""/>
+                    <input type="hidden" name="orddercancelreturn_requesttype" id="orddercancelreturn_requesttype"
+                           value=""/>
+                    <div class="mm-action">
+                        <button id="orddercancel_btn_submit" class="btn btn-custom" name="orddercancel_btn_submit"
+                                type="submit"><?= $escaper->escapeHtml(__('Submit')) ?></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="ticket-created-success" style="display:none">
+        <div class="response-container"></div>
+    </div>
+</div>
+<div class="order-help-container" id="order-track-help" >
+    <div class="show-order-help modal-track-help">
+        <div  class="track-order-help">
+            <form class="form"
+                  action="<?= $escaper->escapeUrl($this->getUrl('mytickets/index/post')) ?>"
+                  id="order-popup-form"
+                  method="post" data-hasrequired="<?= $escaper->escapeHtmlAttr(__('* Required Fields')) ?>"
+                  data-mage-init='{"validation":{}}'>
+                <div class="main-information">
+                    <div class="field order-number required cls_comm_input">
+                        <div class="control">
+                            <input id="keyword" class="input-text" title="Order Number"
+                                   required="" name="keyword" type="text" value="" readonly
+                                   placeholder="<?= $escaper->escapeHtmlAttr(__('Enter Order #')) ?>">
+                        </div>
+                    </div>
+                    <div class="field email required cls_comm_input">
+                        <div class="control">
+                            <input id="order-email"  class="input-text" title="Style"
+                                   required="" name="order-email" type="text" value="" readonly
+                                   placeholder="<?= $escaper->escapeHtmlAttr(__('Email Address')) ?>">
+                            <input id="order-status"  class="input-text" name="status" type="hidden" value="1"
+                            >
+                            <input id="customer_id" readonly  class="input-text" name="customer_id" type="hidden" value=""
+                            >
+                        </div>
+                    </div>
+                    <div class="field reason required cls_comm_input">
+                        <div class="control">
+                                            <textarea id="remarks" class="input-text" title="Reason" required=""
+                                                      name="remarks" type="text"
+                                                      placeholder="<?= $escaper->escapeHtmlAttr(__('Enter Reason')) ?>"></textarea>
+                        </div>
+                    </div>
+                    <div class="field create-ticket">
+                        <button id="create-ticket" class="btn btn-create-ticket" name="create-ticket"
+                                type="submit"><?= $escaper->escapeHtml(__('Submit')) ?>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <div class="ticket-created-success" style="display:none">
+                <div class="response-container"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "LuxuryUnlimited_FrontendConfigs/js/recent" : {},
+            "Magento_Sales/js/recent-orders" : {}
+        }
+    }
+</script>

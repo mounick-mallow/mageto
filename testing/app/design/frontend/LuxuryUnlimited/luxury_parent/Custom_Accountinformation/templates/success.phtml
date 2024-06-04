@@ -1,0 +1,47 @@
+<?php
+    /** @var  Belvg\StoresManager\Helper\Data $storeHelper */
+    $storeHelper = $this->helper(Belvg\StoresManager\Helper\Data::class);
+    $storeSupportEmail = $storeHelper->getSupportEmail();
+    $defaultSupportEmail = 'care@sololuxury.com';
+
+    $supportEmail = !empty($storeSupportEmail) ? $storeSupportEmail : $defaultSupportEmail;
+?>
+
+<div class="success-div">
+    <h2><?= /* @noEscape */ __('Forgot Your Password?') ?></h2>
+    <p>
+        <?php $params = $block->getRequest()->getParams('email'); ?>
+        <?php if (isset($params['email'])): ?>
+            <?php if (isset($params['status'])): ?>
+                <?= /* @noEscape */ __('There is no account associated with') ?>
+                <br>
+                <u><?= $block->escapeHtml(base64_decode($params['email'])) //@codingStandardsIgnoreLine ?></u>
+                <br>
+                <?= /* @noEscape */ __('If you need any further assistance please contact us at') ?>
+                <br>
+                <a href="mailto:<?php echo $supportEmail?>"><?php echo $supportEmail; ?></a>',
+            <?php else: ?>
+                <?= /* @noEscape */ __(
+                    'We have sent you a Email Link which is valid for 2 hours to reset your password.'
+                ) ?>
+                <br>
+                <?= /* @noEscape */ __('If you did not make this request you can ignore this email.') ?>
+                <br>
+                <?= /* @noEscape */ __('Please check your spam folder if you do not receive the email.') ?>
+                <br>
+                <?= /* @noEscape */ __('For any further queries please email at') ?>
+                <br>
+                <a href="mailto:<?php echo $supportEmail; ?>"><?php echo $supportEmail; ?></a>
+            <?php endif; ?>
+        <?php endif; ?>
+    </p>
+    <div class="d-flex justify-content-around">
+        <a class="btn" href="<?= $block->escapeUrl($block->getBaseUrl()) ?>">
+            <?= /* @noEscape */ __('Continue Shopping') ?>
+        </a>
+        <a class="btn" href="<?= $block->escapeUrl($block->getUrl('customer/account/login')) ?>">
+            <?= /* @noEscape */ __('Back To Sign In Screen') ?>
+        </a>
+    </div>
+</div>
+

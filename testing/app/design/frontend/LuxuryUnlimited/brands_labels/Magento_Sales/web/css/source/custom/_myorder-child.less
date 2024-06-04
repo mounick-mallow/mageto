@@ -1,0 +1,310 @@
+& when (@media-common =true) {
+    .block-dashboard-orders {
+        padding-left: @indent__m;
+
+        .block-title {
+            .lib-font-size(20);
+            color: @custom__color-black;
+            font-weight: @font-weight__heavier;
+            margin-bottom: @indent__l;
+        }
+    }
+
+    .orders-recent {
+        .orders-recent-items {
+            border-color: @custom__color-white-smoke;
+            border-radius: 10px;
+
+            .id {
+                .lib-font-size(16);
+                .lib-line-height(20);
+                color: @custom__color-black;
+                font-weight: @font-weight__heavier;
+            }
+
+            .items {
+                .item {
+                    .product-img {
+                        border-radius: 10px;
+                    }
+                }
+
+                .product-info {
+                    color: @theme__primary--color-26;
+                    font-weight: @font-weight__heavier;
+
+                    .date {
+                        .lib-font-size(14);
+                    }
+
+                    .product-name {
+                        .lib-font-size(16);
+                        .lib-line-height(20);
+                        color: @custom__color-black;
+                    }
+
+                    .product-sku {
+                        .lib-font-size(12);
+                    }
+
+                    .product-price {
+                        color: @custom__color-black;
+                    }
+                }
+            }
+
+            .status {
+                p {
+                    .lib-font-size(14);
+                    color: @custom__color-black;
+                }
+
+                .order-status {
+                    color: @theme__secondary--color-50;
+                    font-weight: @font-weight__bold;
+
+                    a {
+                        color: @theme__primary--color-400;
+                    }
+                }
+            }
+
+            .action {
+                .lib-font-size(14);
+                border-radius: 50px;
+                font-weight: @font-weight__bold;
+
+                &.cancel,
+                &.return,
+                &.view {
+                    .lib-button(
+                        @_button-padding: 6px @indent__base @indent__xxs
+                    );
+                    text-align: center;
+                    margin: 0 4px;
+                }
+
+                &.view {
+                    border: 1px solid @theme__primary--color-500;
+                    vertical-align: middle;
+                    text-align: center;
+                    font-weight: @font-weight__bold;
+                    .lib-font-size(16);
+                    .lib-line-height(22);
+                    color: @theme__primary--color-500;
+                    margin: 0 4px;
+
+                    &:hover {
+                        background: @custom__color-white;
+                        border: 1px solid @theme__primary--color-500;
+                        color: @theme__primary--color-500;
+                    }
+                }
+            }
+        }
+    }
+
+    body.account {
+        .page-main {
+            .page-title-wrapper {
+                .lib-vendor-prefix-display(flex);
+                padding: 0;
+
+                .order-date {
+                    margin: 0;
+                    .lib-line-height(40);
+                    .lib-font-size(14);
+                    color: @custom__color-black;
+                }
+
+                .order-status {
+                    .lib-line-height(35);
+                    margin: 0 @indent__xs;
+                    .lib-font-size(16);
+                    padding: 2px @indent__xxs;
+                    color: @custom__color-black;
+                }
+            }
+        }
+    }
+
+    .order-details-items {
+        .table-order-items {
+            tbody {
+                .col.options {
+                    padding: @indent__base @indent__l;
+                }
+            }
+        }
+    }
+
+    .col.subtotal.status,
+    .order-status-modal.modal,
+    .items.order-links,
+    .order-details-items .order-title,
+    .porto-icon-action-undo:before {
+        display: none;
+    }
+
+    .col.return.order-cancel span {
+        cursor: pointer;
+    }
+
+    body.account.sales-order-view {
+        .page-main {
+            .page-title-wrapper {
+                margin: 0 0 15px;
+
+                .page-title {
+                    padding: @indent__xs 0;
+                }
+
+                .order-status {
+                    padding: 2px @indent__xxs;
+                    display: table-cell;
+                    vertical-align: middle;
+                    height: 40px;
+                }
+            }
+        }
+    }
+
+    ul.order-tracking-steps {
+        .lib-vendor-prefix-display(flex);
+        list-style-type: none;
+
+        .step {
+            position: relative;
+
+            > div {
+                .lib-hide-content();
+            }
+
+            &:before {
+                content: '';
+                display: block;
+                width: 20px;
+                height: 20px;
+                border: 1px solid @theme__secondary--color-200;
+                position: relative;
+                margin: 0 auto @indent__s auto;
+                z-index: 2;
+                background: @custom__color-white;
+            }
+
+            &.active:before {
+                background: @theme__primary--color-50;
+                content: @icon-success;
+                color: @custom__color-black;
+                font-family: @icon-font-family;
+            }
+
+            &:after {
+                content: '';
+                background: @theme__secondary--color-200;
+                height: 2px;
+                width: 100%;
+                position: absolute;
+                top: 10px;
+                left: -50%;
+                z-index: 0;
+            }
+
+            &:first-child:after {
+                content: none;
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__s) {
+    .block-content {
+        .orders-recent {
+            .orders-recent-items {
+                .action {
+                    &.cancel,
+                    &.return,
+                    &.view {
+                        .lib-button(
+                            @_button-padding: 6px 8px @indent__xxs,
+                            @_button-margin: 0
+                        );
+                    }
+                }
+            }
+        }
+    }
+
+    ul.order-tracking-steps {
+        .lib-css(flex-direction, column, @_prefix: 1);
+
+        li.step {
+            &:before {
+                position: absolute;
+                margin: 0 0 0 -@indent__xl;
+            }
+
+            &:after {
+                width: 2px;
+                height: 100%;
+                left: -30px;
+                top: 20px;
+            }
+
+            &:first-child:after {
+                content: '';
+            }
+
+            &:last-child:after {
+                content: none;
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    .table-wrapper {
+        .table:not(.totals):not(.cart):not(.table-comparison) {
+            tbody {
+                tr {
+                    td {
+                        &:first-child {
+                            padding: @indent__xs;
+                            text-align: left;
+
+                            &:before {
+                                display: none;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__m) {
+    .order-details-items {
+        width: fit-content;
+    }
+}

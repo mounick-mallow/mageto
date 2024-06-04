@@ -1,0 +1,259 @@
+<?php
+/** @var \LuxuryUnlimited\sizeId\ViewModel\AttributeViewModel $viewModel */
+$viewModel = $block->getViewModel();
+$sizeId = $viewModel->getSizeAttribute();
+$_product = $block->getProduct();
+$viewModelPriceMatch = $block->getData('luxdb_price_match_view_model_pdp');
+$continueshoppingHelper = $viewModelPriceMatch->getShoppingDataHelper();
+$ddHelper = $viewModelPriceMatch->getHomepageHelper();
+
+if ($_product->getTypeId() == \Magento\ConfigurableProduct\Model\Product\Type\Configurable::TYPE_CODE) {
+
+    $sizeHelper = $viewModelPriceMatch->getSizeApiHelper();
+    $dynamicHelper = $viewModelPriceMatch->getDynamicProductHelper();
+    $categoryIds = $_product->getCategoryIds();
+    $attributeData = $sizeHelper->getAttributeData($categoryIds);
+    $productTypeInstance = $dynamicHelper->getProductTypeInstanceManager();
+    $productAttributeOptions = $productTypeInstance->getConfigurableAttributesAsArray($_product);
+
+    $tmp_option = [];
+    foreach ($productAttributeOptions as $key => $value) {
+        $tmp_option[$key]['options'] = $value['options'];
+        $tmp_option[$key]['name'] = $value['label'];
+    }
+
+    $userContext = $dynamicHelper->getHttpManager();
+    $isLoggedIn = $userContext->getValue(\Magento\Customer\Model\Context::CONTEXT_AUTH);
+
+    ?>
+<!-- Special Request -->
+<div class="clsspecialreqpop">
+    <div id="missing-size-success" style="display:none" data-bind="mageInit: {
+                'Magento_Ui/js/modal/modal':{
+                    'type': 'popup',
+                    'id': 'missing-size-success',
+                    'title': '<?= $block->escapeHtml(__('Thank you for your Request!')) ?>',
+                    'trigger': '[data-trigger=missing-size-success]',
+                    'modalClass': 'special-size-request-sucess',
+                    'responsive': true,
+                    'buttons': []
+                }}">
+    <div class="content">
+    <p id="missing-size-result"></p>
+    <?php
+        $ddHelper = $this->helper("\Dynamic\HomepageApi\Helper\Data");
+        $storeManager  = $ddHelper->getStoreManager();
+        $storeCode = $storeManager->getStore()->getCode();
+        $siteUrl = $ddHelper->getScopeConfigManager()->getValue("web/secure/base_url");
+    ?>
+
+    <!-- ##################### START CODE FOR RECOMMENDATION ##################### -->
+    <?php
+        $categoryFactory = $ddHelper->getCategoryFactoryManager();
+        $categoryHelper = $this->helper('\Magento\Catalog\Helper\Category');
+        $categoryRepository = $ddHelper->getCategoryRepositoryManager();
+        $categoryCollection = $ddHelper->getCategoryCollectionFactoryManager();
+        $productRepository = $ddHelper->getProductRepositoryManager();
+        $helperImport = $this->helper('\Magento\Catalog\Helper\Image');
+        $priceHelper = $this->helper('Magento\Framework\Pricing\Helper\Data');
+
+        $_product = $ddHelper->getRegistryManager()->registry('current_product');
+        $currentNameID =  $_product->getId();
+
+        $percentage = $_product->getFinalPrice() * 80 / 100;
+        $min_price = $_product->getFinalPrice() - $percentage;
+        $max_price = $_product->getFinalPrice() + $percentage;
+
+        $categories = $_product->getCategoryIds();
+        $cat = $ddHelper->getCategoryManager()->load(end($categories));
+        $categoryProducts = $cat->getProductCollection()->addAttributeToSelect('*')->setPageSize(3);
+        $categoryProducts->addAttributeToFilter('price', ['gteq' => $min_price]);
+        $categoryProducts->addAttributeToFilter('price', ['lteq' => $max_price]);
+        $categoryProducts->addAttributeToFilter('entity_id', ['nin' => [$currentNameID]]);
+    ?>
+    <?php if ($categoryProducts->getSize()) { ?>
+        <div class="custtabs remommendation-center">
+            <h3 class="active" rel="tab1"><?= /* @noEscape */ __('Recommendation') ?></h3>
+            <div class="remommendation-items">
+                <div class="product info detailed cls_recommendation">
+                    <div class="product data items">
+                        <div class="block upsell">
+                            <div class="block-content content">
+                                <div class="products wrapper grid products-grid products-recommandation">
+                                    <div class="products list items product-items">
+                                        <!-- START CODE FOR FIRST BLOCK -->
+                                        <?php foreach ($categoryProducts as $product) {
+                                            $imageUrl = $helperImport->init($product, 'product_page_image_small')
+                                            ->setImageFile($product->getThumbnail()) // image,small_image,thumbnail
+                                            ->resize(234)
+                                            ->getUrl();
+                                        ?>
+                                        <div class="item product product-item">
+                                            <div class="product-item-info type1" data-container="product-grid">
+                                                <div class="product photo product-item-photo">
+                                                    <a href="<?= $block->escapeUrl($product->getProductUrl()) ?>">
+                                                        <img class="product-image-photo default_image" src="<?= $block->escapeUrl($imageUrl) ?>" alt="<?= $block->escapeHtmlAttr($product->getName()) ?>">
+                                                    </a>
+                                                </div>
+                                                <div class="product details product-item-details">
+                                                    <strong class="product-brand-name">
+                                                        <a class="product-item-link" href="<?= $block->escapeUrl($product->getProductUrl()) ?>"><?= $block->escapeHtml($product->getResource()->getAttribute('brands')->getFrontend()->getValue($product)) ?></a>
+                                                    </strong>
+                                                    <strong class="product name product-item-name">
+                                                        <a class="product-item-link" href="<?= $block->escapeUrl($product->getProductUrl()) ?>"><?= $block->escapeHtml($product->getName()) ?></a>
+                                                    </strong>
+                                                    <div class="price-box price-final_price">
+                                                        <span class="normal-price">
+                                                            <span class="price-container price-final_price tax weee">
+                                                                <span class="price-wrapper">
+                                                                    <span class="price">
+                                                                    <?= /* @noEscape */ $priceHelper->currency($product->getFinalPrice(), true, false); ?>
+                                                                    </span>
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <?php } //end foreach ?>
+                                        <!-- END CODE FOR FIRST BLOCK -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php
+    }
+    ?>
+<!-- ##################### END CODE FOR RECOMMENDATION ##################### -->
+    </div>
+</div>
+
+
+    <div id="missing-size" style="display: none" data-bind="mageInit: {
+            'Magento_Ui/js/modal/modal':{
+                'type': 'popup',
+                'id': 'missing-size',
+                'title': '<?= $block->escapeHtml(__('Special Size Requests')) ?>',
+                'trigger': '[data-trigger=missing-size]',
+                'modalClass': 'special-size-request',
+                'responsive': true,
+                'buttons': []
+            }}">
+        <div class="content">
+        <p id="missing-size-loader"><?= $block->escapeHtml(__('Loading..'))?></p>
+        <p id="missing-size-error"></p>
+        <form class="missing-size-form form contact cls_popupsizerequest_form"
+        action="#"
+        id="missing-size-form"
+        method="post"
+        data-mage-init='{"validation":{}}'>
+            <?php if (!$isLoggedIn) { ?>
+            <div class="field name required cls_comm_input width-50p">
+                <div class="control flex">
+                    <select id="salutation-size" name="salutation">
+                        <option value="mr">Mr</option>
+                        <option value="ms">Ms</option>
+                        <option value="miss">Miss</option>
+                    </select>
+                    <input id="name-size"
+                        class="input-text"
+                        title="Name"
+                        name="name"
+                        type="text"
+                        value=""
+                        placeholder="<?= $block->escapeHtml(__('Name'))?>"
+                        data-validate='{"required":true}'>
+                </div>
+            </div>
+            <div class="field last_name required cls_comm_input width-50p">
+                <div class="control">
+                    <input id="last-name-size"
+                        class="input-text"
+                        title="Last Name"
+                        name="last_name"
+                        type="text"
+                        value=""
+                        placeholder="<?= $block->escapeHtml(__('Last Name'))?>"
+                        data-validate='{}'>
+                </div>
+            </div>
+            <div class="field email name required cls_comm_input  width-50p">
+                <div class="control">
+                    <input id="email-size"
+                        class="input-text"
+                        title="Email"
+                        name="email"
+                        type="email" value=""
+                        placeholder="<?= $block->escapeHtml(__('Email Address'))?>"
+                        data-validate='{"required":true,"validate-email":true}'>
+                </div>
+            </div>
+            <div class="field telephone required cls_comm_input  width-50p">
+                <div class="control">
+                    <input id="phone-size"
+                        class="input-text"
+                        title="Phone Number"
+                        name="telephone"
+                        type="text"
+                        value=""
+                        placeholder="<?= $block->escapeHtml(__('Phone Number'))?>"
+                        data-validate='{}'>
+                </div>
+            </div>
+            <?php } ?>
+
+            <div class="field size required cls_comm_input">
+                <div class="control">
+                    <input id="selected-size"
+                        class="input-text"
+                        title="Enter Your Size"
+                        name="selectedsize"
+                        type="text"
+                        value=""
+                        placeholder="<?= $block->escapeHtml(__('Enter Your Size'))?>"
+                        data-validate='{"required":true}'>
+                </div>
+            </div>
+
+            <input id="productsku" class="input-text" title="Product Sku" name="productsku" type="hidden"
+            value="<?= $block->escapeHtml($_product->getSku()); ?>">
+            <div class="field name required spBtn">
+            <div class="control">
+                <input type="hidden" name="hdn_subject" id="hdn_subject" value="" />
+                <input type="hidden" name="hdn_message" id="hdn_message" value="" />
+                <div class="mm-action"> <button type="button"
+            id="btn_sizesubmit"
+            title="<?= $block->escapeHtmlAttr(__('Submit')) ?>"
+            class="action submit primary">
+                    <span><?= $block->escapeHtml(__('Submit')) ?></span>
+                </button></div>
+            </div>
+
+            </div>
+        </form>
+        </div>
+    </div>
+  <div id="myModalspecsize" class="modal" style="display: none">
+      <div class="modal-body-content">
+        <h3 class="clsspecialpopupheading"><?= $block->escapeHtml(__('Special Size Requests')) ?></h3>
+      </div>
+  </div>
+</div>
+<input type="hidden" name="special-size" value="<?=  /* @noEscape */ $sizeId; ?>" class="special-size-attr-id"/>
+<script type="text/x-magento-init">
+{
+    "*": {
+        "Magento_Catalog/js/product/view/special-size": {
+            "sizeId": "<?=  /* @noEscape */ $sizeId; ?>",
+            "notifyMeUrl" : "<?= /* @noEscape */ $block->escapeHtml($block->getUrl('notifyme/index/post')); ?>"
+        }
+    }
+}
+</script>
+<!-- Special Request -->
+<?php } ?>

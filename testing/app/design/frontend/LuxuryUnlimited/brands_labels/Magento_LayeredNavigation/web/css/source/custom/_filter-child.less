@@ -1,0 +1,99 @@
+//
+//    Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .filter {
+        &-content {
+            .filter-subtitle {
+                color: @custom__color-black;
+                margin-bottom: 46px;
+            }
+        }
+
+        &-options {
+            &-item {
+                border: 2px solid @custom__color-gray5;
+            }
+            &-title {
+                color: @custom__color-black;
+                margin-bottom: 0;
+
+                &:after {
+                    color: @custom__color-black;
+                }
+            }
+
+            &-content {
+                .search {
+                    input {
+                        margin-top: @indent__xs;
+                    }
+                }
+
+                a {
+                    color: @custom__color-black;
+                }
+
+                .count {
+                    color: @theme__primary--color-26;
+                }
+
+                .item {
+                    & > a {
+                        .lib-font-size(16);
+                    }
+                    input {
+                        &:checked + label:after {
+                            border-color: @custom__color-white;
+                        }
+
+                        &:checked + label:before {
+                            background-color: @custom__color-black;
+                            border-color: @custom__color-black;
+                        }
+                    }
+
+                    label {
+                        &:before {
+                            border-color: @custom__color-gray-light;
+                        }
+                    }
+                }
+            }
+        }
+
+        //rewrite parent theme
+        .filter-options-title {
+            text-transform: capitalize;
+        }
+
+        .filter-options-content {
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .filter-content .item {
+            margin-left: 0;
+        }
+    }
+}
+
+//
+//    Mobile
+//--------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    .block.filter {
+        .filter {
+            &-title {
+                color: @custom__color-black;
+                border: 1px solid @custom__color-gray5;
+            }
+        }
+    }
+}

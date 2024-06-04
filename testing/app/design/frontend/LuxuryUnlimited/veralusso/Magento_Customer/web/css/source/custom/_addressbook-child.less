@@ -1,0 +1,167 @@
+//
+//  Common
+//
+& when (@media-common =true) {
+    .form-control {
+        fieldset.fieldset {
+            > .fields {
+                > .field {
+                    width: calc(100% - 8px);
+                }
+
+                &.field-common-section {
+                    .lib-vendor-prefix-display(flex);
+                    .lib-css(flex-direction, column, @_prefix: 1);
+
+                    &:has(.field.zip, .country) {
+                        .lib-vendor-prefix-display(flex);
+                        .lib-css(flex-direction, row, @_prefix: 1);
+                    }
+
+                    > .field {
+                        width: 100%;
+                    }
+                }
+            }
+
+            &.address-info {
+                padding: 0 @indent__base @indent__base;
+                border: none;
+
+                h2 {
+                    display: none;
+                }
+            }
+
+            &.contact-info {
+                border: none;
+            }
+        }
+    }
+
+    .account {
+        .column {
+            &.main {
+                h2 {
+                    display: none;
+                }
+            }
+        }
+
+        .block-box-element {
+            .box-title {
+                input[type='radio'] {
+                    display: none;
+                }
+            }
+
+            strong,
+            .block-title {
+                display: none;
+            }
+
+            address {
+                a {
+                    .lib-font-size(16);
+                    .lib-line-height(24);
+                    color: @custom__color-gray1;
+                }
+            }
+        }
+    }
+
+    .form-address-edit {
+        .fieldset {
+            .fields {
+                &.choice-address {
+                    .lib-css(justify-content, flex-start, @_prefix: 1);
+
+                    .choice {
+                        width: 45%;
+                    }
+
+                    label {
+                        .lib-font-size(14);
+
+                        i {
+                            border-radius: 50%;
+                        }
+                    }
+
+                    input[type='checkbox']:checked + .checkmark + label {
+                        i {
+                            &:before {
+                                border-radius: 50%;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    button.action.save.primary.save-address-button {
+        padding: 14px 54px;
+    }
+
+    .block {
+        .block-addresses-list {
+            .block-content {
+                #additional-addresses-table {
+                    .table-address {
+                        border-top: none;
+                        border-bottom: 1px solid @theme__primary--color-200;
+
+                        .col-head {
+                            color: @custom__color-black;
+                        }
+                    }
+                }
+            }
+
+            table {
+                tbody {
+                    > tr {
+                        > th {
+                            padding: @indent__base 15px;
+                        }
+
+                        > td {
+                            padding: @indent__base 15px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .block-addresses-list {
+        .additional-addresses {
+            border: 1px solid @theme__primary--color-200;
+        }
+    }
+
+    .customer-address-index {
+        .actions-toolbar {
+            .lib-css(justify-content, center, @_prefix: 1);
+
+            .primary {
+                .action {
+                    padding: 14px 54px;
+                }
+            }
+        }
+    }
+
+    body.swarming_credits-index-index {
+        .page-wrapper {
+            .columns {
+                .main:has(.empty-store-credit) {
+                    p:not(.empty-store-credit p) {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+}

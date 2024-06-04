@@ -1,0 +1,9 @@
+<!-- ko foreach: { data: tickets, as: 'ticket' } -->
+    <div class="ticket-message">
+        <div class="message-body">
+            <i class="icon-ticket"></i>
+            <p class="message-text" data-bind="text: ticket.remarks"></p>
+        </div>
+        <div class="message-time" data-bind="text: $parent.getTimeSinceCreatingDate(ticket.created_at)"></div>
+    </div>
+<!-- /ko -->

@@ -1,0 +1,35 @@
+<?php
+/**
+ * @var \LuxuryUnlimited\CategorySectionOne\Block\SectionOne $block
+ */
+
+$isEnabledSectionOne = $block->isEnabledSectionOne();
+
+$categories = [];
+
+?>
+<?php if ($isEnabledSectionOne): ?>
+    <?php $categories = $block->getSectionOneCategories(); ?>
+
+    <?php if (count($categories)): ?>
+        <div class="category-section-one">
+            <?php foreach ($categories as $category): ?>
+            <div class="category-tile">
+
+
+
+                <div class="category-title">
+                    <a href="<?= /** @noEscape */ $category['url']?>"><?= /** @noEscape */ $category['name'] ?></a>
+                </div>
+                <div class="tile-image">
+                    <a href="<?= /** @noEscape */ $category['url']?>" aria-label="<?= /** @noEscape */ $category['name'] ?>">
+                        <image class = "img-preview" src="<?= /** @noEscape */ $category['image'] ?>"></image>
+                    </a>
+                </div>
+            </div>
+            <?php endforeach; ?>
+
+        </div>
+    <?php endif; ?>
+
+<?php endif; ?>

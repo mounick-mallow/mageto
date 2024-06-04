@@ -1,0 +1,126 @@
+// /**
+//  * Copyright © 2015 Magento. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .page-wrapper {
+        .minicart-wrapper {
+            .block-minicart {
+                &::before {
+                    left: 50px;
+                    right: unset;
+                }
+
+                &::after {
+                    left: 49px;
+                    right: unset;
+                }
+            }
+
+            .block-minicart {
+                left: -50px;
+                right: unset;
+            }
+
+            .product {
+                .actions {
+                    left: 0;
+                    right: unset;
+                }
+            }
+        }
+
+        .minicart-donation {
+            .firas-donation {
+                .firas-donation-product-list {
+                    .donateRight {
+                        font-size: @font-size__s;
+                        padding: 0 20px 0 0;
+                    }
+                }
+            }
+        }
+    }
+
+    .checkout-cart-index {
+        .minicart-donation {
+            .firas-donation {
+                .donateTxt {
+                    text-align: start;
+                }
+            }
+        }
+    }
+
+    .minicart-items {
+        .product-item-details {
+            padding: 0 @indent__xxs 0 @indent__m;
+            text-align: start;
+
+            .details-qty {
+                .label {
+                    margin: 0 0 0 @indent__s;
+                }
+            }
+        }
+
+        .product {
+            .options {
+                .values {
+                    margin: 0;
+                }
+            }
+
+            > .product-item-photo {
+                float: right;
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    .page-wrapper {
+        .page-header {
+            .header {
+                .minicart-wrapper {
+                    .block-minicart {
+                        width: 420px;
+                        left: -50px;
+                        right: unset;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__s) {
+    .page-wrapper {
+        .page-header .header {
+            .minicart-wrapper {
+                .block-minicart {
+                    width: 300px;
+                    left: -50px;
+                    right: unset;
+                }
+            }
+        }
+    }
+}

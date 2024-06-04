@@ -1,0 +1,22 @@
+<?php
+/**
+ * @package     Plumrocket_SocialLoginFree
+ * @copyright   Copyright (c) 2018 Plumrocket Inc. (https://plumrocket.com)
+ * @license     https://plumrocket.com/license   End-user License Agreement
+ */
+?>
+
+<?php
+/** @var \Plumrocket\SocialLoginFree\Helper\Data $helper */
+$helper = $this->helper(\Plumrocket\SocialLoginFree\Helper\Data::class);
+if ($helper->isFakeMail()): ?>
+    <div data-mage-init='{"pslogin":{},"loader":{}}' style="display: none;"></div>
+    <script type="text/x-magento-init">
+        {
+            "*": {
+                "Plumrocket_SocialLoginFree/js/fake-email": {
+                }
+            }
+        }
+    </script>
+<?php endif; ?>

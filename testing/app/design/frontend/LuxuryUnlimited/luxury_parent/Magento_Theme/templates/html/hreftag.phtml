@@ -1,0 +1,51 @@
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-P29BLWG');</script>
+<!-- End Google Tag Manager -->
+<?php
+  $ddHelper = $this->helper("\Dynamic\HomepageApi\Helper\Data");  
+   $porto_helper = $this->helper('Smartwave\Porto\Helper\Data');
+       
+  $storeManager  = $ddHelper->getStoreManager();
+  $storeCode = $storeManager->getStore()->getCode();
+  $currentStoreCode = '';
+  if($storeCode != 'english' && $storeCode != 'default'){
+    $currentStoreCode = explode("-",$storeCode);
+    $currentStoreCode = $currentStoreCode[1].'-'.strtoupper($currentStoreCode[0]);
+  }
+  else{
+    $currentStoreCode = $storeCode;
+  }
+  $currentUrl = $_SERVER['REQUEST_URI'];
+  $currentStoreCodePath = '/'.$storeCode.'/';
+  $siteUrl = $porto_helper->getBaseUrl();;
+  $path = explode($currentStoreCodePath, $currentUrl);
+  if(!empty($path[1])){
+    $pagePath = $path[1];
+  }
+  else{
+    $pagePath = '';
+  }
+  $storeCollection = $storeManager->getStores();
+  foreach($storeCollection as $storesdata){
+    $storeDataCode = $storesdata->getCode();
+    if($storeCode != $storeDataCode){
+      if($storeDataCode != 'english' && $storeDataCode != 'default'){
+        $storeDataCode = explode("-", $storeDataCode);
+        $storeDataCode = $storeDataCode[1].'-'.strtoupper($storeDataCode[0]);
+      }
+      $currentPageUrl = $siteUrl.$storesdata->getCode().'/'.$pagePath;
+    ?>
+    <link rel="alternate" href="<?= $block->escapeUrl($currentPageUrl) ?>" hreflang="<?= $block->escapeHtmlAttr($storeDataCode) ?>" />
+    <?php
+    }
+?>
+  <?php
+  }
+?>
+<link rel="alternate" href="<?= $block->escapeUrl($siteUrl.$storeCode.'/') ?>" hreflang="<?= $block->escapeHtmlAttr($currentStoreCode) ?>" />
+<link rel="canonical" href="<?= $block->escapeUrl($siteUrl.$storeCode.'/'.$pagePath) ?>" />
+<link rel="alternate" href="<?= $block->escapeUrl($siteUrl) ?>" hreflang="x-default"/>

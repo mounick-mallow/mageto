@@ -1,0 +1,43 @@
+<?php
+    $porto_helper = $this->helper('Smartwave\Porto\Helper\Data');
+    $product_view = $porto_helper->getConfig('porto_settings/product');
+    $_helper = $this->helper('Magento\Catalog\Helper\Output');
+    $_imagehelper = $this->helper('Magento\Catalog\Helper\Image');
+    if(isset($product_view['prev_next']) && $product_view['prev_next']) {
+        $_product = $block->getProduct();
+        $prev_product = $porto_helper->getPrevProduct($_product);
+        $next_product = $porto_helper->getNextProduct($_product);
+?>
+<?php if($prev_product || $next_product):?>
+<div class="prev-next-products">
+    <?php if($prev_product): ?>
+    <?php
+        $productImage = $_imagehelper->init($prev_product, 'category_page_grid')->constrainOnly(FALSE)->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize(80);
+        $productImageUrl = $productImage->getUrl();
+    ?>
+    <div class="product-nav product-prev">
+        <a href="<?= $block->escapeUrl($prev_product->getProductUrl()) ?>" title="<?= /* @noEscape */ __('Previous Product'); ?>"><?= $block->escapeHtml($product_view['prev_text']) ?></a>
+        <div class="product-pop theme-border-color">
+            <img class="product-image" src="<?= $block->escapeUrl($productImageUrl) ?>" alt="<?= $block->escapeHtmlAttr($productImage->getLabel()) ?>"/>
+            <h3 class="product-name"><?= $block->escapeHtml($prev_product->getName()) ?></h3>
+        </div>
+    </div>
+    <?php endif; ?>
+    <?php if($next_product): ?>
+    <?php
+        $productImage = $_imagehelper->init($next_product, 'category_page_grid')->constrainOnly(FALSE)->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize(80);
+        $productImageUrl = $productImage->getUrl();
+    ?>
+    <div class="product-nav product-next">
+        <a href="<?= $block->escapeUrl($next_product->getProductUrl()) ?>" title="<?= /* @noEscape */ __('Next Product'); ?>"><?= $block->escapeHtml($product_view['next_text']) ?></a>
+        <div class="product-pop theme-border-color">
+            <img class="product-image" src="<?= $block->escapeUrl($productImageUrl) ?>" alt="<?= $block->escapeHtmlAttr($productImage->getLabel()) ?>"/>
+            <h3 class="product-name"><?= $block->escapeHtml($next_product->getName()) ?></h3>
+        </div>
+    </div>
+    <?php endif; ?>
+</div>
+<?php endif; ?>
+<?php
+    }
+?>

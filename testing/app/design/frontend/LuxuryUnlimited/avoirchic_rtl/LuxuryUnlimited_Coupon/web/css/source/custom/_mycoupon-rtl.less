@@ -1,0 +1,50 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common =true) {
+    .my-account-coupons {
+        table {
+            tr {
+                th {
+                    text-align: right;
+                }
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    .my-account-coupons {
+        .table:not(.totals):not(.cart):not(.table-comparison) {
+            tbody {
+                > tr {
+                    > td {
+                        padding-right: 50%;
+                        padding-left: 16px;
+                        text-align: left;
+
+                        &:before {
+                            right: 16px;
+                            left: auto;
+                        }
+
+                        &.col {
+                            &.actions {
+                                padding-right: 16px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

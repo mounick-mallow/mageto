@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="navigation.sections">
+            <block class="Smartwave\Megamenu\Block\Topmenu" name="sw.topnav" template="Smartwave_Megamenu::topmenu.phtml" before="-">
+                <block class="Bss\GeoIPAutoSwitchStore\Block\Switcher" name="switch_website_mobile" as="switch_website_mobile" template="Bss_GeoIPAutoSwitchStore::switch/sw_website.phtml"/>
+            <block class="Magento\Store\Block\Switcher" name="store_language_mobile" as="store_language_mobile" template="switch/languages.phtml"/>
+                <block class="Magento\Framework\View\Element\Template" name="custom_block_mobile" template="Magento_Theme::html/header/header_panel_custom_block.phtml" after="-"/>
+                <block class="Magento\Directory\Block\Currency" name="currency_mobile" template="Magento_Directory::currency.phtml" />
+            </block>
+        </referenceContainer>
+        <referenceContainer name="footer-container">
+            <block name="custom.footer.new.design" class="LuxuryUnlimited\FrontendConfigs\Block\FooterLinks"   template="Magento_Theme::html/footer-links.phtml" before="-" >
+                <block class="Magento\Newsletter\Block\Subscribe" name="footer.newsletter" template="subscribe.phtml"/>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

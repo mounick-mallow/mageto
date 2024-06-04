@@ -1,0 +1,37 @@
+//
+//  Common
+//  _____________________________________________
+& when (@media-common =true) {
+    .sociallogin-account-socialaccounts {
+        .social_empty {
+            text-align: center;
+
+            .empty_icon {
+                margin-bottom: 24px;
+
+                .lib-icon-font(
+                    @_icon-font-content: @icon-social-link,
+                    @_icon-font: @icon-font-family,
+                    @_icon-font-size: @social-empty-icon__font-size,
+                    @_icon-font-line-height: @social-empty-icon__line-height,
+                    @_icon-font-color: @social-empty-icon__font-color,
+                    @_icon-font-text-hide: false,
+                    @_icon-font-position: before,
+                    @_icon-font-display: block
+                );
+            }
+
+            p {
+                .lib-font-size(@social-content-font-size);
+                .lib-line-height(@social-content-line-height);
+                font-weight: @social-content-font-weight;
+                color: @social-content-color;
+                text-align: center;
+            }
+
+            .empty-button {
+                text-align: center;
+            }
+        }
+    }
+}

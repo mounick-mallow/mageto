@@ -1,0 +1,117 @@
+//
+//  Common
+//  ---------------------------------------------
+
+& when (@media-common = true) {
+    .cms-contact-us {
+        form {
+            fieldset {
+                &.fieldset {
+                    .lib-vendor-prefix-display(flex);
+                    .lib-css(flex-direction, row, @_prefix: 1);
+                    .lib-css(flex-wrap, wrap, @_prefix: 1);
+                    .lib-css(justify-content, space-between, @_prefix: 1);
+
+                    .fields {
+                        width: 49%;
+                        .lib-css(flex-wrap, wrap, @_prefix: 1);
+
+                        .field {
+                            width: 100%;
+                        }
+                    }
+
+                    .comment-area {
+                        width: 100%;
+                    }
+                }
+
+                > .contact-me-by {
+                    display: none;
+                }
+
+                > .field:not(.choice) {
+                    > .control {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+
+        .column:not(.sidebar-main) {
+            form {
+                .actions-toolbar {
+                    margin: @indent__l 0 0;
+                    width: 100%;
+                    text-align: center;
+                }
+            }
+        }
+
+        // Result modal for contact us
+        .modals-wrapper {
+            aside.modal-popup.modal-slide.special-requst-modal.modal-popup {
+                .modal-inner-wrap {
+                    .modal-content {
+                        padding: 50px;
+                    }
+                }
+            }
+        }
+
+        .contact-us-modal {
+            .response-container {
+                padding: 0 0 @indent__l 0;
+            }
+
+            .actions {
+                .lib-vendor-prefix-display(flex);
+                .lib-css(justify-content, center, @_prefix: 1);
+
+                a {
+                    padding: 12px 24px;
+                    border: 2px solid @theme__primary--color-500;
+                    border-radius: 5px;
+                    margin: @indent__xs;
+                    font-weight: @font-weight__bold;
+                    color: @theme__territory--white;
+                    background: @theme__primary--color-500;
+                }
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  ---------------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum ='max')
+    and
+    (@break =@screen__xs) {
+    .cms-contact-us {
+        .cls_contactus_main {
+            form {
+                fieldset {
+                    &.fieldset {
+                        .fields {
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+
+        // Result modal for contact us
+        .contact-us-modal .actions a {
+            width: 100%;
+            display: block;
+        }
+
+        .contact-us-modal .actions {
+            .lib-css(flex-direction, column, @_prefix: 1);
+        }
+    }
+}

@@ -1,0 +1,217 @@
+<?php
+$ddHelper = $this->helper("\Dynamic\HomepageApi\Helper\Data");
+$storeManager = $ddHelper->getStoreManager();
+$storeCode = $storeManager->getStore()->getCode();
+$erpClient = \Magento\Framework\App\ObjectManager::getInstance()->get(\Shellpea\ERP\Client\Client::class);
+if (!empty($_POST)) {
+    $firstname = $_POST['firstname'];
+    $lastname = $_POST['lastname'];
+    $websitename = $_POST['websitename'];
+    $websiteurl = $_POST['url'];
+    $email = $_POST['email'];
+    $phone = $_POST['contactno'];
+    $city = $_POST['city'];
+    $country = $_POST['country'];
+    $storewebsite = "www.brands-labels.com";
+    $fbhandle = $_POST['facebookhandle'];
+    $fbfollowers = $_POST['fbfollowers'];
+    $instahandle = $_POST['instagramhandle'];
+    $instafollowers = $_POST['instafollowers'];
+    $twitterhandle = $_POST['twitterhandle'];
+    $twitterfollowers = $_POST['twitterfollowers'];
+    $linkedinhandle = $_POST['linkedinhandle'];
+    $linkedinfollowers = $_POST['linkedfollowers'];
+    $youtubehandle = $_POST['ythandle'];
+    $youtubefollowers = $_POST['ytsubscribers'];
+    $pinteresthandle = $_POST['pihandle'];
+    $pinterestfollowers = $_POST['pifollowers'];
+    $projects = $_POST['projects'];
+    // echo $websitename;
+    // echo $firstname.'=='.$lastname.'=='.$websitename.'='.$websiteurl.'='.$email.'='.$phone.'='.$visitors.'='.$views.'='.$street.'='.$city.'='.$postcode.'='.$country.'='.$storewebsite.'<br/>';
+
+    //The JSON data.
+    $newjsonData = array(
+        "website" => $storewebsite,
+        "first_name" => $firstname,
+        "last_name" => $lastname,
+        "phone" => $phone,
+        "emailaddress" => $email,
+        "facebook" => $fbhandle,
+        "facebook_followers" => $fbfollowers,
+        "instagram" => $instahandle,
+        "instagram_followers" => $instafollowers,
+        "twitter" => $twitterhandle,
+        "twitter_followers" => $twitterfollowers,
+        "youtube" => $youtubehandle,
+        "youtube_followers" => $youtubefollowers,
+        "linkedin" => $linkedinhandle,
+        "linkedin_followers" => $linkedinfollowers,
+        "pinterest" => $pinteresthandle,
+        "pinterest_followers" => $pinterestfollowers,
+        "worked_on" => $projects,
+        "website_name" => $websitename,
+        "url" => $websiteurl,
+        "country" => $country,
+        "type" => "influencer",
+        "lang_code" => $storeCode
+    );
+
+    $result = $erpClient->addInfluencer($newjsonData)[0];
+    $class = '';
+    $message = '';
+    if(isset($response['code'])) {
+        $class = $result['status'] == 'success' ? 'aff-success' : 'aff-failed';
+        $message = $result['message'];
+    }
+
+    ?>
+    <div class="message-container">
+        <div class="<?= /** noEscape */ $class ?>">
+            <?= /** noEscape */ $message ?><span id="close-message">X</span>
+        </div>
+    </div>
+    <?php
+}
+?>
+<div class="returns-container affiliate-container">
+    <div class="returns-left">
+        <div class="returns-content-left">
+            <div class="formBlock">
+                <form method="post">
+                    <div class="personal-info mar-bot">
+                        <div class="form-control">
+                            <!-- <label>First Name:</label> -->
+                            <input type="text" class="form-control" name="firstname"
+                                   placeholder="<?= /* @noEscape */ __('First Name:') ?>" required>
+                        </div>
+                        <div class="form-control">
+                            <!-- <label>Last Name:</label> -->
+                            <input type="text" class="form-control" placeholder="<?= /* @noEscape */ __('Last Name:') ?>"
+                                   name="lastname" required>
+                        </div>
+                        <div class="form-control">
+                            <!-- <label>Email:</label> -->
+                            <input type="email" class="form-control" name="email"
+                                   placeholder="<?= /* @noEscape */ __('Email:') ?>" required>
+                        </div>
+                        <div class="form-control">
+                            <!-- <label>Contact No:</label> -->
+                            <input type="number" class="form-control" name="contactno"
+                                   placeholder="<?= /* @noEscape */ __('Contact No:') ?>" required>
+                        </div>
+
+                    </div>
+                    <div class="company-info mar-bot">
+                        <!-- <h3><i class="porto-icon-info-circled-alt"></i><?php //echo __('Portfolio:') ?></h3> -->
+                        <div class="form-control">
+                            <!-- <label>Website Name:</label> -->
+                            <input type="text" class="form-control" name="websitename"
+                                   placeholder="<?= /* @noEscape */ __('Website Name:') ?>" required>
+                        </div>
+                        <div class="form-control">
+                            <!-- <label>URL:</label> -->
+                            <input type="url" class="form-control" name="url" placeholder="<?= /* @noEscape */ __('URL:') ?>">
+                        </div>
+                        <div class="form-control">
+                            <!-- <label>Website Name:</label> -->
+                            <input type="text" class="form-control" name="facebookhandle"
+                                   placeholder="<?= /* @noEscape */ __('Facebook Handle:') ?>">
+                        </div>
+                        <div class="form-control">
+                            <!-- <label>URL:</label> -->
+                            <input type="text" class="form-control" name="fbfollowers"
+                                   placeholder="<?= /* @noEscape */ __('Facebook Followers') ?>">
+                        </div>
+                        <div class="form-control">
+                            <!-- <label>Website Name:</label> -->
+                            <input type="text" class="form-control" name="instagramhandle"
+                                   placeholder="<?= /* @noEscape */ __('Instagram Handle:') ?>">
+                        </div>
+                        <div class="form-control">
+                            <!-- <label>URL:</label> -->
+                            <input type="text" class="form-control" name="instafollowers"
+                                   placeholder="<?= /* @noEscape */ __('Instagram Followers') ?>">
+                        </div>
+                        <div class="form-control">
+                            <!-- <label>Website Name:</label> -->
+                            <input type="text" class="form-control" name="twitterhandle"
+                                   placeholder="<?= /* @noEscape */ __('Twitter Handle:') ?>">
+                        </div>
+                        <div class="form-control">
+                            <!-- <label>URL:</label> -->
+                            <input type="text" class="form-control" name="twitterfollowers"
+                                   placeholder="<?= /* @noEscape */ __('Twitter Followers:') ?>">
+                        </div>
+                        <div class="form-control">
+                            <!-- <label>Website Name:</label> -->
+                            <input type="text" class="form-control" name="ythandle"
+                                   placeholder="<?= /* @noEscape */ __('Youtube Handle') ?>">
+                        </div>
+                        <div class="form-control">
+                            <!-- <label>URL:</label> -->
+                            <input type="text" class="form-control" name="ytsubscribers"
+                                   placeholder="<?= /* @noEscape */ __('Youtube Subcribers') ?>">
+                        </div>
+                        <div class="form-control">
+                            <!-- <label>Website Name:</label> -->
+                            <input type="text" class="form-control" name="linkedinhandle"
+                                   placeholder="<?= /* @noEscape */ __('LinkedIn') ?>">
+                        </div>
+                        <div class="form-control">
+                            <!-- <label>URL:</label> -->
+                            <input type="text" class="form-control" name="linkedfollowers"
+                                   placeholder="<?= /* @noEscape */ __('Linkedin Followers') ?>">
+                        </div>
+                        <div class="form-control">
+                            <!-- <label>Website Name:</label> -->
+                            <input type="text" class="form-control" name="pihandle"
+                                   placeholder="<?= /* @noEscape */ __('Pinterest Handle') ?>">
+                        </div>
+                        <div class="form-control">
+                            <!-- <label>URL:</label> -->
+                            <input type="text" class="form-control" name="pifollowers"
+                                   placeholder="<?= /* @noEscape */ __('Pintrest Followers:') ?>">
+                        </div>
+                        <div class="form-control">
+                            <!-- <label>URL:</label> -->
+                            <input type="text" class="form-control" name="projects"
+                                   placeholder="<?= /* @noEscape */ __('Projects worked on:') ?>">
+                        </div>
+
+                    </div>
+                    <div class="location-info mar-bot">
+                        <!-- <h3><i class="porto-icon-location"></i><?php // echo __('Location Information:') ?></h3> -->
+                        <div class="form-control">
+                            <!-- <label>City:</label> -->
+                            <input type="text" class="form-control" name="city" placeholder="<?= /* @noEscape */ __('City:') ?>">
+                        </div>
+
+                        <div class="form-control">
+                            <!-- <label>Country:</label> -->
+                            <select name="country">
+                                <option><?= /* @noEscape */ __('Select Country') ?></option>
+                                <option><?= /* @noEscape */ __('United States') ?></option>
+                                <option><?= /* @noEscape */ __('Australia') ?></option>
+                                <option><?= /* @noEscape */ __('Canada') ?></option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="sendinfo">
+                            <button type="submit"
+                                    class="send-request btn btn-primary return-submit"><?= /* @noEscape */ __('Submit') ?></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Theme/js/blogger-reg": {
+            }
+        }
+    }
+</script>

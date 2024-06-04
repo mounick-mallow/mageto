@@ -1,0 +1,61 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common =true) {
+    .catalogsearch-advanced-index {
+        .page-subtitle {
+            .lib-font-size(@font-size__xl);
+            .lib-line-height(@advanced-subtitle__line-height);
+            font-weight: @font-weight__heavier;
+            color: @custom__color-text-top;
+        }
+
+        .form.search.advanced {
+            padding: @indent__m;
+            background: @theme__secondary--color-50;
+
+            .actions-toolbar {
+                .search {
+                    padding: @advanced-search__padding;
+                }
+            }
+        }
+    }
+}
+
+//
+//  Desktop
+//  ---------------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__m) {
+    .catalogsearch-advanced-index {
+        .form.search.advanced {
+            max-width: @advanced-form__max-width;
+
+            .fieldset {
+                .field {
+                    &.name {
+                        max-width: @advanced-input__max-width;
+                    }
+
+                    &.sku {
+                        max-width: @advanced-input__max-width;
+                    }
+
+                    &.price {
+                        .fields.range {
+                            .field.no-label {
+                                max-width: @advanced-input__max-width;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

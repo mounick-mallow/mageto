@@ -1,0 +1,55 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common =true) {
+    .ticket-created-success {
+        .response-container {
+            text-align: center;
+        }
+
+        .re-result-btns {
+            .product-message {
+                margin: @indent__m 0;
+            }
+        }
+    }
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__m) {
+    .ticket-created-success {
+        .lib-css(display, flex, @_prefix: 1);
+
+        .response-container {
+            max-width: 150px;
+            width: 100%;
+        }
+
+        .re-result-btns {
+            padding-left: @indent__m;
+
+            .product-message {
+                margin: 0 0 @indent__l;
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+}

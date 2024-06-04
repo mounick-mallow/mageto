@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="frontendconfigs" translate="label" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>general-configuration</class>
+            <label>General Configurations</label>
+            <tab>Luxury_Unlimited</tab>
+            <resource>LuxuryUnlimited_FrontendConfigs::frontendconfigs_config</resource>
+            <group id="footer" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Footer</label>
+                <field id="aboutus_link" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Link of about us page</label>
+                    <comment>Add URL key. i.e about-us or aboutus/index/index</comment>
+                </field>
+                <field id="contactus_link" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Link of Contact us page</label>
+                    <comment>Add URL key. i.e about-us or aboutus/index/index</comment>
+                </field>
+                <field id="careers_link" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Link of Careers page</label>
+                    <comment>Add URL key. i.e about-us or aboutus/index/index</comment>
+                </field>
+                <field id="shipping_link" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Link of Shipping page</label>
+                    <comment>Add URL key. i.e about-us or aboutus/index/index</comment>
+                </field>
+                <field id="secureshopping_link" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Link of Secure Shopping</label>
+                    <comment>Add URL key. i.e about-us or aboutus/index/index</comment>
+                </field>
+                <field id="designer_link" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Link of Designer</label>
+                    <comment>Add URL key. i.e about-us or aboutus/index/index</comment>
+                </field>
+                <field id="trackorder_link" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Link of Track Order Page</label>
+                    <comment>Add URL key. i.e about-us or aboutus/index/index</comment>
+                </field>
+                <field id="trackticket_link" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Link of Track ticket</label>
+                    <comment>Add URL key. i.e about-us or aboutus/index/index</comment>
+                </field>
+                <field id="giftvoucher_link" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Link of Gift Vouchers</label>
+                    <comment>Add URL key. i.e about-us or aboutus/index/index</comment>
+                </field>
+                <field id="referfriend_link" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Link of refer friend page</label>
+                    <comment>Add URL key. i.e about-us or aboutus/index/index</comment>
+                </field>
+                <field id="socialintentive_link" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Link of Social Initiative</label>
+                    <comment>Add URL key. i.e about-us or aboutus/index/index</comment>
+                </field>
+                <field id="affiliate_link" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Link of Affiliate Program</label>
+                    <comment>Add URL key. i.e about-us or aboutus/index/index</comment>
+                </field>
+                <field id="influencer_link" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Link of Inflluerncer Registration</label>
+                    <comment>Add URL key. i.e about-us or aboutus/index/index</comment>
+                </field>
+                <field id="donation_link" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Link of Donation</label>
+                    <comment>Add URL key. i.e about-us or aboutus/index/index</comment>
+                </field>
+                <field id="faq_link" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Link of FAQ</label>
+                    <comment>Add URL key. i.e about-us or aboutus/index/index</comment>
+                </field>
+                <field id="return_link" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Link of Returns and Refunds</label>
+                    <comment>Add URL key. i.e about-us or aboutus/index/index</comment>
+                </field>
+                <field id="privacy_link" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Link of Privacy Policy</label>
+                    <comment>Add URL key. i.e about-us or aboutus/index/index</comment>
+                </field>
+                <field id="termsandcondi_link" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Link of Terms and Conditions</label>
+                    <comment>Add URL key. i.e about-us or aboutus/index/index</comment>
+                </field>
+                <field id="facebook_link" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Facebook Link</label>
+                    <comment>Add URL</comment>
+                    <validate>validate-url</validate>
+                </field>
+                <field id="twitter_link" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Twitter Link</label>
+                    <comment>Add URL</comment>
+                    <validate>validate-url</validate>
+                </field>
+                <field id="instagram_link" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Instagram Link</label>
+                    <comment>Add URL</comment>
+                    <validate>validate-url</validate>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
+
+

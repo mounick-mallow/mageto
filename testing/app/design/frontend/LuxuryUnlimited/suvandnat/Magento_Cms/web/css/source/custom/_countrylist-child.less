@@ -1,0 +1,183 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common =true) {
+    body {
+        &.cms-countrylist {
+            background-color: @theme__territory--white;
+        }
+    }
+
+    .cms-countrylist {
+        .container {
+            max-width: 100%;
+            padding: 0;
+            width: 100%;
+        }
+    }
+
+    .choosecountry {
+        .country-head {
+            .cls_country {
+                display: inline;
+                color: @theme__territory--color-300;
+                margin: 0;
+                padding: @indent__s 0;
+                text-transform: uppercase;
+                .lib-font-size(24);
+                font-weight: @font-weight__bold;
+                .lib-line-height(35);
+                letter-spacing: 0.3px;
+            }
+
+            .searchbar {
+                display: inline-block;
+                float: right;
+                margin: 0;
+                position: relative;
+                width: 308px;
+
+                &::after {
+                    .lib-css(content, @icon-search);
+                    .lib-css(font-family, @icomoon-font-family);
+                    .lib-font-size(@font-size__base);
+                    color: @theme__territory--color-300;
+                    position: absolute;
+                    right: 15px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                }
+
+                input {
+                    color: @theme__territory--color-300;
+                    width: 100%;
+                    padding: @indent__s @indent__base;
+                    border-radius: 5px;
+                }
+            }
+        }
+
+        .countrylist {
+            ul {
+                column-count: 5;
+                column-span: unset;
+                margin: 0;
+                padding: 0;
+
+                li {
+                    list-style: none;
+                    margin-bottom: @indent__l;
+
+                    a {
+                        .lib-font-size(@font-size__base);
+                        .lib-vendor-box-align(center);
+                        .lib-vendor-prefix-display(flex);
+                        color: @theme__territory--color-300;
+                        text-decoration: none;
+                        text-transform: capitalize;
+
+                        &:hover {
+                            color: @theme__primary--color-500;
+                        }
+
+                        span {
+                            .lib-font-size(@font-size__l);
+                            .lib-line-height(18);
+                            font-weight: @font-weight__regular;
+                        }
+                    }
+
+                    .imgcustimg {
+                        display: none;
+                        border-radius: 0;
+                        height: 28px;
+                        margin-right: @indent__base;
+                        width: 28px;
+                    }
+                }
+            }
+        }
+
+        .alphabet {
+            display: block;
+            margin: @indent__xl auto 0 auto;
+            color: @theme__secondary--color-500;
+            text-align: center;
+            font-family: @custom-primary-font-family;
+            font-weight: @font-weight__heavier;
+            .lib-font-size(@font-size__l);
+            .lib-line-height(20);
+            letter-spacing: 16px;
+
+            .letters {
+                padding: 0;
+
+                .letter {
+                    display: inline;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  ---------------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum ='max')
+    and
+    (@break =@screen__xs) {
+    .cms-countrylist {
+        .choosecountry {
+            .country-head {
+                .lib-vendor-prefix-flex-wrap(wrap);
+                margin-bottom: @indent__xl;
+
+                .cls_country {
+                    display: block;
+                    margin-bottom: 24px;
+                    text-align: left;
+                    padding: 0;
+                }
+
+                .searchbar {
+                    max-width: 100%;
+                    width: 100%;
+                    float: none;
+                }
+
+                .alphabet {
+                    margin: @indent__m auto 0 auto;
+                }
+            }
+
+            .countrylist {
+                ul {
+                    column-count: 2;
+
+                    li {
+                        height: @indent__l;
+                        margin-bottom: @indent__base;
+
+                        a {
+                            span {
+                                .lib-font-size(15);
+                                .lib-line-height(15);
+                            }
+                        }
+
+                        .imgcustimg {
+                            height: 26px;
+                            margin-right: @indent__s;
+                            width: 26px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,36 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common =true) {
+    .modals-wrapper {
+        .modal-popup.subscribe-requst-modal-popup._inner-scroll {
+            .modal-inner-wrap {
+                .modal-content {
+                    &:has(> #subscribe-result-message-popup) {
+                        padding: 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum ='min')
+    and
+    (@break =@screen__m) {
+    .modal-popup.subscribe-requst-modal-popup._inner-scroll {
+        .actions-toolbar {
+            .primary {
+                width: 60%;
+                margin: 0;
+            }
+        }
+    }
+}

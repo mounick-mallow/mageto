@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <referenceBlock name="custom.products.list">
+                <arguments>
+                    <argument name="luxdb_price_match_view_model" xsi:type="object">Dynamic\Mytickets\ViewModel\PriceMatch</argument>
+                </arguments>
+            </referenceBlock>
+        </referenceContainer>
+        <referenceBlock name="sidebar.main" remove="true"/>
+    </body>
+</page>

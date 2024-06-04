@@ -1,0 +1,72 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \Magento\Customer\Block\Address\Book $block */
+
+$viewModel = $block->getData('viewModel');
+$addressCount = $viewModel ? $viewModel->getAddressCount() : 0;
+if($addressCount) {
+?>
+    <div class="block block-box-element block-addresses-default">
+        <div class="block-title">
+            <strong><?= $block->escapeHtml(__('Your Address')) ?></strong>
+            <a class="action edit add" href="<?= $block->escapeUrl($block->getUrl('customer/address/new')) ?>"><span><?= /* @noEscape */ __('Add New Address') ?></span></a>
+        </div>
+
+        <div class="box-widget">
+            <?php if ($_pAddsses = $block->getDefaultBilling()): ?>
+                <div class="box box-billing-address">
+                    <div class="box-title-top-section">
+                        <strong class="box-title">
+                            <input type="radio" id="billing-address" name="address_type" value="billing-address">
+                            <label for="billing-address"><?= $block->escapeHtml(__('Change Billing Address')) ?></label>
+                        </strong>
+                    </div>
+
+                    <div class="box-content">
+                        <address><?= $block->getAddressHtml($block->getAddressById($_pAddsses)) ?></address>
+                    </div>
+
+                    <div class="box-actions">
+                        <a class="action edit" href="<?= $block->escapeUrl($block->getUrl('customer/address/edit', ['id' => $_pAddsses])) ?>"><span><?= $block->escapeHtml(__('Edit')) ?></span></a>
+                    </div>
+                </div>
+            <?php endif ?>
+
+            <?php if ($_pAddsses = $block->getDefaultShipping()): ?>
+                <div class="box box-billing-address">
+                    <div class="box-title-top-section">
+                        <strong class="box-title">
+                            <input type="radio" id="Shipping-address" name="address_type" value="Shipping-address">
+                            <label for="Shipping-address"><?= $block->escapeHtml(__('Change Shipping Address')) ?></label>
+                        </strong>
+                    </div>
+
+                    <div class="box-content">
+                        <address><?= $block->getAddressHtml($block->getAddressById($_pAddsses)) ?></address>
+                    </div>
+
+                    <div class="box-actions">
+                        <a class="action edit" href="<?= $block->escapeUrl($block->getUrl('customer/address/edit', ['id' => $_pAddsses])) ?>"><span><?= $block->escapeHtml(__('Edit')) ?></span></a>
+                    </div>
+                </div>
+            <?php endif ?>
+        </div>
+    </div>
+<?php
+} else {
+?>
+    <div class="block-addresses-empty">
+        <i class="icon-location"></i>
+        <h2>
+            <strong><?= $block->escapeHtml(__('Oops..!')) ?></strong>
+        </h2>
+
+        <p><?= $block->escapeHtml(__('You have no address')) ?></p>
+    </div>
+<?php
+}
+?>

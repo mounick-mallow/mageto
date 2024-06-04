@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Copyright © 2018 Porto. All rights reserved.
+*/
+-->
+<view xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Config/etc/view.xsd">
+    <media>
+        <images module="Magento_Catalog">
+            <image id="category_page_list" type="small_image">
+                <width>312</width>
+                <height>370</height>
+            </image>
+            <image id="category_page_list-hover" type="thumbnail">
+                <width>312</width>
+                <height>370</height>
+            </image>
+            <image id="category_page_grid" type="small_image">
+                <width>312</width>
+                <height>370</height>
+            </image>
+            <image id="category_page_grid-hover" type="thumbnail">
+                <width>312</width>
+                <height>370</height>
+            </image>
+            <image id="cart_page_product_thumbnail" type="small_image">
+                <width>128</width>
+                <height>124</height>
+            </image>
+            <image id="cart_cross_sell_products" type="small_image">
+                <width>160</width>
+                <height>190</height>
+            </image>
+        </images>
+    </media>
+</view>

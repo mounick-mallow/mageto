@@ -1,0 +1,32 @@
+<?php
+/**
+ * Top menu for store
+ *
+ * @var \Smartwave\Megamenu\Block\Topmenu
+ */
+?>
+<?php
+    $_helper = $block->helper(\Smartwave\Megamenu\Helper\Data::class);
+    $_config = $_helper->getConfig('sw_megamenu');
+    $columnsLimit = 0;
+if ($_config['general']['enable']) {
+    ?>
+    <?php $_menu = $block->getMegamenuHtml(); ?>
+
+<nav class="navigation sw-megamenu side-megamenu" role="navigation">
+    <ul>
+    <?= $block->escapeHtml($_menu); ?>
+    </ul>
+</nav>
+
+<script>
+    require([
+        'jquery',
+        'Smartwave_Megamenu/js/sw_megamenu'
+    ], function ($) {
+        $(".sw-megamenu").swMegamenu();
+    });
+</script>
+    <?php
+}
+?>

@@ -1,0 +1,34 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/**
+ * Language switcher template
+ */
+?>
+<?php
+    $_helper = $this->helper('Smartwave\Porto\Helper\Data');
+    $is_demo = 0;
+?>
+<?php if (count($block->getStores())>0 || $is_demo == 1): ?>
+<?php $id = $block->getIdModifier() ? '-' . $block->getIdModifier() : ''?>
+<div class="switcher language switcher-language" data-ui-id="language-switcher" id="switcher-language<?php /* @escapeNotVerified */ echo $id?>">
+    <strong class="label switcher-label"><span><?php /* @escapeNotVerified */ echo __('Language') ?></span></strong>
+    <div class="actions dropdown options switcher-options">
+        <div class="action toggle switcher-trigger" id="switcher-language-trigger<?php /* @escapeNotVerified */ echo $id?>">
+            <strong class="view-<?php echo $block->escapeHtml($block->getCurrentStoreCode()) ?>">
+                <?php if($_helper->getConfig('porto_settings/header/language_flag')): ?>
+                    <img src="<?php echo $_helper->getBaseUrl().'wysiwyg/smartwave/porto/flags/'.$block->escapeHtml($block->escapeHtml($block->getCurrentStoreCode())).'.png'; ?>" alt="" />
+                <?php endif; ?>
+                <span name="switcher-dropdown"><?php echo $block->escapeHtml($block->getStoreName()) ?></span>
+            </strong>
+        </div>
+    </div>
+</div>
+<?php endif; ?>

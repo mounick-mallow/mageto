@@ -1,0 +1,39 @@
+// /**
+//  * Copyright © 2015 Magento. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//    Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .filter {
+        &-options {
+            &-title {
+                &:after {
+                    float: left;
+                }
+            }
+        }
+    }
+}
+
+//
+//    Mobile
+//--------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    .block.filter {
+        .filter {
+            &-title {
+                left: 15px;
+                right: auto;
+            }
+        }
+    }
+}

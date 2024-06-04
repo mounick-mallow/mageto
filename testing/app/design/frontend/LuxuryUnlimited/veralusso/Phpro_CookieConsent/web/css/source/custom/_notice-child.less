@@ -1,0 +1,105 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .phpro-cookie-notice {
+        padding: 0;
+        background-color: @cookie-popup__background-color;
+        width: 100%;
+        height: 100%;
+
+        .notice-wrapper {
+            .lib-css(flex-direction, column, @_prefix: 1);
+            border-radius: @indent__xs;
+            background-color: @custom__color-white;
+            position: absolute;
+            bottom: 0;
+            width: fit-content;
+            margin: 20px 15px;
+            padding: 0;
+
+            .notice__title {
+                color: @custom__color-black;
+                width: 100%;
+                padding: 24px;
+                font-weight: @font-weight__semibold;
+                border-bottom: 2px solid @theme__secondary--color-200;
+            }
+
+            .notice__actions {
+                padding: 42px 32px;
+
+                .notice__description {
+                    color: @custom__color-gray1;
+                    padding: 0 0 32px;
+                    width: 100%;
+                    text-align: center;
+                }
+
+                .notice__btn-settings {
+                    background: @custom__color-white;
+                    color: @custom__color-black;
+                    border: 2px solid @custom__color-black;
+                }
+
+                .notice__btn-accept {
+                    &:active,
+                    &:focus,
+                    &:hover {
+                        background: @custom__color-black;
+                        color: @custom__color-white;
+                    }
+                }
+
+                .action.primary {
+                    border-radius: @indent__xs;
+                }
+
+                .notice__btn-settings {
+                    margin: 0 20px 0 0;
+                }
+            }
+        }
+    }
+}
+
+//
+//  Desktop
+//  ---------------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum ='min')
+    and
+    (@break = @screen__m) {
+    .phpro-cookie-notice {
+        .notice-wrapper {
+            max-width: 624px;
+        }
+    }
+}
+
+//
+//  Mobile
+//  ---------------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum ='max')
+    and
+    (@break = @screen__m) {
+    .phpro-cookie-notice {
+        .notice-wrapper {
+            .notice__actions {
+                .notice__actions {
+                    .lib-css(flex-direction, column, @_prefix: 1);
+                }
+
+                .action.primary {
+                    padding: @indent__xxs;
+                }
+            }
+        }
+    }
+}

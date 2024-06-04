@@ -1,0 +1,138 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * *
+ * @var $block \Magento\Catalog\Block\Product\View
+ * @var $viewModelPriceMatch \Dynamic\Mytickets\ViewModel\PriceMatch
+ */
+?>
+<?php
+$viewModelPriceMatch = $block->getData('luxdb_price_match_view_model_pdp');
+
+$continueshoppingHelper = $viewModelPriceMatch->getShoppingDataHelper();
+?>
+<input type="hidden" name="lastvisitedurl" value="<?= $block->escapeHtml($continueshoppingHelper->getLastUrl()) ?>">
+
+<?php $_product = $block->getProduct(); ?>
+<?php $buttonTitle = __('Add to Cart'); ?>
+
+<?php
+$ddHelper = $viewModelPriceMatch->getHomepageHelper();
+
+$storeManager  = $ddHelper->getStoreManager();
+
+$customerSession = $ddHelper->getCustomerSessionManager();
+$customerName = $customerEmail = '';
+if ($customerSession->isLoggedIn()) {
+    $customerSession->getCustomerId();  // get Customer Id
+    $customerSession->getCustomerGroupId();
+    $customerSession->getCustomer();
+    $customerSession->getCustomerData();
+
+    $customerName = $customerSession->getCustomer()->getName();  // get  Full Name
+    $customerEmail = $customerSession->getCustomer()->getEmail(); // get Email
+}
+
+?>
+<?php if ($_product->isSaleable()): ?>
+<div class="box-tocart">
+    <div class="fieldset">
+        <?php if ($block->shouldRenderQuantity()): ?>
+        <div class="field qty">
+            <label class="label" for="qty">
+                <span><?= /* @escapeNotVerified */ $block->escapeHtml(__('Qty')) ?>:</span>
+            </label>
+            <div class="control">
+                <a href="javascript:void(0)" class="qty-dec" role="button">
+                    <span class="icon-icon-minus"></span>
+                </a>
+                <?php
+                    $qtyValidators = $block->getQuantityValidators();
+                    $qtyValidators = !empty($qtyValidators) ? json_encode($qtyValidators) : '';
+                ?>
+                <input type="number"
+                   name="qty"
+                   id="qty"
+                   maxlength="12"
+                   value="<?= /* @escapeNotVerified */ $block->escapeHtml($block->getProductDefaultQty()) * 1 ?>"
+                   title="<?= /* @escapeNotVerified */ $block->escapeHtml(__('Qty')) ?>" class="input-text qty"
+                   data-validate="<?= $block->escapeHtml($qtyValidators) ?>"
+                />
+                <a href="javascript:void(0)" class="qty-inc" role="button">
+                    <span class="icon-icon-plus"></span>
+                </a>
+            </div>
+        </div>
+        <?php endif; ?>
+        <div class="actions">
+            <button type="submit"
+                    title="<?= /* @escapeNotVerified */ $block->escapeHtml($buttonTitle) ?>"
+                    class="action primary tocart"
+                    id="product-addtocart-button">
+                <span class="icon-icon-add-to-cart"></span>
+                <span><?= /* @escapeNotVerified */ $block->escapeHtml($buttonTitle) ?></span>
+            </button>
+            <!-- START CODE FOE WISTLIST BUTTON -->
+            <a href="#" class="action towishlist primary cls_wishlist
+            wishlist-listing-<?= /* @noEscape */ $block->getProduct()->getId()?>"
+            title="<?= $block->escapeHtml(__('Add to Wish List')); ?>"
+            aria-label="<?= $block->escapeHtml(__('Add To Wish List')); ?>"
+            data-product='<?= /* @noEscape */ $block->getAddToWishlistParams($_product); ?>'
+            data-action="add-to-wishlist"
+            data-url="<?php echo $this->getUrl('ajaxwishlist/index/add/'); ?>" role="button">
+                <span class="icon-icon-whishlist"></span>
+                <span><?= /* @escapeNotVerified */ $block->escapeHtml(__('Add To Wish List')) ?></span>
+            </a>
+
+            <!-- END CODE FOE WISTLIST BUTTON -->
+            <?= $block->getChildHtml('', true) ?>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
+<div class="clsspecialreqpop">
+    <div id="wishlist-modal-addcontent">
+        <div class='wishlist-success-div' >
+            <div id="wishlist-success">
+                <div class="modal-content">
+                    <p id="wishlist-result-message"></p>
+                    <div class="actions-toolbar wishlist-result-toolbar">
+                        <div class="primary">
+                            <button data-url="" type="button" title="<?= $block->escapeHtmlAttr(__('Wishlist')) ?>" class="action wishlist-redirect submit primary">
+                                <span><?= $block->escapeHtml(__('Wishlist')) ?></span>
+                            </button>
+                        </div>
+                        <div class="primary">
+                            <button type="button" title="<?= $block->escapeHtmlAttr(__('Continue Shopping')) ?>" class="action wishlist-continue primary">
+                                <span><?= $block->escapeHtml(__('Continue Shopping')) ?></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/x-magento-init">
+    {
+        "#product_addtocart_form": {
+            "Magento_Catalog/js/validate-product": {}
+        },
+        "*": {
+            "productSizePopup": {}
+        }
+    }
+</script>
+<?php if (!$block->isRedirectToCartEnabled()): ?>
+    <script type="text/x-magento-init">
+        {
+            "*": {
+                "Magento_Catalog/js/product/view/wishlist-modal": {}
+            }
+        }
+    </script>
+<?php endif; ?>

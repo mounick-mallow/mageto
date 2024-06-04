@@ -1,0 +1,30 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common =true) {
+    .empty-return-list {
+        &:before {
+            font-weight: @font-weight__bold;
+        }
+
+        .lib-icon-font(
+            @_icon-font-content: @order-return-list-icon-font,
+            @_icon-font-size: @order-return-list-icon-size,
+            @_icon-font-line-height: @order-return-list-icon-lineheight,
+            @_icon-font-color: @custom__color-black
+        );
+    }
+
+    .orderreturn-customer-orderslist {
+        .orders-request-modal {
+            .orders-recent {
+                .orders-recent-items {
+                    .action.view {
+                        padding: 13px @indent__m;
+                    }
+                }
+            }
+        }
+    }
+}

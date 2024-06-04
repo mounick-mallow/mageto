@@ -1,0 +1,26 @@
+& when (@media-common = true) {
+    .owl-theme {
+        .owl-controls {
+            .owl-nav {
+                [class*='owl-'] {
+                    background-color: @theme__secondary--color-50;
+                    color: @custom__color-black;
+                    position: absolute;
+
+                    .icon-icon-right,
+                    .icon-icon-left {
+                        color: @custom__color-black;
+                    }
+                }
+
+                .owl-next {
+                    right: 0;
+                }
+
+                .owl-prev {
+                    left: 0;
+                }
+            }
+        }
+    }
+}

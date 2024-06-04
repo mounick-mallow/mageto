@@ -1,0 +1,136 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .cms-page-view {
+        .changetheworld {
+            .container {
+                padding: 0;
+
+                h4 {
+                    margin: @indent__xs 0 60px 0;
+                    text-align: center;
+                }
+
+                .topimgs {
+                    ul {
+                        list-style: none;
+                        padding: 0;
+
+                        li {
+                            .lib-vendor-prefix-display(flex);
+                            margin-bottom: @indent__xl;
+
+                            .img-content {
+                                align-items: center;
+                                .lib-vendor-prefix-display(flex);
+                                justify-content: center;
+                            }
+
+                            &.text-block {
+                                flex-direction: column;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        p:last-child {
+            margin-bottom: 0;
+        }
+
+        // Change The World
+        .cls_changetheworld_box {
+            p:last-child {
+                margin-bottom: 0;
+            }
+        }
+
+        //About us
+        .accordion_body {
+            .md-list-style {
+                margin-bottom: 0;
+                .md-list-item {
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+//
+//  Desktop
+//  ---------------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum ='min')
+    and
+    (@break =@screen__m) {
+    .cms-page-view {
+        .changetheworld {
+            .container {
+                .topimgs {
+                    ul {
+                        li {
+                            flex-direction: row;
+
+                            .imgbox {
+                                flex: 50%;
+                            }
+
+                            .img-content {
+                                flex: 50%;
+                                flex-direction: column;
+                                padding: 0 @indent__l;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  ---------------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum ='max')
+    and
+    (@break =@screen__m) {
+    .cms-page-view {
+        .changetheworld {
+            .container {
+                .topimgs {
+                    ul {
+                        li {
+                            flex-direction: column;
+
+                            &.column-reverse {
+                                flex-direction: column-reverse;
+                            }
+
+                            .imgbox {
+                                flex: 100%;
+                            }
+
+                            .img-content {
+                                flex: 100%;
+                                padding: 0;
+                                margin-top: @indent__l;
+                                flex-direction: column;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

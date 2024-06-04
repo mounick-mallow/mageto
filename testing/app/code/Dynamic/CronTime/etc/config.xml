@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Dynamic_CronTime
+ *
+ * @copyright   Copyright (c) 2023 IdeaInYou
+ * @author      RuslanP <ruslan.p@ideainyou.com>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <setting>
+            <general_cron_time_amasty>
+                <frequency_cron_time_amasty>
+                    0 2 * * 1
+                </frequency_cron_time_amasty>
+            </general_cron_time_amasty>
+        </setting>
+        <setting>
+            <general_cron_time_amasty_cronschedule>
+                <frequency_cron_time_amasty_cronschedule>
+                    5 2 * * 1
+                </frequency_cron_time_amasty_cronschedule>
+            </general_cron_time_amasty_cronschedule>
+        </setting>
+        <setting>
+            <general_cron_time_amasty_sorting>
+                <frequency_cron_time_amasty_sorting>
+                    10 2 * * 1
+                </frequency_cron_time_amasty_sorting>
+            </general_cron_time_amasty_sorting>
+        </setting>
+        <setting>
+            <general_cron_time_bss>
+                <frequency_cron_time_bss>
+                    15 2 * * 1
+                </frequency_cron_time_bss>
+            </general_cron_time_bss>
+        </setting>
+        <setting>
+            <general_cron_time_firasbrands>
+                <frequency_cron_time_firasbrands>
+                    20 2 * * 1
+                </frequency_cron_time_firasbrands>
+            </general_cron_time_firasbrands>
+        </setting>
+    </default>
+</config>

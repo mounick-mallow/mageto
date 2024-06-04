@@ -1,0 +1,54 @@
+<?php
+	$product = $block->getProduct();
+	$product_id = @$product->getId();
+	$product_sku = @$product->getSku();
+
+	?>
+	<div class="marktmsg">
+		<h3><?= /* @noEscape */ __('Why Veralusso') ?></h3>
+		<ul>
+			<li>
+				<div class="icon icon1"></div>
+				<h4><?= /* @noEscape */ __('Shop over') ?></h4>
+				<p><?= /* @noEscape */ __('100,000 styles.') ?></p>
+			</li>
+			<li>
+				<div class="icon icon2"></div>
+				<h4><?= /* @noEscape */ __('4.7/5 stars and') ?></h4>
+				<p><?= /* @noEscape */ __('25,000+ reviews') ?></p>
+			</li>
+			<li>
+				<div class="icon icon3"></div>
+				<h4><?= /* @noEscape */ __('Free global returns') ?></h4>
+				<p><?= /* @noEscape */ __('and pick up') ?> </p>
+			</li>
+			<!--<li>
+				<a href="javascript:;" id="pricecompare" class="pricecompare_a">
+					<div class="icon icon4"></div>
+					<h4><?= /* @noEscape */ __('Price Compare') ?></h4>
+					<p><?= /* @noEscape */ __('To Get the Best Price') ?></p>
+				</a>
+			</li> -->
+			<li class="info_contact">
+				<div class="contact_link" href="#" title="Do you need some help? Contact us">
+					<span class="text"><h4><?= /* @noEscape */ __('VERA LUSSO ASSIST') ?></h4>
+						<a href="<?= $block->escapeUrl($this->getUrl()) ?>contact-us"><span class="icon"></span></a>
+						&nbsp;&nbsp;<span class="iconwhatsup"></span>
+						&nbsp;&nbsp;<span class="iconchat"></span>
+					</span>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<div class='clsmsgsuccessbox' >
+		<div id="myModalPriceCompare" class="modal">
+		  	<div class="modal-content">
+		    	<span id="pricecompareClose" class="close">&times;</span>
+		    	<div class="priceCompareModelConent" id="priceCompareModelConent">
+		    		<div class='datanotfoundprice'>Data not found.</div>
+		    	</div>
+		  	</div>
+		</div>
+	</div>
+
+

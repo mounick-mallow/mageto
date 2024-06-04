@@ -1,0 +1,21 @@
+<div class="clsspecialreqpop" id="subscribe-popup">
+    <div id="subscribe-success-popup modal-content">
+        <p id="subscribe-result-message-popup"></p>
+        <div class="actions-toolbar subscribe-result-toolbar">
+            <div class="primary">
+                <button type="button" title="<?= $block->escapeHtmlAttr(__('Continue Shopping')) ?>"
+                        class="action subscribe-continue primary">
+                    <span><?= $block->escapeHtml(__('Continue Shopping')) ?></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "LuxuryUnlimited_NewsLetterSubscription/js/subscribe": {
+            }
+        }
+    }
+</script>

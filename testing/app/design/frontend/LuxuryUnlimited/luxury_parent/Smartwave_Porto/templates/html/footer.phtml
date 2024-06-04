@@ -1,0 +1,193 @@
+<?php
+$_helper = $this->helper('Smartwave\Porto\Helper\Cssconfig');
+$porto_helper = $this->helper('Smartwave\Porto\Helper\Data');
+?>
+
+
+<a href="javascript:void(0)" id="totop" role="button" aria-label="Back to top"><em class="porto-icon-up-open"></em></a>
+
+
+<?php //Include Google fonts character subsets (such as extended latin, cyrillic)
+    $d = $porto_helper->getConfig('porto_design');
+    $charSubset = "";
+    if (isset($d['font']['char_latin_ext']) && $d['font']['char_latin_ext']==1 )
+        $charSubset .= ',latin-ext';
+    if (isset($d['font']['char_subset']) && $d['font']['char_subset'])
+        $charSubset .= ','.$d['font']['char_subset'];
+    $font_sizes = "%3A300%2C300italic%2C400%2C400italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic";
+?>
+
+<?php $header_type = $porto_helper->getConfig('porto_settings/header/header_type'); ?>
+<meta name="google-site-verification" content="HUBgU1YPnPcKrcT3JjwiKrMucK0yZR3UoMM9-stTRmM" />
+
+<!--link type="text/css" media="all" href="<?= $block->escapeUrl($_helper->getSettingsFile()) ?>" rel="preload" as="style" onload="this.rel='stylesheet'" -->
+<script type="text/javascript">
+var porto_config = {
+    paths: {
+        'parallax': 'js/jquery.parallax.min',
+        'owlcarousel': 'owl.carousel/owl.carousel',
+        'owlcarousel_thumbs': 'owl.carousel/owl.carousel2.thumbs',
+        'imagesloaded': 'Smartwave_Porto/js/imagesloaded',
+        'packery': 'Smartwave_Porto/js/packery.pkgd'
+    },
+    shim: {
+        'parallax': {
+          deps: ['jquery']
+        },
+        'owlcarousel': {
+          deps: ['jquery']
+        },
+        'owlcarousel_thumbs': {
+          deps: ['jquery','owlcarousel']
+        },
+        'packery': {
+          deps: ['jquery','imagesloaded']
+        },
+    }
+};
+
+require.config(porto_config);
+</script>
+<script type="text/javascript">
+require([
+    'jquery'
+], function ($) {
+    $(document).ready(function(){
+        $(".drop-menu > a").off("click").on("click", function(){
+            if($(this).parent().children(".nav-sections").hasClass("visible"))
+                $(this).parent().children(".nav-sections").removeClass("visible");
+            else
+                $(this).parent().children(".nav-sections").addClass("visible")
+        });
+    });
+<?php if ($porto_helper->getConfig('porto_settings/header/sticky_header')): ?>
+    var scrolled = false;
+    $(window).scroll(function(){
+        if(!$('.page-header').hasClass('type10')) {
+            if($(window).width()>=768){
+                if(140<$(window).scrollTop() && !scrolled){
+                    $('.page-header').addClass("sticky-header");
+                    scrolled = true;
+                    if(!$(".page-header").hasClass("type12")) {
+                        $('.page-header .minicart-wrapper').after('<div class="minicart-place hide"></div>');
+
+                        if($(".page-header").hasClass("type2"))
+                            $('.page-header .navigation').append($('header.page-header.type2 a.action.my-wishlist').detach());
+
+                        var minicart = $('.page-header .minicart-wrapper').detach();
+                        if($(".page-header").hasClass("type8"))
+                            $('.page-header .menu-wrapper').append(minicart);
+                        else
+                            $('.page-header .navigation').append(minicart);
+
+                        <?php if ($porto_helper->getConfig('porto_settings/header/sticky_header_logo')): ?>
+                        var logo_image = $('<div>').append($('.page-header .header > .logo').clone()).html();
+                        if($(".page-header").hasClass("type8"))
+                            $('.page-header .menu-wrapper').prepend('<div class="sticky-logo">'+logo_image+'</div>');
+                        else
+                            $('.page-header .navigation').prepend('<div class="sticky-logo">'+logo_image+'</div>');
+                        <?php endif; ?>
+                    } else {
+                        <?php if ($porto_helper->getConfig('porto_settings/header/sticky_header_logo')): ?>
+                        $('.page-header.type12 .logo').append('<span class="sticky-logo"><img src="" alt=""/></span>');
+                        $('.page-header .logo > img').addClass("hide");
+                        <?php endif; ?>
+                    }
+                    <?php if ($porto_helper->getConfig('porto_settings/header/sticky_header_logo')): ?>
+                    <?php
+                    if($logo_src = $porto_helper->getConfig('porto_settings/header/sticky_header_logo_src')){
+                        $folderName = \Smartwave\Porto\Model\Config\Backend\Image\Stickylogo::UPLOAD_DIR;
+                        $path = $folderName . '/' . $logo_src;
+                        $imageUrl = $porto_helper->getBaseUrl() . $path;
+                    ?>
+                    $(".sticky-logo img").attr("src","<?= $block->escapeUrl($imageUrl) ?>");
+                    <?php
+                    }
+                    ?>
+                    <?php endif; ?>
+                }
+                if(140>=$(window).scrollTop() && scrolled){
+                    $('.page-header').removeClass("sticky-header");
+                    scrolled = false;
+                    if(!$(".page-header").hasClass("type12")) {
+                        var minicart;
+                        if($(".page-header").hasClass("type8"))
+                            minicart = $('.page-header .menu-wrapper .minicart-wrapper').detach();
+                        else
+                            minicart = $('.page-header .navigation .minicart-wrapper').detach();
+                        $('.minicart-place').after(minicart);
+                        $('.minicart-place').remove();
+                        if($(".page-header").hasClass("type2"))
+                            $('.page-header .block.block-search').before($('.page-header .navigation a.action.my-wishlist').detach());
+                        $('.page-header .minicart-wrapper-moved').addClass("minicart-wrapper").removeClass("minicart-wrapper-moved").removeClass("hide");
+                    }
+                    <?php if ($porto_helper->getConfig('porto_settings/header/sticky_header_logo')): ?>
+                    if($(".page-header").hasClass("type8"))
+                        $('.page-header .menu-wrapper > .sticky-logo').remove();
+                    else if($(".page-header").hasClass("type12")) {
+                        $('.page-header .sticky-logo').remove();
+                        $('.page-header .logo > img').removeClass("hide");;
+                    } else
+                        $('.page-header .navigation > .sticky-logo').remove();
+                    <?php endif; ?>
+                }
+            }
+        }
+    });
+<?php endif; ?>
+});
+</script>
+
+<?php if($porto_helper->getConfig('porto_settings/general/smartlayers')): ?>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-58378513496862c5"></script>
+<?php endif; ?>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-195925994-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-195925994-1');
+</script>
+
+<!-- schema for organisation -->
+<script type="application/ld+json">
+ {
+  "@context":"http://schema.org",
+  "@type":"Organization",
+  "url":"https://www.brands-labels.com/",
+  "name":"Brands & Labels",
+  "logo":"https://www.brands-labels.com/media/logo/default/logo.png",
+  "contactPoint":[
+   {"@type":"ContactPoint",
+   "telephone":"+91-123-786-000",
+   "contactType":"customer service"}
+  ],
+  "address":{
+   "addressCountry":"United Arab Emirates",
+   "postalCode":"145678",
+   "addressRegion":"Dubai",
+   "addressLocality":"Dubai"}
+ }
+</script>
+<!-- schema end -->
+
+<!-- schema for website with search -->
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "WebSite",
+  "url":"https://www.brands-labels.com/",
+  "potentialAction":
+   {
+   "@type": "SearchAction",
+   "target": "https://www.brands-labels.com/catalogsearch/result/?q={search_term_string}",
+   "query": "required",
+   "query-input":"required name=search_term_string"
+   }
+ }
+</script>
+<!-- end -->
+

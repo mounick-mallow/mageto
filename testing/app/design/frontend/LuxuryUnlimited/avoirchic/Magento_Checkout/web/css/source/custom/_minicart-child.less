@@ -1,0 +1,213 @@
+& when (@media-common = true) {
+    .page-wrapper {
+        .minicart-wrapper {
+            .block-minicart {
+                padding: 20px;
+                color: @theme__primary--color-400;
+
+                .block-title span,
+                .product-item-details,
+                .subtotal {
+                    color: @theme__primary--color-400;
+                }
+
+                .product-item-details .product-item-name a {
+                    color: @theme__primary--color-500;
+                }
+
+                .block-title {
+                    margin: 0;
+                }
+
+                .subtitle.empty {
+                    padding: @indent__l 0 14px;
+                }
+            }
+
+            .minicart-items-wrapper {
+                overflow: visible;
+            }
+
+            .block-content {
+                .actions {
+                    .secondary,
+                    .primary {
+                        .action {
+                            &.checkout,
+                            &.viewcart,
+                            &:hover {
+                                background-color: @color-white;
+                                border: none;
+                                color: @theme__primary--color-800;
+                                border-radius: 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .minicart-items {
+            .product-item {
+                padding: @indent__s 0 0 0;
+            }
+
+            .product-item-details {
+                padding: 0 @indent__m 0 72px;
+                border-bottom: 1px solid @custom__color-gray5;
+
+                .product-item-name {
+                    margin: 0 0 @indent__xxs;
+                    .lib-font-size(14);
+                }
+
+                .product-item-pricing {
+                    margin: 0;
+                }
+
+                .action {
+                    border: none;
+
+                    &.delete {
+                        &::before {
+                            content: @icon-close;
+                        }
+                    }
+                }
+
+                .price {
+                    color: @theme__primary--color-500;
+                    .lib-font-size(16);
+                }
+            }
+
+            .product {
+                .product-image-container {
+                    width: 60px !important; // Magento Core HTML template has inline style which overrides this value
+
+                    .product-image-photo {
+                        margin: 0;
+                        border-radius: @indent__xs;
+                    }
+                }
+
+                .options {
+                    dl {
+                        margin: 0;
+                    }
+
+                    .values {
+                        &:not(:last-child):after {
+                            content: ' -';
+                        }
+
+                        display: inline;
+                        .lib-font-size(13);
+                    }
+                }
+            }
+
+            .details-qty {
+                .label {
+                    text-transform: uppercase;
+                    border-radius: 0;
+
+                    &::after {
+                        content: '';
+                    }
+                }
+            }
+        }
+
+        .minicart-donation {
+            .firas-donation {
+                .lib-vendor-prefix-display(flex);
+                .lib-css(flex-direction, column, @_prefix: 1);
+                padding: 0;
+                background-color: @color-white;
+
+                .firas-donation-title {
+                    margin: 0;
+                    font-size: @font-size__s;
+                    text-align: center;
+                }
+
+                .firas-donation-product-list {
+                    .firas-donation-product {
+                        width: 100%;
+                        .lib-vendor-prefix-display(flex);
+                        .lib-css(flex-direction, row, @_prefix: 1);
+                        padding: 0;
+                        box-shadow: none;
+                    }
+
+                    .donateRight {
+                        font-size: @font-size__s;
+                        padding: 0 0 0 20px;
+
+                        .donateTxt {
+                            text-decoration: underline;
+                            color: @theme__primary--color-800;
+                        }
+
+                        .donateBtn {
+                            display: none;
+                        }
+
+                        .donate-sort-info {
+                            margin: 0;
+                        }
+                    }
+
+                    .firas-donation-image-wrapper {
+                        display: inline;
+                        padding: 0;
+
+                        .firas-donation-product-image {
+                            position: relative;
+                            border-radius: @indent__xs;
+                            width: 76px;
+                            top: 44%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    .page-wrapper {
+        .minicart-wrapper {
+            .block-minicart {
+                width: 420px;
+                right: -50px;
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__s) {
+    .page-wrapper {
+        .page-header .header {
+            .minicart-wrapper {
+                .block-minicart {
+                    width: 300px;
+                    right: -50px;
+                }
+            }
+        }
+    }
+}

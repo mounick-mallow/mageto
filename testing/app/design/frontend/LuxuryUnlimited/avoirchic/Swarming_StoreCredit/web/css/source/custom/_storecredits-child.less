@@ -1,0 +1,93 @@
+//
+//  Common
+//  ---------------------------------------------
+
+& when (@media-common = true) {
+    body.swarming_credits-index-index {
+        div.empty-store-credit {
+            text-align: @storecredit-align-center;
+            display: block !important; // need to override parent style which can't be overridden by specificity
+
+            .lib-icon-font(
+                @_icon-font-content: 'Opps...!',
+                @_icon-font: @icon-font-family,
+                @_icon-font-size: 50px,
+                @_icon-font-line-height: normal,
+                @_icon-font-color: @custom__color-black
+            );
+
+            &:before {
+                display: block;
+                width: @storecredit-auto;
+                height: @storecredit-auto;
+                margin: 0 @storecredit-auto 22px;
+                font-weight: @font-weight__bold;
+            }
+        }
+    }
+
+    #order-track-help {
+        padding: @indent__base;
+        text-align: @storecredit-align-center;
+    }
+}
+
+//
+//  Mobile
+//  ---------------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    body.swarming_credits-index-index {
+        .page-wrapper {
+            .columns {
+                .main {
+                    .store-credit-table-section {
+                        #my-swarming-credits-transaction-table.credit-table-data {
+                            tbody {
+                                tr {
+                                    border-radius: 5px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+//
+//  Desktop
+//  ---------------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__m) {
+    body.swarming_credits-index-index {
+        .page-wrapper {
+            .columns {
+                .main {
+                    .store-credit-table-section {
+                        border: 1px solid @custom__color-transparent-gray7;
+                        border-radius: @indent__base;
+                        background: @custom__background-color;
+                        min-width: fit-content;
+
+                        .credit-table-data thead {
+                            tr,
+                            th {
+                                background: transparent;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,331 @@
+// /**
+//  * Copyright © 2015 Magento. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+& when (@media-common =true) {
+    .block-dashboard-orders {
+        .block-title {
+            margin-bottom: @indent__l;
+        }
+    }
+
+    .orders-recent {
+        .orders-recent-items {
+            border: 2px solid @color-white-smoke;
+            display: block;
+            margin: 0 auto @indent__l;
+            padding: 24px @indent__l;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+
+            .orders-recent-details {
+                .lib-css(align-items, center, @_prefix: 1);
+                .lib-css(display, flex, @_prefix: 1);
+                .lib-css(flex-wrap, wrap, @_prefix: 1);
+                .lib-css(justify-content, space-between, @_prefix: 1);
+            }
+
+            .id {
+                border-bottom: 1px solid @color-white-smoke;
+                display: block;
+                margin-bottom: 24px;
+                padding: 0 0 12px;
+            }
+
+            .items {
+                margin-bottom: 20px;
+                width: 100%;
+
+                .item {
+                    .lib-css(display, flex, @_prefix: 1);
+                    padding: 0;
+                    margin-bottom: 16px;
+
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+
+                    .product-img {
+                        border: 2px solid @color-white-smoke;
+                        height: 60px;
+                        margin-right: @indent__l;
+                        overflow: hidden;
+                        width: 60px;
+
+                        img {
+                            height: 100%;
+                            width: 100%;
+                        }
+                    }
+                }
+
+                .product-info {
+                    width: ~'calc(100% - 90px)';
+
+                    .date {
+                        margin-bottom: 8px;
+                    }
+
+                    .product-name {
+                        margin: 0 0 4px;
+                    }
+
+                    .product-sku {
+                        margin: 0;
+                    }
+                }
+            }
+
+            .status {
+                p {
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+                }
+
+                .order-status {
+                    border: 0;
+                    margin-bottom: 6px;
+                    padding: 0;
+                    text-transform: capitalize;
+                }
+            }
+
+            .order-cancel {
+                &:first-child {
+                    margin-right: @indent__s;
+                }
+            }
+
+            .action {
+                height: 34px;
+
+                &.cancel,
+                &.return {
+                    .lib-button();
+                    text-align: center;
+                }
+            }
+        }
+    }
+
+    .sales-order-history {
+        &.layout-fullwidth.page-layout-2columns-left {
+            &.account {
+                .columns {
+                    .column.main {
+                        padding: 0;
+                    }
+                }
+            }
+        }
+    }
+
+    .cart-empty {
+        margin-bottom: @indent__l;
+
+        .no-page {
+            text-align: center;
+        }
+    }
+
+    .product-status-bar {
+        .lib-vendor-prefix-display(flex);
+        width: 100%;
+        margin: @indent__l;
+        padding: 0;
+
+        .status-item {
+            list-style-type: none;
+            float: left;
+            position: relative;
+            text-align: center;
+            width: 20%;
+
+            &.active::before {
+                content: @icon-success;
+                background-color: @track-order-status__active-stepbox-background;
+                color: @track-order-status__active-stepbox-color;
+            }
+
+            &:before {
+                width: 20px;
+                height: 20px;
+                content: '';
+                display: block;
+                text-align: center;
+                margin: 0 auto 3px auto;
+                position: relative;
+                z-index: 2;
+                font-family: @icon-font-family;
+                border-radius: 4px;
+                border: 2px solid @track-order-status__border-color;
+                background-color: @track-order-status__stepbox-background;
+            }
+
+            &:after {
+                width: 100%;
+                height: 2px;
+                content: '';
+                position: absolute;
+                top: 10px;
+                left: -50%;
+                z-index: 0;
+                background-color: @track-order-status__progress-bar-background;
+            }
+
+            &:first-child:after {
+                content: none;
+            }
+        }
+    }
+
+    .order-return-popup,
+    .item-can-return-popup {
+        .modal-content {
+            text-align: center;
+        }
+    }
+
+    .order-return-popup input[name='order-return-submit'],
+    .item-can-return-popup input[name='submit'] {
+        margin: @indent__base 0 0 0;
+        padding: @indent__xs @indent__base;
+        border: 1px solid @order-return-popup__border;
+        background: @order-return-popup__background;
+        border-radius: 50px;
+        color: @order-return-popup__color;
+        font-weight: @font-weight__bold;
+    }
+
+    .page-main {
+        .block-dashboard-orders {
+            padding-left: 0;
+
+            .orders-recent {
+                width: 100%;
+            }
+        }
+    }
+}
+
+//
+//    Mobile
+//--------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum ='max')
+    and
+    (@break =@screen__s) {
+    .orders-recent {
+        .orders-recent-items {
+            .orders-recent-details {
+                .col {
+                    width: 100%;
+                    margin-bottom: 16px;
+
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+                }
+
+                .items {
+                    .item {
+                        .lib-css(flex-direction, column, @_prefix: 1);
+
+                        .product-img {
+                            margin-bottom: 16px;
+                        }
+
+                        .product-info {
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    ul.product-status-bar {
+        .lib-css(flex-direction, column, @_prefix: 1);
+
+        .status-item {
+            &::before {
+                position: absolute;
+                margin: 0 0 0 -@indent__l;
+            }
+
+            &::after {
+                width: 2px;
+                height: 100%;
+                top: 20px;
+                left: -20px;
+            }
+
+            &:first-child:after {
+                content: '';
+            }
+
+            &:last-child:after {
+                content: none;
+            }
+        }
+    }
+
+    .page-main {
+        .block-dashboard-orders {
+            margin-top: @indent__m;
+        }
+    }
+}
+
+//
+//    Desktop
+//--------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum ='min')
+    and
+    (@break =@screen__l) {
+    .sales-order-history {
+        &.layout-fullwidth.page-layout-2columns-left {
+            &.account {
+                .columns {
+                    .column.main {
+                        padding: 0 0 0 @indent__l;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum ='min')
+    and
+    (@break =@screen__custom__xl) {
+    .orders-recent {
+        .orders-recent-items {
+            .orders-recent-details {
+                .lib-css(flex-wrap, nowrap, @_prefix: 1);
+
+                .col {
+                    &:last-child {
+                        padding-right: 0;
+                    }
+                }
+            }
+
+            .items {
+                max-width: 550px;
+                margin-bottom: 0;
+            }
+        }
+    }
+}

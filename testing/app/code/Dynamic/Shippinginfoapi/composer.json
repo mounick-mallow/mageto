@@ -1,0 +1,22 @@
+{
+    "name": "dynamic/module-shippinginfoapi",
+    "description": "Shipping info api",
+    "type": "magento2-module",
+    "license": "GPL-3.0",
+    "authors": [
+        {
+            "name": "Sanket",
+            "email": "sanketzadafiya01@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Dynamic\\Shippinginfoapi\\": ""
+        }
+    }
+}

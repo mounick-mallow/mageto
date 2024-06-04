@@ -1,0 +1,323 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    body.orderreturn-customer-orderslist.layout-fullwidth.page-layout-2columns-left.account {
+        .block-dashboard-orders {
+            .orders-recent .orders-recent-items {
+                .id {
+                    padding: @indent__s 15px;
+                }
+
+                .orders-recent-details {
+                    .lib-css(align-items, center, @_prefix: 1);
+                    .lib-css(display, flex, @_prefix: 1);
+                    .lib-css(flex-wrap, wrap, @_prefix: 1);
+                    .lib-css(justify-content, space-between, @_prefix: 1);
+
+                    .actions {
+                        display: inline-block;
+                    }
+                }
+            }
+        }
+    }
+
+    .orderreturn-customer-orderslist {
+        .block-dashboard-orders {
+            padding-left: 0;
+
+            .orders-recent .orders-recent-items .order-cancel:first-child {
+                margin-right: 0;
+            }
+        }
+
+        .orders-history {
+            margin-top: 0;
+            margin-bottom: @indent__base;
+
+            .table-order-items {
+                border: 1px solid @color-gray80;
+                border-radius: 10px;
+                padding: 0;
+                margin: 0;
+
+                .myreturns-table-row {
+                    .lib-css(display, flex, @_prefix: 1);
+                    .lib-css(justify-content, space-between, @_prefix: 1);
+                    .lib-css(align-items, center, @_prefix: 1);
+                    padding: 0 @indent__s;
+                    margin: 0;
+                }
+
+                .myreturns-table-header {
+                    .myreturns-table-col {
+                        .lib-font-size(14);
+                        .lib-line-height(22);
+                        font-weight: @font-weight__semibold;
+                        color: @color-gray20;
+                        padding: @indent__s 0;
+                        text-transform: capitalize;
+                        letter-spacing: 0;
+                    }
+                }
+
+                .myreturns-table-body {
+                    .myreturns-table-row {
+                        border-top: 1px solid @color-gray80;
+
+                        .myreturns-table-col {
+                            .lib-font-size(14);
+                            .lib-line-height(22);
+                            font-weight: @font-weight__regular;
+                            color: @color-gray52;
+                            padding: @indent__s 0;
+                            letter-spacing: 0;
+                            word-wrap: break-word;
+
+                            .myreturns-txt-title {
+                                display: none; /*  added display none to toggle the title content in mobile view */
+                            }
+
+                            .showticketnomessage {
+                                .lib-text-hide();
+                                line-height: 1;
+                                display: inline-block;
+
+                                &.icomoon-icon-chat::before {
+                                    content: @icon-ticket;
+                                    font-family: @icon-font-family;
+                                    .lib-font-size(20);
+                                    color: @color-gray40;
+                                    cursor: pointer;
+                                }
+                            }
+
+                            .ticket-status {
+                                .lib-font-size(12);
+                                .lib-css(display, flex, @_prefix: 1);
+                                .lib-css(justify-content, center, @_prefix: 1);
+                                .lib-css(align-items, center, @_prefix: 1);
+                                border: 1px solid @color-gray94;
+                                font-weight: @font-weight__semibold;
+                                letter-spacing: 0;
+                                text-align: center;
+                                padding: 4px 0 2px;
+                                width: 100px;
+                                max-width: 120px;
+                                background-color: @color-gray94;
+                                border-radius: 8px;
+
+                                &.pending {
+                                    border: 1px solid @theme__color__primary;
+                                    background: @theme__color__primary;
+                                    color: @color-white;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .returns_empty {
+                text-align: center;
+
+                .empty_icon {
+                    margin-bottom: 24px;
+
+                    .lib-icon-font(
+                        @_icon-font-content: @icon-return,
+                        @_icon-font: @icon-font-family,
+                        @_icon-font-size: @myticket-empty-icon__font-size,
+                        @_icon-font-line-height: @myticket-empty-icon__line-height,
+                        @_icon-font-color: @myticket-empty-icon__font-color,
+                        @_icon-font-text-hide: false,
+                        @_icon-font-position: before,
+                        @_icon-font-display: block
+                    );
+                }
+
+                p {
+                    .lib-font-size(@myticket-content-font-size);
+                    .lib-line-height(@myticket-content-line-height);
+                    font-weight: @myticket-content-font-weight;
+                    color: @myticket-content-color;
+                    text-align: center;
+                }
+            }
+
+            .returns_footer {
+                padding: @indent__m 0;
+                overflow: hidden;
+                float: right;
+
+                .clsspecialrequest {
+                    float: right;
+
+                    .action {
+                        border-radius: 12px;
+                        padding: 9px 18px;
+                    }
+                }
+            }
+
+            .help-modal,
+            .toolbar-amount,
+            .limiter {
+                display: none;
+            }
+        }
+
+        .orders-request-modal {
+            .orders-recent-items {
+                text-align: start;
+            }
+        }
+    }
+
+    .empty-return-list {
+        text-align: @order-return-list-align;
+        display: @order-return-list-show;
+
+        &:before {
+            display: @order-return-list-bef-show;
+            width: @order-return-list-bef-width;
+            height: @order-return-list-bef-height;
+            margin: @order-return-list-bef-margin;
+        }
+
+        p {
+            color: @order-return-list-bef-color;
+        }
+    }
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__s) {
+    .orderreturn-customer-returnlist {
+        .orders-history {
+            .myreturns-table-row {
+                .myreturns-table-col {
+                    &.order_id {
+                        width: 20%;
+                        min-width: 96px;
+                    }
+
+                    &.orderreturn_id {
+                        width: 11%;
+                        min-width: 105px;
+                    }
+
+                    &.created_at {
+                        width: 30%;
+                        min-width: 96px;
+                    }
+
+                    &.product_sku {
+                        width: 25%;
+                        min-width: 96px;
+                    }
+
+                    &.status {
+                        width: 11%;
+                        min-width: 110px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    .orderreturn-customer-orderslist {
+        .main {
+            .orders-history {
+                margin-top: @indent__m;
+            }
+        }
+    }
+}
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__s) {
+    .orderreturn-customer-orderslist {
+        .main {
+            .orders-history {
+                .table-order-items {
+                    .myreturns-table-header {
+                        display: none; /*  added display none to toggle the title content in mobile view */
+                    }
+
+                    .myreturns-table-body {
+                        .myreturns-table-row {
+                            display: block;
+
+                            &:first-child {
+                                border-top: 0;
+                            }
+
+                            .myreturns-table-col {
+                                .lib-css(display, flex, @_prefix: 1);
+                                .lib-css(align-items, center, @_prefix: 1);
+                                padding: 0;
+
+                                .myreturns-txt-title {
+                                    display: block;
+                                    width: 42%;
+                                    color: @color-gray20;
+                                    .lib-font-size(14);
+                                    .lib-line-height(22);
+                                    font-weight: @font-weight__semibold;
+                                    letter-spacing: 0;
+                                    text-transform: capitalize;
+                                    padding: 15px @indent__s;
+                                }
+
+                                .showticketnomessage {
+                                    .lib-text-hide();
+                                    line-height: 1;
+                                    display: inline-block;
+
+                                    &.icomoon-icon-chat::before {
+                                        content: @icon-ticket;
+                                        font-family: @icon-font-family;
+                                        .lib-font-size(20);
+                                        color: @color-gray40;
+                                        cursor: pointer;
+                                    }
+                                }
+
+                                .myreturns-txt-cnt {
+                                    width: 58%;
+                                    padding: 15px @indent__s;
+
+                                    &.ticket-status {
+                                        padding: 4px 0 2px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

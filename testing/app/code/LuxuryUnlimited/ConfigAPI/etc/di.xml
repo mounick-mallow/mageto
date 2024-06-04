@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="LuxuryUnlimited\ConfigAPI\Api\StoreConfigurationInterface" type="LuxuryUnlimited\ConfigAPI\Model\StoreConfiguration" />
+    <preference for="LuxuryUnlimited\ConfigAPI\Api\Data\ConfigItemInterface" type="LuxuryUnlimited\ConfigAPI\Model\Data\ConfigItem" />
+    <preference for="LuxuryUnlimited\ConfigAPI\Api\Data\ConfigGetItemInterface" type="LuxuryUnlimited\ConfigAPI\Model\Data\ConfigGetItem" />
+</config>

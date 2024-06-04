@@ -1,0 +1,75 @@
+& when (@media-common =true) {
+    .my-account-coupons {
+        table {
+            border: @my-coupon-table-border-width solid
+                @my-coupon-table-border-color;
+            tr {
+                th {
+                    border-bottom: @my-coupon-border-table;
+                }
+            }
+            tr {
+                td {
+                    border-top: @my-coupon-border-table;
+                    &.col {
+                        &.actions {
+                            a.action.primary {
+                                .lib-button();
+                                background: @theme__primary--500;
+                                color: @custom__color-white;
+                                border-radius: @my-coupon-table-border-radius;
+                                padding: @indent__xs @indent__s;
+                                padding: 8px @indent__m;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .couponlist-coupon-index {
+        .no-coupons {
+            .empty_icon {
+                .lib-icon-font(
+                    @_icon-font-content: 'Opps...!',
+                    @_icon-font: @icon-font-family,
+                    @_icon-font-size:  50px,
+                    @_icon-font-line-height: normal,
+                    @_icon-font-color: @theme__primary--500,
+                    @_icon-font-text-hide: false,
+                    @_icon-font-position: before,
+                    @_icon-font-display: block
+                );
+            }
+
+            p {
+                &.empty_txt {
+                    color: @store-credit-header-color;
+                }
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    .my-account-coupons.table-wrapper {
+        .data.table.table-coupon-items {
+            tbody {
+                > tr {
+                    > td {
+                        &.col {
+                            &.actions {
+                                text-align: left;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

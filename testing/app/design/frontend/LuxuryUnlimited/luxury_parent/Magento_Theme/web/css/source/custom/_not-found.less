@@ -1,0 +1,47 @@
+//
+//  Common
+//  ---------------------------------------------
+
+& when (@media-common = true) {
+    .no-page {
+        padding-top: @indent__l;
+
+        h3 {
+            margin: @indent__s 0;
+        }
+
+        .re-result-desc {
+            margin: @indent__s 0;
+        }
+
+        .re-result-btns {
+            .lib-vendor-prefix-display(flex);
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+    }
+
+    .cms-noroute-index {
+        .column.main h1 {
+            color: @custom__color-black;
+            margin-bottom: @indent__base;
+            font-weight: @font-weight__bold;
+
+            .porto-icon-doc {
+                opacity: 0;
+                width: 0;
+            }
+        }
+
+        .column.main p {
+            font-weight: @font-weight__semibold;
+            max-width: 500px;
+            margin: @indent__s auto;
+        }
+
+        .fieldset > .fields {
+            gap: 15px;
+        }
+    }
+}

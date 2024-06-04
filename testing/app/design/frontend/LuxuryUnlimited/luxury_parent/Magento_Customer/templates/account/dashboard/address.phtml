@@ -1,0 +1,50 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \Magento\Customer\Block\Account\Dashboard\Address $block */
+?>
+
+<div class="block block-box-element block-dashboard-addresses">
+    <div class="block-title">
+        <strong><?= $block->escapeHtml(__('Address Book')) ?></strong>
+        <a class="action edit" href="<?= $block->escapeUrl($block->getAddressBookUrl()) ?>"><span><?= $block->escapeHtml(__('Manage Addresses')) ?></span></a>
+    </div>
+    <div class="box-widget">
+        <div class="box box-billing-address">
+            <div class="box-title-top-section">
+                <strong class="box-title">
+                    <input type="radio" id="billing_add" name="address" value="billing_add">
+                    <label for="billing_add"><?= $block->escapeHtml(__('Default Billing Address')) ?></label>
+                </strong>
+            </div>
+            <div class="box-content">
+                <address>
+                    <?= $block->getPrimaryBillingAddressHtml() ?>
+                </address>
+            </div>
+            <div class="box-actions">
+                <a class="action edit" href="<?= $block->escapeUrl($block->getPrimaryBillingAddressEditUrl()) ?>" data-ui-id="default-billing-edit-link"><span><?= $block->escapeHtml(__('Edit address')) ?></span></a>
+                <a class="action delete" href="<?= $block->escapeUrl($block->getPrimaryBillingAddressEditUrl()) ?>" data-ui-id="default-billing-edit-link"><span><?= $block->escapeHtml(__('Delete')) ?></span></a>
+            </div>
+        </div>
+        <div class="box box-billing-address">
+            <div class="box-title-top-section">
+                <strong class="box-title">
+                    <input type="radio" id="shipping_add" name="address" value="shipping_add">
+                    <label for="shipping_add"><?= $block->escapeHtml(__('Default Shipping Address')) ?></label>
+                </strong>
+            </div>
+            <div class="box-content">
+                <address>
+                    <?= $block->getPrimaryShippingAddressHtml() ?>
+                </address>
+            </div>
+            <div class="box-actions">
+                <a class="action edit add_address" href="<?= $block->escapeUrl($block->getPrimaryShippingAddressEditUrl()) ?>" data-ui-id="default-shipping-edit-link"><span><?= $block->escapeHtml(__('Add Address')) ?></span></a>
+            </div>
+        </div>
+    </div>
+</div>

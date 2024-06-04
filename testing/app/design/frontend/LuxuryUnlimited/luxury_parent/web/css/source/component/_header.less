@@ -1,0 +1,262 @@
+// /**
+//  * Copyright © Magento, Inc. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .page-header {
+        margin: @header__margin;
+
+        .panel {
+            &.wrapper {
+                background-color: @header-panel__background-color;
+                .lib-font-size(@header_wrapper-font-size);
+                .lib-line-height(@header_wrapper-font-line-hight);
+                color: @header-panel__text-color;
+                margin-bottom: @header_wrapper-gap-bottom;
+
+                a {
+                    color: @header-panel__text-color;
+
+                    &:hover {
+                        color: @link__hover__color;
+                    }
+                }
+            }
+
+            &.header {
+                padding-top: 19px;
+                padding-bottom: 19px;
+            }
+        }
+
+        .header {
+            &.content {
+                &::before,
+                &::after {
+                    .lib-hide-content();
+                }
+            }
+        }
+
+        .customer-account-link {
+            .customer-account-text {
+                &:extend(.abs-visually-hidden all);
+            }
+        }
+
+        .content-right {
+            .lib-vendor-prefix-display();
+            .lib-vendor-box-align (center);
+            .lib-css(justify-content, flex-end, @_prefix: 1);
+            .lib-css(gap, @indent__xs @indent__s, @_prefix: 1);
+        }
+
+        .minicart-wrapper {
+            .action.showcart {
+                .counter.qty {
+                    width: 4px;
+                    height: 4px;
+                    background-color: @color-sky-blue1;
+                    border-radius: 50%;
+                    margin: 0;
+                    top: 0;
+                    right: 0;
+                    padding: 0;
+                    left: unset;
+                    min-width: unset;
+                }
+            }
+        }
+    }
+
+    .action.primary,
+    .action {
+        span {
+            display: inline-block;
+            padding-top: 3px;
+        }
+    }
+}
+
+//
+//    Mobile
+//--------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    .page-header {
+        .header {
+            &.content {
+                .lib-css(display, flex, @_prefix: 1);
+                .lib-css(align-items, center, @_prefix: 1);
+                .lib-css(justify-content, space-between, @_prefix: 1);
+
+                .logo {
+                    height: auto;
+
+                    img {
+                        height: auto;
+                    }
+                }
+
+                .minicart-wrapper {
+                    margin: 0;
+                }
+
+                .top-panel {
+                    &::after {
+                        .lib-hide-content();
+                    }
+                }
+            }
+
+            .panel {
+                &.header {
+                    padding: 0;
+                    position: static;
+
+                    .top-panel {
+                        .top-links-area {
+                            .lib-hide-content();
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when(@extremum = 'max')
+    and
+    (@break = @screen__xs) {
+    .page-header {
+        .header.content {
+            .block-search {
+                .searchsuite-autocomplete {
+                    max-width: unset;
+                }
+            }
+        }
+    }
+}
+
+//
+//    Desktop
+//--------------------------------------
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__m) {
+    .section-items {
+        .section-item-title {
+            .lib-hide-content();
+        }
+    }
+
+    .page-header {
+        background-color: @header-desktop__background-color;
+        margin: @navigation-desktop__margin;
+
+        .header {
+            &.panel,
+            &.content {
+                position: static;
+                .lib-css(display, grid, @_prefix: 1);
+                .lib-css(grid-template-columns, auto auto auto, @_prefix: 1);
+                .lib-css(align-items, center, @_prefix: 1);
+                .lib-css(justify-content, space-between, @_prefix: 1);
+                .lib-css(gap, 15px 15px, @_prefix: 1);
+            }
+        }
+        .panel {
+            &.header {
+                .block-search {
+                    margin: 0;
+                    position: static;
+
+                    .label {
+                        .lib-hide-content();
+                    }
+
+                    .block-content {
+                        margin: 0;
+                        visibility: hidden;
+                        opacity: 0;
+                        position: absolute;
+                        right: 0;
+                        top: 100%;
+                        margin-top: 20px;
+                    }
+
+                    &.show {
+                        .block-content {
+                            visibility: visible;
+                            opacity: 1;
+                        }
+                    }
+
+                    #search_mini_form {
+                        .actions {
+                            .action.search {
+                                height: @indent__xl;
+                                border: none;
+                            }
+                        }
+                    }
+                }
+
+                .search-area {
+                    position: static;
+                    .lib-css(display, flex, @_prefix: 1);
+                    .lib-css(justify-content, center, @_prefix: 1);
+                    .lib-css(align-items, center, @_prefix: 1);
+                    margin-top: @indent__m;
+
+                    .block-search {
+                        right: 0;
+                        max-width: unset;
+                        width: unset;
+                    }
+                }
+                .top-links-area {
+                    .customer_logged_in {
+                        ul {
+                            position: absolute;
+                            right: 0;
+                            width: max-content;
+                            background-color: rgba(250, 250, 250, 0.9);
+                            backdrop-filter: @menu-bg-blur-index;
+                            padding: 15px 20px;
+                            top: @indent__xl;
+
+                            li {
+                                border: none;
+
+                                &:not(:last-child) {
+                                    margin-bottom: 15px;
+                                }
+
+                                a {
+                                    color: @color-blue1;
+                                    .lib-font-size(16);
+                                    line-height: 16px;
+                                    font-family: @custom-primary-font-family;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

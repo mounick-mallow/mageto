@@ -1,0 +1,105 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \Magento\Customer\Block\Form\Edit $block */
+?>
+<?php $_telephone = $block->getLayout()->createBlock(\Magento\Customer\Block\Widget\Telephone::class) ?>
+<div class="customerBlock accountInfo">
+    <form action="<?= $block->escapeUrl($block->getUrl('customer/account/editPost')) ?>" method="post"
+        id="form-validate" enctype="multipart/form-data"
+        data-hasrequired="<?= $block->escapeHtmlAttr(__('* Required Fields')) ?>" autocomplete="off">
+        <div class="customLogin">
+            <?= $block->getBlockHtml('formkey') ?>
+            <h2>
+                <?= $block->escapeHtml(__('Edit Account Information')) ?>
+            </h2>
+            <fieldset class="fieldset">
+                <legend class="fieldset-legend">
+                    <span><?= $block->escapeHtml(__('Login')) ?></span>
+                </legend>
+                <?= $block->getLayout()->createBlock(\Magento\Customer\Block\Widget\Name::class)->setObject($block->getCustomer())->toHtml() ?>
+            </fieldset>
+            <fieldset class="fieldset">
+                <legend class="fieldset-legend">
+                    <span><?= $block->escapeHtml(__('Change Email')) ?></span>
+                </legend>
+                <div class="form-block field email required" data-container="change-email">
+                    <label for="email" class="label"><?= $block->escapeHtml(__('Email')) ?></label>
+                    <input type="email" name="email" id="email" autocomplete="email" data-input="change-email"
+                        value="<?= $block->escapeHtmlAttr($block->getCustomer()->getEmail()) ?>"
+                        title="<?= $block->escapeHtmlAttr(__('Email')) ?>" class="input-text"
+                        data-validate="{required:true, 'validate-email':true}"
+                        placeholder="<?= $block->escapeHtml(__('Email')) ?>" />
+                </div>
+                <?php if ($_telephone->isEnabled()) : ?>
+                    <?= $_telephone->toHtml() ?>
+                <?php endif ?>
+            </fieldset>
+            <fieldset class="fieldset">
+                <legend class="fieldset-legend">
+                    <span><?= $block->escapeHtml(__('Dob')) ?></span>
+                </legend>
+                <?php $_dob = $block->getLayout()->createBlock(\Magento\Customer\Block\Widget\Dob::class) ?>
+                <?php if ($_dob->isEnabled()) : ?>
+                    <?= $_dob->setDate($block->getCustomer()->getDob())->toHtml() ?>
+                <?php endif ?>
+                <div class="field skype">
+                    <label for="skypem" class="label">
+                        <span><?= $escaper->escapeHtml(__('Marriage')) ?></span>
+                    </label>
+                    <div class="control">
+                        <div class="control">
+                            <input type="text" name="skypem" id="skypem" value=""
+                                    placeholder="<?= $block->escapeHtmlAttr(__('Marriage')) ?>"
+                                    title="<?= $block->escapeHtmlAttr(__('Marriage')) ?>" class="input-text">
+                            <input type="text" name="skype" id="skype" value="0000/00/00" class="input-text"
+                                    style="display: none;">
+                             <span class="datepicker-symbol" style="cursor: pointer"></span>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <?= $block->getChildHtml('form_additional_info') ?>
+        <div class="actions-toolbar">
+            <div class="primary">
+                <button type="submit" class="btn btn-primary action primary"
+                    title="<?= $block->escapeHtmlAttr(__('Update')) ?>"><span><?= $block->escapeHtml(__('Update')) ?></span></button>
+            </div>
+        </div>
+    </form>
+
+    <div id="modal-edit">
+        <div class="modal-body-content">
+            <p><?= $block->escapeHtml(__('Your account information has been successfully updated in our records.')) ?></p>
+        </div>
+    </div>
+
+    <?php $isDobEnable = $_dob->isEnabled(); ?>
+    <?php $isIgnore = $isDobEnable ? true : false ?>
+    <script type="text/x-magento-init">
+        {
+        "[data-role=change-email], [data-role=change-password]": {
+            "changeEmailPassword": {
+                "titleChangeEmail": "<?= $block->escapeJs($block->escapeHtml(__('Change Email'))) ?>",
+                "titleChangePassword": "<?= $block->escapeJs($block->escapeHtml(__('Change Password'))) ?>",
+                "titleChangeEmailAndPassword": "<?= $block->escapeJs($block->escapeHtml(__('Change Email and Password'))) ?>"
+            }
+        },
+        "[data-container=new-password]": {
+            "passwordStrengthIndicator": {
+                "formSelector": "form.form-edit-account"
+            }
+        },
+        "*": {
+            "MagentoCustomerEditForm": {
+                "isDobEnable": <?= $isDobEnable ?>,
+                "ignoreVal": <?= $isIgnore ?>
+            }
+        }
+    }
+    </script>
+</div>

@@ -1,0 +1,18 @@
+<dd class="<%- data.row_class %>" id="qs-option-<%- data.index %>" role="option" class="product-item" href="<%- data.url %>">
+    <div class="product-image-box">
+        <img width="45px" height="45px" src="<%- data.image %>">
+    </div>
+    <div class="product-shop product-item">
+        <div class="f-fix">
+            <div class="product-primary"><div class="product-name"><%- data.title %></div></div>
+            <div class="product-average"><div class="product-description"><%- data.description %></div></div>
+            <div class="product-secondary">
+                <div class="price-box">
+                    <span class="price"><span>As low as </span><%= data.price %></span>
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+</dd>

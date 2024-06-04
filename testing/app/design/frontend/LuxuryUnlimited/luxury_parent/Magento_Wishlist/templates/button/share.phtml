@@ -1,0 +1,85 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block \Magento\Wishlist\Block\Customer\Wishlist\Button */
+?>
+<?php if ($block->getWishlist()->getItemsCount() && $block->getWishlist()->getShared() < $block->getConfig()->getSharingEmailLimit()): ?>
+    <button type="button" name="save_and_share" title="<?php echo __('Share Wish List') ?>"
+            class="action wishlist-sharing-request-btn btn primary">
+        <span><?php echo __('Share Wish List') ?></span>
+    </button>
+
+    <div class="clsspecialreqpop" id="wishlist-share-modal">
+        <div class="modal-content">
+            <div class="wishlist-content">
+                <div class="wishlist-data">
+                    <input type="hidden" id="wishlist_id" value="<?php echo $block->getWishlist()->getId();?>">
+                    <fieldset class="fieldset">
+                        <div class="field emails required">
+                            <label class="label" for="email_address">
+                                <span><?= $block->escapeHtml(__('Email addresses, separated by commas')) ?></span>
+                            </label>
+                            <div class="control">
+                                <input
+                                    id="share_email_address"
+                                    class="input-text"
+                                    title="emails"
+                                    name="emails"
+                                    required=""
+                                    type="text"
+                                    data-validate="{required:true,'validate-emails':true}"
+                                    placeholder="<?php echo  /* @noEscape */ __('Email Addresses') ?>" >
+                            </div>
+                        </div>
+                        <div class="field text">
+                            <label class="label" for="message"><span><?= $block->escapeHtml(__('Message')) ?></span></label>
+                            <div class="control">
+                                <textarea
+                                    id="share_message"
+                                    name="message"
+                                    cols="60"
+                                    rows="5"
+                                    placeholder="<?php echo /* @noEscape */ __('Message'); ?>"
+                                ></textarea>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="actions-toolbar">
+                        <div class="primary">
+                            <button type="button" title="<?= $block->escapeHtmlAttr(__('Share Wish List')) ?>" class="action wishlistsharing-submit submit primary">
+                                <span><?= $block->escapeHtml(__('Share Wishlist')) ?></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="wishlist-success-div"  id="wishlist-success">
+                <div class="modal-content">
+                    <p id="wishlist-result-message"></p>
+                    <div class="wishlist-result-toolbar">
+                        <div class="primary">
+                            <button type="button" title="<?= $block->escapeHtmlAttr(__('Share Wish List')) ?>"
+                                    class="action close-wishlist-share-modal submit primary">
+                                <span><?= $block->escapeHtml(__('Back to My Wishlist')) ?></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/x-magento-init">
+        {
+            "*": {
+                "Magento_Wishlist/js/share": {
+                }
+            }
+        }
+    </script>
+<?php endif;?>

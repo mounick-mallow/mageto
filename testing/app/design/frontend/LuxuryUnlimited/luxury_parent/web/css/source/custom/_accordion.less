@@ -1,0 +1,73 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .acc__card {
+        border-width: @accordion-custom-box-border-width;
+        border-style: solid;
+        border-color: @accordion-custom-box-border-color;
+        border-radius: @accordion-custom-box-border-radius;
+        position: relative;
+        padding: @accordion-custom-box-padding;
+
+        &:not(:last-child) {
+            margin-bottom: @accordion-custom-box-margin;
+        }
+
+        .arrow-up,
+        .arrow-down {
+            position: absolute;
+            right: @indent__l;
+            top: @indent__m;
+        }
+
+        .acc__title {
+            cursor: pointer;
+            position: relative;
+
+            .panel-title {
+                margin: 0;
+                line-height: 1.4;
+            }
+
+            .lib-icon-font(
+                @_icon-font-content: @icon-down,
+                @_icon-font: @icomoon-font-family,
+                @_icon-font-size: 22px,
+                @_icon-font-line-height: 24px,
+                @_icon-font-text-hide: true,
+                @_icon-font-position: after,
+                @_icon-font-color: @accordion-custom-arrow-color,
+                @_icon-font-display: block
+            );
+
+            &.active {
+                .lib-icon-font-symbol(
+                    @_icon-font-content: @icon-up,
+                    @_icon-font-position: after
+                );
+
+                .panel-title {
+                    color: @accordion-custom-head-active-color;
+                }
+            }
+
+            &:after {
+                position: absolute;
+                right: 0;
+                top: 50%;
+                margin-top: -12px;
+            }
+        }
+
+        .acc__panel {
+            display: none;
+            padding-top: @indent__m;
+        }
+
+        .plusminus {
+            display: none;
+        }
+    }
+}

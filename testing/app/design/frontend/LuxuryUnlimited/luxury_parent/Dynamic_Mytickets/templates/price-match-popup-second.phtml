@@ -1,0 +1,146 @@
+<?php
+
+use Dynamic\Mytickets\ViewModel\PriceMatch;
+use Magento\Catalog\Block\Product\View;
+
+/**
+ * @var $block View
+ * @var $viewModelPriceMatch PriceMatch
+ */
+
+$viewModelPriceMatch = $block->getData('price_match_view_model');
+
+$dynamicHelper = $viewModelPriceMatch->getDynamicHelper();
+$imageHelper = $viewModelPriceMatch->getImageHelper();
+
+$storeCode = $dynamicHelper->getStore()->getCode();
+
+$firstName = '';
+$lastName = '';
+$email = '';
+$telephone = '';
+if ($viewModelPriceMatch->isLoggedIn()) {
+    $customer = $viewModelPriceMatch->getCustomer();
+    $customerId = $viewModelPriceMatch->getCustomerId($customer);
+    if ($customerId) {
+        $customerById = $viewModelPriceMatch->getCustomerById($customerId);
+        $firstName = $customerById->getFirstname();
+        $lastName = $customerById->getLastname();
+        $email = $customerById->getEmail();
+        if ($viewModelPriceMatch->getTelephone($customerById->getAddresses())) {
+            $telephone = $viewModelPriceMatch->getTelephone($customerById->getAddresses());
+        }
+    }
+}
+
+$product = $block->getProduct();
+$imageUrl = $imageHelper->init($product, 'product_base_image')->getUrl();
+$productname = $block->getProduct()->getName();
+$brand = $product->getResource()->getAttribute('brands')->getFrontend()->getValue($product);
+
+?>
+<!-- Price Match Popup -->
+<div class="clsspecialreqpopsecond additional" id="priceMatchModalSecond" >
+    <div class="modal-inner-content">
+        <form class="form contact cls_popupspecialrequest_form"
+              action="<?= $block->escapeHtml($block->getUrl('pricematch/index/postticket')); ?>"
+              id="price-match-form-ticket-second"
+              method="post"
+              data-hasrequired="<?= /* @escapeNotVerified */ $block->escapeHtml(__('* Required Fields')) ?>"
+              data-mage-init='{"validation":{}}'>
+            <div class="field name required cls_comm_input">
+                <div class="control">
+                    <input id="priceMatchName" class="input-text" title="<?= $block->escapeHtml(__('Name')) ?>"
+                    name="name" required="" type="text" value="<?= $block->escapeHtml($firstName); ?>"
+                    placeholder="<?= $block->escapeHtml(__('Enter Your First Name')) ?>">
+                    <input id="priceMatchLastName" class="input-text"
+                    title="<?= $block->escapeHtml(__('Last Name')) ?>" required=""
+                    name="last_name" type="text" value="<?= $block->escapeHtml($lastName); ?>"
+                    placeholder="<?= $block->escapeHtml(__('Enter Your Last Name')) ?>">
+                </div>
+            </div>
+
+            <div class="field name required cls_comm_input">
+                <div class="control">
+                    <input id="priceMatchEmail" class="input-text" required=""
+                    title="<?= $block->escapeHtml(__('Email')) ?>"
+                    name="email" type="email" <?php if ($email != "") {?> readonly="readonly" <?php } ?>
+                    value="<?= $block->escapeHtml($email); ?>"
+                    placeholder="<?= $block->escapeHtml(__('Enter email'))?>">
+                    <input id="priceMatchPhone" class="input-text" title="<?= $block->escapeHtml(__('Phone')) ?>"
+                    required="" name="phone" type="text" value="<?= $block->escapeHtml($telephone); ?>"
+                    placeholder="<?= $block->escapeHtml(__('Enter Phone Number')) ?>">
+                </div>
+            </div>
+
+            <div class="field name required cls_comm_input">
+                <div class="control">
+                    <input id="priceMatchBrand" class="input-text"
+                    title="<?= $block->escapeHtml(__('Brand')) ?>" required=""
+                    name="brand" type="text" value="<?= $block->escapeHtml($productname); ?>"
+                    placeholder="<?= $block->escapeHtml(__('Enter Brand Name'))?>">
+                    <input id="priceMatchOrderId" class="input-text" title="<?= $block->escapeHtml(__('Order Id')) ?>"
+                    name="orderreturn_id" type="text" value="" placeholder="<?= $block->escapeHtml(__('Enter Order Id')) ?>">
+                </div>
+            </div>
+
+            <div class="field name  cls_comm_input width-100">
+                <input id="priceMatchChipperWebsite" class="input-text"
+                title="<?= $block->escapeHtml(__('Website is chipper')) ?>"
+                name="cheaper_website" type="text" value=""
+                placeholder="<?= $block->escapeHtml(__('URL Website where this item is cheaper'))?>">
+            </div>
+
+            <div class="field name  cls_comm_input">
+                <div class="control">
+                    <input id="priceMatchChipperLink" class="input-text"
+                    title="<?= $block->escapeHtml(__('Cheaper product link')) ?>"
+                    name="cheaper_link" type="text" value=""
+                    placeholder="<?= $block->escapeHtml(__('LInk to the cheaper Product'))?>">
+                    <input id="priceMatchProductPrice" class="input-text"
+                    title="<?= $block->escapeHtml(__('Price incl Tax')) ?>"
+                    name="cheaper_price_with_tax" type="text" value=""
+                    placeholder="<?= $block->escapeHtml(__('Price Including duties and taxes'))?>">
+                </div>
+            </div>
+
+            <div class="field name required cls_comm_input width-100">
+                <div class="control">
+                    <input id="priceMatchIsAvaliable" class="input-text"
+                    title="<?= $block->escapeHtml(__('Is the product currently available?')) ?>"
+                    required="" name="cheaper_avaliable" type="text" value=""
+                    placeholder="<?= $block->escapeHtml(__('Is the product currently available on the website?'))?>">
+                </div>
+            </div>
+            <div class="field remarks  cls_comm_input width-100">
+                <div class="control">
+                    <textarea id="priceMatchRemarks" class="input-text"
+                    title="<?= $block->escapeHtml(__('Remarks')) ?>"  name="remarks" type="text" value=""
+                    placeholder="<?= $block->escapeHtml(__('Enter Remarks'))?>"></textarea>
+                </div>
+            </div>
+            <div class="field name required spBtn">
+                <div class="control">
+                    <input type="hidden" name="lang_code" id="priceMatchLangCode"
+                    value="<?= $block->escapeHtml($storeCode); ?>" />
+                    <input type="hidden" name="is_it_bought" id="priceMatchIsItBought" value="" />
+                    <input type="hidden" name="hdn_subject" id="priceMatchHdnSubject" value="" />
+                    <input type="hidden" name="hdn_message" id="priceMatchHdnMessage" value="" />
+                    <div class="mm-action">
+                        <button id="price-match-btn_submit" class="btn btn-custom" name="btn_ticket" type="submit">
+                            <?= $block->escapeHtml(__('Submit')) ?></button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Dynamic_Mytickets/js/price-match-second": {
+            }
+        }
+    }
+</script>

@@ -1,0 +1,27 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var $block \Magento\Checkout\Block\Cart\Item\Renderer\Actions\Remove */
+
+$item = $this->getItem();
+$productId = $item->getProductId();
+
+/** @var Belvg\Products\Helper\Data  $helper */
+$helper = $this->helper(Belvg\Products\Helper\Data::class);
+$productImage = $helper->getImageByProductId($item->getProductId(), 'mini_cart_product_thumbnail');
+
+
+?>
+<a href="#"
+   data-image="<?php echo  $block->escapeUrl($productImage); ?>"
+   data-name="<?php echo $block->escapeHtml($item->getName()); ?>"
+   title="<?= $block->escapeHtml(__('Remove item')) ?>"
+   class="action action-delete"
+   data-post='<?= /* @noEscape */ $block->getDeletePostJson() ?>'>
+    <span>
+        <?= $block->escapeHtml(__('Remove item')) ?>
+    </span>
+</a>

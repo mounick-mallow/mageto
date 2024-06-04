@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <referenceBlock name="search.result">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">LuxuryUnlimited\CmsSearch\ViewModel\CmsSearch</argument>
+                </arguments>
+            </referenceBlock>
+        </referenceContainer>
+
+        <referenceBlock name="search_result_list">
+            <arguments>
+                <argument name="luxdb_price_match_view_model" xsi:type="object">Dynamic\Mytickets\ViewModel\PriceMatch</argument>
+            </arguments>
+        </referenceBlock>
+    </body>
+</page>

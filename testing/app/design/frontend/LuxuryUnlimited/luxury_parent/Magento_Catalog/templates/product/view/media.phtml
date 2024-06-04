@@ -1,0 +1,190 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * Product media data template
+ *
+ * @var $block \Magento\Catalog\Block\Product\View\Gallery
+ * @var $dataViewModel \Smartwave\Porto\ViewModel\Data
+ */
+
+$porto_helper = $block->getData('porto_pdp_view_model');
+$_config = $porto_helper->getConfig('porto_settings/product');
+$image_width = (isset($_config['ratio_width']) && $_config['ratio_width']) ? $_config['ratio_width'] : 600;
+$image_height = (isset($_config['ratio_height']) && $_config['ratio_height']) ? $_config['ratio_height'] : 600;
+$aspect_ratio = (isset($_config['aspect_ratio'])) ? $_config['aspect_ratio'] : 0;
+if ($aspect_ratio) {
+    $image_height = $image_width;
+}
+$_product = $block->getProduct();
+$page_type = $_product->getData('product_page_type');
+if (!$page_type) {
+    $page_type = isset($_config['product_page_type']) ? $_config['product_page_type'] : '';
+}
+?>
+<?php if ($page_type == 'carousel'): ?>
+    <?php
+        $galleryImagesJson = $block->getGalleryImagesJson();
+        $gallery_images = !empty($galleryImagesJson) ? json_decode($galleryImagesJson) : [];
+
+    ?>
+<div id="gallery_images" class="owl-carousel product-image-carousel">
+    <?php foreach ($gallery_images as $gallery_image): ?>
+    <div class="item">
+        <img src="<?= /* @noEscape */ $gallery_image->img; ?>" alt=""/>
+    </div>
+    <?php endforeach; ?>
+</div>
+<div class="short-custom-block">
+    <?= /* @noEscape */ $porto_helper->filterContent($_product->getData("custom_block")); ?>
+</div>
+<div class="fullwidth-custom-block">
+    <?= /* @noEscape */ $porto_helper->filterContent($_product->getData("custom_block_2")); ?>
+</div>
+    <script type="text/x-magento-init">
+        {
+            "*": {
+                "Magento_Catalog/js/media/page-type-carousel": {
+                }
+            }
+        }
+    </script>
+<?php elseif ($page_type == 'grid'): ?>
+    <?php
+        $galleryImagesJson = $block->getGalleryImagesJson();
+        $gallery_images = !empty($galleryImagesJson) ? json_decode($galleryImagesJson) : [];
+    ?>
+<div id="gallery_images" class="row">
+    <?php foreach ($gallery_images as $gallery_image): ?>
+    <div class="col-sm-6">
+        <div class="product-image-grid">
+            <img src="<?= /* @noEscape */ $gallery_image->img; ?>" alt=""/>
+        </div>
+    </div>
+    <?php endforeach; ?>
+</div>
+<?php elseif ($page_type == 'sticky_right'): ?>
+    <?php
+        $galleryImagesJson = $block->getGalleryImagesJson();
+        $gallery_images = !empty($galleryImagesJson) ? json_decode($galleryImagesJson) : [];
+    ?>
+<div id="gallery_images">
+    <?php foreach ($gallery_images as $gallery_image): ?>
+    <div class="product-image-list">
+        <img src="<?= /* @noEscape */ $gallery_image->img; ?>" alt=""/>
+    </div>
+    <?php endforeach; ?>
+</div>
+<div class="short-custom-block">
+    <?= /* @noEscape */ $porto_helper->filterContent($_product->getData("custom_block")); ?>
+</div>
+    <script type="text/x-magento-init">
+        {
+            "*": {
+                "Magento_Catalog/js/media/page-type-sticky_right": {
+                }
+            }
+        }
+    </script>
+<?php elseif ($page_type == 'fullwidth'): ?>
+<div class="gallery-placeholder product-image-block _block-content-loading" data-gallery-role="gallery-placeholder">
+    <div data-role="loader" class="loading-mask">
+        <div class="loader">
+            <img src="<?= /* @noEscape */ $block->getViewFileUrl('images/loader-1.gif'); ?>"
+                alt="<?= $block->escapeHtml(__('Loading...')) ?>">
+        </div>
+    </div>
+</div>
+<script type="text/x-magento-init">
+    {
+        "[data-gallery-role=gallery-placeholder]": {
+            "mage/gallery/gallery": {
+                "mixins":["magnifier/magnify"],
+                "magnifierOpts": <?= /* @noEscape */ $block->getMagnifier(); ?>,
+                "data": <?= /* @noEscape */ $block->getGalleryImagesJson(); ?>,
+                "options": {
+                    "nav": "<?= /* @noEscape */ $block->getVar("gallery/nav"); ?>",
+                    "loop": true,
+                    "keyboard": <?= /* @noEscape */ $block->getVar("gallery/keyboard"); ?>,
+                    "arrows": <?= /* @noEscape */ $block->getVar("gallery/arrows"); ?>,
+                    "allowfullscreen": <?= /* @noEscape */ $block->getVar("gallery/allowfullscreen"); ?>,
+                    "showCaption": <?= /* @noEscape */ $block->getVar("gallery/caption"); ?>,
+                    "width": <?= /* @noEscape */ $image_width; ?>,
+                    "thumbwidth": 100,
+                    "thumbheight": 100,
+                    <?php if (!$aspect_ratio): ?>
+                    "height": <?= /* @noEscape */ $image_height; ?>,
+                    <?php endif; ?>
+                    "transitionduration": <?= /* @noEscape */ $block->getVar("gallery/transition/duration"); ?>,
+                    "transition": "<?= /* @noEscape */ $block->getVar("gallery/transition/effect"); ?>",
+                    "navarrows": <?= /* @noEscape */ $block->getVar("gallery/navarrows"); ?>,
+                    "navtype": "<?= /* @noEscape */ $block->getVar("gallery/navtype"); ?>",
+                    "navdir": "vertical"
+                },
+                "fullscreen": <?= /* @noEscape */ $block->getGalleryOptions()->getFSOptionsJson() ?>,
+                "breakpoints": <?= /* @noEscape */ $block->getBreakpoints(); ?>
+            }
+        }
+    }
+</script>
+<div class="fullwidth-custom-block">
+    <?= /* @noEscape */ $porto_helper->filterContent($_product->getData("custom_block")); ?>
+</div>
+    <script type="text/x-magento-init">
+        {
+            "*": {
+                "Magento_Catalog/js/media/page-type-fullwidth": {
+                }
+            }
+        }
+    </script>
+<?php else: ?>
+<div class="gallery-placeholder product-image-block _block-content-loading" data-gallery-role="gallery-placeholder">
+</div>
+<script type="text/x-magento-init">
+    {
+        "[data-gallery-role=gallery-placeholder]": {
+            "mage/gallery/gallery": {
+                "mixins":["magnifier/magnify"],
+                "magnifierOpts": <?= /* @noEscape */ $block->getMagnifier(); ?>,
+                "data": <?= /* @noEscape */ $block->getGalleryImagesJson(); ?>,
+                "options": {
+                    "nav": "thumbs",
+                    "loop": 1,
+                    "keyboard": 1,
+                    "arrows": 1,
+                    "allowfullscreen": 1,
+                    "showCaption": 0,
+                    "width": 600,
+                    "thumbwidth": 100,
+                    "thumbheight": 100,
+                    <?php if (!$aspect_ratio): ?>
+                    "height": <?= /* @noEscape */ $image_height; ?>,
+                    <?php endif; ?>
+                    <?php if ($block->getVar("gallery/transition/duration")): ?>
+                    "transitionduration": <?= /* @noEscape */ $block->getVar("gallery/transition/duration") ?>,
+                    <?php endif; ?>
+                    "transition": "<?= /* @noEscape */ $block->getVar("gallery/transition/effect") ?>",
+                    "navarrows": 1,
+                    "navtype": "<?= /* @noEscape */ $block->getVar("gallery/navtype") ?>",
+                    "navdir": "horizontal"
+                },
+                "fullscreen": <?= /* @noEscape */ $block->getGalleryOptions()->getFSOptionsJson() ?>,
+                "breakpoints": <?= /* @noEscape */ $block->getBreakpoints(); ?>
+            }
+        }
+    }
+</script>
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Catalog/js/media/page-type-default": {
+            }
+        }
+    }
+</script>
+<?php endif; ?>

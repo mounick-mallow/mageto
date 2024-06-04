@@ -1,0 +1,101 @@
+<?php
+
+declare(strict_types=1);
+
+use Magento\Customer\Block\Form\Login as LoginBlock;
+
+/**
+ * @var LoginBlock $block
+ */
+$baseUrl = $block->getBaseUrl();
+$loginUrl = $baseUrl . 'customer/account/loginPost/';
+/** @var \Magento\Customer\Block\Account\AuthorizationLink $authBlock */
+$authBlock = $this->getLayout()->getBlock('authorization-link');
+?>
+
+<?php if ($authBlock && $authBlock->isLoggedIn()): ?>
+    <?php $block->redirect('tickets/customer/index/'); ?>
+<?php else: ?>
+<h1 class="hed"><?= /* @noEscape */ __('Track Your Requests'); ?></h1>
+
+<div class="login-container">
+    <div class="block block-customer-login">
+        <div class="block-title">
+            <strong id="block-customer-login-heading" role="heading"
+                    aria-level="2"><?= $block->escapeHtml(__('Registered Customers')) ?></strong>
+        </div>
+        <div class="block-content" aria-labelledby="block-customer-login-heading">
+            <form class="form form-login"
+                  action="<?= $block->escapeUrl($loginUrl) ?>"
+                  method="post"
+                  id="login-form"
+                  data-mage-init='{"validation":{}}'>
+                <?= $block->getBlockHtml('formkey') ?>
+                <fieldset class="fieldset login" data-hasrequired="<?= $block->escapeHtml(__('* Required Fields')) ?>">
+                    <legend><?= $block->escapeHtml(__('Registered Customers')) ?></legend>
+                    <div class="field note"><?= $block->escapeHtml(__('If you have an account, sign in with your email address.')) ?></div>
+                    <div class="field email required">
+                        <div class="control">
+                            <input placeholder="<?= $block->escapeHtml(__('Email Address*')) ?>" name="login[username]"
+                                   value="<?= $block->escapeHtmlAttr($block->getUsername()) ?>" id="email"
+                                   autocomplete="off" type="email" class="input-text"
+                                   title="<?= $block->escapeHtmlAttr(__('Email')) ?>"
+                                   data-mage-init='{"mage/trim-input":{}}'
+                                   data-validate="{required:true, 'validate-email':true}">
+                            <div class="clslogin cls_user"></div>
+                        </div>
+                    </div>
+                    <div class="field password required">
+                        <div class="control cls_password">
+                            <input placeholder="<?= $block->escapeHtml(__('Password*')) ?>" name="login[password]"
+                                   type="password" autocomplete="off" class="input-text" id="pass"
+                                   title="<?= $block->escapeHtmlAttr(__('Password')) ?>"
+                                   data-validate="{required:true}">
+                            <div class="clslogin cls_eye"></div>
+                        </div>
+                    </div>
+                    <?= $block->getChildHtml('form_additional_info') ?>
+                    <div class="actions-toolbar">
+                        <div class="primary">
+                            <button type="submit" class="action login primary" name="send" id="send2">
+                                <span><?= $block->escapeHtml(__('Login')) ?></span></button>
+                        </div>
+                        <div class="secondary cls_forget"><a class="action remind"
+                                                             href="<?= $block->escapeUrl($block->getForgotPasswordUrl()) ?>"><span><?= $block->escapeHtml(__('Forgot Your Password?')) ?></span></a>
+                        </div>
+
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+    <div class="check-order-container block block-new-customer">
+        <div class="row">
+            <div class="col-md-12 guestreturncontainer">
+                <div class="contentBlock">
+                    <div class="block-title">
+                        <strong id="block-customer-login-heading" role="heading"
+                                aria-level="2"><?= /* @noEscape */ __('Guest Users') ?></strong>
+                    </div>
+                    <div class="notte"><?= /* @noEscape */ __('Please enter your email to track your request.') ?></div>
+                </div>
+                <div class="formBlock">
+                    <form action="<?= $block->escapeUrl($baseUrl . 'trackbyemail') ?>" method="GET" data-mage-init='{"validation":{}}'>
+                        <div class="form-control">
+                            <input type="text" name="email" placeholder="<?= /* @noEscape */ __('Email Address*') ?>" data-validate="{required:true,'validate-emails':true}">
+                        </div>
+                        <div class="actions-toolbar">
+                            <div class="primary" style="margin-left: 0px">
+                                <button type="submit" class="action login primary" name="checkticket">
+                                    <span><?= /* @noEscape */ __('Let’s go') ?></span></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-12 order-result-container">
+            </div>
+        </div>
+    </div>
+</div>
+<?php endif; ?>

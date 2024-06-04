@@ -1,0 +1,26 @@
+<?php
+    $porto_helper = $this->helper('Smartwave\Porto\Helper\Data');
+/* @noEscape */ echo $porto_helper->getConfig('porto_settings/product/custom_social');
+?>
+<?php $_product = $block->getProduct(); ?>
+<div class="social-media-icons">
+    <!-- WhatsApp -->
+    <a target="_blank" href="https://api.whatsapp.com/send?text=<?= $block->escapeHtmlAttr(urlencode($_product->getProductUrl())) ?>">
+            WhatsApp</a>
+    <!-- Facebook -->
+    <a href="https://www.facebook.com/sharer/sharer.php?u=<?= $block->escapeHtmlAttr(urlencode($_product->getProductUrl())) ?>&t=<?= $block->escapeHtmlAttr(urlencode($_product->getName())) ?>" onclick='javascript:window.open(this.href,"","width=640,height=480,left=0,top=0,location=no,status=yes,scrollbars=yes,resizable=yes");return false' title="Share on facebook">
+        <img src="<?= $block->escapeUrl($this->getViewFileUrl('Magento_Catalog::images/facebook-share.jpg')) ?>" alt="Facebook" width="12%">
+    </a>
+    <!-- TWITTER -->
+    <a href="http://twitter.com/home/?status=<?= $block->escapeHtmlAttr(urlencode($_product->getProductUrl())) ?>(<?= $block->escapeHtmlAttr(urlencode($_product->getName())) ?>)" onclick='javascript:window.open(this.href,"","width=640,height=480,left=0,top=0,location=no,status=yes,scrollbars=yes,resizable=yes");return false' title="Share on Twitter">
+        <img src="<?= $block->escapeUrl($this->getViewFileUrl('Magento_Catalog::images/tw.png')) ?>" alt="Twitter" width="5%">
+    </a>
+    <!-- Pinterest -->
+    <a href="https://pinterest.com/pin/create/button/?url=<?= $block->escapeHtmlAttr(urlencode($_product->getProductUrl())) ?>&media=<?= $block->escapeHtmlAttr(urlencode($_product->getImageUrl())) ?> &description=<?= $block->escapeHtmlAttr(urlencode($_product->getName())) ?>" onclick='javascript:window.open(this.href,"","width=640,height=480,left=0,top=0,location=no,status=yes,scrollbars=yes,resizable=yes");return false' title="Pin it">
+        <img src="<?= $block->escapeUrl($this->getViewFileUrl('Magento_Catalog::images/pinterest-share.jpg')) ?>" alt="Pinterest" width="12%">
+    </a>
+    <!-- Google Plus -->
+    <a href="https://plus.google.com/share?url=<?= $block->escapeHtmlAttr(urlencode($_product->getProductUrl())) ?>" onclick='javascript:window.open(this.href,"","width=640,height=480,left=0,top=0,location=no,status=yes,scrollbars=yes,resizable=yes");return false' title="Share on Google Plus">
+        <img src="<?= $block->escapeUrl($this->getViewFileUrl('Magento_Catalog::images/google-plus-share.jpg')) ?>" alt="Google Plus" width="12%">
+    </a>
+</div>

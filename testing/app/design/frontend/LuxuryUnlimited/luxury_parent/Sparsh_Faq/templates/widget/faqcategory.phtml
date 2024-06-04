@@ -1,0 +1,28 @@
+<?php
+$items = $block->getFaqItems();
+?>
+<div class="faq-search-bar">
+    <input id="search" class="input-text"  title="<?= $block->escapeHtml(__('Search By')) ?>"  name="search" type="text" placeholder="<?= $block->escapeHtml(__('Search By')) ?>">
+</div>
+<div class="sparsh-faq-block">
+    <?php if ($items->getSize()) : ?>
+        <div id="faq-accordion">
+            <?php
+            $count = 1;
+            foreach ($items as $item) : ?>
+                <div class="acc__card">
+                    <div class="accordion_head acc__title">
+                        <h4 class="panel-title"><?= $block->escapeHtml($item->getFaqQuestion()) ?></h4>
+                    </div>
+                    <div class="accordion_body acc__panel">
+                        <?= /* @noEscape */
+                        $item->getFaqAnswer() ?>
+                    </div>
+                </div>
+                <?php $count++;
+            endforeach; ?>
+        </div>
+    <?php else : ?>
+        <h2 class="title"><?= $block->escapeHtml(__("No FAQ Found.")) ?></h2>
+    <?php endif; ?>
+</div>

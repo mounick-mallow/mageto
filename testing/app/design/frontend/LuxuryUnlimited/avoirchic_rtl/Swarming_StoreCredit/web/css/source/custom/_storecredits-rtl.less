@@ -1,0 +1,38 @@
+//
+//  Common
+//  ---------------------------------------------
+
+& when (@media-common = true) {
+    body.swarming_credits-index-index {
+        .returns_footer {
+            .pages {
+                .item {
+                    .action {
+                        display: inline;
+                        padding: @indent__xxs;
+                    }
+
+                    &:last-child {
+                        margin-right: @indent__xs;
+                    }
+                }
+            }
+        }
+    }
+
+    .pages {
+        .action {
+            &.next {
+                &:before {
+                    content: @icon-left;
+                }
+            }
+
+            &.previous {
+                &:before {
+                    content: @icon-right;
+                }
+            }
+        }
+    }
+}

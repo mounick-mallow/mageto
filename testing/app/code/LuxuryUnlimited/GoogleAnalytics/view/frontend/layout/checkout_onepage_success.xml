@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * LuxuryUnlimited_GoogleAnalytics
+ *
+ * @copyright   Copyright (c) 2023
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="content">
+            <block class="LuxuryUnlimited\GoogleAnalytics\Block\Checkout\PlaceOrderAfter" name="ga.place.order.js"
+                   after="ga.place.order.js"
+                   template="LuxuryUnlimited_GoogleAnalytics::js/script.phtml"/>
+        </referenceBlock>
+    </body>
+</page>

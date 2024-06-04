@@ -1,0 +1,236 @@
+<?php
+/**
+ * BelVG LLC.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://store.belvg.com/BelVG-LICENSE-COMMUNITY.txt
+ *
+ ********************************************************************
+ * @category   BelVG
+ * @package    BelVG_GuestWishlist
+ * @copyright  Copyright (c) BelVG LLC. (http://www.belvg.com)
+ * @license    http://store.belvg.com/BelVG-LICENSE-COMMUNITY.txt
+ */
+// @codingStandardsIgnoreFile
+/** @var \BelVG\GuestWishlist\Block\Wishlist $block */
+$createAccountLink = "<a href={$block->getUrl('customer/account/create')}>" . __('Here') . "</a>";
+
+if ($this->helper('Magento\Wishlist\Helper\Data')->isAllow()) : ?>
+    <div class="header-wishlist">
+
+        <p><?= $block->escapeHtmlAttr(__('Keep your favorite pieces no matter the browser or device all in one place')) ?></p>
+        <div class="actions-toolbar">
+                <button type="button" title="<?= $block->escapeHtmlAttr(__('Share Wish List')) ?>"
+                        class="action wishlistsharing-submit submit wishlist-sign-in-button primary">
+                    <span><?= $block->escapeHtml(__('Sign In')) ?></span>
+                </button>
+        </div>
+    </div>
+
+    <?php if (!$block->hasWishlistItems()): ?>
+        <div class="cart-empty">
+            <div class="no-page" style="text-align: center">
+                <img alt="<?= /* @noEscape */ __('Oops') ?>" src="<?= $block->getViewFileUrl('images/oops.svg') ?>">
+                <h3><?= __("You Don't Seem to Have Any Favourites Yet"); ?> </h3>
+                <p class="re-result-desc" style="text-align: center">
+                        <em class="icon-user porto-icon-user"></em> <?= __('Use the heart icon to save products '); ?>
+                </p>
+                <p class="re-result-desc" style="text-align: center">
+                    <i class="icon-wishlist far fa-heart"></i> <?= __(' Join or login to view saved items on different devices  '); ?>
+                </p>
+                <div class="re-result-btns" style="text-align: center">
+                    <?php echo $this->getLayout()->createBlock("Dynamic\Mytickets\Block\View")->setTemplate("Dynamic_Mytickets::search_ticket_popup.phtml")->toHtml() ?>
+                    <a class="action primary" href="<?php echo $block->getUrl('brands'); ?>"><?= $block->escapeHtml(__('Continue Shopping')); ?></a>
+                </div>
+            </div>
+        </div>
+    <?php endif ?>
+
+    <div class="form-wishlist-items" id="wishlist-view-form"
+          data-mage-init='{"wishlist":{
+          "addToCartUrl":<?= /* @noEscape */ $block->getItemAddToCartParams("%item%") ?>,
+          "addAllToCartUrl":<?= /* @noEscape */ $block->getAddAllToCartParams() ?>,
+          "commentString":""},
+          "validation": {}}' action="<?= $block->escapeUrl($block->getUrl('guestwishlist/index/update', ['wishlist_id' => $block->getWishlistInstance()->getId()])) ?>" method="post">
+        <?= $block->getChildHtml('top') ?>
+        <?php if ($block->hasWishlistItems()): ?>
+            <?= $block->getBlockHtml('formkey') ?>
+            <?php $block->getChildBlock('items')->setItems($block->getWishlistItems()); ?>
+            <?= $block->getChildHtml('items') ?>
+            <div class="btnAction">
+                <input id="currentUrl" type="hidden" value="<?= $block->getUrl('*/*/*', ['_current' => true, '_use_rewrite' => true]) ?>"/>
+                <button type="button"  class="action wishlist-sharing-request-btn copy-page-link primary">
+                    <?= /* @noEscape */ __('Share Wishlist') ?>
+                </button>
+            </div>
+        <?php endif ?>
+
+        <?= $block->getChildHtml('bottom') ?>
+        <div class="actions-toolbar">
+            <div class="primary">
+                <?= $block->getChildHtml('control_buttons') ?>
+            </div>
+        </div>
+    </div>
+    <script id="form-tmpl" type="text/x-magento-template">
+      <form id="wishlist-hidden-form" method="post" action="<%- data.url %>" class="no-display">
+          <% if (data.qty) { %>
+          <input name="qty" value="<%- data.qty %>">
+          <% } %>
+
+          <% if (data.item) { %>
+          <input name="item" value="<%- data.item %>">
+          <% } %>
+
+          <% if (data.entity) { %>
+          <input name="entity" value="<%- data.entity %>">
+          <% } %>
+      </form>
+    </script>
+    <script type="text/javascript">
+        function copy() {
+            var currentUrl = document.getElementById('currentUrl');
+            currentUrl.type = 'text';
+            currentUrl.select();
+            document.execCommand("copy");
+            currentUrl.type = 'hidden';
+        }
+    </script>
+<?php endif ?>
+
+<div id="wishlist-login-popup" class="wishlist-login-popup">
+    <div class="modal-content">
+        <span class="create-account-msg"><?= __('If you dont have an account, please click %1 to create one', $createAccountLink) ?></span>
+        <form class="form"
+              id="wishlist-login-popup-form"
+              data-mage-init='{"validation":{}}'
+        >
+            <div id="wishlist-login-popup-form-errors" style="color: red; margin-bottom: 10px"></div>
+            <?php echo $block->getBlockHtml('formkey') ?>
+            <fieldset class="fieldset">
+                <legend class="fieldset-legend">
+                    <span><?= $block->escapeHtml(__('WishList Login')) ?></span>
+                </legend>
+                <div class="field required">
+                    <label class="label" for="wishlist-login-email"><span><?= $block->escapeHtml(__('Email')) ?></span></label>
+                    <div class="control">
+                        <input
+                            id="wishlist-login-email"
+                            class="input-text"
+                            title="email"
+                            name="email"
+                            required=""
+                            type="text"
+                            placeholder="<?= /* @noEscape */ $block->escapeHtml(__('Email')) ?>" >
+                    </div>
+                </div>
+                <div class="field username required">
+                    <label class="label" for="user_name"><span><?= $block->escapeHtml(__('Password')) ?></span></label>
+                    <div class="control">
+                        <input
+                            class="input-text"
+                            title="<?= /* @noEscape */ $block->escapeHtml(__('Password')) ?>"
+                            name="password"
+                            required=""
+                            type="password"
+                            placeholder="<?= /* @noEscape */ $block->escapeHtml(__('Password')) ?>" >
+                    </div>
+                </div>
+
+                <div class="field name required spBtn">
+                    <div class="mm-action">
+                        <button
+                            class="btn btn-custom primary action"
+                            name="wishlist-ajax-login-button"
+                            type="button"
+                            id="wishlist-ajax-login-button"
+                        >
+                            <?php echo __('Login') ?>
+                        </button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+
+<div id="wishlist-modal-content">
+    <div class="wishlist-content">
+        <div class="wishlist-data">
+            <div class="wishlist-modal-tittle"><?= $block->escapeHtml(__('Log in or Continue as Guest to Share Your Wishlist')) ?></div>
+            <fieldset class="fieldset">
+                <legend class="fieldset-legend">
+                    <span><?= $block->escapeHtml(__('WishList Modal Login')) ?></span>
+                </legend>
+                <div class="fields">
+                    <div class="field username required">
+                        <label class="label" for="user_name"><span><?= $block->escapeHtml(__('Name')) ?></span></label>
+                        <div class="control">
+                            <input id="user_name" class="input-text" title="username" name="username" required="" type="text"  placeholder="<?= /* @noEscape */ $block->getEnteredData('Enter name') ?>" >
+                        </div>
+                    </div>
+                    <div class="field required">
+                        <label class="label" for="user_email_address"><span><?= $block->escapeHtml(__('Email')) ?></span></label>
+                        <div class="control">
+                            <input id="email" class="input-text" title="email" name="email" required="" type="text"  placeholder="<?= /* @noEscape */ $block->getEnteredData('Email') ?>" >
+                        </div>
+                    </div>
+                </div>
+                <div class="field emails required">
+                    <label class="label" for="email_address"><span><?= $block->escapeHtml(__('Email addresses, separated by commas')) ?></span></label>
+                    <div class="control">
+                        <input id="share_email_address" class="input-text" title="emails" name="emails" required="" type="text" data-validate="{required:true,'validate-emails':true}" placeholder="<?= /* @noEscape */ $block->getEnteredData('Email addresses') ?>" >
+                    </div>
+                </div>
+                <div class="field text">
+                    <label class="label" for="message"><span><?= $block->escapeHtml(__('Message')) ?></span></label>
+                    <div class="control">
+                        <textarea id="share_message" name="message" cols="60" rows="5"><?= /* @noEscape */ $block->getEnteredData('message') ?></textarea>
+                    </div>
+                </div>
+            </fieldset>
+            <div class="actions-toolbar">
+                <div class="primary">
+                    <button type="button" title="<?= $block->escapeHtmlAttr(__('Share Wish List')) ?>"
+                            class="action wishlistsharing-submit submit primary">
+                        <span><?= $block->escapeHtml(__('Continue as Guest User')) ?></span>
+                    </button>
+                    <button type="button" title="<?= $block->escapeHtmlAttr(__('Share Wish List')) ?>"
+                            class="action wishlistsharing-submit submit wishlist-sign-in-button primary" id="wishlist-sign-in-button">
+                        <span><?= $block->escapeHtml(__('Sign In')) ?></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class='wishlist-success-div' >
+        <div id="wishlist-success">
+            <div class="modal-content">
+                <p id="wishlist-result-message"></p>
+                <div class="actions-toolbar wishlist-result-toolbar">
+                    <div class="primary">
+                        <button type="button" title="<?= $block->escapeHtmlAttr(__('Share Wish List')) ?>" class="action wishlistsharing-submit submit primary">
+                            <span><?= $block->escapeHtml(__('Back to My Wishlist')) ?></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "BelVG_GuestWishlist/js/guest_wishlist_view": {
+                "shareLink": "<?php echo $block->escapeUrl($this->getUrl('ajaxwishlist/index/share/')); ?>"
+            }
+        }
+    }
+</script>
+
+

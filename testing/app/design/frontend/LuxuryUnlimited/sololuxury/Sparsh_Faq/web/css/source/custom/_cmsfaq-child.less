@@ -1,0 +1,101 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .sparsh-question-answer {
+        margin-top: @indent__xl;
+
+        .faq-search-bar {
+            margin: 0 auto 60px;
+        }
+    }
+
+    .sparsh-faq-block {
+        .faq-question {
+            border-color: @theme__primary--brd-light;
+            border-width: @faq-trigger-border-width;
+            margin: 0;
+            padding: @faq-question-padding;
+
+            &.ui-state-active {
+                strong {
+                    color: @theme__primary--500;
+                }
+
+                &:after {
+                    color: @theme__primary--500;
+                    content: @faq-question-icon-minus;
+                }
+
+                &:last-child {
+                    border-width: none;
+                }
+            }
+
+            strong {
+                .lib-font-size(@font-size__xl);
+                .lib-line-height(@faq-trigger__line-height);
+                font-weight: @font-weight__semibold;
+                color: @theme__secondary--color-800;
+            }
+
+            &:after {
+                content: @faq-question-icon-plus;
+            }
+        }
+
+        .faq-answer {
+            .lib-font-size(@font-size__l);
+            .lib-line-height(@faq-answer__line-height);
+            font-weight: @font-weight__regular;
+            color: @theme__secondary--color-400;
+            padding: @faq-answer-padding;
+
+            a {
+                text-decoration: underline;
+                color: @theme__primary--500;
+            }
+
+            &.ui-accordion-content-active {
+                &:last-child {
+                    border-color: @theme__primary--brd-light;
+                    border-width: @faq-answer-border-width;
+                    border-style: solid;
+                }
+            }
+        }
+    }
+}
+
+//
+//    Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__m) {
+    .sparsh-question-answer {
+        .faq-search-bar {
+            width: 80%;
+        }
+    }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    .sparsh-question-answer {
+        .faq-search-bar {
+            width: 100%;
+        }
+    }
+}

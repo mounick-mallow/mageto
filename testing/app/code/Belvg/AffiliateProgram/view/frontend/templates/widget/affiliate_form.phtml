@@ -1,0 +1,251 @@
+<?php
+    $dynamicHelper = $this->helper(Dynamic\Customization\Helper\Data::class);
+    $storeManager = $dynamicHelper->getStoreManager();
+    $storeCode = $storeManager->getStore()->getCode();
+    $countryHelper = $dynamicHelper->getCountry();
+    $siteUrl = $dynamicHelper->getBaseUrl();
+
+    $countryCollection = $countryHelper->toOptionArray();
+
+    /** @var Belvg\AffiliateProgram\Block\Widget\AffiliateForm $block */
+?>
+
+<div class="returns-container affiliate-container cls_shipping_panelmain">
+    <div class="formBlock search-request-modal">
+        <form
+            method="post"
+            action="<?php echo $block->escapeUrl($block->getUrl('belvg_affiliate/index/post')) ?>"
+            id="affiliate-form"
+            data-mage-init='{"validation":{}}'
+        >
+            <input name="form_key" type="hidden" value="<?php echo $block->getFormKey(); ?>" />
+            <div class="personal-info mar-bot">
+
+                <fieldset class="fieldset specialrequest" data-hasrequired="* Required Fields">
+                    <legend class="tittle"><?= /* @noEscape */ __('Join the affiliate program') ?></legend>
+                    <div class="fields">
+                        <div class="form-control field name prifix-field">
+                            <label for="firstname" class="label">
+                                <span><?= $escaper->escapeHtml(__('First Name')) ?></span>
+                            </label>
+                            <div class="control prifix-input-with-option">
+                                <select
+                                    name="name_with_initials"
+                                    id="initial"
+                                    class="name_initial specialgender input-prefix prefix-select"
+                                >
+                                    <option selected="selected" value="mr."><?= /* @noEscape */ __('Mr.'); ?></option>
+                                    <option value="mrs."><?= /* @noEscape */ __('Mrs.'); ?></option>
+                                    <option value="miss."><?= /* @noEscape */ __('Miss.'); ?></option>
+                                </select>
+                                <input type="text" class="form-control input-text prefix-text"
+                                       id="firstname"
+                                       name="first_name"
+                                       placeholder="<?= /* @noEscape */ __('First Name'); ?>"
+                                       required
+                                />
+                            </div>
+                        </div>
+                        <div class="form-control field">
+                            <label for="lastname" class="label">
+                                <span><?= $escaper->escapeHtml(__('Last Name')) ?></span>
+                            </label>
+                            <div class="control">
+                                <input
+                                    type="text"
+                                    class="form-control "
+                                    placeholder="<?= /* @noEscape */ __('Last Name') ?>"
+                                    id="lastname"
+                                    name="last_name"
+                                    required
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fields">
+                        <div class="form-control email field">
+                            <label for="email" class="label">
+                                <span><?= $escaper->escapeHtml(__('Email')) ?></span>
+                            </label>
+                            <div class="control">
+                                <input type="email" class="form-control" placeholder="<?= /* @noEscape */ __('Email') ?>"
+                                       required id="email"
+                                       name="email"
+                                />
+                            </div>
+                        </div>
+                        <div class="form-control phone field">
+                            <label for="phone" class="label">
+                                <span><?= $escaper->escapeHtml(__('Contact No')) ?></span>
+                            </label>
+                            <div class="control">
+                                <div class="special-number-dropdown">
+                                    <div class="selected-flag">
+                                        <i class="fi"></i>
+                                    </div>
+
+                                    <select id="specialcountry" name="country_id">
+                                        <option><?php echo __('Select Country') ?></option>
+                                        <?php foreach ($countryCollection as $country): ?>
+                                            <?php if (!empty($country['value']) && !empty($country['label'])): ?>
+                                                <option value="<?php echo $country['value'] ?>">
+                                                    <?php echo $country['label'];?>
+                                                </option>
+                                            <?php endif; ?>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <input
+                                type="text" class="form-control input-text"
+                                placeholder="<?= /* @noEscape */ __('Contact No') ?>"
+                                required
+                                id="phone"
+                                name="phone"
+                            />
+                        </div>
+                    </div>
+
+                    <div class="fields">
+                        <div class="form-control field" style="width: 100%; ">
+                            <label class="label" for="website_url">
+                                <span><?= /* @noEscape */ __('Website URL')?></span>
+                            </label>
+                            <div class="control">
+                                <input type="url"
+                                       class="input-text"
+                                       id="website_url"
+                                       name="website_url"
+                                       placeholder="<?= /* @noEscape */ __('Website URL')?>"
+                                       value=""
+                                       required
+                                >
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fields">
+                        <div class="form-control field">
+                            <label for="affiliate-visitors" class="label">
+                                <span><?= $escaper->escapeHtml(__('Visitors Number')) ?></span>
+                            </label>
+                            <div class="control">
+                                <select id="affiliate-visitors" name="visitors" required>
+                                    <option><?= /* @noEscape */ __('Select Visitors Number') ?></option>
+                                    <option value="1000">1000+</option>
+                                    <option value="10000">10000+</option>
+                                    <option value="100000">100000+</option>
+                                    <option value="1000000">1000000+</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-control field">
+                            <label for="affiliate-views" class="label">
+                                <span><?= $escaper->escapeHtml(__('Views Number')) ?></span>
+                            </label>
+                            <div class="control">
+                                <select id="affiliate-views" name="views" required>
+                                    <option><?= /* @noEscape */ __('Select Views Number') ?></option>
+                                    <option value="1000">1000+</option>
+                                    <option value="10000">10000+</option>
+                                    <option value="100000">100000+</option>
+                                    <option value="1000000">1000000+</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fields">
+                        <div class="form-control address field">
+                            <label for="street1" class="label">
+                                <span><?= $escaper->escapeHtml(__('Street Address')) ?></span>
+                            </label>
+                            <div class="control">
+                                <input type="text" class="form-control" id="street1" name="street_address_1"
+                                       placeholder="<?= /* @noEscape */ __('Street Address 1') ?>">
+                            </div>
+                        </div>
+                        <div class="form-control address field">
+                            <label for="street2" class="label">
+                                <span><?= $escaper->escapeHtml(__('Street Address')) ?></span>
+                            </label>
+                            <div class="control">
+                                <input type="text" class="form-control" id="street2" name="street_address_2"
+                                       placeholder="<?= /* @noEscape */ __('Street Address 2') ?>">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fields fields-col-3">
+                        <div class="form-control city field" style="margin-left: 0; margin-right: 0">
+                            <label for="city" class="label">
+                                <span><?= $escaper->escapeHtml(__('City')) ?></span>
+                            </label>
+                            <div class="control">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="<?= /* @noEscape */ __('City') ?>"
+                                    id="city"
+                                    name="city"
+                                    required
+                                />
+                            </div>
+                        </div>
+                        <div class="form-control country field" style="margin-left: 0; margin-right: 0">
+                            <label for="country" class="label">
+                                <span><?= $escaper->escapeHtml(__('Country')) ?></span>
+                            </label>
+                            <div class="control">
+                                <select name="country" required id="country">
+                                    <option><?= /* @noEscape */ __('Select Country') ?></option>
+                                    <?php foreach ($countryCollection as $country): ?>
+                                        <?php if (!empty($country['value']) && !empty($country['label'])): ?>
+                                            <option value="<?php echo  $block->escapeHtmlAttr($country['label']) ?>">
+                                                <?php echo $block->escapeHtml(__($country['label'])) ?>
+                                            </option>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fields">
+                        <div class="form-control postcode field" style="width: 100%; ">
+                            <label for="country" class="label">
+                                <span><?= $escaper->escapeHtml(__('Post Code')) ?></span>
+                            </label>
+                            <div class="control">
+                                <input type="text" class="form-control" id="postcode" name="post_code"
+                                       placeholder="<?= /* @noEscape */ __('Post Code') ?>">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sendinfo" style="text-align: center;">
+                        <input
+                            type="button"
+                            class="send-request btn btn-primary return-submit primary action"
+                            value="<?= /* @noEscape */ __('Let\'s Go') ?>"
+                            id="affiliate-submit"
+                            name="aff-submit"
+                        />
+                    </div>
+                </fieldset>
+        </form>
+    </div>
+</div>
+
+<div id="affiliate-request-result" style="display:none;">
+    <div class="modal-content" style="text-align: center;"><?php echo __('Affiliate Request Has Been Sent'); ?></div>
+</div>
+
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Belvg_AffiliateProgram/js/affiliate": ""
+        }
+    }
+</script>

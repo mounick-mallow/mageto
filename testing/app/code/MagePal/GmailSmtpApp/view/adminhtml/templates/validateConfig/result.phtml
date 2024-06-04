@@ -1,0 +1,68 @@
+<?php
+/**
+ * Copyright © MagePal LLC. All rights reserved.
+ * See COPYING.txt for license details.
+ * https://www.magepal.com | support@magepal.com
+ */
+?>
+
+<?php /** @var $block MagePal\GmailSmtpApp\Block\Adminhtml\ValidateConfig  */ ?>
+
+<?php foreach ($block->verify() as $result): ?>
+    <?php if ($result['has_error'] === false): ?>
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
+            <circle class="path circle" fill="none" stroke="#73AF55" stroke-width="6" stroke-miterlimit="10" cx="65.1"
+                    cy="65.1" r="62.1"/>
+            <polyline class="path check" fill="none" stroke="#73AF55" stroke-width="6" stroke-linecap="round"
+                      stroke-miterlimit="10" points="100.2,40.2 51.5,88.8 29.8,67.5 "/>
+        </svg>
+        <p class="success">Congratulations, You Did It!</p>
+        <p><?= $block->escapeHtml($result['msg']) ?></p>
+
+        <hr class="style" />
+
+        <h2 class="center">What next? Take a look at our other top extensions.</h2>
+        <table aria-describedby="extensions" class="tg">
+            <tbody><tr>
+                <td class="tg-baqh" colspan="2">
+                    <a href="https://bit.ly/smtp-ex-ee" target="_blank">Enhanced E-commerce for Google Tag Manager</a>
+                </td>
+            </tr><tr>
+                <th class="tg-baqh" scope="col">
+                    <a href="https://bit.ly/smtp-ex-esp" target="_blank">Enhanced Success Page</a>
+                </th>
+                <th class="tg-baqh" scope="col">
+                    <a href="https://bit.ly/smtp-ex-ete" target="_blank">Enhanced Sales Email</a>
+                </th>
+            </tr>
+            </tr>
+            </tbody>
+        </table>
+    <?php else: ?>
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
+            <circle class="path circle" fill="none" stroke="#D06079" stroke-width="6" stroke-miterlimit="10" cx="65.1"
+                    cy="65.1" r="62.1"/>
+            <line class="path line" fill="none" stroke="#D06079" stroke-width="6" stroke-linecap="round"
+                  stroke-miterlimit="10" x1="34.4" y1="37.9" x2="95.8" y2="92.3"/>
+            <line class="path line" fill="none" stroke="#D06079" stroke-width="6" stroke-linecap="round"
+                  stroke-miterlimit="10" x1="95.8" y1="38" x2="34.4" y2="92.2"/>
+        </svg>
+        <p class="error">Bummer!</p>
+        <div class="error-wrapper">
+            <p><?= $block->escapeHtml($block->formatErrorMsg($result['msg']), ['a']) ?> </p>
+        </div>
+
+        <hr class="style"/>
+
+        <h2 class="center">Need help with configuring your SMTP?</h2>
+        <p>
+            Our affordable technical support include help with installation, usage, configuration, and troubleshooting
+            our Free Open Source extensions.
+        </p>
+        <p>
+            Visit <a href="http://bit.ly/MpSmtpEr" target="_blank">www.magepal.com</a> to learn more about our
+            <a href="http://bit.ly/MpSmtpEr"
+               target="_blank">Premium 30 Minutes Paid Support</a>.
+        </p>
+    <?php endif; ?>
+<?php endforeach; ?>

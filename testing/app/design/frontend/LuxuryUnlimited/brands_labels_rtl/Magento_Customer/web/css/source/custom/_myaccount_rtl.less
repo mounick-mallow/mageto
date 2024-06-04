@@ -1,0 +1,104 @@
+//
+//  Common
+//  ---------------------------------------------
+
+& when (@media-common = true) {
+    .account {
+        &.layout-fullwidth.page-layout-2columns-left.pl-thm-luxuryunlimited-brands_labels_rtl {
+            .columns {
+                .column.main {
+                    padding: 0 (@indent__l + 3) 0 0;
+                }
+            }
+        }
+
+        .page-wrapper {
+            .block-collapsible-nav {
+                .item {
+                    a {
+                        &:before {
+                            left: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .customer-account-index {
+        .block {
+            .block-title {
+                color: @color-gray20;
+
+                strong {
+                    .lib-font-size(24);
+                    line-height: @indent__l;
+                    font-weight: @font-weight__heavier;
+                    color: @color-black;
+                }
+
+                a.action.edit {
+                    font-size: @font-size__s;
+                    .lib-line-height(19);
+                    text-transform: capitalize;
+                    text-decoration: underline;
+                    font-weight: @font-weight__heavier;
+                    border: 2px solid @theme__primary--color-400;
+                    color: @theme__primary--color-400;
+                }
+            }
+        }
+    }
+
+    .block {
+        .title {
+            strong {
+                font-size: @font-size__base;
+                margin: 0;
+                .lib-line-height(23);
+                font-weight: @font-weight__heavier;
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    .account {
+        &.layout-fullwidth.page-layout-2columns-left.pl-thm-luxuryunlimited-brands_labels_rtl {
+            .page-main {
+                .columns {
+                    .column.main {
+                        padding: 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__xs) {
+    .customer-account-index {
+        .page-main {
+            .page-title-wrapper {
+                margin: 50px 20px 50px 20px;
+
+                .page-title {
+                    span {
+                        font-size: @h3__font-size;
+                        font-style: normal;
+                        .lib-line-height(30);
+                        font-weight: @font-weight__semibold;
+                    }
+                }
+            }
+        }
+    }
+}

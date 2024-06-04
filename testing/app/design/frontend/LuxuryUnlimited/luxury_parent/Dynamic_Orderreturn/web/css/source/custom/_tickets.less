@@ -1,0 +1,316 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .orderreturn-customer-tickets {
+        .orders-history {
+            margin-top: 0;
+            margin-bottom: @indent__base;
+
+            .table-order-items {
+                border: 1px solid @table__border-color;
+                border-radius: @table-custom__border-radius;
+                padding: 0;
+                margin: 0;
+
+                .myreturns-table-row {
+                    .lib-css(display, flex, @_prefix: 1);
+                    .lib-css(justify-content, space-between, @_prefix: 1);
+                    .lib-css(align-items, center, @_prefix: 1);
+                    padding: 0 @indent__s;
+                    margin: 0;
+                }
+
+                .myreturns-table-header {
+                    background: @table-custom__th-background;
+                    border-radius: 10px;
+
+                    .myreturns-table-col {
+                        .lib-font-size(14);
+                        .lib-line-height(22);
+                        font-weight: @font-weight__semibold;
+                        color: @table-custom__th-color;
+                        padding: @table-custom__th-padding;
+                        text-transform: capitalize;
+                        letter-spacing: 0;
+                        border-color: @table__border-color;
+                    }
+                }
+
+                .myreturns-table-body {
+                    .myreturns-table-row {
+                        border-top: 1px solid @table__border-color;
+
+                        .myreturns-table-col {
+                            .lib-font-size(14);
+                            .lib-line-height(22);
+                            font-weight: @font-weight__regular;
+                            color: @table-custom__td-color;
+                            padding: @indent__s 0;
+                            letter-spacing: 0;
+                            word-wrap: break-word;
+
+                            .myreturns-txt-title {
+                                display: none; /*  added display none to toggle the title content in mobile view */
+                            }
+
+                            .ticket-status {
+                                .lib-font-size(12);
+                                .lib-css(display, flex, @_prefix: 1);
+                                .lib-css(justify-content, center, @_prefix: 1);
+                                .lib-css(align-items, center, @_prefix: 1);
+                                border: 1px solid @color-gray94;
+                                font-weight: @font-weight__semibold;
+                                letter-spacing: 0;
+                                text-align: center;
+                                padding: 4px 0 2px;
+                                width: 100px;
+                                max-width: 120px;
+                                background-color: @color-gray94;
+                                border-radius: 8px;
+
+                                &.pending {
+                                    border: 1px solid @theme__color__primary;
+                                    background: @theme__color__primary;
+                                    color: @color-white;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .returns_empty {
+                text-align: center;
+
+                .empty_icon {
+                    margin-bottom: 24px;
+
+                    .lib-icon-font(
+                        @_icon-font-content: @icon-no-coupon,
+                        @_icon-font: @icon-font-family,
+                        @_icon-font-size: @myticket-empty-icon__font-size,
+                        @_icon-font-line-height: @myticket-empty-icon__line-height,
+                        @_icon-font-color: @myticket-empty-icon__font-color,
+                        @_icon-font-text-hide: false,
+                        @_icon-font-position: before,
+                        @_icon-font-display: block
+                    );
+                }
+
+                p {
+                    .lib-font-size(@myticket-content-font-size);
+                    .lib-line-height(@myticket-content-line-height);
+                    font-weight: @myticket-content-font-weight;
+                    color: @myticket-content-color;
+                    text-align: center;
+                }
+            }
+
+            .returns_footer {
+                padding: @indent__m 0 @indent__m;
+                overflow: hidden;
+                text-align: center;
+
+                .clsspecialrequest {
+                    .action {
+                        margin: 0;
+                        width: 236px;
+                    }
+                }
+            }
+
+            .help-modal {
+                display: none;
+            }
+        }
+
+        .modals-wrapper
+            aside.modal-popup.modal-slide.special-requst-modal.modal-popup.special-requst-modal.help-modal {
+            .modal-inner-wrap {
+                width: 600px;
+
+                .modal-header {
+                    .action-close {
+                        top: 19px;
+                        position: absolute;
+                        right: 12px;
+                    }
+
+                    .modal-title {
+                        padding: 24px;
+                    }
+                }
+
+                .form.contact {
+                    background: transparent;
+                    padding-top: 0;
+                }
+
+                .modal-content {
+                    margin-top: 16px;
+                    border-radius: 10px;
+
+                    .help-tagline {
+                        text-align: center;
+                    }
+
+                    .help-content {
+                        padding: 10px 20px;
+                    }
+                }
+
+                .fieldset.helprequest {
+                    .field {
+                        margin-bottom: @indent__s;
+                        text-align: left;
+
+                        .label {
+                            padding-left: 0;
+                            color: @color-black;
+                            font-weight: @font-weight__semibold;
+                            .lib-font-size(14);
+                            margin: 0 0 8px;
+                        }
+                    }
+
+                    .special-number-dropdown select {
+                        height: 40px;
+
+                        &:focus {
+                            box-shadow: none;
+                        }
+                    }
+                }
+
+                .clsmsgsuccessbox {
+                    padding: 20px 0;
+                    text-align: center;
+
+                    .actions-toolbar .primary {
+                        width: auto;
+                        border-radius: 12px;
+                    }
+                }
+            }
+        }
+
+        .returns_footer {
+            .lib-vendor-prefix-display(flex);
+            .lib-css(justify-content, space-between, @_prefix: 1);
+
+            .toolbar-amount {
+                display: none;
+            }
+        }
+    }
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__s) {
+    .orderreturn-customer-tickets {
+        .orders-history {
+            .myreturns-table-row {
+                .myreturns-table-col {
+                    &.ticketid {
+                        width: 20%;
+                        min-width: 96px;
+                    }
+
+                    &.type {
+                        width: 11%;
+                        min-width: 105px;
+                    }
+
+                    &.sku {
+                        width: 30%;
+                        min-width: 96px;
+                    }
+
+                    &.reason-msg {
+                        width: 25%;
+                        min-width: 96px;
+                    }
+
+                    &.status {
+                        width: 11%;
+                        min-width: 110px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__s) {
+    .orderreturn-customer-tickets {
+        .main {
+            .orders-history {
+                .table-order-items {
+                    .myreturns-table-header {
+                        display: none; /*  added display none to toggle the title content in mobile view */
+                    }
+
+                    .myreturns-table-body {
+                        .myreturns-table-row {
+                            display: block;
+
+                            &:first-child {
+                                border-top: 0;
+                            }
+
+                            .myreturns-table-col {
+                                .lib-css(display, flex, @_prefix: 1);
+                                .lib-css(align-items, center, @_prefix: 1);
+                                padding: 0;
+
+                                .myreturns-txt-title {
+                                    display: block;
+                                    width: 42%;
+                                    color: @color-gray20;
+                                    .lib-font-size(14);
+                                    .lib-line-height(22);
+                                    font-weight: @font-weight__semibold;
+                                    letter-spacing: 0;
+                                    text-transform: capitalize;
+                                    padding: 15px @indent__s;
+                                }
+
+                                .myreturns-txt-cnt {
+                                    width: 58%;
+                                    padding: 15px @indent__s;
+                                    text-align: right;
+
+                                    &.ticket-status {
+                                        padding: 4px 0 2px;
+                                    }
+                                }
+
+                                &.status {
+                                    justify-content: space-between;
+                                    padding-right: @indent__s;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

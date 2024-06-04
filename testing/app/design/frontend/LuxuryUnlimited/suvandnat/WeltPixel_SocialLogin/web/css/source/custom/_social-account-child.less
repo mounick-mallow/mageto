@@ -1,0 +1,29 @@
+//
+//  Common
+//  _____________________________________________
+& when (@media-common =true) {
+    body.sociallogin-account-socialaccounts {
+        .social_empty {
+            .empty_icon {
+                &:before {
+                    display: block;
+                    height: 84px;
+                    width: 84px;
+                    margin: 0 auto 22px;
+                }
+
+                .lib-icon-font(
+                    @_icon-font-content: @icon-credit-card,
+                    @_icon-font: @icon-font-family,
+                    @_icon-font-size: 84px,
+                    @_icon-font-line-height: 84px,
+                    @_icon-font-color: @theme__primary--color-500
+                );
+            }
+        }
+    }
+
+    .sociallogin-account-socialaccounts .social_empty p {
+        color: @theme__territory--color-400;
+    }
+}

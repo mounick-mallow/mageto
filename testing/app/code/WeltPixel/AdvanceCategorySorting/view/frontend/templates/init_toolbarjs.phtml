@@ -1,0 +1,17 @@
+<?php
+    $overwrite = false;
+    $_helper = $block->helper(\WeltPixel\AdvanceCategorySorting\Helper\Data::class);
+    $overwrite = $_helper->overwriteToolbar() ? false : true;
+?>
+
+<?php if ($overwrite): ?>
+    <script>
+        require.config({
+            map: {
+                '*': {
+                    productListToolbarForm: 'WeltPixel_AdvanceCategorySorting/js/product/list/toolbar'
+                }
+            }
+        });
+    </script>
+<?php endif; ?>

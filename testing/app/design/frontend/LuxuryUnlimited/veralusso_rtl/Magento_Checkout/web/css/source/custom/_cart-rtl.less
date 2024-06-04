@@ -1,0 +1,192 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .checkout-cart-index {
+        .column.main {
+            direction: rtl;
+        }
+    }
+
+    .cart-totals {
+        tbody {
+            .mark {
+                text-align: right;
+            }
+
+            .amount {
+                text-align: left;
+                padding-left: 0;
+                padding-right: 14px;
+            }
+        }
+        .grand {
+            .mark {
+                padding-left: 16px;
+                padding-right: 0;
+            }
+        }
+    }
+
+    .cart-summary {
+        .block.discount {
+            .actions-toolbar {
+                left: 0;
+                right: auto;
+            }
+        }
+    }
+
+    .block.crosssell {
+        .products-grid {
+            direction: initial;
+        }
+    }
+
+    .cart {
+        &.table-wrapper {
+            .col {
+                &.qty {
+                    .field {
+                        &.qty {
+                            .qty-changer {
+                                a {
+                                    &.qty-dec {
+                                        padding-left: 5px;
+                                        padding-right: 0;
+                                    }
+
+                                    &.qty-inc {
+                                        padding-left: 0;
+                                        padding-right: 5px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__m) {
+    .checkout-cart-index {
+        .cart-summary {
+            float: left;
+        }
+
+        .form-cart {
+            float: right;
+        }
+    }
+
+    .cart {
+        &.table-wrapper {
+            .product-item-photo {
+                padding-left: 20px;
+                padding-right: 0;
+            }
+
+            .col {
+                &.subtotal {
+                    padding-left: 92px;
+                    padding-right: 11px;
+                }
+
+                &.qty {
+                    .field.qty {
+                        .qty-changer {
+                            a.qty-dec {
+                                right: 6px;
+                                left: auto;
+                            }
+
+                            a.qty-inc {
+                                right: auto;
+                                left: 6px;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .actions-toolbar {
+                left: 0;
+                right: auto;
+
+                > .action-edit {
+                    right: auto;
+                    left: 32px;
+                    margin-right: 0;
+                }
+
+                > .action-delete {
+                    left: 0;
+                    right: auto;
+                }
+
+                > .towishlist {
+                    left: 22px;
+                    right: auto;
+                }
+            }
+        }
+    }
+
+    .cart-container {
+        .form-cart {
+            .actions.main {
+                text-align: right;
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    .checkout-cart-index {
+        .cart {
+            &.table-wrapper {
+                .product-item-photo {
+                    padding-left: 20px;
+                    padding-right: 0;
+                }
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__s) {
+    .cart-totals {
+        .totals {
+            .amount {
+                text-align: left;
+            }
+        }
+    }
+}

@@ -1,0 +1,383 @@
+// /**
+//  * Copyright © 2015 Magento. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//    Common
+//--------------------------------------
+
+& when (@media-common =true) {
+    .page-title-wrapper {
+        text-align: @contact-align-center;
+    }
+
+    .cms-contact-us {
+        .main {
+            margin: 0 auto;
+        }
+
+        .cls_contactus_main {
+            .cls_cont_static {
+                .lib-font-size(16);
+                .lib-line-height(20);
+                color: @theme__secondary--color-400;
+                font-weight: @font-weight__semibold;
+                margin: 0 auto 60px;
+                max-width: 600px;
+                text-align: @contact-align-center;
+            }
+        }
+
+        .form {
+            &.contact {
+                margin: 0 auto;
+                max-width: 920px;
+
+                .field {
+                    .cls_comm_input {
+                        width: 50%;
+                    }
+
+                    .control {
+                        input,
+                        select {
+                            .lib-font-size(16);
+                            color: @color-black;
+                            .lib-line-height(16);
+                        }
+                    }
+
+                    textarea {
+                        .lib-font-size(16);
+                        color: @color-black;
+                        width: @contact-full-width;
+                    }
+
+                    &.comment-country {
+                        .lib-vendor-prefix-display(flex);
+                        .lib-css(justify-content, space-between, @_prefix: 1);
+                    }
+
+                    &:not(.comment) {
+                        .lib-vendor-prefix-display(flex);
+                        .lib-css(justify-content, space-between, @_prefix: 1);
+                        .lib-css(gap, 30px, @_prefix: 1);
+                    }
+
+                    &.name {
+                        .firstname {
+                            .lib-vendor-prefix-display(flex);
+
+                            .control {
+                                border: 1px solid @theme__primary--200;
+                                height: 50px;
+                                padding-bottom: @indent__s;
+                                padding-top: @indent__s;
+                                width: @contact-full-width;
+                            }
+
+                            select {
+                                border: @contact-zero-val;
+                                height: auto;
+                                padding-bottom: 3px;
+                                padding-top: 3px;
+                                width: auto;
+
+                                &:focus {
+                                    box-shadow: @contact-none-value;
+                                }
+                            }
+
+                            input {
+                                border: @contact-zero-val;
+                                height: auto;
+                                padding-bottom: 3px;
+                                padding-top: 3px;
+                                position: relative;
+                                width: auto;
+
+                                &::after {
+                                    background: @theme__primary--brd-light;
+                                    content: '';
+                                    height: 27px;
+                                    position: absolute;
+                                    right: 4px;
+                                    top: 11px;
+                                    width: 2px;
+                                }
+                            }
+                        }
+                    }
+
+                    &.telephone {
+                        width: @contact-full-width;
+
+                        .control {
+                            width: @contact-full-width;
+                        }
+
+                        .intl-tel-input {
+                            &.allow-dropdown {
+                                .flag-container {
+                                    &:hover {
+                                        .selected-flag {
+                                            background-color: transparent;
+                                        }
+                                    }
+
+                                    .selected-flag {
+                                        padding-left: 15px;
+                                        position: relative;
+                                        width: 92px;
+
+                                        .iti-flag {
+                                            top: 2px;
+                                        }
+
+                                        .iti-arrow {
+                                            border: @contact-zero-val;
+                                            position: relative;
+
+                                            &::after {
+                                                content: @icon-down;
+                                                position: absolute;
+                                                top: 50%;
+                                                font-family: @icomoon-font-family;
+                                                left: 40px;
+                                                .lib-font-size(20);
+                                                color: @theme__primary--color;
+                                                .lib-css(transform, translateY(-50%), @_prefix: 1);
+                                            }
+                                        }
+
+                                        &::after {
+                                            background: @theme__primary--brd-light;
+                                            content: '';
+                                            height: 27px;
+                                            position: absolute;
+                                            right: 4px;
+                                            top: 11px;
+                                            width: 2px;
+                                        }
+                                    }
+                                }
+
+                                input {
+                                    padding-left: 110px;
+                                    padding-right: @contact-zero-val;
+                                    width: @contact-full-width;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                .cls_comm_input {
+                    margin-bottom: @indent__base;
+                    margin-right: @contact-zero-val;
+                }
+            }
+
+            .submit_main_contact {
+                .actions-toolbar {
+                    margin-top: @indent__xl;
+                    text-align: @contact-align-center;
+
+                    .primary {
+                        float: @contact-none-value;
+                    }
+
+                    .action {
+                        &.primary {
+                            .lib-button-primary();
+                            width: 360px;
+                            height: 50px;
+                        }
+                    }
+                }
+            }
+        }
+
+        .cls-contact-details {
+            margin-top: 50px;
+
+            .contact-us-page-bottom-contact {
+                text-align: @contact-align-center;
+
+                h5 {
+                    .lib-font-size(16);
+                    border-bottom: 1px solid @color-gray_light;
+                    color: @color-black_dark;
+                    display: inline-block;
+                    font-weight: @font-weight__semibold;
+                    margin-bottom: 45px;
+                    margin-top: @contact-zero-val;
+                    padding: 15px;
+                    text-transform: uppercase;
+                }
+
+                .contact-details__details {
+                    .content {
+                        p {
+                            .lib-font-size(16);
+                            .lib-line-height(24);
+                            color: @theme__secondary--color-400;
+                            font-weight: @font-weight__semibold;
+                            margin-bottom: @indent__s;
+                            text-align: @contact-align-center;
+                        }
+
+                        a {
+                            .lib-font-size(16);
+                            .lib-line-height(24);
+                            color: @theme__secondary--color-400;
+                            font-weight: @font-weight__regular;
+                            text-align: @contact-align-center;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+//
+//  Mobile  max-width: 480px
+//--------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum ='max')
+    and
+    (@break = @screen__xs) {
+    .pl-thm-luxuryunlimited-sololuxury,
+    .pl-thm-luxuryunlimited-sololuxury_rtl {
+        &.cms-page-view {
+            &.cms-contact-us {
+                .form.contact {
+                    .field {
+                        &.name {
+                            .firstname {
+                                input {
+                                    width: 68%;
+                                }
+
+                                select {
+                                    width: 30%;
+                                }
+                            }
+                        }
+
+                        &.select_input_box {
+                            .intl-tel-input {
+                                &.allow-dropdown {
+                                    .flag-container {
+                                        .selected-flag {
+                                            .iti-arrow {
+                                                &::after {
+                                                    left: 27px;
+                                                }
+                                            }
+
+                                            &::after {
+                                                right: 24px;
+                                                top: 7px;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+//
+//  Mobile  max-width: 768px
+//--------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum ='max')
+    and
+    (@break = @screen__m) {
+    .cms-page-view {
+        &.cms-contact-us {
+            .form.contact {
+                .field {
+                    .cls_comm_input {
+                        width: @contact-full-width;
+                    }
+
+                    &:not(.comment) {
+                        display: block;
+                    }
+
+                    .control {
+                        input,
+                        select {
+                            width: @contact-full-width;
+                        }
+                    }
+
+                    &.name {
+                        .control {
+                            width: @contact-full-width;
+                        }
+
+                        .firstname {
+                            input {
+                                width: 78%;
+                            }
+
+                            select {
+                                width: 20%;
+                            }
+                        }
+                    }
+
+                    .subject {
+                        margin-bottom: 16px;
+                    }
+
+                    &.typeofenquiry {
+                        margin-bottom: @contact-zero-val;
+
+                        .control {
+                            margin-bottom: @indent__base;
+                        }
+                    }
+                }
+
+                .actions-toolbar {
+                    margin-top: @contact-zero-val;
+
+                    .action {
+                        &.primary {
+                            width: @contact-full-width;
+                            margin: @contact-zero-val;
+                        }
+                    }
+                }
+            }
+
+            .cls-contact-details {
+                .contact-us-page-bottom-contact {
+                    .contact-details__details {
+                        .content {
+                            text-align: left;
+
+                            p {
+                                text-align: left;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

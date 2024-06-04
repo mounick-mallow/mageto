@@ -1,0 +1,88 @@
+// /**
+//  * Copyright © 2015 Magento. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//  Common
+//  ---------------------------------------------
+
+& when (@media-common = true) {
+    .track-order-login {
+        .track-order-widget {
+            max-width: 945px;
+            margin: 0 auto;
+        }
+
+        .track-order-element {
+            border: none;
+        }
+
+        .fieldset {
+            .actions-toolbar {
+                .primary {
+                    .action {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+
+    .modal-track-help {
+        .field.create-ticket {
+            text-align: center;
+        }
+
+        #create-ticket {
+            background: @custom__color-black;
+            color: @custom__color-white;
+        }
+    }
+}
+
+//
+//  Desktop
+//  ---------------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__s) {
+    .track-order-login {
+        .track-order-widget {
+            .block-customer-login {
+                border-right: 1px solid @theme__secondary--color-200;
+                padding-right: 51px;
+            }
+
+            .block-new-customer {
+                padding-left: 51px;
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  ---------------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum ='max')
+    and
+    (@break = @screen__m) {
+    .modal-popup.modal-slide.modal-track-help,
+    .modal-popup.modal-slide.modal-track-reference {
+        .modal-inner-wrap {
+            background: transparent;
+            padding: @indent__s;
+
+            .modal-header,
+            .modal-content {
+                background: @custom__color-white;
+            }
+        }
+    }
+}

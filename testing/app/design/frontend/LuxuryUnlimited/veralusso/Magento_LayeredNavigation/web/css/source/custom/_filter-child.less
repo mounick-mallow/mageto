@@ -1,0 +1,169 @@
+& when (@media-common =true) {
+    .filter {
+        &-subtitle {
+            .lib-font-size(24);
+            font-weight: @font-weight__heavier;
+            padding: 0;
+            .lib-line-height(16);
+            color: @theme__primary--color;
+            margin-bottom: @indent__xl;
+            border-bottom: 0;
+            text-align: left;
+        }
+
+        &-options {
+            &-item {
+                padding: 0;
+            }
+
+            &-title {
+                background-color: @custom__color-white;
+                color: @custom__color-black;
+                font-weight: @font-weight__semibold;
+                padding-top: @indent__xxs;
+                padding-bottom: @indent__xxs;
+
+                &:after {
+                    content: @icon-down;
+                }
+
+                &:hover {
+                    &:after {
+                        background-color: transparent;
+                        color: @custom__color-black;
+                    }
+                }
+
+                &.active {
+                    &:after {
+                        content: @icon-up;
+                    }
+                }
+            }
+
+            .filter {
+                &-options {
+                    &-content {
+                        background-color: @custom__color-white;
+                        border: 0;
+                        padding-left: 0;
+                        padding-right: 0;
+
+                        .items {
+                            &:extend(.abs-reset-list all);
+                        }
+
+                        .item {
+                            .lib-font-size(16);
+                            .lib-line-height(20);
+                            font-weight: @font-weight__heavier;
+                            padding: 8px 0;
+
+                            a {
+                                color: @theme__primary--color;
+
+                                .count {
+                                    color: @custom__color-gray1;
+                                }
+
+                                span {
+                                    &.price {
+                                        display: inline-block;
+                                    }
+
+                                    &:before {
+                                        margin-left: 2px;
+                                    }
+                                }
+
+                                &:hover {
+                                    text-decoration: none;
+                                }
+                            }
+
+                            input {
+                                &:checked + label:after {
+                                    border-color: @custom__color-white;
+                                }
+
+                                &:checked + label:before {
+                                    background-color: @custom__color-gray1;
+                                    border-color: @custom__color-gray1;
+                                }
+                            }
+
+                            label {
+                                &:before {
+                                    border-color: @theme__primary--color-200;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .filter-current {
+            .filter-current-subtitle {
+                padding-left: 0;
+                padding-right: 0;
+            }
+
+            .items {
+                border: 0;
+                &:extend(.abs-reset-list all);
+
+                .item {
+                    text-align: left;
+                    padding-left: 0;
+
+                    .filter-label {
+                        color: @theme__primary--color;
+                    }
+
+                    .filter-value {
+                        color: @theme__primary--color;
+                    }
+                }
+            }
+        }
+
+        .filter-actions {
+            background-color: @custom__color-white;
+            border: 0;
+        }
+
+        // Parent theme rewrites
+        .filter-content {
+            .filter-subtitle {
+                font-weight: @font-weight__semibold;
+                margin-bottom: @indent__xl;
+                margin-top: 14px;
+            }
+        }
+
+        .filter-options {
+            .filter-options-content {
+                padding-top: 0;
+            }
+        }
+
+        .filter-options-title {
+            .lib-font-size(16);
+
+            &.active {
+                &::after {
+                    content: @icon-up;
+                }
+            }
+        }
+    }
+
+    .ui-slider {
+        .ui-slider-handle {
+            position: absolute;
+            z-index: 2;
+            cursor: default;
+        }
+    }
+}

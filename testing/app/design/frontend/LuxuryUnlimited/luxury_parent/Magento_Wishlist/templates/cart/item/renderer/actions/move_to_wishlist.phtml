@@ -1,0 +1,40 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \Magento\Wishlist\Block\Cart\Item\Renderer\Actions\MoveToWishlist $block */
+?>
+<?php if ($block->isProductVisibleInSiteVisibility()) : ?>
+    <a href="#"
+       data-item ='<?= /* @noEscape */ $block->getMoveFromCartParams() ?>'
+       id ='<?php echo $block->getItem()->getId(); ?>'
+       data-mage-init='
+            {
+                "LuxuryUnlimited_AjaxWishList/js/from-cart": {
+                    "id": "<?php echo $block->getItem()->getId(); ?>",
+                    "url": "<?= $block->escapeUrl($block->getUrl('ajaxwishlist/index/fromcart')) ?>"
+                }
+            }
+        '
+       class="use-ajax action towishlist action-towishlist move-to-wishlist-<?php echo $block->getItem()->getId(); ?>" title="Move to Wishlist">
+        <span><?= $block->escapeHtml(__('Move to Wishlist')) ?></span>
+    </a>
+<?php endif ?>
+<div class="clssearchreqpop">
+    <div id="modal-wishlist-content-<?php echo $block->getItem()->getId(); ?>" style="display: block">
+        <div class="modal-search-content">
+            <div class="ticket-created-success" style="display:none">
+                <div class="response-container">
+                    <div class="image"><img src="" class="prod-image" /> </div>
+                </div>
+                <div class="re-result-btns" style="text-align: center">
+                    <div class="product-message"></div>
+                    <a class="action primary moved-view-wishlist" href="#"><?= $block->escapeHtml(__('View Wishlist')); ?></a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

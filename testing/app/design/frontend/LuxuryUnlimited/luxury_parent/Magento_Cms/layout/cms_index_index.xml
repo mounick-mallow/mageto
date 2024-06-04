@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+    	<remove src="mage/calendar.css" />
+    	<remove src="css/print.css" />
+        <remove src="icon-fonts/css/animation.css" />
+        <remove src="fancybox/css/jquery.fancybox.css" />
+        <remove src="Bss_GeoIPAutoSwitchStore::css/magnific-popup.css" />
+        <remove src="Bss_SocialLogin::css/jquery.fancybox.min.css" />
+        <remove src="Experius_DonationProduct::css/donation.css" />
+        <remove src="Magefan_Blog::css/blog-m.css" />
+        <remove src="Magefan_Blog::css/blog-custom.css" />
+        <remove src="Smartwave_Dailydeals::css/style.css" />
+        <remove src="WeltPixel_Quickview::css/magnific-popup.css" />
+        <remove src="Amasty_ShopbyBase::css/swiper.min.css" />
+        <remove src="//fonts.googleapis.com/css?family=Shadows+Into+Light" />
+        <!-- DEVTASK-21844-performanceissue-p2 : remove unused css on the page -->
+        <remove src="Plumrocket_SocialLoginFree::css/pslogin.css" />
+        <remove src="Plumrocket_SocialLoginFree::css/pslogin-custom.css" />
+        <remove src="MaxMage_InternationalTelephoneInput::css/intlTelInput.css"/>
+        <remove src="Sparsh_Faq::css/faq.css"/>
+    </head>
+</page>

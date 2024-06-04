@@ -1,0 +1,44 @@
+//
+//  Common
+//  ---------------------------------------------
+
+& when (@media-common = true) {
+    #order-track-help {
+        padding: @indent__base;
+        text-align: @storecredit-align-center;
+    }
+
+    body.swarming_credits-index-index {
+        .page-wrapper {
+            .columns {
+                .main:has(.empty-store-credit) {
+                    p:not(.empty-store-credit p) {
+                        .lib-css(display, @storecredit-none);
+                    }
+                }
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  ---------------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__s) {
+    .help-modal {
+        padding: @indent__l;
+    }
+
+    .modals-wrapper {
+        aside.modal-popup.modal-slide.special-requst-modal.modal-popup.help-modal {
+            .modal-inner-wrap {
+                max-width: 100%;
+            }
+        }
+    }
+}

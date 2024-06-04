@@ -1,0 +1,81 @@
+<?php
+/**
+ * Copyright © 2018 Porto. All rights reserved.
+ */
+
+?>
+<?php
+/**
+ * Top menu for store
+ *
+ * @see \Smartwave\Megamenu\Block\Topmenu
+ */
+?>
+<?php
+    $_helper = $block->getMenuHelper();
+    $_portohelper = $block->getPortoHelper();
+
+    $categories = $_helper->getFirstLevelCategories();
+    $_category_config = $_portohelper->getConfig('porto_settings/category');
+    $_category_grid_config = $_portohelper->getConfig('porto_settings/category_grid');
+
+    $aspect_ratio = $this->getData("aspect_ratio");
+    if($aspect_ratio == null) {
+        $aspect_ratio = $_category_config['aspect_ratio'];
+    }
+    $ratio_width = $this->getData("image_width");
+    if(!$ratio_width) {
+        $ratio_width = ($_category_config['ratio_width'])?$_category_config['ratio_width']:300;
+    }
+    $ratio_height = $this->getData("image_height");
+    if(!$ratio_height) {
+        $ratio_height = ($_category_config['ratio_height'])?$_category_config['ratio_height']:300;
+    }
+    $lazy_owl = $this->getData("lazy_owl");
+    if(!$lazy_owl)
+        $lazy_owl = 0;
+    $product_count = $this->getData("product_count");
+    if(!$product_count)
+        $product_count = 8;
+    $columns = $this->getData("columns");
+    if(!$columns)
+        $columns = 4;
+?>
+<div class="ajax-products">
+    <div class="category-list col-md-2">
+        <span><?= /* @noEscape */ __('Shop by'); ?>:</span>
+        <ul>
+        <?php
+            foreach($categories as $category) {
+                $cat_id = $category->getId();
+                if($category->getIsActive()) { ?>
+                    <li><a class="" cat_id="'.$cat_id.'" href="javascript:void(0)"><span><?= $block->escapeHtml($category->getName()) ?></span></a></li>
+               <?php }
+            }
+        ?>
+        </ul>
+    </div>
+    <div class="category-detail col-md-10">
+        <div class="ajax_products_loader" style="text-align: center;"><i class="ajax-loader large animate-spin" style="position: absolute;top: 50%;top: 35vh;margin-top: -20px;left: 50%;margin-left: -18px;"></i></div>
+        <div class="products-area"></div>
+    </div>
+</div>
+<div class="clearer"></div>
+<div
+    id="smartwave-porto-ajax-info"
+    data-aspect="<?= $block->escapeJs($aspect_ratio) ?>"
+    data-image-width="<?= $block->escapeJs($ratio_width) ?>"
+    data-image-height="<?= $block->escapeJs($ratio_height) ?>"
+    data-product-count="<?= $block->escapeJs($product_count) ?>"
+    data-columns="<?= $block->escapeJs($columns) ?>"
+></div>
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Smartwave_Porto/js/ajax-products": {
+            }
+        }
+    }
+</script>
+

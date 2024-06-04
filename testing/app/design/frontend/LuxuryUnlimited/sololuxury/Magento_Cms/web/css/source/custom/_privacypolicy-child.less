@@ -1,0 +1,74 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common =true) {
+    .pivacy-policy-wrapper {
+        background-color: @theme__primary--color-bg;
+
+        .header {
+            text-align: center;
+            margin: 0 0 @indent__l;
+
+            h2 {
+                margin: 0;
+                color: @theme__secondary--color-800;
+            }
+
+            p {
+                color: @theme__secondary--color-400;
+            }
+        }
+
+        .group {
+            border-bottom: 1px solid @theme__primary--brd-light;
+            margin: 0;
+
+            &:first-child {
+                border-top: 1px solid @theme__primary--brd-light;
+            }
+
+            button {
+                border: none;
+            }
+
+            .arrow-active {
+                &.collapsible {
+                    color: @theme__primary--500;
+                }
+
+                &.collapsible::before {
+                    content: @icon-minus;
+                }
+            }
+
+            .collapsible {
+                border-radius: 0;
+                width: 100%;
+                text-align: left;
+                color: @theme__secondary--color-800;
+                padding: @indent__l;
+                background: none;
+                margin: 0;
+
+                &::before {
+                    content: @icon-plus;
+                    float: right;
+                    font-family: @icon-font-family;
+                    .lib-font-size(24);
+                    .lib-line-height(24);
+                }
+            }
+
+            .group-content {
+                display: none;
+                color: @theme__secondary--color-400;
+                padding: 0 @indent__l @indent__l;
+
+                &.active {
+                    display: block;
+                }
+            }
+        }
+    }
+}

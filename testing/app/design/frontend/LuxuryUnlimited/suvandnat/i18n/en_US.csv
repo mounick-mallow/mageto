@@ -1,0 +1,7 @@
+"Create an Account","Signup",module,Magento_Customer
+"Registered Customers","Login with Email",module,Magento_Customer
+"If you have an account, sign in with your email address.","Login and enjoy a personalized shopping experience.",module,Magento_Customer
+"Login With Social Profile","Login with social",module,WeltPixel_SocialLogin
+"General & Order Enquiries","Contact Us",module,Magento_Contact
+"I want to donate","Donate Now"
+"Back to My Orders","View all orders"

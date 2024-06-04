@@ -1,0 +1,177 @@
+//
+//  Common
+//
+& when (@media-common =true) {
+    .form-control {
+        fieldset.fieldset {
+            > .fields {
+                > .field {
+                    width: auto;
+
+                    &:last-child {
+                        margin: 0;
+                    }
+                }
+
+                &.field-common-section {
+                    .lib-vendor-prefix-display(flex);
+                    .lib-css(flex-direction, column, @_prefix: 1);
+
+                    &:has(.field.zip, .country) {
+                        .lib-vendor-prefix-display(flex);
+                        .lib-css(flex-direction, row, @_prefix: 1);
+                    }
+
+                    > .field {
+                        width: 100%;
+                    }
+                }
+            }
+
+            &.address-info {
+                padding: 0;
+                border: none;
+
+                h2 {
+                    display: none;
+                }
+            }
+
+            &.contact-info {
+                border: none;
+                padding: 0;
+            }
+        }
+    }
+
+    .account {
+        .column {
+            &.main {
+                h2 {
+                    display: none;
+                }
+            }
+
+            .block {
+                &.block-addresses-list {
+                    margin: 0 0 @indent__base;
+
+                    .block-content {
+                        #additional-addresses-table {
+                            .table-address {
+                                border-top: none;
+
+                                .col-head {
+                                    font-weight: @font-weight__bold;
+                                }
+                            }
+                        }
+                    }
+
+                    table {
+                        tbody {
+                            > tr {
+                                > th {
+                                    padding: @indent__base 15px;
+                                }
+
+                                > td {
+                                    padding: @indent__base 15px;
+                                    color: @table-custom__td-color;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .block-box-element {
+            strong,
+            .block-title {
+                display: none;
+            }
+
+            address {
+                a {
+                    .lib-font-size(16);
+                    .lib-line-height(22);
+                    color: @theme__secondary--color-400;
+                }
+            }
+        }
+    }
+
+    .form-address-edit {
+        .fieldset {
+            .fields {
+                &.choice-address {
+                    .lib-css(justify-content, flex-start, @_prefix: 1);
+
+                    .choice {
+                        width: 45%;
+                    }
+
+                    label {
+                        .lib-font-size(14);
+
+                        i {
+                            border-radius: 50%;
+                        }
+                    }
+
+                    input[type='checkbox']:checked + .checkmark + label {
+                        i {
+                            &:before {
+                                border-radius: 50%;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .actions-toolbar {
+            .lib-css(justify-content, center, @_prefix: 1);
+        }
+    }
+
+    button.action.save.primary.save-address-button {
+        padding: 14px 54px;
+    }
+
+    .block-addresses-list {
+        border-radius: 0;
+
+        table {
+            thead {
+                background: none;
+            }
+        }
+    }
+
+    .customer-address-index {
+        .actions-toolbar {
+            .lib-css(justify-content, flex-start, @_prefix: 1);
+
+            .primary {
+                .action {
+                    padding: @indent__xs @indent__base;
+                    background: @theme__primary--500;
+                    color: @custom__color-white;
+                    border: 1px solid @theme__primary--500;
+                }
+            }
+        }
+    }
+
+    .fieldset {
+        > .fields {
+            > .field.prifix-field {
+                > .control.prifix-input-with-option {
+                    border: 1px solid @theme__primary--200;
+                }
+            }
+        }
+    }
+}

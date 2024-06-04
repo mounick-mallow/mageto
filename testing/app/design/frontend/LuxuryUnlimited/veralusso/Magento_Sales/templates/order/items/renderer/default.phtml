@@ -1,0 +1,277 @@
+<?php
+
+declare(strict_types=1);
+
+use Dynamic\Customization\Helper\Data as CustomizationHelper;
+use Dynamic\Mytickets\ViewModel\TicketCollection as TicketCollectionViewModel;
+use Dynamic\Orderreturn\Helper\Data as OrderReturnHelper;
+use Dynamic\OrderTracking\Helper\Data as OrderTrackingHelper;
+use Magento\Framework\Escaper;
+use Magento\Sales\Block\Order\Item\Renderer\DefaultRenderer;
+
+/**
+ * @var DefaultRenderer $block
+ * @var Escaper $escaper
+ */
+/** @var TicketCollectionViewModel $ticketViewModel */
+$ticketViewModel = $block->getData('viewModelCancelReturn');
+/** @var OrderTrackingHelper $trackingHelper */
+$trackingHelper = $this->helper(OrderTrackingHelper::class);
+/** @var CustomizationHelper $customizationHelper */
+$customizationHelper = $this->helper(CustomizationHelper::class);
+/** @var OrderReturnHelper $returnHelper */
+$returnHelper = $this->helper(OrderReturnHelper::class);
+
+$storeManager = $customizationHelper->getStoreManager();
+$storeCode = $storeManager->getStore()->getCode();
+$_item = $block->getItem();
+$rawSku = $block->getSku();
+$sku = $block->getSku();
+$sku = strtolower($sku);
+$sku = preg_replace('/\s+/', '-', $sku);
+$productName = $_item->getName();
+$productSku = $_item->getSku();
+$_order = $block->getOrder();
+$orderId = $_order->getIncrementId();
+$orderOriginalId = $_order->getId();
+$customerEmail = $_order->getCustomerEmail();
+$currencySymbol = $_order->getOrderCurrency()->getCurrencySymbol();
+$rowTotal = (float)$_item->getRowTotal();
+$discount = (float)$_item->getDiscountAmount();
+$total = (float)$rowTotal - $discount;
+$product = $customizationHelper->getProductManager()->load($_item->getProductId());
+$imageHelper = $customizationHelper->getImageHelperManager();
+$imageUrl = $imageHelper->init($product, 'product_page_image_small')
+    ->setImageFile($product->getFile())
+    ->resize(80, 200)
+    ->getUrl();
+
+$configOrderReturn = $returnHelper->getConfigValue('orderreturn_reason/orderreturn_configuration/reason');
+$returnReasonData = !empty($configOrderReturn) ? json_decode($configOrderReturn,true) : [];
+
+$configOrderCancel = $returnHelper->getConfigValue('ordercancel_reason/ordercancel_configuration/reason');
+$cancelReasonData = !empty($configOrderCancel) ? json_decode($configOrderCancel,true) : [];
+
+$refundNote = "You are eligible for a refund of $currencySymbol$total excluding discount amount of $currencySymbol$discount";
+$orderItemIds = $_order->getRealOrderId() . '-' . $_item->getItemId();
+$orderStatus = $trackingHelper->getOrderStatusList($_order);
+
+$isItemCancelled = $ticketViewModel->isTicketsCancelReturnOrderItem($block->getSku(), $orderId, 'Cancel');
+$isItemReturned = $ticketViewModel->isTicketsCancelReturnOrderItem($block->getSku(), $orderId, 'Return');
+$isBuyBackRequest = $ticketViewModel->isTicketsBuyBackOrderItem($block->getSku(), $orderId, 'Buy Back');
+$itemStatus = is_null($_item->getData('status'))? 'ordered':strtolower($_item->getData('status'));
+?>
+<tr id="order-item-row-<?= (int)$_item->getId() ?>" colspan="9">
+    <td class="col image" data-th="<?= $escaper->escapeHtml(__('Image')) ?>">
+        <img alt="<?= $escaper->escapeHtml($_item->getName()) ?>"
+             src="<?= $escaper->escapeUrl($imageUrl) ?>"/>
+    </td>
+    <td class="col name" data-th="<?= $escaper->escapeHtml(__('Product Name')) ?>">
+        <div class="item_group_order">
+            <strong class="product name product-item-name"><?= $escaper->escapeHtml($_item->getName()) ?></strong>
+        </div>
+    </td>
+    <td class="col options" data-th="<?= $escaper->escapeHtml(__('Product Options')) ?>">
+        <?php if ($_options = $block->getItemOptions()): ?>
+            <dl class="item-options">
+                <?php foreach ($_options as $_option): ?>
+                    <!--<dt><?= $escaper->escapeHtml($_option['label']) ?></dt>-->
+                    <?php if (!$block->getPrintStatus()): ?>
+                        <?php $_formatedOptionValue = $block->getFormatedOptionValue($_option) ?>
+                        <dd>
+                            <?php if (isset($_formatedOptionValue['full_view'])): ?>
+                                <?= $escaper->escapeHtml($_formatedOptionValue['full_view'], ['a']) ?>
+                            <?php else: ?>
+                                <?= $escaper->escapeHtml($_formatedOptionValue['value'], ['a']) ?>
+                            <?php endif; ?>
+                        </dd>
+                    <?php else: ?>
+                        <dd>
+                            <?= /* @noEscape */
+                            nl2br($escaper->escapeHtml($_option['print_value'] ?? $_option['value'])) ?>
+                        </dd>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </dl>
+        <?php endif; ?>
+        <?php $addtInfoBlock = $block->getProductAdditionalInformationBlock(); ?>
+        <?php if ($addtInfoBlock): ?>
+            <?= $addtInfoBlock->setItem($_item)->toHtml() ?>
+        <?php endif; ?>
+        <?= $escaper->escapeHtml($_item->getDescription()) ?>
+    </td>
+    <td class="col sku" data-th="<?= $escaper->escapeHtml(__('SKU')) ?>">
+        <?= /* @noEscape */
+        $block->prepareSku($block->getSku()) ?>
+    </td>
+    <td class="col price" data-th="<?= $escaper->escapeHtml(__('Price')) ?>">
+        <?= $block->getItemPriceHtml() ?>
+    </td>
+    <td class="col qty" data-th="<?= $escaper->escapeHtml(__('Qty')) ?>">
+        <ul class="items-qty">
+            <?php if ($block->getItem()->getQtyOrdered() > 0): ?>
+                <li class="item">
+                    <span class="content"><?= $escaper->escapeHtml((int)$block->getItem()->getQtyOrdered()) ?></span>
+                </li>
+            <?php endif; ?>
+            <?php if ($block->getItem()->getQtyShipped() > 0): ?>
+                <li class="item">
+                    <span class="content"><?= $escaper->escapeHtml((int)$block->getItem()->getQtyShipped()) ?></span>
+                </li>
+            <?php endif; ?>
+            <?php if ($block->getItem()->getQtyCanceled() > 0): ?>
+                <li class="item">
+                    <span class="content"><?= $escaper->escapeHtml((int)$block->getItem()->getQtyCanceled()) ?></span>
+                </li>
+            <?php endif; ?>
+            <?php if ($block->getItem()->getQtyRefunded() > 0): ?>
+                <li class="item">
+                    <span class="content"><?= $escaper->escapeHtml((int)$block->getItem()->getQtyRefunded()) ?></span>
+                </li>
+            <?php endif; ?>
+        </ul>
+    </td>
+    <td class="col subtotal" data-th="<?= $escaper->escapeHtml(__('Subtotal')) ?>">
+        <?= $block->getItemRowTotalHtml() ?>
+    </td>
+    <td class="col status" data-th="<?= $escaper->escapeHtml(__('Status')) ?>">
+        <a href="javascript:void(0);" class="item-status-popup" rel="<?= $itemStatus;?>"
+           item-content-id="<?= $escaper->escapeJs($block->getItem()->getId()) ?>">
+            <span><?= __($escaper->escapeHtml(ucfirst($itemStatus))) ?></span>
+        </a>
+    </td>
+    <td class="col return order-cancel" data-th="<?= $escaper->escapeHtmlAttr(__('Return')) ?>">
+        <?php if ($_order->canCancel()): ?>
+            <?php if($isBuyBackRequest):?>
+                <span id="item-buy-backbuyback-<?= $escaper->escapeHtmlAttr($orderItemIds) ?>"
+                      class="order-buy-back">
+                                    <span class="buy-back-placed"><?= $escaper->escapeHtml(__('Requested for Buy Back')) ?></span>
+                                </span>
+            <?php else:?>
+                <span id="item-buyback-<?= $escaper->escapeHtmlAttr($orderItemIds) ?>"
+                      class="order-buy-back return-order-button">
+                    <span class="action buy-back"><?= $escaper->escapeHtml(__('Buy Back')) ?></span>
+                </span>
+            <?php endif;?>
+            <?php if ($isItemCancelled || $isItemReturned): ?>
+                <span class="order-request-pending">
+                    <?= $escaper->escapeHtml(__('Request Pending')) ?>
+                </span>
+            <?php else : ?>
+                <span id="item-return-<?= $escaper->escapeHtmlAttr($orderItemIds) ?>">
+                    <i class="porto-icon-action-undo"></i><?= $escaper->escapeHtml(__('Return')) ?>
+                </span>
+                <div id="item-can-return-<?= $escaper->escapeHtmlAttr($_item->getItemId()) ?>"
+                     class="show-<?= $escaper->escapeHtmlAttr($sku) ?> item-can-return-popup" style="display:none">
+                    <div class="modal-content">
+                        <p><?= $escaper->escapeHtml('Return Item: ' . $productName) ?></p>
+                        <div id="result-<?= $escaper->escapeHtmlAttr($sku) ?>" class="result-message"></div>
+                        <div id="loader-<?= $escaper->escapeHtmlAttr($sku) ?>" style="display:none;">loading</div>
+                        <div class="form-data">
+                            <div id="order-refund-details">
+                                <span id="order-refund-amount"><?= $escaper->escapeHtml($refundNote) ?></span>
+                            </div>
+                            <?php if (!empty($returnReasonData)): ?>
+                                <label><?= $escaper->escapeHtml(__('Select Reason')) ?></label>
+                                <select id="order-return-reason-<?= $escaper->escapeHtmlAttr($orderItemIds) ?>"
+                                        name="order-return-reason">
+                                    <option value=""><?= $escaper->escapeHtml(__('Reason to return')) ?></option>
+                                    <?php foreach ($returnReasonData as $reason): ?>
+                                        <option value="<?= $escaper->escapeHtmlAttr($reason['reason_data']) ?>">
+                                            <?= $escaper->escapeHtml($reason['reason_data']) ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            <?php endif; ?>
+                            <input id="order-return-submit-<?= $escaper->escapeHtmlAttr($orderItemIds) ?>" type="button"
+                                   value="Send" name="submit">
+                        </div>
+                    </div>
+                </div>
+                <span id="item-cancel-<?= $escaper->escapeHtmlAttr($orderItemIds) ?>">
+                    <?= $escaper->escapeHtml(__('Cancel')) ?>
+                </span>
+                <div class="show-<?= $escaper->escapeHtmlAttr($_order->getRealOrderId()) ?>" style="display:none">
+                    <div class="modal-content">
+                        <p><?= $escaper->escapeHtml(__('Cancel Order #%1', $_order->getRealOrderId())) ?></p>
+                        <div id="order-refund-details">
+                            <span id="order-refund-amount"><?= $escaper->escapeHtmlAttr($refundNote) ?></span>
+                        </div>
+                        <div id="result-<?= $escaper->escapeHtmlAttr($_order->getRealOrderId()) ?>"></div>
+                        <div class="form-data">
+                            <?php if (!empty($cancelReasonData)): ?>
+                                <label><?= $escaper->escapeHtml(__('Select Reason')) ?></label>
+                                <select id="ordercancel-reason-<?= $escaper->escapeHtmlAttr($orderItemIds) ?>"
+                                        name="ordercancel-reason">
+                                    <option value=""><?= $escaper->escapeHtml(__('Reason to cancel')) ?></option>
+                                    <?php foreach ($cancelReasonData as $reason): ?>
+                                        <option value="<?= $escaper->escapeHtmlAttr($reason['reason_data']) ?>">
+                                            <?= $escaper->escapeHtml($reason['reason_data']) ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            <?php endif; ?>
+                            <input id="ordercancel-submit-<?= $escaper->escapeHtmlAttr($orderItemIds) ?>" type="button"
+                                   value="Send" name="submit">
+                        </div>
+                        <div id="loader-<?= $escaper->escapeHtmlAttr($_order->getRealOrderId()) ?>" style="display:none;">
+                            loading
+                        </div>
+                    </div>
+                </div>
+            <?php endif; ?>
+        <?php else : ?>
+            <?php if ($isItemCancelled): ?>
+                <span class="order-item-cancelled"><?= $escaper->escapeHtml(__('Cancelled')) ?></span>
+            <?php elseif ($isItemReturned): ?>
+                <span class="order-item-returned"><?= $escaper->escapeHtml(__('Returned')) ?></span>
+            <?php endif; ?>
+        <?php endif; ?>
+    </td>
+</tr>
+<?php if (!empty($orderStatus) && count($orderStatus) > 0): ?>
+    <div class="order-status-modal modal" id="order-status-model-<?= $escaper->escapeHtmlAttr($_order->getId()) ?>">
+        <div class="modal-content">
+            <span class="close" order-content-id="<?= $escaper->escapeHtmlAttr($_order->getId()) ?>">×</span>
+            <div class="modal-progress-bar">
+                <div class="card card-timeline">
+                    <ul class="order-tracking-steps">
+                        <?php $i = 1; ?>
+                        <?php foreach ($orderStatus as $statusData): ?>
+                            <?php $status = isset($statusData['status_date']) ? 'active' : ''; ?>
+                            <li class="step <?= $escaper->escapeHtmlAttr($status) ?>">
+                                <div><?= $escaper->escapeHtml($i) ?></div>
+                                <span><?= $escaper->escapeHtml($statusData['status_title']) ?></span>
+                                <?php if (isset($statusData['status_date'])): ?>
+                                    <p><?= $escaper->escapeHtml($statusData['status_date']) ?></p>
+                                <?php endif; ?>
+                            </li>
+                            <?php $i++; ?>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
+
+<script type="text/x-magento-init">
+{
+    "*": {
+        "Magento_Sales/js/item/modal-order-item": {
+            "orderId": <?= $escaper->escapeJs($_order->getRealOrderId()) ?>,
+            "itemId": <?= $escaper->escapeJs($_item->getItemId()) ?>,
+            "originalOrderId": "<?= $escaper->escapeJs($orderOriginalId) ?>",
+            "productSku": "<?= $escaper->escapeJs($rawSku) ?>",
+            "customerEmail": "<?= $escaper->escapeJs($customerEmail) ?>",
+            "langCode": "<?= $escaper->escapeJs($storeCode) ?>",
+            "refundNote": "<?= $escaper->escapeJs($refundNote) ?>",
+            "productName": "<?= $escaper->escapeHtml($productName) ?>",
+            "sku": "<?= $escaper->escapeJs($sku) ?>",
+            "sendReturnUrl": "<?= $escaper->escapeUrl($block->getUrl('orderreturn/ajax/sendReturn')) ?>",
+            "updateItemUrl": "<?= $escaper->escapeUrl($block->getUrl('orderhistory/ajax/UpdateItem')) ?>",
+            "checkReturnUrl": "<?= $escaper->escapeUrl($block->getUrl('orderreturn/ajax/checkOrderReturn')) ?>"
+        }
+    }
+}
+</script>

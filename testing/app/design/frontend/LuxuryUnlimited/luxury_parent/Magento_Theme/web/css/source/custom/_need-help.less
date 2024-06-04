@@ -1,0 +1,59 @@
+//
+//  Common
+//  ---------------------------------------------
+
+& when (@media-common = true) {
+    .cms-need-help {
+        .help-acc-content {
+            .help-icon-con {
+                i {
+                    &::before {
+                        .lib-font-size(30);
+                    }
+                    &.icon-icon-add-to-cart {
+                        &::before {
+                            content: @icon-add-to-cart;
+                        }
+                    }
+                    &.icon-icon-credit-card {
+                        &::before {
+                            content: @icon-credit-card;
+                        }
+                    }
+                    &.icon-icon-on-hold {
+                        &::before {
+                            content: @icon-on-hold;
+                        }
+                    }
+                    &.icon-icon-shopping {
+                        &::before {
+                            content: @icon-shopping;
+                        }
+                    }
+                    &.icon-icon-return {
+                        &::before {
+                            content: @icon-return;
+                        }
+                    }
+                    &.icon-icon-radio {
+                        &::before {
+                            content: @icon-radio;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .block-rss {
+        i {
+            &::before {
+                .lib-font-size(28);
+            }
+            &.icon-icon-report {
+                &::before {
+                    content: @icon-report;
+                }
+            }
+        }
+    }
+}

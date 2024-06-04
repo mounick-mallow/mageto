@@ -1,0 +1,23 @@
+<?php /** @var \Magento\Sales\Block\Order\Items $block */?>
+<div class="success-table-wrapper order-items">
+    <table class="cart items data table table-order-items" id="my-orders-table"
+           summary="<?= /* @noEscape  */ __('Items Ordered') ?>">
+        <caption class="table-caption"><?= /* @noEscape */ __('Items Ordered') ?></caption>
+        <thead>
+            <tr>
+                <th colspan="2" class="col image" scope="col"><?= $block->escapeHtml(__('Item')) ?></th>
+                <th class="col price" scope="col"><?= $block->escapeHtml(__('Price')) ?></th>
+                <th class="col qty" scope="col"><?= $block->escapeHtml(__('Qty')) ?></th>
+                <th class="col subtotal" scope="col"><?= $block->escapeHtml(__('Subtotal')) ?></th>
+            </tr>
+        </thead>
+        <?php $items = $block->getItems(); ?>
+        <tbody class="cart item">
+        <?php foreach ($items as $item): ?>
+            <?php if (!$item->getParentItem()):?>
+                <?= $block->getItemHtml($item) ?>
+            <?php endif; ?>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>

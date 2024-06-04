@@ -1,0 +1,23 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common =true) {
+    .about-us-wrapper {
+        .content {
+            .paragraph {
+                &:nth-child(even) {
+                    .paragraph-text {
+                        padding: @indent__l @indent__l @indent__l 0;
+                    }
+                }
+
+                &:nth-child(odd) {
+                    .paragraph-text {
+                        padding: @indent__l 0 @indent__l @indent__l;
+                    }
+                }
+            }
+        }
+    }
+}

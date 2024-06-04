@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="sales_order_item_renderers"/>
+    <update handle="sales_order_item_price"/>
+    <body>
+        <referenceBlock name="page.main.title">
+            <action method="setPageTitle">
+                <argument translate="true" name="title" xsi:type="string">Thank You For Purchase!</argument>
+            </action>
+        </referenceBlock>
+        <referenceBlock name="checkout.success">
+            <action method="setTemplate">
+                <argument name="template" xsi:type="string">LuxuryUnlimited_Checkout::onepage/success.phtml</argument>
+            </action>
+        </referenceBlock>
+        <referenceContainer name="order.success.additional.info">
+            <block class="Magento\Sales\Block\Order\Items" name="order_items"
+                   template="LuxuryUnlimited_Checkout::order/items.phtml">
+                <block class="Magento\Framework\View\Element\RendererList" name="sales.order.items.renderers" as="renderer.list" />
+            </block>
+            <block class="LuxuryUnlimited\Checkout\Block\Onepage\Success\Order\Info"
+                   as="info" name="sales.order.info" template="LuxuryUnlimited_Checkout::order/info.phtml" />
+        </referenceContainer>
+        <referenceBlock name="sales.order.items.renderers.default">
+            <action method="setTemplate">
+                <argument name="template" xsi:type="string">LuxuryUnlimited_Checkout::order/items/default.phtml</argument>
+            </action>
+            <arguments>
+                <argument name="viewModel" xsi:type="object">LuxuryUnlimited\Checkout\ViewModel\ItemRendererImage</argument>
+            </arguments>
+        </referenceBlock>
+    </body>
+</page>

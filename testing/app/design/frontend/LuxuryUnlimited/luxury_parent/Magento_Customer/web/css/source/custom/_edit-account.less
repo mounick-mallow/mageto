@@ -1,0 +1,140 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .customer-account-edit {
+        #form-validate {
+            h2 {
+                text-align: center;
+            }
+
+            .fieldset {
+                width: 100%;
+                .lib-vendor-prefix-display(flex);
+                flex-wrap: wrap;
+                gap: @indent__m;
+                margin-bottom: @indent__m;
+
+                .fields {
+                    width: 100%;
+                    .lib-vendor-prefix-display(flex);
+                    flex-wrap: wrap;
+                    gap: @indent__m;
+                }
+
+                .field {
+                    &.date {
+                        button {
+                            display: none;
+                        }
+                    }
+
+                    .prifix-input-with-option {
+                        position: relative;
+
+                        .input-prefix {
+                            position: absolute;
+                            max-width: @edit-account-prefix__max-width;
+                            padding: 0;
+                            border: none;
+                            padding-left: @layout__width-xs-indent;
+                        }
+
+                        .input-text {
+                            padding-left: @edit-account-prefix__padding-left;
+                        }
+                    }
+
+                    .intl-tel-input {
+                        .input-text {
+                            padding-left: @edit-account-prefix__padding-left;
+                        }
+                    }
+                }
+            }
+
+            .actions-toolbar {
+                .lib-vendor-prefix-display(flex);
+                justify-content: center;
+            }
+        }
+
+        .ui-datepicker {
+            background: @custom-color-3;
+        }
+
+        .modal-edit-account {
+            margin: 0 auto;
+            border-radius: @modal-popup-border-radius;
+
+            .modal-inner-wrap {
+                max-width: @edit-account-modal__width;
+
+                .modal-content {
+                    text-align: center;
+                }
+            }
+
+            .modal-footer {
+                .lib-vendor-prefix-display(flex);
+                justify-content: center;
+            }
+        }
+
+        .customerBlock {
+            &.accountInfo {
+                #modal-edit {
+                    margin-top: @indent__xl;
+                }
+            }
+        }
+    }
+}
+
+//
+//  Desktop
+//  ---------------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__m) {
+    .customer-account-edit {
+        #form-validate {
+            .fieldset {
+                .field {
+                    flex: 48%;
+                }
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  ---------------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    .customer-account-edit {
+        #form-validate {
+            .fieldset {
+                .field {
+                    flex: 100%;
+                }
+            }
+        }
+
+        .modal-edit-account {
+            max-height: @edit-account-modal__max-height;
+            width: 90%;
+            margin: 0 auto;
+            top: 25%;
+        }
+    }
+}

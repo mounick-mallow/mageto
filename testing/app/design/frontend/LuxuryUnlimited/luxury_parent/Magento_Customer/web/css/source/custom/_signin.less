@@ -1,0 +1,335 @@
+//
+//    Common
+//--------------------------------------
+& when (@media-common =true) {
+    // Login
+    .luxb_password {
+        position: relative;
+
+        .toggle-password {
+            display: block;
+            width: 30px;
+            height: 30px;
+            position: absolute;
+            right: 10px;
+            top: 5px;
+            z-index: 2;
+            cursor: pointer;
+
+            &:after {
+                content: @icon-open-eye;
+                font-family: @icomoon-font-family;
+                .lib-font-size(30);
+                .lib-line-height(30);
+                width: 30px;
+                height: 30px;
+                display: block;
+                text-align: center;
+                color: @text__color;
+            }
+        }
+    }
+
+    .customer-account-login {
+        .login-container {
+            width: 100%;
+            padding: 0;
+            margin: 0 auto;
+        }
+
+        .sociallogin-wrapper {
+            .sociallogin-block-title {
+                text-align: center;
+            }
+        }
+
+        .block-customer-login {
+            .actions-toolbar {
+                div.primary,
+                div.secondary {
+                    display: block;
+                }
+
+                div.primary {
+                    float: none;
+                    display: block;
+
+                    .action.primary {
+                        margin: 0;
+                        float: none;
+                        display: inline-block;
+                    }
+                }
+            }
+
+            .fieldset {
+                &:after {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    // Forgot Password
+    .forgotpassword-container {
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .signup-account-container {
+        &:extend(.abs-add-clearfix all);
+
+        .apple-login-container {
+            clear: both;
+        }
+
+        .fieldset {
+            > .fields {
+                > .field {
+                    &.field-dob {
+                        .customer-dob {
+                            position: relative;
+
+                            .ui-datepicker-trigger {
+                                .lib-button-reset();
+                                position: absolute;
+                                right: 10px;
+                                top: 6px;
+
+                                .lib-icon-font(
+                                    @_icon-font-content: @icon-report,
+                                    @_icon-font: @icomoon-font-family,
+                                    @_icon-font-size: 20px,
+                                    @_icon-font-line-height: 24px,
+                                    @_icon-font-text-hide: true,
+                                    @_icon-font-position: after,
+                                    @_icon-font-display: block
+                                );
+
+                                &:after {
+                                    width: 24px;
+                                    text-align: center;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            &.customLogin {
+                margin-bottom: 30px;
+            }
+        }
+    }
+
+    .block-customer-signin {
+        fieldset {
+            border: 0;
+            padding: 0;
+            margin: 0;
+        }
+    }
+
+    .choice {
+        input {
+            display: none;
+            cursor: pointer;
+
+            &:checked + label:after {
+                content: '';
+                display: block;
+                position: absolute;
+                top: 10px;
+                left: 8px;
+                width: 4px;
+                height: 9px;
+                border: solid @color-white;
+                border-width: 0 2px 2px 0;
+                transform: rotate(45deg);
+            }
+
+            &:checked + label:before {
+                background-color: @color-gray40;
+            }
+        }
+
+        label {
+            position: relative;
+            cursor: pointer;
+            display: block;
+            padding-left: 40px;
+
+            &:before {
+                content: '';
+                -webkit-appearance: none;
+                background-color: transparent;
+                border: 2px solid @color-gray40;
+                display: inline-block;
+                position: absolute;
+                left: 0;
+                top: 7px;
+                vertical-align: middle;
+                cursor: pointer;
+                width: 20px;
+                height: 20px;
+                box-sizing: border-box;
+            }
+        }
+    }
+
+    // Signin Error Popup
+
+    .modal-popup {
+        &.siginerror-modal {
+            .modal-header {
+                border-bottom: 2px solid @color-gray95;
+            }
+
+            .modal-footer {
+                display: none;
+            }
+        }
+
+        .signin-error-content {
+            text-align: center;
+
+            p {
+                .lib-line-height(30);
+            }
+
+            .sigin-popup-buttons {
+                .lib-vendor-prefix-display(flex);
+                .lib-css(justify-content, center, @_prefix: 1);
+                .primary {
+                    width: auto;
+                }
+
+                button {
+                    margin: 0 @indent__xxs;
+                }
+            }
+        }
+    }
+
+    .customer-account-create {
+        .signup-account-container {
+            .block {
+                &.block-customer-signin {
+                    .fieldset {
+                        &.customLogin {
+                            .fields {
+                                .field {
+                                    width: 48%;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+//
+//    Desktop
+//--------------------------------------
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__m) {
+    // Login
+    .login-container,
+    .signup-account-container {
+        .block-customer-login,
+        .customer-create-account {
+            width: 48%;
+        }
+
+        .block-customer-login {
+            float: left;
+        }
+
+        .customer-create-account {
+            float: right;
+
+            .block-customer-login {
+                .actions-toolbar {
+                    .secondary {
+                        a.action {
+                            margin-top: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__s) {
+    // Create Account
+    .signup-account-container {
+        .block-customer-signin {
+            float: left;
+            width: 45.55555555555556%;
+
+            .block-customer-signin {
+                float: left;
+                width: 45.55555555555556%;
+            }
+        }
+
+        .customer-create-account {
+            float: right;
+            width: 52.77777777777778%;
+        }
+    }
+}
+
+.media-width(@extremum, @break)
+    when
+    (@extremum ='max')
+    and
+    (@break = @screen__xs) {
+    .customer-account-create {
+        .page-wrapper {
+            .signup-account-container {
+                .block {
+                    &.block-customer-signin {
+                        .fieldset {
+                            &.customLogin {
+                                .fields {
+                                    flex-direction: column;
+                                    justify-content: flex-start;
+
+                                    .field {
+                                        width: 100%;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .page-wrapper {
+        .forgotpassword-container {
+            .actions-toolbar {
+                flex-direction: column;
+                row-gap: 20px;
+
+                .primary,
+                .secondary {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}

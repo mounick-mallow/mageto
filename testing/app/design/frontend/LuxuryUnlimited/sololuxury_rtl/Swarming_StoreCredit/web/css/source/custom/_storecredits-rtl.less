@@ -1,0 +1,25 @@
+//
+//  Common
+//  ---------------------------------------------
+
+& when (@media-common = true) {
+    body.swarming_credits-index-index {
+        .returns_footer {
+            .pages {
+                .action {
+                    &.next {
+                        &:before {
+                            content: @icon-left;
+                        }
+                    }
+
+                    &.previous {
+                        &:before {
+                            content: @icon-right;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

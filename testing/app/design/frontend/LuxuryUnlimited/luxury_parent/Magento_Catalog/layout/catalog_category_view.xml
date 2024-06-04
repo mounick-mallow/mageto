@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2018 Porto. All rights reserved.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+     <head>
+        <!-- DEVTASK-21844-performanceissue-p2 : remove unused css on the page -->
+        <remove src="Plumrocket_SocialLoginFree::css/pslogin.css" />
+        <remove src="Plumrocket_SocialLoginFree::css/pslogin-custom.css" />
+        <remove src="MaxMage_InternationalTelephoneInput::css/intlTelInput.css"/>
+        <remove src="Sparsh_Faq::css/faq.css"/>
+    </head>
+    <body>
+        <move element="breadcrumbs" destination="main.content" before="-" />
+        <referenceContainer name="page.top">
+             <block class="Magento\Catalog\Block\Category\View" name="category_banner" template="category/banner.phtml" ifconfig="porto_settings/category/category_description" before="-"/>
+        </referenceContainer>
+        <referenceContainer name="content">
+            <block class="Magento\Catalog\Block\Category\View" name="category_desc_main_column" template="category/desc_main_column.phtml" ifconfig="porto_settings/category/category_description" before="category.products">
+                <arguments>
+                    <argument name="data_view_model" xsi:type="object">Smartwave\Porto\ViewModel\Data</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+        <move element="category.image" destination="content" before="category_desc_main_column"/>
+        <referenceContainer name="sidebar.main">
+            <block class="Smartwave\Porto\Block\Template" name="category_view_custom_block" after="-" template="Magento_Catalog::category/custom_block.phtml"/>
+        </referenceContainer>
+        <referenceContainer name="product.info.review" remove="true" />
+        <referenceBlock name="category.products.list">
+            <arguments>
+                <argument name="luxdb_price_match_view_model" xsi:type="object">Dynamic\Mytickets\ViewModel\PriceMatch</argument>
+            </arguments>
+        </referenceBlock>
+    </body>
+</page>

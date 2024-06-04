@@ -1,0 +1,224 @@
+//
+//  Common
+//
+& when (@media-common =true) {
+    .form-control {
+        fieldset.fieldset {
+            > .fields {
+                > .field {
+                    width: calc(~'100% - 8px');
+                }
+
+                &.field-common-section {
+                    .lib-vendor-prefix-display(flex);
+                    .lib-css(flex-direction, column, @_prefix: 1);
+
+                    &:has(.field.zip, .country) {
+                        .lib-vendor-prefix-display(flex);
+                        .lib-css(flex-direction, row, @_prefix: 1);
+                    }
+
+                    > .field {
+                        width: 100%;
+                    }
+                }
+            }
+
+            &.address-info {
+                padding: 0;
+                border: none;
+
+                h2 {
+                    display: none;
+                }
+            }
+
+            &.contact-info {
+                border: none;
+                padding: 0;
+            }
+        }
+    }
+
+    .account {
+        .column {
+            &.main {
+                h2 {
+                    display: none;
+                }
+            }
+
+            .block {
+                &.block-addresses-list {
+                    .block-content {
+                        #additional-addresses-table {
+                            .table-address {
+                                border-top: none;
+                                border-bottom: none;
+
+                                .col-head {
+                                    color: @custom-additional-color;
+                                    font-weight: @font-weight__bold;
+                                }
+                            }
+                        }
+                    }
+
+                    table {
+                        tbody {
+                            > tr {
+                                > th {
+                                    padding: @indent__base 15px;
+                                }
+
+                                > td {
+                                    padding: @indent__base 15px;
+                                    background: @theme__secondary--color-50;
+                                    color: @custom-color-2;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .block-box-element {
+            .block-title {
+                display: block;
+                background: @custom-color-2;
+                padding: @indent__xs @indent__xs @indent__xs @indent__l;
+                margin: 0;
+
+                strong {
+                    color: @custom-additional-color;
+                    font-weight: @font-weight__bold;
+                }
+            }
+
+            address {
+                a {
+                    .lib-font-size(18);
+                    .lib-line-height(28);
+                    color: @custom-color-2;
+                }
+            }
+
+            .box-widget {
+                padding: 24px;
+                background: @theme__secondary--color-50;
+            }
+
+            .box {
+                background: @custom-additional-color;
+            }
+
+            .box-title {
+                input[type='radio'] {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    .form-address-edit {
+        padding: 24px;
+        background: @theme__secondary--color-50;
+
+        .fieldset {
+            .fields {
+                &.choice-address {
+                    .lib-css(justify-content, flex-start, @_prefix: 1);
+
+                    .choice {
+                        width: 45%;
+                    }
+
+                    label {
+                        .lib-font-size(14);
+
+                        i {
+                            border-radius: 50%;
+                        }
+                    }
+
+                    input[type='checkbox']:checked + .checkmark + label {
+                        i {
+                            &:before {
+                                border-radius: 50%;
+                                background: @custom-additional-color;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .actions-toolbar {
+            .lib-css(justify-content, flex-start, @_prefix: 1);
+        }
+    }
+
+    button.action.save.primary.save-address-button {
+        padding: 14px 54px;
+    }
+
+    .block-addresses-list {
+        .additional-addresses {
+            border: none;
+        }
+    }
+
+    .customer-address-index {
+        .actions-toolbar {
+            .lib-css(justify-content, center, @_prefix: 1);
+
+            .primary {
+                .action {
+                    padding: @indent__xs 34px;
+                    background: @theme__primary--color-500;
+                    color: @custom-additional-color;
+                    border: 2px solid @theme__primary--color-500;
+                }
+            }
+        }
+    }
+
+    .block-addresses-list {
+        table {
+            thead {
+                background: @custom-color-2;
+            }
+
+            tbody {
+                border: 1px solid @theme__secondary--color-100;
+            }
+        }
+    }
+
+    .columns {
+        .column:not(.sidebar-additional) {
+            form {
+                .actions-toolbar {
+                    .lib-css(justify-content, center, @_prefix: 1);
+                    margin-left: 0;
+                }
+            }
+        }
+    }
+
+    .fieldset {
+        > .fields {
+            > .field.prifix-field {
+                > .control.prifix-input-with-option {
+                    border: 1px solid @theme__secondary--color-100;
+                }
+            }
+        }
+    }
+
+    select#country,
+    select#region_id {
+        background: @pager-action__background;
+    }
+}

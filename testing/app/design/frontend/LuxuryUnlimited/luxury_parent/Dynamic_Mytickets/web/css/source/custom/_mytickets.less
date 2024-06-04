@@ -1,0 +1,411 @@
+//
+//  Common
+//  _____________________________________________
+& when (@media-common = true) {
+    .tickets-customer-index {
+        .mytickets-container {
+            .mytickets-title-wrapper {
+                .mytickets-title {
+                    .lib-font-size(20);
+                    font-weight: @font-weight__heavier;
+                    color: @color-black;
+                }
+            }
+
+            .mytickets-list {
+                margin-bottom: @indent__s + 4;
+
+                .mytickets-table-wrapper {
+                    border: 1px solid;
+                    margin: 0;
+
+                    .mytickets-table-row {
+                        .lib-css(display, flex, @_prefix: 1);
+                        .lib-css(justify-content, space-between, @_prefix: 1);
+                        .lib-css(align-items, center, @_prefix: 1);
+                        gap: @indent__xs;
+                    }
+
+                    .mytickets-table-body {
+                        .mytickets-table-row {
+                            border-top: 1px solid;
+
+                            .mytickets-table-col {
+                                .lib-font-size(14);
+                                .lib-line-height(20);
+                                word-break: break-all;
+
+                                .mob-title {
+                                    display: none; /*  added display none to toggle the title content in mobile view */
+                                }
+
+                                &.ticket-view {
+                                    a {
+                                        .lib-text-hide();
+                                        line-height: 1;
+                                        display: inline-block;
+
+                                        &.icomoon-icon-chat::before {
+                                            content: @icon-ticket;
+                                            font-family: @icon-font-family;
+                                            .lib-font-size(20);
+                                            color: @color-gray40;
+                                            cursor: pointer;
+                                        }
+                                    }
+                                }
+
+                                &.status span {
+                                    font-weight: @font-weight__bold;
+                                    border-radius: @indent__xxs;
+                                    padding: @indent__xxs @indent__s;
+                                }
+                            }
+                        }
+
+                        .no-record {
+                            .lib-font-size(14);
+                            .lib-line-height(20);
+                            font-weight: @font-weight__heavier;
+                            color: @color-gray40;
+                            padding: @indent__m @indent__xs;
+                            text-align: center;
+                        }
+                    }
+                }
+            }
+        }
+
+        .order-products-toolbar {
+            .pager {
+                .lib-css(display, flex, @_prefix: 1);
+                .lib-css(justify-content, space-between, @_prefix: 1);
+                .lib-css(align-items, center, @_prefix: 1);
+                &::before,
+                &::after {
+                    display: none;
+                }
+
+                .toolbar-amount {
+                    padding: 0;
+                    color: @color-gray40;
+                }
+
+                .limiter-options {
+                    margin: 0 @indent__xs 0 7px;
+                    width: 70px;
+                    padding: @indent__s;
+                }
+            }
+        }
+    }
+
+    .modal-popup.ticket-chat-modal {
+        .modal-header {
+            .modal-title {
+                text-align: start;
+                color: @theme__primary--color-400;
+                .lib-font-size(@font-size__xl);
+                font-weight: @font-weight__heavier;
+            }
+        }
+
+        .message-container {
+            .lib-vendor-prefix-display(flex);
+            .lib-css(flex-direction, column, @_prefix: 1);
+            .lib-css(align-items, flex-start, @_prefix: 1);
+
+            .message {
+                width: 70%;
+                text-align: start;
+                border-radius: 15px 15px 15px 0;
+
+                .content {
+                    .lib-font-size(@font-size__s);
+                }
+            }
+
+            &.merchant {
+                .lib-css(align-items, flex-end, @_prefix: 1);
+
+                .message {
+                    border-radius: 15px 15px 0 15px;
+                }
+            }
+
+            .message-date {
+                padding: @indent__xs 0;
+            }
+        }
+
+        .chat-submit-form {
+            #message {
+                width: 82%;
+                border: none;
+                height: 54px;
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+
+                &::-webkit-scrollbar {
+                    display: none;
+                }
+            }
+
+            form {
+                .lib-vendor-prefix-display(flex);
+            }
+        }
+
+        .modal-content {
+            padding: 0;
+        }
+
+        .chat-messages-wrapper {
+            max-height: 580px;
+            overflow-y: scroll;
+        }
+    }
+
+    .notification-area {
+        position: relative;
+
+        &:hover {
+            span.msg {
+                display: block;
+            }
+        }
+
+        span.msg {
+            position: absolute;
+            display: none;
+            background: @custom__color-white;
+            border: 1px solid @custom__color-black;
+            border-radius: @indent__xxs;
+            padding: @indent__xs;
+            .lib-css(flex-direction, column, @_prefix: 1);
+            right: -@indent__xs;
+            top: 33px;
+            min-width: 240px;
+            z-index: 99;
+
+            &::before {
+                content: '';
+                border-top: 1px solid @custom__color-black;
+                border-right: 1px solid @custom__color-black;
+                background-color: @custom__color-white;
+                position: absolute;
+                right: @indent__base;
+                top: -9px;
+                width: 15px;
+                height: 15px;
+                .lib-rotate(-45deg);
+            }
+
+            &.active {
+                .lib-vendor-prefix-display(flex);
+            }
+
+            .icon-ticket {
+                &::before {
+                    content: @icon-ticket;
+                }
+            }
+        }
+
+        span.unread-msg-cnt {
+            font-size: @font-size__xs;
+            .lib-line-height(14px);
+            border-radius: 100%;
+            color: @minicart__qty_color;
+            display: inline-block;
+            font-weight: @font-weight__heavier;
+            position: absolute;
+            top: 4px;
+            left: 11px;
+            text-align: center;
+            white-space: normal;
+            width: @minicart-qty__height;
+            height: @minicart-qty__height;
+            min-width: @minicart-qty__height;
+            .lib-vendor-prefix-display(inline-flex);
+            .lib-vendor-box-align (center);
+            .lib-css(justify-content, center, @_prefix: 1);
+            margin: 0;
+            padding: 3px;
+            overflow: hidden;
+            background: @qty-color;
+
+            .loader {
+                > img {
+                    max-width: 24px;
+                }
+            }
+        }
+
+        a.action.notification.my-notification.unread-link {
+            position: relative;
+        }
+    }
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'min')
+    and
+    (@break = @screen__s) {
+    .tickets-customer-index {
+        .mytickets-container {
+            .mytickets-table-body {
+                .no-record {
+                    border-top: 1px solid;
+                }
+            }
+
+            .mytickets-table-row {
+                .mytickets-table-col {
+                    width: 100%;
+
+                    &.id {
+                        max-width: 90px;
+                    }
+
+                    &.brand-name {
+                        max-width: 112px;
+                    }
+
+                    &.status {
+                        max-width: 112px;
+                        text-align: center;
+                    }
+
+                    &.ticket-date {
+                        max-width: 100px;
+                    }
+
+                    &.ticket-view {
+                        max-width: 20px;
+                        a {
+                            .lib-text-hide();
+
+                            &::before {
+                                .lib-font-size(20);
+                            }
+                        }
+                    }
+
+                    &.style {
+                        max-width: 538px;
+                    }
+
+                    &.updated {
+                        width: 72%;
+                    }
+                }
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__s) {
+    .tickets-customer-index {
+        .columns {
+            .mytickets-container {
+                .mytickets-list {
+                    .mytickets-table-wrapper {
+                        .mytickets-table-header {
+                            display: none;
+                        }
+
+                        .mytickets-table-row {
+                            flex-direction: column;
+
+                            &:first-child {
+                                border-top: 0;
+                            }
+
+                            .mytickets-table-col {
+                                &.id,
+                                &.brand-name,
+                                &.ticket-date,
+                                &.status,
+                                &.style,
+                                &.updated,
+                                &.ticket-view {
+                                    width: 100%;
+                                    padding: 0;
+                                }
+                            }
+                        }
+
+                        .mytickets-table-body {
+                            .mytickets-table-row {
+                                .mytickets-table-col {
+                                    .lib-vendor-prefix-display(flex);
+                                    .lib-css(justify-content, space-between, @_prefix: 1);
+                                    .lib-css(align-items, center, @_prefix: 1);
+                                    padding: 0px;
+                                    margin-bottom: 10px;
+
+                                    &.ticket-view {
+                                        .ticket-active {
+                                            display: inline-block;
+                                        }
+                                    }
+
+                                    &.updated {
+                                        span {
+                                            width: 100%;
+                                            text-align: center;
+                                        }
+                                    }
+
+                                    span {
+                                        width: 48%;
+                                        text-align: right;
+                                    }
+
+                                    .mob-title {
+                                        display: block;
+                                        text-align: left;
+                                        .lib-font-size(14);
+                                        font-weight: @font-weight__semibold;
+                                        background: transparent;
+                                        text-transform: uppercase;
+                                        padding: 0;
+                                    }
+
+                                    &.status span {
+                                        width: 48%;
+                                        text-align: right;
+                                        max-width: fit-content;
+                                        .mob-title {
+                                            display: block;
+                                            text-align: left;
+                                            .lib-font-size(14);
+                                            font-weight: @font-weight__semibold;
+                                            background: transparent;
+                                            text-transform: uppercase;
+                                            padding: 0;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

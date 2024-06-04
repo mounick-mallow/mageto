@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <!-- DEVTASK-21844 Accessibility section no.2 : remove  maximum-scale=1.0, user-scalable=no -->
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <css src="owl.carousel/assets/owl.carousel.css" />
+        <css src="fancybox/css/jquery.fancybox.css" />
+        <css src="icon-fonts/css/porto-icons-codes.css" />
+        <css src="font-awesome/css/font-awesome.min.css" />
+        <css src="css/flag-icons.min.css" />
+		<script src="js/cms.js" />
+        <script src="js/custom.js" />
+        <remove src="WeltPixel_NavigationLinks::css/navigation_desktop.css"/>
+        <remove src="WeltPixel_NavigationLinks::css/navigation_mobile.css"/>
+        <remove src="MageWorx_SearchSuiteAutocomplete::css/searchsuiteautocomplete.css"/>
+    </head>
+</page>

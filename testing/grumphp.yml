@@ -1,0 +1,103 @@
+grumphp:
+  hide_circumvention_tip: true
+  process_timeout: 300
+  stop_on_failure: false
+  ignore_unstaged_changes: true
+  tasks:
+    # First everything which lints, secures or verifies something
+    jsonlint:
+      ignore_patterns:
+        - "#dev/(.*).json#"
+        - "#docker/(.*).json#"
+      detect_key_conflicts: true
+      metadata:
+        priority: 100
+    xmllint:
+      ignore_patterns:
+        - "#test/(.*).xml#"
+        - "#dev/tests/(.*).xml#"
+        - "#__MACOSX/(.*)#"
+      metadata:
+        priority: 100
+    # filter not allowed keywords
+    git_blacklist:
+      keywords:
+        - "\\.dev"
+        - "\\.local"
+        - "\\.test"
+        - "<<<<<<<"
+        - "======="
+        - "DebuggerUtility"
+        - "ObjectManager::getInstance"
+        - "_GET\\["
+        - "_POST\\["
+        - "_REQUEST\\["
+        - "console\\.log\\("
+        - "die\\("
+        - "die;"
+        - "exit\\("
+        - "exit;"
+        - "fileadmin"
+        - "phpinfo"
+        - "phpinfo\\("
+        - "print_r\\("
+        - "var_dump\\("
+      triggered_by: ['php', 'js', 'html', 'phtml']
+      regexp_type: E
+      whitelist_patterns:
+        - /^.\/app\/([a-zA-Z0-9-_]+)\/([a-zA-Z0-9-_]+)\/([a-zA-Z0-9-_]+)\/(?!(Test)).*\/.*$/
+      metadata:
+        priority: 90
+    # validate composer json
+    composer:
+      file: "./composer.json"
+      no_check_all: true
+      no_check_lock: false
+      no_check_publish: false
+      with_dependencies: false
+      strict: false
+      metadata:
+        priority: 80
+    # run PHP_CodeSniffer
+    phpcs:
+      standard: "Magento2"
+      whitelist_patterns:
+        - /^app\/code\/(.*)/
+      ignore_patterns: ["^./app/code/Magento/(.*)", "^./.github/(.*)", "./deploy.php"]
+      tab_width: 4
+      metadata:
+        priority: 70
+    # run PHP Mess Detector
+    phpmd:
+      ruleset: ["./dev/tests/static/testsuite/Magento/Test/Php/_files/phpmd/ruleset.xml"]
+      exclude:
+        - "app/code/Magento/"
+        - "lib/"
+        - ".github/"
+        - "deploy.php"
+        - "dev/"
+      metadata:
+        priority: 70
+    # validate git branch names
+    git_branch_name:
+      blacklist:
+        - "master"
+        - "stage"
+      allow_detached_head: true
+    phpstan:
+      autoload_file: ~
+      configuration: './dev/tests/static/testsuite/Magento/Test/Php/_files/phpstan/phpstan.neon'
+      level: 1
+      triggered_by: ['php']
+      force_patterns: []
+      ignore_patterns:
+        - "#test/(.*)#"
+        - "#dev/(.*)#"
+        - "#packages/(.*)#"
+        - "#setup/(.*)#"
+        - "#pub/(.*).php#"
+        - "#deploy.php#"
+        - "#app/bootstrap.php#"
+      memory_limit: "-1"
+      metadata:
+        priority: 90

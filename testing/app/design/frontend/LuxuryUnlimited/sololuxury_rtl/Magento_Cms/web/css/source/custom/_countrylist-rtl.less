@@ -1,0 +1,29 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common =true) {
+    .choosecountry {
+        .country-head {
+            .searchbar {
+                &::after {
+                    left: 15px;
+                    right: auto;
+                }
+            }
+
+            .alphabet {
+                .letters {
+                    .lib-vendor-prefix-display(flex);
+                    .lib-css(flex-direction, row, @_prefix: 1);
+                    .lib-css(justify-content, center, @_prefix: 1);
+                    .lib-vendor-prefix-flex-wrap(wrap);
+                }
+
+                .letters .letter {
+                    padding: 0 8px;
+                }
+            }
+        }
+    }
+}

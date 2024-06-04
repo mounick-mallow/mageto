@@ -1,0 +1,194 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/**
+ * Product media data template
+ *
+ * @var $block \Magento\Catalog\Block\Product\View\Gallery
+ */
+?>
+<?php
+$porto_helper = $this->helper('Smartwave\Porto\Helper\Data');
+$_config = $porto_helper->getConfig('porto_settings/product');
+$image_width = (isset($_config['ratio_width']) && $_config['ratio_width'])?$_config['ratio_width']:600;
+$image_height = (isset($_config['ratio_height']) && $_config['ratio_height'])?$_config['ratio_height']:600;
+$aspect_ratio = (isset($_config['aspect_ratio']))?$_config['aspect_ratio']:0;
+if ($aspect_ratio)
+    $image_height = $image_width;
+$thumb_width = 75;
+$thumb_height = 75 * $image_height / $image_width;
+if ($aspect_ratio)
+    $thumb_height = 75;
+$_product = $block->getProduct();
+$page_type = $_product->getData('product_page_type');
+if(!$page_type)
+    $page_type = isset($_config['product_page_type'])?$_config['product_page_type']:'';
+$image_size = $_product->getData('product_image_size');
+$thumbnail_type = (isset($_config['vertical_thumbnail']) && $_config['vertical_thumbnail'])?'vertical':'horizontal';
+if($page_type == 'wide_grid') {
+    $thumbnail_type = 'vertical';
+    $thumb_width = 100;
+    $thumb_height = 100;
+}
+?>
+<?php if ($page_type == 'carousel'): ?>
+<?php
+    $galleryImagesJson = $block->getGalleryImagesJson();
+    $gallery_images = !empty($galleryImagesJson) ? json_decode($galleryImagesJson) : [];
+?>
+<div id="gallery_images" class="owl-carousel product-image-carousel">
+    <?php foreach ($gallery_images as $gallery_image): ?>
+    <div class="item">
+        <img src="<?php echo $gallery_image->img; ?>" alt=""/>
+    </div>
+    <?php endforeach; ?>
+</div>
+<div class="short-custom-block"><?php echo $porto_helper->filterContent($_product->getData("custom_block")); ?></div>
+<div class="fullwidth-custom-block"><?php echo $porto_helper->filterContent($_product->getData("custom_block_2")); ?></div>
+<?php elseif ($page_type == 'grid'): ?>
+<?php
+    $galleryImagesJson = $block->getGalleryImagesJson();
+    $gallery_images = !empty($galleryImagesJson) ? json_decode($galleryImagesJson) : [];
+?>
+<div id="gallery_images" class="row">
+    <?php foreach($gallery_images as $gallery_image): ?>
+    <div class="col-sm-6">
+        <div class="product-image-grid">
+            <img src="<?php echo $gallery_image->img; ?>" alt=""/>
+        </div>
+    </div>
+    <?php endforeach; ?>
+</div>
+<?php elseif ($page_type == 'sticky_right'): ?>
+<?php
+    $galleryImagesJson = $block->getGalleryImagesJson();
+    $gallery_images = !empty($galleryImagesJson) ? json_decode($galleryImagesJson) : [];
+?>
+<div id="gallery_images">
+    <?php foreach ($gallery_images as $gallery_image): ?>
+    <div class="product-image-list">
+        <img src="<?php echo $gallery_image->img; ?>" alt=""/>
+    </div>
+    <?php endforeach; ?>
+</div>
+<div class="short-custom-block"><?php echo $porto_helper->filterContent($_product->getData("custom_block")); ?></div>
+<?php elseif($page_type == 'fullwidth'): ?>
+<div class="gallery-placeholder _block-content-loading" data-gallery-role="gallery-placeholder">
+    <div data-role="loader" class="loading-mask">
+        <div class="loader">
+            <img src="<?php /* @escapeNotVerified */ echo $block->getViewFileUrl('images/loader-1.gif'); ?>"
+                 alt="<?php /* @escapeNotVerified */ echo __('Loading...') ?>">
+        </div>
+    </div>
+</div>
+<script type="text/x-magento-init">
+    {
+        "[data-gallery-role=gallery-placeholder]": {
+            "mage/gallery/gallery": {
+                "mixins":["magnifier/magnify"],
+                "magnifierOpts": <?php /* @escapeNotVerified */ echo $block->getMagnifier(); ?>,
+                "data": <?php /* @escapeNotVerified */ echo $block->getGalleryImagesJson(); ?>,
+                "options": {
+                    "nav": "<?php /* @escapeNotVerified */ echo $block->getVar("gallery/nav"); ?>",
+                    "loop": <?= /* @escapeNotVerified */ $block->getVar("gallery/loop") ? 'true' : 'false' ?>,
+                    "keyboard": <?= /* @escapeNotVerified */ $block->getVar("gallery/keyboard") ? 'true' : 'false' ?>,
+                    "arrows": <?= /* @escapeNotVerified */ $block->getVar("gallery/arrows") ? 'true' : 'false' ?>,
+                    "allowfullscreen": <?= /* @escapeNotVerified */ $block->getVar("gallery/allowfullscreen") ? 'true' : 'false' ?>,
+                    "showCaption": <?= /* @escapeNotVerified */ $block->getVar("gallery/caption") ? 'true' : 'false' ?>,
+                    "width": <?php /* @escapeNotVerified */ echo $image_width; ?>,
+                    "thumbwidth": 100,
+                    "thumbheight": 100,
+                    <?php if (!$aspect_ratio): ?>
+                        "height": <?php /* @escapeNotVerified */ echo $image_height; ?>,
+                    <?php endif; ?>
+                    <?php if ($block->getVar("gallery/transition/duration")): ?>
+                        "transitionduration": <?= /* @escapeNotVerified */ $block->getVar("gallery/transition/duration") ?>,
+                    <?php endif; ?>
+                    "transition": "<?= /* @escapeNotVerified */ $block->getVar("gallery/transition/effect") ?>",
+                    "navarrows": <?= /* @escapeNotVerified */ $block->getVar("gallery/navarrows") ? 'true' : 'false' ?>,
+                    "navtype": "<?= /* @escapeNotVerified */ $block->getVar("gallery/navtype") ?>",
+                    "navdir": "vertical"
+                },
+                "fullscreen": {
+                  "nav": "<?= /* @escapeNotVerified */ $block->getVar("gallery/fullscreen/nav") ?>",
+                  "loop": <?= /* @escapeNotVerified */ $block->getVar("gallery/fullscreen/loop") ? 'true' : 'false' ?>,
+                  "navdir": "<?= /* @escapeNotVerified */ $block->getVar("gallery/fullscreen/navdir") ?>",
+                  "navarrows": <?= /* @escapeNotVerified */ $block->getVar("gallery/fullscreen/navarrows") ? 'true' : 'false' ?>,
+                  "navtype": "<?= /* @escapeNotVerified */ $block->getVar("gallery/fullscreen/navtype") ?>",
+                  "arrows": <?= /* @escapeNotVerified */ $block->getVar("gallery/fullscreen/arrows") ? 'true' : 'false' ?>,
+                  "showCaption": <?= /* @escapeNotVerified */ $block->getVar("gallery/fullscreen/caption") ? 'true' : 'false' ?>,
+                  <?php if ($block->getVar("gallery/fullscreen/transition/duration")): ?>
+                      "transitionduration": <?= /* @escapeNotVerified */ $block->getVar("gallery/fullscreen/transition/duration") ?>,
+                  <?php endif; ?>
+                  "transition": "<?= /* @escapeNotVerified */ $block->getVar("gallery/fullscreen/transition/effect") ?>"
+                },
+                "breakpoints": <?php /* @escapeNotVerified */ echo $block->getBreakpoints(); ?>
+            }
+        }
+    }
+</script>
+<div class="fullwidth-custom-block"><?php echo $porto_helper->filterContent($_product->getData("custom_block")); ?></div>
+<?php else: ?>
+<div class="gallery-placeholder _block-content-loading" data-gallery-role="gallery-placeholder">
+    <div data-role="loader" class="loading-mask">
+        <div class="loader">
+            <img src="<?php /* @escapeNotVerified */ echo $block->getViewFileUrl('images/loader-1.gif'); ?>"
+                 alt="<?php /* @escapeNotVerified */ echo __('Loading...') ?>">
+        </div>
+    </div>
+</div>
+<script type="text/x-magento-init">
+    {
+        "[data-gallery-role=gallery-placeholder]": {
+            "mage/gallery/gallery": {
+                "mixins":["magnifier/magnify"],
+                "magnifierOpts": <?php /* @escapeNotVerified */ echo $block->getMagnifier(); ?>,
+                "data": <?php /* @escapeNotVerified */ echo $block->getGalleryImagesJson(); ?>,
+                "options": {
+                    "nav": "<?php /* @escapeNotVerified */ echo $block->getVar("gallery/nav"); ?>",
+                    "loop": true,
+                    "keyboard": <?php /* @escapeNotVerified */ echo $block->getVar("gallery/keyboard"); ?>,
+                    "arrows": <?php /* @escapeNotVerified */ echo $block->getVar("gallery/arrows"); ?>,
+                    "allowfullscreen": <?php /* @escapeNotVerified */ echo $block->getVar("gallery/allowfullscreen"); ?>,
+                    "showCaption": <?php /* @escapeNotVerified */ echo $block->getVar("gallery/caption"); ?>,
+                    "width": <?php /* @escapeNotVerified */ echo $image_width; ?>,
+                    "thumbwidth": <?php /* @escapeNotVerified */ echo $thumb_width; ?>,
+                    "thumbheight": <?php /* @escapeNotVerified */ echo $thumb_height; ?>,
+                    <?php if (!$aspect_ratio): ?>
+                        "height": <?php /* @escapeNotVerified */ echo $image_height; ?>,
+                    <?php endif; ?>
+                    "transitionduration": <?php /* @escapeNotVerified */  echo $block->getVar("gallery/transition/duration"); ?>,
+                    "transition": "<?php /* @escapeNotVerified */  echo $block->getVar("gallery/transition/effect"); ?>",
+                    "navarrows": <?php /* @escapeNotVerified */  echo $block->getVar("gallery/navarrows"); ?>,
+                    "navtype": "<?php /* @escapeNotVerified */  echo $block->getVar("gallery/navtype"); ?>",
+                    "navdir": "<?php /* @escapeNotVerified */  echo $thumbnail_type; ?>"
+                },
+                "fullscreen": {
+                    "nav": "<?php /* @escapeNotVerified */  echo $block->getVar("gallery/fullscreen/nav"); ?>",
+                    "loop": <?php /* @escapeNotVerified */  echo $block->getVar("gallery/fullscreen/loop"); ?>,
+                    "navdir": "<?php /* @escapeNotVerified */  echo $block->getVar("gallery/fullscreen/navdir"); ?>",
+                    "arrows": <?php /* @escapeNotVerified */  echo $block->getVar("gallery/fullscreen/arrows"); ?>,
+                    "showCaption": <?php /* @escapeNotVerified */  echo $block->getVar("gallery/fullscreen/caption"); ?>,
+                    "transitionduration": <?php /* @escapeNotVerified */  echo $block->getVar("gallery/fullscreen/transition/duration"); ?>,
+                    "transition": "<?php /* @escapeNotVerified */  echo $block->getVar("gallery/fullscreen/transition/effect"); ?>"
+                },
+                "breakpoints": <?php /* @escapeNotVerified */ echo $block->getBreakpoints(); ?>
+            }
+        }
+    }
+</script>
+<?php endif; ?>
+<script type="text/x-magento-init">
+{
+    "*": {
+        "MagentoCatalogGallery": {
+            "pageType": "<?= $page_type ?>"
+        }
+    }
+}
+</script>

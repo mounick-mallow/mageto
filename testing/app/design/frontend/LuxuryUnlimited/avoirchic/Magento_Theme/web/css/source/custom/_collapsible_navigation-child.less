@@ -1,0 +1,56 @@
+//
+//  Common
+//  ---------------------------------------------
+
+& when (@media-common = true) {
+    .block-collapsible-nav {
+        .nav.items {
+            .item {
+                a,
+                > strong {
+                    &::before {
+                        display: none;
+                    }
+                }
+
+                a {
+                    &:hover,
+                    &:active,
+                    &:focus {
+                        background: linear-gradient(
+                            90deg,
+                            rgba(217, 217, 217, 0.3) 0%,
+                            rgba(217, 217, 217, 0) 100%
+                        );
+                    }
+                }
+
+                &.current {
+                    a,
+                    strong {
+                        background: linear-gradient(
+                            90deg,
+                            rgba(217, 217, 217, 0.3) 0%,
+                            rgba(217, 217, 217, 0) 100%
+                        );
+                    }
+                }
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  ---------------------------------------------
+.media-width(@extremum, @break)
+    when
+    (@extremum = 'max')
+    and
+    (@break = @screen__m) {
+    .block-collapsible-nav {
+        strong {
+            .lib-css(font-weight, @font-weight__heavier);
+        }
+    }
+}

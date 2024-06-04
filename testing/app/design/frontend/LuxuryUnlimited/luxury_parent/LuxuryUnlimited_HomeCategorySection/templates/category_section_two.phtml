@@ -1,0 +1,39 @@
+<?php
+
+/**
+ * @var \LuxuryUnlimited\CategorySectionTwo\Block\SectionTwo $block
+ */
+
+$isEnabledSectionTwo = $block->isEnabledSectionTwo();
+
+$categories = [];
+
+?>
+<?php if ($isEnabledSectionTwo) : ?>
+    <?php $categories = $block->getSectionTwoCategories(); ?>
+
+    <?php if (count($categories)) : ?>
+        <div class="category-section-two">
+
+            <?php foreach ($categories as $category) : ?>
+                <div class="category-tile">
+                    <div class="category-title">
+                        <a href="<?= /*@noEscape*/ $category['url'] ?>"><?= /* @noEscape */ $category['name'] ?></a>
+                    </div>
+                    <div class="tile-image">
+                        <a href="<?= /*@noEscape*/ $category['url'] ?>">
+                            <img
+                                class="img-preview" src="<?=/* @noEscape */ $category['image'] ?>"
+                                alt="<?= /* @noEscape */ $category['name'] ?>"
+                                width="145"
+                                height="216"
+                                loading="lazy"
+                            >
+                        </a>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+
+<?php endif; ?>

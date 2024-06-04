@@ -1,0 +1,29 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \Magento\Customer\Block\Newsletter $block */
+?>
+<?= $block->getChildHtml('form_before') ?>
+<div class="newsletterBlock">
+    <form class="form form-newsletter-manage" action="<?= $block->escapeUrl($block->getAction()) ?>" method="post" id="form-validate">
+        <?= $block->getBlockHtml('formkey') ?>
+
+        <h3><?= $block->escapeHtml(__('Subscription option')) ?></h3>
+        <div class="form-block checkbox">
+            <input type="checkbox" name="is_subscribed" id="subscription" value="1" title="<?= $block->escapeHtmlAttr(__('General Subscription')) ?>"<?php if ($block->getIsSubscribed()) : ?> checked="checked"<?php endif; ?> class="checkbox">
+            <span class="checkmark" data-mage-init='{"checkmark":{}}'></span>
+            <label for="is_subscribed"><?= $block->escapeHtml(__('General Subscription')) ?></label>
+        </div>
+        <?= $block->getChildHtml('customer.form.newsletter.extra') ?>
+        <div class="actions-toolbar">
+            <button type="submit" title="<?= $block->escapeHtmlAttr(__('Save')) ?>" class="btn btn-primary action primary"
+                ><span><?= $block->escapeHtml(__('Save')) ?></span>
+            </button>
+        </div>
+    </form>
+</div>
+<?php /* Extensions placeholder */ ?>
+<?= $block->getChildHtml('customer.form.newsletter.extra2') ?>
